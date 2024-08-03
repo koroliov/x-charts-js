@@ -8,7 +8,8 @@ PROJECT_IMAGE_TAG := "0"
 NODE_VERSION_NUM := "22.5.1"
 
 help:
-	echo "Provide a target, type in the command prompt: make <space> <tab> <tab> to see all targets"
+	echo "Provide a target, type in the command prompt: \
+	make <space> <tab> <tab> to see all targets"
 
 docker-image-build:
 	docker build . \
