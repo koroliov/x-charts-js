@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>0000-dummy-modules</title>
+  <!-- <link rel="stylesheet" href="css.css">-->
+  <link href="data:image/x-icon;base64," rel="icon" type="image/x-icon">
+</head>
+<body>
+  <button id="click-me">original 'click me' text</button>
+  <script type="module">
+    import dummy from '/dist/modules/dummy.js';
+    document.getElementById('click-me').addEventListener('click', dummy);
+  </script>
+</body>
+</html>

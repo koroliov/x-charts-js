@@ -1,0 +1,17 @@
+{
+  "name": "XCharts",
+  "version": "0.0.0",
+  "main": "",
+  "exports": "",
+  "type": "module",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Dmitry Koroliov <d.koroliov@gmail.com>",
+  "license": "MIT",
+  "private": true,
+  "description": ""
+}

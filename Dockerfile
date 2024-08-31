@@ -19,3 +19,5 @@ LABEL name=${PROJECT_NAME}
 RUN adduser --uid 1000 ${PROJECT_NAME}
 USER ${PROJECT_NAME}
 WORKDIR /home/${PROJECT_NAME}
+
+CMD ["node", "./test/e2e/utils/server/main.js"]
