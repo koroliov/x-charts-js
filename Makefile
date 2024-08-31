@@ -1,7 +1,8 @@
 .PHONY: help \
 	docker-image-build \
 	docker-container-run \
-	docker-container-kill
+	docker-container-kill \
+	docker-container-bash
 .SILENT: help
 
 PROJECT_NAME := "xcharts"
@@ -12,7 +13,7 @@ help:
 	echo "Provide a target, type in the command prompt: \
 	make <space> <tab> <tab> to see all targets"
 
-docker-container-run: docker-image-build
+docker-container-run:
 	docker container run --rm \
 	--publish 443:443 \
 	-v ./package.json:/home/$(PROJECT_NAME)/package.json \
@@ -25,6 +26,9 @@ docker-container-run: docker-image-build
 
 docker-container-kill:
 	docker container kill $(PROJECT_NAME)-$(PROJECT_IMAGE_TAG)
+
+docker-container-bash:
+	docker container exec -it $(PROJECT_NAME)-$(PROJECT_IMAGE_TAG) bash
 
 docker-image-build:
 	docker build . \
