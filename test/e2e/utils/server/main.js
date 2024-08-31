@@ -5,7 +5,7 @@ const server = http2.createSecureServer({
   key: fs.readFileSync('./test/e2e/utils/server/privkey.pem'),
   cert: fs.readFileSync('./test/e2e/utils/server/cert.pem'),
 });
-server.on('error', (err) => console.error(err));
+server.on('error', console.error);
 
 server.on('stream', (stream, headers) => {
   if (/^\/test\/e2e\/cases\/[a-z\/0-9\-]+.html$/.test(headers[':path'])) {
