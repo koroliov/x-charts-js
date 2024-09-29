@@ -8,6 +8,7 @@
 PROJECT_NAME := "xcharts"
 PROJECT_IMAGE_TAG := "0"
 NODE_VERSION_NUM := "22.5.1"
+PWD := $(shell pwd)
 
 help:
 	echo "Provide a target, type in the command prompt: \
@@ -16,9 +17,9 @@ help:
 docker-container-run:
 	docker container run --rm \
 	--publish 443:443 \
-	-v ./package.json:/home/$(PROJECT_NAME)/package.json \
-	-v ./dist/:/home/$(PROJECT_NAME)/dist/ \
-	-v ./test/:/home/$(PROJECT_NAME)/test/ \
+	-v /$(PWD)/package.json:/home/$(PROJECT_NAME)/package.json \
+	-v /$(PWD)/dist/:/home/$(PROJECT_NAME)/dist/ \
+	-v /$(PWD)/test/:/home/$(PROJECT_NAME)/test/ \
 	-d \
 	--name $(PROJECT_NAME)-$(PROJECT_IMAGE_TAG) \
 	-u $(PROJECT_NAME) \
