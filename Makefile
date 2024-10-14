@@ -12,6 +12,7 @@
 F := ''
 PROJECT_NAME := "xcharts"
 PROJECT_IMAGE_TAG := "0"
+CONTAINER_NAME := $(PROJECT_NAME)-$(PROJECT_IMAGE_TAG)
 NODE_VERSION_NUM := "22.5.1"
 PWD := $(shell pwd)
 
@@ -38,21 +39,17 @@ docker-container-run:
 	-v /$(PWD)/package.json:/home/$(PROJECT_NAME)/package.json \
 	-v /$(PWD)/dist/:/home/$(PROJECT_NAME)/dist/ \
 	-v /$(PWD)/test/:/home/$(PROJECT_NAME)/test/ \
-	-d \
-	--name $(PROJECT_NAME)-$(PROJECT_IMAGE_TAG) \
-	-u $(PROJECT_NAME) \
+	-d --name $(CONTAINER_NAME) -u $(PROJECT_NAME) \
 	$(PROJECT_NAME):$(PROJECT_IMAGE_TAG)
 
 docker-container-kill:
 	docker container kill $(PROJECT_NAME)-$(PROJECT_IMAGE_TAG)
 
 docker-container-bash:
-	docker container exec -it $(PROJECT_NAME)-$(PROJECT_IMAGE_TAG) bash
+	docker container exec -it $(CONTAINER_NAME) bash
 
 docker-container-copy-from:
-	docker container cp \
-	$(PROJECT_NAME)-$(PROJECT_IMAGE_TAG):/home/$(PROJECT_NAME)/$(F) $(F)
+	docker container cp $(CONTAINER_NAME):/home/$(PROJECT_NAME)/$(F) $(F)
 
 docker-container-copy-to:
-	docker container cp \
-	$(F) $(PROJECT_NAME)-$(PROJECT_IMAGE_TAG):/home/$(PROJECT_NAME)/$(F)
+	docker container cp $(F) $(CONTAINER_NAME):/home/$(PROJECT_NAME)/$(F)
