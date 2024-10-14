@@ -1,11 +1,13 @@
 .PHONY: help \
+	list-cmd-options \
 	docker-image-build \
 	docker-container-run \
 	docker-container-kill \
 	docker-container-bash \
 	docker-container-copy-from \
 	docker-container-copy-to
-.SILENT: help
+.SILENT: help \
+	list-cmd-options
 
 F := ''
 PROJECT_NAME := "xcharts"
@@ -16,6 +18,13 @@ PWD := $(shell pwd)
 help:
 	echo "Provide a target, type in the command prompt: \
 	make <space> <tab> <tab> to see all targets"
+
+list-cmd-options:
+	echo "F: file path + name in the project on host and on container"
+	echo "  Used with:"
+	echo "    docker-container-copy-from"
+	echo "    docker-container-copy-to"
+	echo "  example: make F=./foo/bar.js docker-container-copy-to"
 
 docker-image-build:
 	docker build . \
