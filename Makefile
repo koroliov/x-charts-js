@@ -2,9 +2,12 @@
 	docker-image-build \
 	docker-container-run \
 	docker-container-kill \
-	docker-container-bash
+	docker-container-bash \
+	docker-container-copy-from \
+	docker-container-copy-to
 .SILENT: help
 
+F := ''
 PROJECT_NAME := "xcharts"
 PROJECT_IMAGE_TAG := "0"
 NODE_VERSION_NUM := "22.5.1"
@@ -13,6 +16,12 @@ PWD := $(shell pwd)
 help:
 	echo "Provide a target, type in the command prompt: \
 	make <space> <tab> <tab> to see all targets"
+
+docker-image-build:
+	docker build . \
+	--build-arg NODE_VERSION_NUM=$(NODE_VERSION_NUM) \
+	--build-arg PROJECT_NAME=$(PROJECT_NAME) \
+	-t $(PROJECT_NAME):$(PROJECT_IMAGE_TAG)
 
 docker-container-run:
 	docker container run --rm \
@@ -31,8 +40,10 @@ docker-container-kill:
 docker-container-bash:
 	docker container exec -it $(PROJECT_NAME)-$(PROJECT_IMAGE_TAG) bash
 
-docker-image-build:
-	docker build . \
-	--build-arg NODE_VERSION_NUM=$(NODE_VERSION_NUM) \
-	--build-arg PROJECT_NAME=$(PROJECT_NAME) \
-	-t $(PROJECT_NAME):$(PROJECT_IMAGE_TAG)
+docker-container-copy-from:
+	docker container cp \
+	$(PROJECT_NAME)-$(PROJECT_IMAGE_TAG):/home/$(PROJECT_NAME)/$(F) $(F)
+
+docker-container-copy-to:
+	docker container cp \
+	$(F) $(PROJECT_NAME)-$(PROJECT_IMAGE_TAG):/home/$(PROJECT_NAME)/$(F)
