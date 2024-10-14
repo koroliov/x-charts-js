@@ -1,7 +1,8 @@
 .PHONY: help \
 	list-cmd-options \
 	docker-image-build \
-	docker-container-run \
+	docker-container-run-detached \
+	docker-container-run-interactive \
 	docker-container-kill \
 	docker-container-bash \
 	docker-container-copy-from \
@@ -33,7 +34,10 @@ docker-image-build:
 	--build-arg PROJECT_NAME=$(PROJECT_NAME) \
 	-t $(PROJECT_NAME):$(PROJECT_IMAGE_TAG)
 
-docker-container-run:
+docker-container-run-interactive: docker-container-run-detached \
+ docker-container-bash
+
+docker-container-run-detached:
 	docker container run --rm \
 	--publish 443:443 \
 	-v /$(PWD)/package.json:/home/$(PROJECT_NAME)/package.json \
