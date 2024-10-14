@@ -12,7 +12,7 @@
 
 F := ''
 PROJECT_NAME := "xcharts"
-PROJECT_IMAGE_TAG := "1"
+PROJECT_IMAGE_TAG := "2"
 CONTAINER_NAME := $(PROJECT_NAME)-$(PROJECT_IMAGE_TAG)
 NODE_VERSION_NUM := "22.9.0"
 PWD := $(shell pwd)
@@ -41,6 +41,7 @@ docker-container-run-detached:
 	docker container run --rm \
 	--publish 443:443 \
 	-v /$(PWD)/package.json:/home/$(PROJECT_NAME)/package.json \
+	-v /$(PWD)/package-lock.json:/home/$(PROJECT_NAME)/package-lock.json \
 	-v /$(PWD)/dist/:/home/$(PROJECT_NAME)/dist/ \
 	-v /$(PWD)/test/:/home/$(PROJECT_NAME)/test/ \
 	-d --name $(CONTAINER_NAME) -u $(PROJECT_NAME) \

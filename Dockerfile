@@ -20,4 +20,8 @@ RUN adduser --uid 1000 ${PROJECT_NAME}
 USER ${PROJECT_NAME}
 WORKDIR /home/${PROJECT_NAME}
 
+COPY ./package.json .
+COPY ./package-lock.json .
+RUN npm ci
+
 CMD ["node", "./test/e2e/utils/server/main.js"]
