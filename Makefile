@@ -11,8 +11,8 @@
 	list-cmd-options
 
 F := ''
-PROJECT_NAME := "xcharts"
-PROJECT_IMAGE_TAG := "2"
+PROJECT_NAME := "x-charts"
+PROJECT_IMAGE_TAG := "3"
 CONTAINER_NAME := $(PROJECT_NAME)-$(PROJECT_IMAGE_TAG)
 NODE_VERSION_NUM := "22.9.0"
 PWD := $(shell pwd)
