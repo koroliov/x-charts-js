@@ -1,5 +1,5 @@
 .PHONY: help \
-	list-cmd-options \
+	help-list-cmd-options \
 	docker-image-build \
 	docker-container-run-detached \
 	docker-container-run-interactive \
@@ -8,9 +8,9 @@
 	docker-container-copy-from \
 	docker-container-copy-to
 .SILENT: help \
-	list-cmd-options
+	help-list-cmd-options
 
-F := ''
+FILE := ''
 PROJECT_NAME := "x-charts"
 PROJECT_IMAGE_TAG := "3"
 CONTAINER_NAME := $(PROJECT_NAME)-$(PROJECT_IMAGE_TAG)
@@ -21,12 +21,13 @@ help:
 	echo "Provide a target, type in the command prompt: \
 	make <space> <tab> <tab> to see all targets"
 
-list-cmd-options:
-	echo "F: file path + name in the project on host and on container"
+help-list-cmd-options:
+	echo "FILE: file path + name in the project on the host and on the container"
+	echo "  no preceding slash, like ./"
 	echo "  Used with:"
 	echo "    docker-container-copy-from"
 	echo "    docker-container-copy-to"
-	echo "  example: make F=./foo/bar.js docker-container-copy-to"
+	echo "  example: make FILE=foo/bar.js docker-container-copy-to"
 
 docker-image-build:
 	docker build . \
@@ -54,7 +55,9 @@ docker-container-bash:
 	docker container exec -it $(CONTAINER_NAME) bash
 
 docker-container-copy-from:
-	docker container cp $(CONTAINER_NAME):/home/$(PROJECT_NAME)/$(F) $(F)
+	docker container cp $(CONTAINER_NAME):/home/$(PROJECT_NAME)/$(FILE) \
+	$(FILE)
 
 docker-container-copy-to:
-	docker container cp $(F) $(CONTAINER_NAME):/home/$(PROJECT_NAME)/$(F)
+	docker container cp $(FILE) \
+	$(CONTAINER_NAME):/home/$(PROJECT_NAME)/$(FILE)
