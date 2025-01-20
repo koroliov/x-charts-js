@@ -1,4 +1,6 @@
-FROM "fedora:40" AS get-node
+ARG FEDORA_VERSION_NUM="00"
+
+FROM "fedora:${FEDORA_VERSION_NUM}" AS get-node
 WORKDIR /tmp
 ARG NODE_VERSION_NUM
 ARG NODE_DIR_NAME=node-v${NODE_VERSION_NUM}-linux-x64
@@ -8,7 +10,7 @@ RUN curl -s https://nodejs.org/dist/v${NODE_VERSION_NUM}/${NODE_TARBALL_NAME} > 
   ${NODE_TARBALL_NAME}
 RUN tar -xf ${NODE_DIR_NAME}.tar.xz
 
-FROM "fedora:40" AS final
+FROM "fedora:${FEDORA_VERSION_NUM}" AS final
 ARG NODE_VERSION_NUM
 ARG NODE_DIR_NAME=node-v${NODE_VERSION_NUM}-linux-x64
 ENV PATH=/opt/${NODE_DIR_NAME}/bin:$PATH

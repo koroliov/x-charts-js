@@ -15,6 +15,7 @@ PROJECT_NAME := "x-charts"
 PROJECT_IMAGE_TAG := "3"
 CONTAINER_NAME := $(PROJECT_NAME)-$(PROJECT_IMAGE_TAG)
 NODE_VERSION_NUM := "22.9.0"
+FEDORA_VERSION_NUM := "40"
 PWD := $(shell pwd)
 
 help:
@@ -31,6 +32,7 @@ help-list-cmd-options:
 
 docker-image-build:
 	docker build . \
+	--build-arg FEDORA_VERSION_NUM=$(FEDORA_VERSION_NUM) \
 	--build-arg NODE_VERSION_NUM=$(NODE_VERSION_NUM) \
 	--build-arg PROJECT_NAME=$(PROJECT_NAME) \
 	-t $(PROJECT_NAME):$(PROJECT_IMAGE_TAG)
