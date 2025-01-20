@@ -11,11 +11,11 @@
 	help-list-cmd-options
 
 FILE := ''
-PROJECT_NAME := "x-charts"
-PROJECT_IMAGE_TAG := "3"
+PROJECT_NAME := x-charts
+PROJECT_IMAGE_TAG := 3
 CONTAINER_NAME := $(PROJECT_NAME)-$(PROJECT_IMAGE_TAG)
-NODE_VERSION_NUM := "22.9.0"
-FEDORA_VERSION_NUM := "40"
+NODE_VERSION_NUM := 22.9.0
+FEDORA_VERSION_NUM := 40
 PWD := $(shell pwd)
 
 help:
