@@ -1,3 +1,4 @@
+#This is not a typo, 00 is needed
 ARG FEDORA_VERSION_NUM=00
 
 FROM fedora:${FEDORA_VERSION_NUM} AS get-node
