@@ -15,7 +15,7 @@ Currently this is handled manually
 **How to install/update other software in container?**
 
 - Modify the Dockerfile
-  - Update the image tag number
+- Update the image tag number
 - Rebuild image
 - Run the container with an interactive shell or login into a running container
   - Check the software version
