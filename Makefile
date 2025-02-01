@@ -6,13 +6,14 @@
 	docker-container-kill \
 	docker-container-bash \
 	docker-container-copy-from \
-	docker-container-copy-to
+	docker-container-copy-to \
+	flow-build
 .SILENT: help \
 	help-list-cmd-options
 
 FILE := ''
 PROJECT_NAME := x-charts
-PROJECT_IMAGE_TAG := 5
+PROJECT_IMAGE_TAG := 6
 CONTAINER_NAME := $(PROJECT_NAME)-$(PROJECT_IMAGE_TAG)
 NODE_VERSION_NUM := 23.6.0
 FEDORA_VERSION_NUM := 41
@@ -46,6 +47,7 @@ docker-container-run-detached:
 	-v /$(PWD)/package.json:/home/$(PROJECT_NAME)/package.json \
 	-v /$(PWD)/package-lock.json:/home/$(PROJECT_NAME)/package-lock.json \
 	-v /$(PWD)/dist/:/home/$(PROJECT_NAME)/dist/ \
+	-v /$(PWD)/src/:/home/$(PROJECT_NAME)/src/ \
 	-v /$(PWD)/test/:/home/$(PROJECT_NAME)/test/ \
 	-d --name $(CONTAINER_NAME) -u $(PROJECT_NAME) \
 	$(PROJECT_NAME):$(PROJECT_IMAGE_TAG)
@@ -63,3 +65,6 @@ docker-container-copy-from:
 docker-container-copy-to:
 	docker container cp $(FILE) \
 	$(CONTAINER_NAME):/home/$(PROJECT_NAME)/$(FILE)
+
+flow-build:
+	docker container exec -it $(CONTAINER_NAME) bash -c "npm run flow-build"
