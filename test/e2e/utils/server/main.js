@@ -10,6 +10,8 @@ server.on('error', console.error);
 server.on('stream', (stream, headers) => {
   if (/^\/test\/e2e\/cases\/[a-z\/0-9\-]+.html$/.test(headers[':path'])) {
     return handleFileType('text/html');
+  } else if (/^\/test\/e2e\/cases\/[a-z\/0-9\-]+.js/.test(headers[':path'])) {
+    return handleFileType('text/javascript');
   } else if (/^\/dist\//.test(headers[':path'])) {
     return handleFileType('text/javascript');
   }
