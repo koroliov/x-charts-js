@@ -1,8 +1,9 @@
 .PHONY: help \
 	help-list-cmd-options \
 	docker-image-build \
-	docker-container-run-detached \
 	docker-container-run-interactive \
+	docker-container-run-detached \
+	docker-container-logs \
 	docker-container-kill \
 	docker-container-bash \
 	docker-container-copy-from \
@@ -51,6 +52,9 @@ docker-container-run-detached:
 	-v /$(PWD)/test/:/home/$(PROJECT_NAME)/test/ \
 	-d --name $(CONTAINER_NAME) -u $(PROJECT_NAME) \
 	$(PROJECT_NAME):$(PROJECT_IMAGE_TAG)
+
+docker-container-logs:
+	docker container logs -f $(PROJECT_NAME)-$(PROJECT_IMAGE_TAG)
 
 docker-container-kill:
 	docker container kill $(PROJECT_NAME)-$(PROJECT_IMAGE_TAG)
