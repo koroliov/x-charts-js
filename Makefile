@@ -14,7 +14,7 @@
 
 FILE := ''
 PROJECT_NAME := x-charts
-PROJECT_IMAGE_TAG := 6
+PROJECT_IMAGE_TAG := 7
 CONTAINER_NAME := $(PROJECT_NAME)-$(PROJECT_IMAGE_TAG)
 NODE_VERSION_NUM := 23.6.0
 FEDORA_VERSION_NUM := 41
@@ -37,6 +37,7 @@ docker-image-build:
 	--build-arg FEDORA_VERSION_NUM=$(FEDORA_VERSION_NUM) \
 	--build-arg NODE_VERSION_NUM=$(NODE_VERSION_NUM) \
 	--build-arg PROJECT_NAME=$(PROJECT_NAME) \
+	--build-arg PROJECT_IMAGE_TAG=$(PROJECT_IMAGE_TAG) \
 	-t $(PROJECT_NAME):$(PROJECT_IMAGE_TAG)
 
 docker-container-run-interactive: docker-container-run-detached \
