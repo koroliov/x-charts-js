@@ -15,6 +15,7 @@ LABEL maintainer=${PROJECT_NAME}
 
 WORKDIR /opt
 
+RUN echo "${PROJECT_NAME} ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/${PROJECT_NAME}
 RUN curl -s https://nodejs.org/dist/v${NODE_VERSION_NUM}/${NODE_TARBALL_NAME} > \
   ${NODE_TARBALL_NAME}
 RUN tar -xf ${NODE_DIR_NAME}.tar.xz
