@@ -31,4 +31,4 @@ COPY ./package.json .
 COPY ./package-lock.json .
 RUN npm ci
 
-CMD ["node", "./test/e2e/utils/server/main.js"]
+CMD ["npm", "run", "nodemon", "--legacy-watch", "./test/e2e/utils/server/main.js"]
