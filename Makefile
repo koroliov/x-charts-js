@@ -3,8 +3,10 @@
 	docker-image-build \
 	docker-container-run-interactive \
 	docker-container-run-detached \
+	docker-container-run-attached \
 	docker-container-logs \
 	docker-container-kill \
+	docker-container-restart \
 	docker-container-bash \
 	docker-container-copy-from \
 	docker-container-copy-to \
@@ -53,6 +55,20 @@ docker-container-run-detached:
 	-v $(PWD)/test/:/home/$(PROJECT_NAME)/test/ \
 	-d --name $(CONTAINER_NAME) -u $(PROJECT_NAME) \
 	$(PROJECT_NAME):$(PROJECT_IMAGE_TAG)
+
+docker-container-run-attached:
+	docker container run --rm \
+	--publish 443:443 \
+	-v $(PWD)/package.json:/home/$(PROJECT_NAME)/package.json \
+	-v $(PWD)/package-lock.json:/home/$(PROJECT_NAME)/package-lock.json \
+	-v $(PWD)/dist/:/home/$(PROJECT_NAME)/dist/ \
+	-v $(PWD)/src/:/home/$(PROJECT_NAME)/src/ \
+	-v $(PWD)/test/:/home/$(PROJECT_NAME)/test/ \
+	--name $(CONTAINER_NAME) -u $(PROJECT_NAME) \
+	$(PROJECT_NAME):$(PROJECT_IMAGE_TAG)
+
+docker-container-restart:
+	docker container restart $(PROJECT_NAME)-$(PROJECT_IMAGE_TAG)
 
 docker-container-logs:
 	docker container logs -f $(PROJECT_NAME)-$(PROJECT_IMAGE_TAG)
