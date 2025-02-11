@@ -17,8 +17,7 @@ WORKDIR /opt
 
 RUN echo "${PROJECT_NAME} ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/${PROJECT_NAME}
 RUN dnf install -y procps-ng-4.0.4-4.fc41.x86_64
-RUN curl -s https://nodejs.org/dist/v${NODE_VERSION_NUM}/${NODE_TARBALL_NAME} > \
-  ${NODE_TARBALL_NAME}
+ADD https://nodejs.org/dist/v${NODE_VERSION_NUM}/${NODE_TARBALL_NAME} ${NODE_TARBALL_NAME}
 RUN tar -xf ${NODE_DIR_NAME}.tar.xz
 RUN rm ${NODE_DIR_NAME}.tar.xz
 
