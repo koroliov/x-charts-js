@@ -15,7 +15,6 @@ LABEL maintainer=${PROJECT_NAME}
 
 WORKDIR /opt
 
-RUN dnf install -y procps-ng-4.0.4-4.fc41.x86_64
 ADD https://nodejs.org/dist/v${NODE_VERSION_NUM}/${NODE_TARBALL_NAME} ${NODE_TARBALL_NAME}
 RUN tar -xf ${NODE_DIR_NAME}.tar.xz
 RUN rm ${NODE_DIR_NAME}.tar.xz
