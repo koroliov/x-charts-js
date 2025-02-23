@@ -62,12 +62,13 @@ function handleStream(stream, headers) {
 
       function reduceReaddirDirents(accum, dirEntry) {
         if (!dirEntry.isDirectory()) {
-          throw new Error([
+          const errMsg = [
             'When a list-dir/ request is made, the listed dir',
             'is not supposed to have files, only directories',
             'which are test cases or groups of test cases',
             `Problem is in path: ${ requestedPath }`,
-          ].join('\n'));
+          ].join('\n');
+          return respond500(errMsg);
         }
         const dirsToIgnore = ['/common-files',];
         for (const di of dirsToIgnore) {
@@ -90,7 +91,15 @@ function handleStream(stream, headers) {
       'content-type': 'text/plain; charset=utf-8',
       ':status': 404,
     });
-    stream.end('404 error, unexpected path ' + requestedPath);
+    stream.end('404 error, unexpected path:\n' + requestedPath);
+  }
+
+  function respond500(msg) {
+    stream.respond({
+      'content-type': 'text/plain; charset=utf-8',
+      ':status': 500,
+    });
+    stream.end('500 error:\n' + msg);
   }
 
   function handleFileType(mimeType) {
