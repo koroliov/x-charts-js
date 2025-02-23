@@ -11,6 +11,7 @@ server.listen(443);
 
 function handleStream(stream, headers) {
   const requestedPath = headers[':path'];
+  const requestedPathRelative = `.${ requestedPath }`;
   if (!isLocationAllowed()) {
     return respond404();
   }
@@ -30,8 +31,8 @@ function handleStream(stream, headers) {
     if (requestedPath === '/list-dir/') {
       handleListOfTestsRequest('./test/e2e/cases/');
     } else if (requestedPath.endsWith('/list-dir/')) {
-      const relativePathForList = `.${ requestedPath
-          .substring(0, requestedPath.length - 'list-dir/'.length)}`;
+      const relativePathForList = requestedPathRelative
+          .substring(0, requestedPathRelative.length - 'list-dir/'.length);
       if (!relativePathForList.endsWith('/common-files/')) {
         handleListOfTestsRequest(relativePathForList);
       }
@@ -86,6 +87,12 @@ function handleStream(stream, headers) {
   }
 
   function handleFileRequest() {
+    if (fs.existsSync(requestedPathRelative)) {
+      const stat = fs.statSync(requestedPathRelative);
+      if (stat.isFile()) {
+        return respondWithExistingFile(requestedPathRelative);
+      }
+    }
     respond404();
   }
 
