@@ -35,6 +35,8 @@ function handleStream(stream, headers) {
       if (!relativePathForList.endsWith('/common-files/')) {
         handleListOfTestsRequest(relativePathForList);
       }
+    } else if (!requestedPath.endsWith('/common-files/')) {
+      respondWithExistingFile('./test/e2e/cases/common-files/template.html');
     } else {
       respond404();
     }
@@ -103,20 +105,25 @@ function handleStream(stream, headers) {
     stream.end('500 error:\n' + msg);
   }
 
-  function handleFileType(mimeType) {
-    const fName = `.${ headers[':path'] }`;
-    if (fs.existsSync(fName)) {
-      return respondWithFile(fName);
-    } else {
-      return respond404(fName);
+  function respondWithExistingFile(filePath) {
+    const contentType = determineContentTypeHeader(filePath);
+    if (!contentType) {
+      respond500(`Coudln't process file: ${ filePath }`);
     }
+    stream.respondWithFile(filePath, {
+      'content-type': contentType,
+      'access-control-allow-origin': '*',
+      ':status': 200,
+    });
+  }
 
-    function respondWithFile(fName) {
-      stream.respondWithFile(fName, {
-        'content-type': `${ mimeType };charset=utf-8`,
-        'access-control-allow-origin': '*',
-        ':status': 200,
-      });
-    }
+  function determineContentTypeHeader(fileNameOrPath) {
+    const m = Object.create(null);
+    m[void 0] = null;
+    m.html = 'text/html;charset=utf-8';
+    m.js = 'text/javascript;charset=utf-8';
+
+    const extension = fileNameOrPath.match(/\.([^.]+)$/)?.[1];
+    return m[extension];
   }
 }
