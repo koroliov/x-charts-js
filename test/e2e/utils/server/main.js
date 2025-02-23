@@ -28,7 +28,9 @@ function handleStream(stream, headers) {
   }
 
   function handleDirRequest() {
-    if (requestedPath === '/list-dir/') {
+    if (requestedPath === '/') {
+      redirectToTestRoot();
+    } else if (requestedPath === '/list-dir/') {
       handleListOfTestsRequest('./test/e2e/cases/');
     } else if (requestedPath.endsWith('/list-dir/')) {
       const relativePathForList = requestedPathRelative
@@ -40,6 +42,14 @@ function handleStream(stream, headers) {
       respondWithExistingFile('./test/e2e/cases/common-files/template.html');
     } else {
       respond404();
+    }
+
+    function redirectToTestRoot() {
+      stream.respond({
+        'location': '/test/e2e/cases/',
+        ':status': 308,
+      });
+      stream.end('');
     }
 
     function handleListOfTestsRequest(dirPath) {
