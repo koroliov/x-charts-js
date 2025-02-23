@@ -27,4 +27,4 @@ COPY ./package-lock.json .
 RUN npm install -g npm@${NPM_VERSION_NUM}
 RUN npm ci
 
-CMD ["npm", "run", "nodemon", "--legacy-watch", "./test/e2e/utils/server/main.js"]
+CMD ["npm", "run", "nodemon"]
