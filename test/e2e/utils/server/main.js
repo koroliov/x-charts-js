@@ -17,7 +17,8 @@ function handleStream(stream, headers) {
   isDirRequested() ? handleDirRequest() : handleFileRequest();
 
   function isLocationAllowed() {
-    return requestedPath === '/' ||
+    const allowed = new Set([ '/', '/list-dir/', ]);
+    return allowed.has(requestedPath) ||
       requestedPath.startsWith('/test/e2e/cases/');
   }
 
@@ -26,7 +27,7 @@ function handleStream(stream, headers) {
   }
 
   function handleDirRequest() {
-    if (requestedPath === '/') {
+    if (requestedPath === '/list-dir/') {
       handleListOfTestsRequest('./test/e2e/cases/');
     } else if (requestedPath.endsWith('/list-dir/')) {
       const relativePathForList = `.${ requestedPath
