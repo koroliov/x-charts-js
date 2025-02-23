@@ -6,16 +6,92 @@ const server = http2.createSecureServer({
   cert: fs.readFileSync('./test/e2e/utils/server/cert.pem'),
 });
 server.on('error', console.error);
+server.on('stream', handleStream);
+server.listen(443);
 
-server.on('stream', (stream, headers) => {
-  if (/^\/test\/e2e\/cases\/[a-z\/0-9\-]+.html$/.test(headers[':path'])) {
-    return handleFileType('text/html');
-  } else if (/^\/test\/e2e\/cases\/[a-z\/0-9\-]+.js/.test(headers[':path'])) {
-    return handleFileType('text/javascript');
-  } else if (/^\/dist\//.test(headers[':path'])) {
-    return handleFileType('text/javascript');
+function handleStream(stream, headers) {
+  const requestedPath = headers[':path'];
+  if (!isLocationAllowed()) {
+    return respond404();
   }
-  respond404(headers[':path']);
+  isDirRequested() ? handleDirRequest() : handleFileRequest();
+
+  function isLocationAllowed() {
+    return requestedPath === '/' ||
+      requestedPath.startsWith('/test/e2e/cases/');
+  }
+
+  function isDirRequested() {
+    return requestedPath.endsWith('/');
+  }
+
+  function handleDirRequest() {
+    if (requestedPath === '/') {
+      handleListOfTestsRequest('./test/e2e/cases/');
+    } else if (requestedPath.endsWith('/list-dir/')) {
+      const relativePathForList = `.${ requestedPath
+          .substring(0, requestedPath.length - 'list-dir/'.length)}`;
+      if (!relativePathForList.endsWith('/common-files/')) {
+        handleListOfTestsRequest(relativePathForList);
+      }
+    } else {
+      respond404();
+    }
+
+    function handleListOfTestsRequest(dirPath) {
+      if (!fs.existsSync(dirPath)) {
+        return respond404();
+      }
+      const stat = fs.statSync(dirPath);
+      if (!stat.isDirectory()) {
+        return respond404();
+      }
+      const dirEntries = fs.readdirSync(dirPath, { withFileTypes: true, });
+      const testCasesOrGroupsOfTestCases =
+          dirEntries.reduce(reduceReaddirDirents, []);
+      respondJson(testCasesOrGroupsOfTestCases);
+
+      function respondJson(data) {
+        const json = JSON.stringify(data);
+        stream.respond({
+          'content-type': 'application/json; charset=utf-8',
+          ':status': 200,
+        });
+        stream.end(json);
+      }
+
+      function reduceReaddirDirents(accum, dirEntry) {
+        if (!dirEntry.isDirectory()) {
+          throw new Error([
+            'When a list-dir/ request is made, the listed dir',
+            'is not supposed to have files, only directories',
+            'which are test cases or groups of test cases',
+            `Problem is in path: ${ requestedPath }`,
+          ].join('\n'));
+        }
+        const dirsToIgnore = ['/common-files',];
+        for (const di of dirsToIgnore) {
+          if (dirEntry.name.endsWith(di)) {
+            return accum;
+          }
+        }
+        accum.push(`${ dirEntry.parentPath.substr(1) }${ dirEntry.name }/`);
+        return accum;
+      }
+    }
+  }
+
+  function handleFileRequest() {
+    respond404();
+  }
+
+  function respond404() {
+    stream.respond({
+      'content-type': 'text/plain; charset=utf-8',
+      ':status': 404,
+    });
+    stream.end('404 error, unexpected path ' + requestedPath);
+  }
 
   function handleFileType(mimeType) {
     const fName = `.${ headers[':path'] }`;
@@ -33,14 +109,4 @@ server.on('stream', (stream, headers) => {
       });
     }
   }
-
-  function respond404(pathOrFileName) {
-    stream.respond({
-      'content-type': 'text/plain; charset=utf-8',
-      ':status': 404,
-    });
-    stream.end('404 error, unexpected path ' + pathOrFileName);
-  }
-});
-
-server.listen(443);
+}
