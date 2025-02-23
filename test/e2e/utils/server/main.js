@@ -93,7 +93,22 @@ function handleStream(stream, headers) {
         return respondWithExistingFile(requestedPathRelative);
       }
     }
+    const [, fName] = requestedPathRelative.match(/\/([^/]+)$/);
+    const specialFileNames = new Set([
+      'setup.js',
+    ]);
+    if (specialFileNames.has(fName)) {
+      return respond201();
+    }
     respond404();
+  }
+
+  function respond201() {
+    stream.respond({
+      'content-type': 'text/plain; charset=utf-8',
+      ':status': 201,
+    });
+    stream.end('');
   }
 
   function respond404() {
