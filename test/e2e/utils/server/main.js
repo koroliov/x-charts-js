@@ -84,7 +84,7 @@ function handleStream(stream, headers) {
           ].join('\n');
           return respond500(errMsg);
         }
-        const dirsToIgnore = ['/common-files',];
+        const dirsToIgnore = ['common-files',];
         for (const di of dirsToIgnore) {
           if (dirEntry.name.endsWith(di)) {
             return accum;
