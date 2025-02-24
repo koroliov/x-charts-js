@@ -140,7 +140,7 @@ function handleStream(stream, headers) {
   function respondWithExistingFile(filePath) {
     const contentType = determineContentTypeHeader(filePath);
     if (!contentType) {
-      respond500(`Coudln't process file: ${ filePath }`);
+      return respond500(`Coudln't process file: ${ filePath }`);
     }
     stream.respondWithFile(filePath, {
       'content-type': contentType,
