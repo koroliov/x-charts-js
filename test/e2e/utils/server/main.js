@@ -154,6 +154,7 @@ function handleStream(stream, headers) {
     m[void 0] = null;
     m.html = 'text/html;charset=utf-8';
     m.js = 'text/javascript;charset=utf-8';
+    m.css = 'text/css;charset=utf-8';
 
     const extension = fileNameOrPath.match(/\.([^.]+)$/)?.[1];
     return m[extension];
