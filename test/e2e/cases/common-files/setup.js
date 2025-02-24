@@ -20,6 +20,10 @@ async function runDefaultSetup() {
   }
 
   function handleTestPageForModules() {
+    const s = document.createElement('script');
+    s.setAttribute('type', 'module');
+    s.setAttribute('src', './test.js');
+    document.body.appendChild(s);
   }
 
   async function handleListOfTestsPage() {

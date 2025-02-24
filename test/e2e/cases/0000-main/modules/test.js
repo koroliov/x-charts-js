@@ -1,2 +1,2 @@
 import dummy from '/dist/modules/dummy.js';
-document.getElementById('click-me').addEventListener('click', dummy);
+document.getElementById('x-charts').addEventListener('click', dummy);

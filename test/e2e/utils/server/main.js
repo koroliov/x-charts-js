@@ -20,7 +20,8 @@ function handleStream(stream, headers) {
   function isLocationAllowed() {
     const allowed = new Set([ '/', '/list-dir/', ]);
     return allowed.has(requestedPath) ||
-      requestedPath.startsWith('/test/e2e/cases/');
+      requestedPath.startsWith('/test/e2e/cases/') ||
+      requestedPath.startsWith('/dist/');
   }
 
   function isDirRequested() {
