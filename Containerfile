@@ -27,4 +27,5 @@ COPY ./package-lock.json .
 RUN npm install -g npm@${NPM_VERSION_NUM}
 RUN npm ci
 
-CMD ["npm", "run", "nodemon"]
+#CMD ["npm", "run", "nodemon"]
+CMD ["node", "./cmd.js"]

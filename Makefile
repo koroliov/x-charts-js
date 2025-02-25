@@ -16,7 +16,7 @@
 
 FILE := ''
 PROJECT_NAME := x-charts
-PROJECT_IMAGE_TAG := 16
+PROJECT_IMAGE_TAG := 17
 CONTAINER_NAME := $(PROJECT_NAME)-$(PROJECT_IMAGE_TAG)
 NODE_VERSION_NUM := 23.6.0
 NPM_VERSION_NUM := 11.1.0
@@ -49,7 +49,10 @@ podman-container-run-interactive: podman-container-run-detached \
 
 podman-container-run-detached:
 	podman container run --rm \
+	--init \
 	--publish 8080:443 \
+	--publish 35729:35729 \
+	-v $(PWD)/cmd.js:/home/$(PROJECT_NAME)/cmd.js \
 	-v $(PWD)/package.json:/home/$(PROJECT_NAME)/package.json \
 	-v $(PWD)/package-lock.json:/home/$(PROJECT_NAME)/package-lock.json \
 	-v $(PWD)/dist/:/home/$(PROJECT_NAME)/dist/ \
@@ -60,7 +63,10 @@ podman-container-run-detached:
 
 podman-container-run-attached:
 	podman container run --rm \
+	--init \
 	--publish 8080:443 \
+	--publish 35729:35729 \
+	-v $(PWD)/cmd.js:/home/$(PROJECT_NAME)/cmd.js \
 	-v $(PWD)/package.json:/home/$(PROJECT_NAME)/package.json \
 	-v $(PWD)/package-lock.json:/home/$(PROJECT_NAME)/package-lock.json \
 	-v $(PWD)/dist/:/home/$(PROJECT_NAME)/dist/ \
