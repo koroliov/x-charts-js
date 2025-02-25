@@ -21,7 +21,6 @@ CONTAINER_NAME := $(PROJECT_NAME)-$(PROJECT_IMAGE_TAG)
 NODE_VERSION_NUM := 23.6.0
 NPM_VERSION_NUM := 11.1.0
 FEDORA_VERSION_NUM := 41
-PWD := $(shell pwd)
 
 help:
 	echo "Provide a target, type in the command prompt: \
@@ -52,12 +51,12 @@ podman-container-run-detached:
 	--init \
 	--publish 8080:443 \
 	--publish 35729:35729 \
-	-v $(PWD)/cmd.js:/home/$(PROJECT_NAME)/cmd.js \
-	-v $(PWD)/package.json:/home/$(PROJECT_NAME)/package.json \
-	-v $(PWD)/package-lock.json:/home/$(PROJECT_NAME)/package-lock.json \
-	-v $(PWD)/dist/:/home/$(PROJECT_NAME)/dist/ \
-	-v $(PWD)/src/:/home/$(PROJECT_NAME)/src/ \
-	-v $(PWD)/test/:/home/$(PROJECT_NAME)/test/ \
+	-v $(CURDIR)/cmd.js:/home/$(PROJECT_NAME)/cmd.js \
+	-v $(CURDIR)/package.json:/home/$(PROJECT_NAME)/package.json \
+	-v $(CURDIR)/package-lock.json:/home/$(PROJECT_NAME)/package-lock.json \
+	-v $(CURDIR)/dist/:/home/$(PROJECT_NAME)/dist/ \
+	-v $(CURDIR)/src/:/home/$(PROJECT_NAME)/src/ \
+	-v $(CURDIR)/test/:/home/$(PROJECT_NAME)/test/ \
 	-d --name $(CONTAINER_NAME) \
 	$(PROJECT_NAME):$(PROJECT_IMAGE_TAG)
 
@@ -66,12 +65,12 @@ podman-container-run-attached:
 	--init \
 	--publish 8080:443 \
 	--publish 35729:35729 \
-	-v $(PWD)/cmd.js:/home/$(PROJECT_NAME)/cmd.js \
-	-v $(PWD)/package.json:/home/$(PROJECT_NAME)/package.json \
-	-v $(PWD)/package-lock.json:/home/$(PROJECT_NAME)/package-lock.json \
-	-v $(PWD)/dist/:/home/$(PROJECT_NAME)/dist/ \
-	-v $(PWD)/src/:/home/$(PROJECT_NAME)/src/ \
-	-v $(PWD)/test/:/home/$(PROJECT_NAME)/test/ \
+	-v $(CURDIR)/cmd.js:/home/$(PROJECT_NAME)/cmd.js \
+	-v $(CURDIR)/package.json:/home/$(PROJECT_NAME)/package.json \
+	-v $(CURDIR)/package-lock.json:/home/$(PROJECT_NAME)/package-lock.json \
+	-v $(CURDIR)/dist/:/home/$(PROJECT_NAME)/dist/ \
+	-v $(CURDIR)/src/:/home/$(PROJECT_NAME)/src/ \
+	-v $(CURDIR)/test/:/home/$(PROJECT_NAME)/test/ \
 	--name $(CONTAINER_NAME) \
 	$(PROJECT_NAME):$(PROJECT_IMAGE_TAG)
 
