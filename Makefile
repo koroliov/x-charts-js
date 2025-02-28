@@ -1,16 +1,3 @@
-.PHONY: help \
-	help-list-cmd-options \
-	podman-image-build \
-	podman-container-run-interactive \
-	podman-container-run-detached \
-	podman-container-run-attached \
-	podman-container-logs \
-	podman-container-kill \
-	podman-container-restart \
-	podman-container-bash \
-	podman-container-copy-from \
-	podman-container-copy-to \
-	flow-build
 .SILENT: help \
 	help-list-cmd-options
 
@@ -22,10 +9,12 @@ NODE_VERSION_NUM := 23.6.0
 NPM_VERSION_NUM := 11.1.0
 FEDORA_VERSION_NUM := 41
 
+.PHONY: help
 help:
 	echo "Provide a target, type in the command prompt: \
 	make <space> <tab> <tab> to see all targets"
 
+.PHONY: help-list-cmd-options
 help-list-cmd-options:
 	echo "FILE: file path + name in the project on the host and on the container"
 	echo "  no preceding slash, like ./"
@@ -34,6 +23,7 @@ help-list-cmd-options:
 	echo "    podman-container-copy-to"
 	echo "  example: make FILE=foo/bar.js podman-container-copy-to"
 
+.PHONY: podman-image-build
 podman-image-build:
 	podman build . \
 	--build-arg FEDORA_VERSION_NUM=$(FEDORA_VERSION_NUM) \
@@ -43,9 +33,11 @@ podman-image-build:
 	--build-arg PROJECT_IMAGE_TAG=$(PROJECT_IMAGE_TAG) \
 	-t $(PROJECT_NAME):$(PROJECT_IMAGE_TAG)
 
+.PHONY: podman-container-run-interactive
 podman-container-run-interactive: podman-container-run-detached \
  podman-container-bash
 
+.PHONY: podman-container-run-detached
 podman-container-run-detached:
 	podman container run --rm \
 	--init \
@@ -60,6 +52,7 @@ podman-container-run-detached:
 	-d --name $(CONTAINER_NAME) \
 	$(PROJECT_NAME):$(PROJECT_IMAGE_TAG)
 
+.PHONY: podman-container-run-attached
 podman-container-run-attached:
 	podman container run --rm \
 	--init \
@@ -74,25 +67,32 @@ podman-container-run-attached:
 	--name $(CONTAINER_NAME) \
 	$(PROJECT_NAME):$(PROJECT_IMAGE_TAG)
 
+.PHONY: podman-container-restart
 podman-container-restart:
 	podman container restart $(PROJECT_NAME)-$(PROJECT_IMAGE_TAG)
 
+.PHONY: podman-container-logs
 podman-container-logs:
 	podman container logs -f $(PROJECT_NAME)-$(PROJECT_IMAGE_TAG)
 
+.PHONY: podman-container-kill
 podman-container-kill:
 	podman container kill $(PROJECT_NAME)-$(PROJECT_IMAGE_TAG)
 
+.PHONY: podman-container-bash
 podman-container-bash:
 	podman container exec -it $(CONTAINER_NAME) bash
 
+.PHONY: podman-container-copy-from
 podman-container-copy-from:
 	podman container cp $(CONTAINER_NAME):/home/$(PROJECT_NAME)/$(FILE) \
 	$(FILE)
 
+.PHONY: podman-container-copy-to
 podman-container-copy-to:
 	podman container cp $(FILE) \
 	$(CONTAINER_NAME):/home/$(PROJECT_NAME)/$(FILE)
 
+.PHONY: flow-build
 flow-build:
 	podman container exec -it $(CONTAINER_NAME) bash -c "npm run flow-build"
