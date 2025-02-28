@@ -9,6 +9,9 @@ NODE_VERSION_NUM := 23.6.0
 NPM_VERSION_NUM := 11.1.0
 FEDORA_VERSION_NUM := 41
 
+.DEFAULT:
+	@echo "Unknown target $@"
+
 .PHONY: help
 help:
 	echo "Provide a target, type in the command prompt: \
