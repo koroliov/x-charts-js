@@ -18,7 +18,7 @@ function handleStream(stream, headers) {
   isDirRequested() ? handleDirRequest() : handleFileRequest();
 
   function isLocationAllowed() {
-    const allowed = new Set([ '/', '/list-dir/', ]);
+    const allowed = new Set([ '/', '/list-dir/', '/get-livereloadjs/',]);
     return allowed.has(requestedPath) ||
       requestedPath.startsWith('/test/e2e/cases/') ||
       requestedPath.startsWith('/dist/');
@@ -31,6 +31,8 @@ function handleStream(stream, headers) {
   function handleDirRequest() {
     if (requestedPath === '/') {
       redirectToTestRoot();
+    } else if (requestedPath === '/get-livereloadjs/') {
+      handleLivereloadjsRequest();
     } else if (requestedPath === '/list-dir/') {
       handleListOfTestsRequest('./test/e2e/cases/');
     } else if (requestedPath.endsWith('/list-dir/')) {
@@ -43,6 +45,20 @@ function handleStream(stream, headers) {
       respondWithExistingFile('./test/e2e/cases/common-files/template.html');
     } else {
       respond404();
+    }
+
+    function handleLivereloadjsRequest() {
+      stream.respond({
+        'content-type': 'text/javascript; charset=utf-8',
+        ':status': 200,
+      });
+      stream.end(`
+        document.write([
+          '<script src="http://localhost:${ process.env.LIVERELOAD_PORT
+            }/livereload.js?snipver=1"></',
+          'script>',
+        ].join(''));
+      `);
     }
 
     function redirectToTestRoot() {

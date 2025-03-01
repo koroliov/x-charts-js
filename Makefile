@@ -6,8 +6,11 @@ NODE_VERSION_NUM := 23.6.0
 NPM_VERSION_NUM := 11.1.0
 FEDORA_VERSION_NUM := 41
 
+include ./Makefile.config
+
 .DEFAULT:
-	@echo "Unknown target $@"
+	@echo "Something went wrong, check $@ file/target is present"
+	@exit 1
 
 .SILENT: help
 .PHONY: help
@@ -45,8 +48,9 @@ podman-container-run-detached: DETACHED_FLAG = -d
 podman-container-run-attached podman-container-run-detached:
 	podman container run --rm \
 	--init \
-	--publish 8080:443 \
-	--publish 35729:35729 \
+	--publish $(PORT):443 \
+	--publish $(LIVERELOAD_PORT):35729 \
+	--env LIVERELOAD_PORT=$(LIVERELOAD_PORT) \
 	-v $(CURDIR)/cmd.js:/home/$(PROJECT_NAME)/cmd.js \
 	-v $(CURDIR)/package.json:/home/$(PROJECT_NAME)/package.json \
 	-v $(CURDIR)/package-lock.json:/home/$(PROJECT_NAME)/package-lock.json \
