@@ -10,7 +10,7 @@ server.on('stream', handleStream);
 server.listen(443);
 
 function handleStream(stream, headers) {
-  const requestedPath = headers[':path'];
+  const requestedPath = headers[':path'].split('?')[0];
   const requestedPathRelative = `.${ requestedPath }`;
   if (!isLocationAllowed()) {
     return respond404();
