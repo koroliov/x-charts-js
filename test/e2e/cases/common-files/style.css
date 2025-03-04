@@ -1,7 +1,7 @@
-x-charts {
+div {
   margin: 50px 0 0 50px;
   border: 1px solid black;
-  display: block;
+  background-color: grey;
   width: 800px;
   height: 600px;
 }
