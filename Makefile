@@ -86,6 +86,16 @@ podman-container-copy-to:
 	podman container cp $(FILE) \
 	$(CONTAINER_NAME):/home/$(PROJECT_NAME)/$(FILE)
 
+.PHONY: flow-build-full
+flow-build-full:
+	podman container exec -it $(CONTAINER_NAME) bash -c "npm run flow-build-full"
+
+FILE_MAPPED_TO_DIST = $(subst ./src/,,$(FILE))
 .PHONY: flow-build
 flow-build:
-	podman container exec -it $(CONTAINER_NAME) bash -c "npm run flow-build"
+	podman container exec -it $(CONTAINER_NAME) bash -c "npm run flow-build \
+	$(FILE) > ./dist/modules/$(FILE_MAPPED_TO_DIST)"
+
+.PHONY: flow-build-help
+flow-build-help:
+	@echo 'make flow-build FILE=./src/some/file.js'
