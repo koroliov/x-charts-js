@@ -3,10 +3,11 @@
 **Increment image tag number**
 
 If any of:
-- package.json
+- package.json (only in case it affects the podman image/container, i.e. only if
+    npm modules were changed)
 - package-lock.json
-- Dockerfile
-- Makefile (only in case it affects the docker image/container)
+- Containerfile
+- Makefile (only in case it affects the podman image/container)
 
 have been changed, the docker image tag must be incremented by 1.
 
