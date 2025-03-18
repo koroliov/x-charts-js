@@ -4,7 +4,7 @@ import '/dist/modules/components/pie-3d.js';
 const ins = new XCharts({
   containerDiv: document.getElementById('x-charts'),
   options: {
-    backgroundColor: '#ffffff',
+    backgroundColor: '#f7ffff',
   },
 });
 ins.add({
