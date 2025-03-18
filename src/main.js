@@ -7,18 +7,18 @@ import type {
 
 const componentsRegistry: Map<string, Class<Component>> = new Map();
 
-export default class XCharts {
-  static _registerComponent(
-    componentType: string,
-    componentClass: Class<Component>
-  ): void {
-    if (componentsRegistry.has(componentType)) {
-      throw new Error(`Component of componentType ${ componentType
-          } has been already registered`);
-    }
-    componentsRegistry.set(componentType, componentClass);
+export function registerComponent(
+  componentType: string,
+  componentClass: Class<Component>
+): void {
+  if (componentsRegistry.has(componentType)) {
+    throw new Error(`Component of componentType ${ componentType
+        } has been already registered`);
   }
+  componentsRegistry.set(componentType, componentClass);
+}
 
+export default class XCharts {
   _shadowRoot: ShadowRoot
   _componentsContainer: HTMLDivElement
   _config: XChartsConfig
@@ -27,39 +27,40 @@ export default class XCharts {
     Object.freeze(config.options);
     Object.freeze(config);
     this._config = config;
-    this._initDom();
-  }
+    const that = this;
+    initDom();
 
-  _initDom(): void {
-    this._shadowRoot = this._config.containerDiv
-        .attachShadow({ mode: 'open', });
-    this._shadowRoot.innerHTML = `
-      <div style="
-        background-color: ${ this._config.options.backgroundColor };
-        width: 100%;
-        height: 100%;
-        position: relative;
-      ">
-        <canvas style="
-          position: absolute;
-          z-index: 1;
-          width: 100%;
-          height: 100%;
-        "></canvas>
+    function initDom(): void {
+      that._shadowRoot = that._config.containerDiv
+          .attachShadow({ mode: 'open', });
+      that._shadowRoot.innerHTML = `
         <div style="
+          background-color: ${ that._config.options.backgroundColor };
           width: 100%;
           height: 100%;
           position: relative;
-          z-index: 0;
-        " id="x-charts--components-container"></div>
-      </div>
-    `;
-    const componentsContainer = this._shadowRoot
-        .getElementById('x-charts--components-container');
-    if (!(componentsContainer instanceof HTMLDivElement)) {
-      throw new Error('Internal XCharts error');
+        ">
+          <canvas style="
+            position: absolute;
+            z-index: 1;
+            width: 100%;
+            height: 100%;
+          "></canvas>
+          <div style="
+            width: 100%;
+            height: 100%;
+            position: relative;
+            z-index: 0;
+          " id="x-charts--components-container"></div>
+        </div>
+      `;
+      const componentsContainer = that._shadowRoot
+          .getElementById('x-charts--components-container');
+      if (!(componentsContainer instanceof HTMLDivElement)) {
+        throw new Error('Internal XCharts error');
+      }
+      that._componentsContainer = componentsContainer;
     }
-    this._componentsContainer = componentsContainer;
   }
 
   add(config: AddComponentConfig): Component {

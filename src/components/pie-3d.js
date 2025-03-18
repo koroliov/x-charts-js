@@ -3,7 +3,9 @@ import type {
   Component,
   AddComponentConfig,
 } from '../types.js';
-import XCharts from '../main.js';
+import XCharts, {
+  registerComponent,
+} from '../main.js';
 
 class Pie3d implements Component {
   static +_type = 'pie-3d'
@@ -37,4 +39,4 @@ class Pie3d implements Component {
   }
 }
 
-XCharts._registerComponent(Pie3d._type, Pie3d);
+registerComponent(Pie3d._type, Pie3d);
