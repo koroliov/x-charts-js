@@ -4,4 +4,19 @@ export type XChartsConfig = {
   options: {
     backgroundColor: string,
   },
-};
+}
+
+type ComponentDatum = {
+  value: number,
+  meta: { color: string, }
+}
+
+export interface Component {
+}
+
+export type AddComponentConfig = {
+  type: string,
+  options: {},
+  zIndex: string,
+  data: {} | [],
+}

@@ -1,12 +1,31 @@
 //@flow strict
-import type { XChartsConfig } from './types.js';
+import type {
+  XChartsConfig,
+  Component,
+  AddComponentConfig,
+} from './types.js';
+
+const componentsRegistry: Map<string, Class<Component>> = new Map();
 
 export default class XCharts {
+  static _registerComponent(
+    componentType: string,
+    componentClass: Class<Component>
+  ): void {
+    if (componentsRegistry.has(componentType)) {
+      throw new Error(`Component of componentType ${ componentType
+          } has been already registered`);
+    }
+    componentsRegistry.set(componentType, componentClass);
+  }
+
   _shadowRoot: ShadowRoot
   _componentsContainer: HTMLDivElement
   _config: XChartsConfig
 
   constructor(config: XChartsConfig) {
+    Object.freeze(config.options);
+    Object.freeze(config);
     this._config = config;
     this._initDom();
   }
@@ -41,5 +60,35 @@ export default class XCharts {
       throw new Error('Internal XCharts error');
     }
     this._componentsContainer = componentsContainer;
+  }
+
+  add(config: AddComponentConfig): Component {
+    freezeConfig();
+    const ComponentClass = componentsRegistry.get(config.type);
+    if (!ComponentClass) {
+      throw new Error(`Component of type ${
+          config.type } has not been registered`);
+    }
+    const that = this;
+    const container = createContainer();
+
+    //$FlowExpectedError[prop-missing]
+    return new ComponentClass(config, container);
+
+    function freezeConfig() {
+      Object.freeze(config);
+      Object.freeze(config.options);
+      Object.freeze(config.data);
+    }
+
+    function createContainer() {
+      const container = document.createElement('div');
+      container.setAttribute('class', `${ config.type }--container`);
+      container.style.zIndex = config.zIndex;
+      container.style.position = 'absolute';
+      container.style.width = '100%';
+      container.style.height = '100%';
+      that._shadowRoot.appendChild(container);
+    }
   }
 }
