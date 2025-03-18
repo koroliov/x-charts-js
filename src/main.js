@@ -66,14 +66,21 @@ export default class XCharts {
     freezeConfig();
     const ComponentClass = componentsRegistry.get(config.type);
     if (!ComponentClass) {
-      throw new Error(`Component of type ${
-          config.type } has not been registered`);
+      throw new Error(getNoRegisteredComponentErrorMsg());
     }
     const that = this;
     const container = createContainer();
 
     //$FlowExpectedError[prop-missing]
     return new ComponentClass(config, container);
+
+    function getNoRegisteredComponentErrorMsg() {
+      return [
+        `Component of type ${ config.type } has not been registered,`,
+        `registered components are:`,
+        Array.from(componentsRegistry.keys()).join(),
+      ].join('\n');
+    }
 
     function freezeConfig() {
       Object.freeze(config);
