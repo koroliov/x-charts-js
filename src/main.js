@@ -95,7 +95,8 @@ export default class XCharts {
       container.style.position = 'absolute';
       container.style.width = '100%';
       container.style.height = '100%';
-      that._shadowRoot.appendChild(container);
+      that._componentsContainer.appendChild(container);
+      return container;
     }
   }
 }

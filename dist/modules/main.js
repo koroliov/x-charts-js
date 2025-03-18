@@ -1,12 +1,31 @@
 //      strict
-                                                
+             
+                
+            
+                     
+                    
+
+const componentsRegistry                                = new Map();
 
 export default class XCharts {
+  static _registerComponent(
+    componentType        ,
+    componentClass                  
+  )       {
+    if (componentsRegistry.has(componentType)) {
+      throw new Error(`Component of componentType ${ componentType
+          } has been already registered`);
+    }
+    componentsRegistry.set(componentType, componentClass);
+  }
+
   _shadowRoot            
   _componentsContainer                
   _config               
 
   constructor(config               ) {
+    Object.freeze(config.options);
+    Object.freeze(config);
     this._config = config;
     this._initDom();
   }
@@ -41,5 +60,43 @@ export default class XCharts {
       throw new Error('Internal XCharts error');
     }
     this._componentsContainer = componentsContainer;
+  }
+
+  add(config                    )            {
+    freezeConfig();
+    const ComponentClass = componentsRegistry.get(config.type);
+    if (!ComponentClass) {
+      throw new Error(getNoRegisteredComponentErrorMsg());
+    }
+    const that = this;
+    const container = createContainer();
+
+    //$FlowExpectedError[prop-missing]
+    return new ComponentClass(config, container);
+
+    function getNoRegisteredComponentErrorMsg() {
+      return [
+        `Component of type ${ config.type } has not been registered,`,
+        `registered components are:`,
+        Array.from(componentsRegistry.keys()).join(),
+      ].join('\n');
+    }
+
+    function freezeConfig() {
+      Object.freeze(config);
+      Object.freeze(config.options);
+      Object.freeze(config.data);
+    }
+
+    function createContainer() {
+      const container = document.createElement('div');
+      container.setAttribute('class', `${ config.type }--container`);
+      container.style.zIndex = config.zIndex;
+      container.style.position = 'absolute';
+      container.style.width = '100%';
+      container.style.height = '100%';
+      that._componentsContainer.appendChild(container);
+      return container;
+    }
   }
 }
