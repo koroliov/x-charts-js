@@ -3,21 +3,35 @@ import type {
   Component,
   AddComponentConfig,
 } from '../types.js';
+
 import XCharts, {
   registerComponent,
 } from '../main.js';
+
+type AddComponentPie3dConfig = {
+  ...Exclude<AddComponentConfig, AddComponentConfig['options']>,
+  options: {
+    thickness: StringSuffix<'px'>,
+    radius: StringSuffix<'px'>,
+    centerX: StringSuffix<'px'>,
+    centerY: StringSuffix<'px'>,
+    startAt: StringSuffix<'deg'>,
+    rotationAroundCenterXAxis: StringSuffix<'deg'>,
+    rotationAroundCenterZAxis: StringSuffix<'deg'>,
+  },
+}
 
 class Pie3d implements Component {
   static +_type = 'pie-3d'
   _container: HTMLDivElement
   _ctx: CanvasRenderingContext2D
 
-  constructor(c: AddComponentConfig, container: HTMLDivElement) {
+  constructor(config: AddComponentPie3dConfig, container: HTMLDivElement) {
     validateAddComponentConfig();
     this._container = container;
     const that = this;
     createCanvas();
-    //draw pie
+    draw();
 
     function createCanvas() {
       const canvas = document.createElement('canvas');
@@ -30,6 +44,8 @@ class Pie3d implements Component {
     }
 
     function draw() {
+      //config.data.foo = 123;
+      //take
     }
 
     function validateAddComponentConfig() {
