@@ -1,22 +1,24 @@
 //@flow strict
 export type XChartsConfig = {
-  containerDiv: HTMLDivElement,
-  options: {
-    backgroundColor: string,
+  +containerDiv: HTMLDivElement,
+  +options: {
+    +backgroundColor: string,
   },
 }
 
 type ComponentDatum = {
-  value: number,
-  meta: { color: string, }
+  +value: number,
+  +meta: {
+    +color: string,
+  },
 }
 
 export interface Component {
 }
 
 export type AddComponentConfig = {
-  type: string,
-  options: {},
-  zIndex: string,
-  data: {} | [],
+  +type: string,
+  +zIndex: string,
+  +options: {},
+  +data: $ReadOnlyArray<ComponentDatum>,
 }
