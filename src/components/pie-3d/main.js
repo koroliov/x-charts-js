@@ -1,49 +1,20 @@
 //@flow strict
 import type {
   Component,
-  AddComponentConfig,
-} from '../types.js';
+} from '../../types.js';
 
 import XCharts, {
   registerComponent,
-} from '../main.js';
+} from '../../main.js';
 
-type AddComponentPie3dConfig = {
-  ...Exclude<AddComponentConfig, AddComponentConfig['options']>,
-  options: {
-    +thickness: StringSuffix<'px'>,
-    +radius: StringSuffix<'px'>,
-    +centerX: StringSuffix<'px'>,
-    +centerY: StringSuffix<'px'>,
-    +startAt: StringSuffix<'deg'>,
-    +rotationAroundCenterXAxis: StringSuffix<'deg'>,
-    +rotationAroundCenterZAxis: StringSuffix<'deg'>,
-  },
-}
-
-type Point = [number, number, number,]
-
-type SliceDrawingData = [
-  +startPoint: Point,
-  +endPoint: Point,
-  +color: string,
-]
-
-type EdgeDrawingData = {
-  +point: Point,
-  +sliceIndex: number,
-}
-
-type SideDrawingData = {
-  +slices: $ReadOnlyArray<SliceDrawingData>,
-  +leftEdge: EdgeDrawingData,
-  +rightEdge: EdgeDrawingData,
-}
-
-type PieDrawingData = {
-  +heads: SideDrawingData,
-  +tails: SideDrawingData,
-}
+import type {
+  AddComponentPie3dConfig,
+  Point,
+  SliceDrawingData,
+  EdgeDrawingData,
+  SideDrawingData,
+  PieDrawingData,
+} from './types.js';
 
 class Pie3d implements Component {
   static +_type = 'pie-3d'

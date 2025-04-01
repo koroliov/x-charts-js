@@ -1,5 +1,5 @@
 import XCharts from '/dist/modules/main.js';
-import '/dist/modules/components/pie-3d.js';
+import '/dist/modules/components/pie-3d/main.js';
 
 const ins = new XCharts({
   containerDiv: document.getElementById('x-charts'),

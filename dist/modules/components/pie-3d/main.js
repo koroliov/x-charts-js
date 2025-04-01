@@ -1,49 +1,20 @@
 //      strict
              
             
-                     
-                     
+                        
 
 import XCharts, {
   registerComponent,
-} from '../main.js';
+} from '../../main.js';
 
-                                
-                                                                
-            
-                                   
-                                
-                                 
-                                 
-                                  
-                                                    
-                                                    
-    
- 
-
-                                      
-
-                         
-                     
+             
+                          
+        
                    
+                  
+                  
                  
- 
-
-                        
-                
-                      
- 
-
-                        
-                                            
-                             
-                              
- 
-
-                       
-                          
-                          
- 
+                    
 
 class Pie3d                      {
   static  _type = 'pie-3d'
