@@ -11,13 +11,13 @@ import XCharts, {
 type AddComponentPie3dConfig = {
   ...Exclude<AddComponentConfig, AddComponentConfig['options']>,
   options: {
-    thickness: StringSuffix<'px'>,
-    radius: StringSuffix<'px'>,
-    centerX: StringSuffix<'px'>,
-    centerY: StringSuffix<'px'>,
-    startAt: StringSuffix<'deg'>,
-    rotationAroundCenterXAxis: StringSuffix<'deg'>,
-    rotationAroundCenterZAxis: StringSuffix<'deg'>,
+    +thickness: StringSuffix<'px'>,
+    +radius: StringSuffix<'px'>,
+    +centerX: StringSuffix<'px'>,
+    +centerY: StringSuffix<'px'>,
+    +startAt: StringSuffix<'deg'>,
+    +rotationAroundCenterXAxis: StringSuffix<'deg'>,
+    +rotationAroundCenterZAxis: StringSuffix<'deg'>,
   },
 }
 
