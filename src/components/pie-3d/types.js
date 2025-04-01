@@ -22,7 +22,7 @@ export type Point = [number, number, number,]
 export type SliceData = {
   +startPoint: Point,
   +endPoint: Point,
-  ellipticAngle: number,
+  angle: number,
   +value: number,
   +percentValue: number,
   +color: string,
