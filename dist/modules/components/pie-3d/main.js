@@ -10,10 +10,10 @@ import XCharts, {
              
                           
         
-                   
-                  
-                  
-                 
+            
+           
+           
+          
                     
 
 class Pie3d                      {
@@ -39,9 +39,7 @@ class Pie3d                      {
     }
 
     function draw() {
-      //config.options.rotationAroundCenterXAxis
-      //config.data.foo = 123;
-      //take
+      //calculate percentage
     }
 
     function validateAddComponentConfig() {

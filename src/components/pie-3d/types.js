@@ -7,13 +7,13 @@ import type {
 export type AddComponentPie3dConfig = {
   ...Exclude<AddComponentConfig, AddComponentConfig['options']>,
   options: {
-    +thickness: StringSuffix<'px'>,
-    +radius: StringSuffix<'px'>,
-    +centerX: StringSuffix<'px'>,
-    +centerY: StringSuffix<'px'>,
-    +startAt: StringSuffix<'deg'>,
-    +rotationAroundCenterXAxis: StringSuffix<'deg'>,
-    +rotationAroundCenterZAxis: StringSuffix<'deg'>,
+    +thicknessPx: number,
+    +radiusPx: number,
+    +centerXPx: number,
+    +centerYPx: number,
+    +startAtPx: number,
+    +rotationAroundCenterXAxisDeg: number,
+    +rotationAroundCenterZAxisDeg: number,
   },
 }
 

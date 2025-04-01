@@ -11,12 +11,12 @@ ins.add({
   type: 'pie-3d',
   zIndex: '1',
   options: {
-    thickness: '50px',
-    radius: '500px',
-    centerX: '400px',
-    centerY: '300px',
-    rotationAroundCenterXAxis: '60deg',
-    rotationAroundCenterZAxis: '45deg',
+    thicknessPx: 50,
+    radiusPx: 500,
+    centerXPx: 400,
+    centerYPx: 300,
+    rotationAroundCenterXAxisDeg: 60,
+    rotationAroundCenterZAxisDeg: 45,
   },
   data: [
     { value: 40, meta: { color: '#ff0000', }, },
