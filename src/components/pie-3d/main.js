@@ -10,10 +10,10 @@ import XCharts, {
 import type {
   AddComponentPie3dConfig,
   Point,
-  SliceDrawingData,
-  EdgeDrawingData,
-  SideDrawingData,
-  PieDrawingData,
+  SliceData,
+  EdgeData,
+  SideData,
+  PieData,
 } from './types.js';
 
 class Pie3d implements Component {
@@ -39,9 +39,7 @@ class Pie3d implements Component {
     }
 
     function draw() {
-      //config.options.rotationAroundCenterXAxis
-      //config.data.foo = 123;
-      //take
+      //calculate percentage
     }
 
     function validateAddComponentConfig() {

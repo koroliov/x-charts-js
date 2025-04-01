@@ -19,24 +19,28 @@ export type AddComponentPie3dConfig = {
 
 export type Point = [number, number, number,]
 
-export type SliceDrawingData = [
+export type SliceData = [
   +startPoint: Point,
   +endPoint: Point,
+  ellipticAngle: number,
+  +value: number,
+  +percentValue: number,
   +color: string,
 ]
 
-export type EdgeDrawingData = {
+export type EdgeData = {
   +point: Point,
   +sliceIndex: number,
 }
 
-export type SideDrawingData = {
-  +slices: $ReadOnlyArray<SliceDrawingData>,
-  +leftEdge: EdgeDrawingData,
-  +rightEdge: EdgeDrawingData,
+export type SideData = {
+  +slices: $ReadOnlyArray<SliceData>,
+  +leftEdge: EdgeData,
+  +rightEdge: EdgeData,
+  +center: [number, number],
 }
 
-export type PieDrawingData = {
-  +heads: SideDrawingData,
-  +tails: SideDrawingData,
+export type PieData = {
+  +heads: SideData,
+  +tails: SideData,
 }
