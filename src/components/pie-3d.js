@@ -21,6 +21,30 @@ type AddComponentPie3dConfig = {
   },
 }
 
+type Point = [number, number, number,]
+
+type SliceDrawingData = [
+  +startPoint: Point,
+  +endPoint: Point,
+  +color: string,
+]
+
+type EdgeDrawingData = {
+  +point: Point,
+  +sliceIndex: number,
+}
+
+type SideDrawingData = {
+  +slices: $ReadOnlyArray<SliceDrawingData>,
+  +leftEdge: EdgeDrawingData,
+  +rightEdge: EdgeDrawingData,
+}
+
+type PieDrawingData = {
+  +heads: SideDrawingData,
+  +tails: SideDrawingData,
+}
+
 class Pie3d implements Component {
   static +_type = 'pie-3d'
   _container: HTMLDivElement
@@ -44,6 +68,7 @@ class Pie3d implements Component {
     }
 
     function draw() {
+      //config.options.rotationAroundCenterXAxis
       //config.data.foo = 123;
       //take
     }

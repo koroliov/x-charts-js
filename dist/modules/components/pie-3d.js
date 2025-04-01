@@ -3,21 +3,59 @@
             
                      
                      
+
 import XCharts, {
   registerComponent,
 } from '../main.js';
+
+                                
+                                                                
+            
+                                   
+                                
+                                 
+                                 
+                                  
+                                                    
+                                                    
+    
+ 
+
+                                      
+
+                         
+                     
+                   
+                 
+ 
+
+                        
+                
+                      
+ 
+
+                        
+                                            
+                             
+                              
+ 
+
+                       
+                          
+                          
+ 
 
 class Pie3d                      {
   static  _type = 'pie-3d'
   _container                
   _ctx                          
 
-  constructor(c                    , container                ) {
+  constructor(config                         , container                ) {
     validateAddComponentConfig();
     this._container = container;
     const that = this;
     createCanvas();
-    //draw pie
+    draw();
 
     function createCanvas() {
       const canvas = document.createElement('canvas');
@@ -30,6 +68,9 @@ class Pie3d                      {
     }
 
     function draw() {
+      //config.options.rotationAroundCenterXAxis
+      //config.data.foo = 123;
+      //take
     }
 
     function validateAddComponentConfig() {
