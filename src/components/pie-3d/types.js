@@ -19,14 +19,14 @@ export type AddComponentPie3dConfig = {
 
 export type Point = [number, number, number,]
 
-export type SliceData = [
+export type SliceData = {
   +startPoint: Point,
   +endPoint: Point,
   ellipticAngle: number,
   +value: number,
   +percentValue: number,
   +color: string,
-]
+}
 
 export type EdgeData = {
   +point: Point,
