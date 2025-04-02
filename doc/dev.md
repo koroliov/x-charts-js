@@ -1,5 +1,7 @@
 **Rules for development:**
 
+============================= **Various** ======================================
+
 **Increment image tag number**
 
 If any of:
@@ -9,13 +11,13 @@ If any of:
 - Containerfile
 - Makefile (only in case it affects the podman image/container)
 
-have been changed, the docker image tag must be incremented by 1.
+have been changed, the podman image tag must be incremented by 1.
 
 Currently this is handled manually
 
 **How to install/update other software in container?**
 
-- Modify the Dockerfile
+- Modify the Containerfile
 - Update the image tag number
 - Rebuild image
 - Run the container with an interactive shell or login into a running container
@@ -29,3 +31,20 @@ Currently this is handled manually
 - Update the image tag number
 - Commit the changes
 - Rebuild the image
+
+============================= **Code style** ===================================
+
+**Flow/JavaScript**
+
+- Try to follow [Google JS style guide](https://google.github.io/styleguide/jsguide.html)
+- Additional rules:
+  - No semicolon after type declarations:
+  - Inside type declarations use comas:
+  ```
+  type foo = [0]
+  type bar = 0
+  type baz = {
+    +propA: number,
+    +propB: string,
+  }
+  ```
