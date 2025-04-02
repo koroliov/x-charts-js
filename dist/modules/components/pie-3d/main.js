@@ -8,7 +8,7 @@ import XCharts, {
 } from '../../main.js';
 
              
-                          
+                            
         
             
            
@@ -21,8 +21,8 @@ class Pie3d                      {
   _container                
   _ctx                          
 
-  constructor(config                         , container                ) {
-    validateAddComponentConfig();
+  constructor(arg                           , container                ) {
+    validateAddComponentArgument();
     this._container = container;
     const that = this;
     createCanvas();
@@ -42,7 +42,7 @@ class Pie3d                      {
       //calculate percentage
     }
 
-    function validateAddComponentConfig() {
+    function validateAddComponentArgument() {
       //validate c.options
       //validate c.data
     }

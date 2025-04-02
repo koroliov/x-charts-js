@@ -8,7 +8,7 @@ import XCharts, {
 } from '../../main.js';
 
 import type {
-  AddComponentPie3dConfig,
+  AddComponentPie3dArgument,
   Point,
   SliceData,
   EdgeData,
@@ -21,8 +21,8 @@ class Pie3d implements Component {
   _container: HTMLDivElement
   _ctx: CanvasRenderingContext2D
 
-  constructor(config: AddComponentPie3dConfig, container: HTMLDivElement) {
-    validateAddComponentConfig();
+  constructor(arg: AddComponentPie3dArgument, container: HTMLDivElement) {
+    validateAddComponentArgument();
     this._container = container;
     const that = this;
     createCanvas();
@@ -42,7 +42,7 @@ class Pie3d implements Component {
       //calculate percentage
     }
 
-    function validateAddComponentConfig() {
+    function validateAddComponentArgument() {
       //validate c.options
       //validate c.data
     }

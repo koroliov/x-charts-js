@@ -1,5 +1,5 @@
 //@flow strict
-export type XChartsConfig = {
+export type XChartsConstructorArgument = {
   +containerDiv: HTMLDivElement,
   +options: {
     +backgroundColor: string,
@@ -16,7 +16,7 @@ type ComponentDatum = {
 export interface Component {
 }
 
-export type AddComponentConfig = {
+export type AddComponentArgument = {
   +type: string,
   +zIndex: string,
   +options: {},

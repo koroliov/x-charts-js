@@ -1,8 +1,8 @@
 //@flow strict
 import type {
-  XChartsConfig,
+  XChartsConstructorArgument,
   Component,
-  AddComponentConfig,
+  AddComponentArgument,
 } from './types.js';
 
 const componentsRegistry: Map<string, Class<Component>> = new Map();
@@ -21,21 +21,22 @@ export function registerComponent(
 export default class XCharts {
   _shadowRoot: ShadowRoot
   _componentsContainer: HTMLDivElement
-  _config: XChartsConfig
+  _constructorArgument: XChartsConstructorArgument
 
-  constructor(config: XChartsConfig) {
-    Object.freeze(config.options);
-    Object.freeze(config);
-    this._config = config;
+  constructor(arg: XChartsConstructorArgument) {
+    Object.freeze(arg.options);
+    Object.freeze(arg);
+    this._constructorArgument = arg;
     const that = this;
     initDom();
 
     function initDom(): void {
-      that._shadowRoot = that._config.containerDiv
+      that._shadowRoot = that._constructorArgument.containerDiv
           .attachShadow({ mode: 'open', });
       that._shadowRoot.innerHTML = `
         <div style="
-          background-color: ${ that._config.options.backgroundColor };
+          background-color: ${
+            that._constructorArgument.options.backgroundColor };
           width: 100%;
           height: 100%;
           position: relative;
@@ -63,9 +64,9 @@ export default class XCharts {
     }
   }
 
-  add(config: AddComponentConfig): Component {
-    freezeConfig();
-    const ComponentClass = componentsRegistry.get(config.type);
+  add(arg: AddComponentArgument): Component {
+    freezeArgument();
+    const ComponentClass = componentsRegistry.get(arg.type);
     if (!ComponentClass) {
       throw new Error(getNoRegisteredComponentErrorMsg());
     }
@@ -73,26 +74,26 @@ export default class XCharts {
     const container = createContainer();
 
     //$FlowExpectedError[prop-missing]
-    return new ComponentClass(config, container);
+    return new ComponentClass(arg, container);
 
     function getNoRegisteredComponentErrorMsg() {
       return [
-        `Component of type ${ config.type } has not been registered,`,
+        `Component of type ${ arg.type } has not been registered,`,
         `registered components are:`,
         Array.from(componentsRegistry.keys()).join(),
       ].join('\n');
     }
 
-    function freezeConfig() {
-      Object.freeze(config);
-      Object.freeze(config.options);
-      Object.freeze(config.data);
+    function freezeArgument() {
+      Object.freeze(arg);
+      Object.freeze(arg.options);
+      Object.freeze(arg.data);
     }
 
     function createContainer() {
       const container = document.createElement('div');
-      container.setAttribute('class', `${ config.type }--container`);
-      container.style.zIndex = config.zIndex;
+      container.setAttribute('class', `${ arg.type }--container`);
+      container.style.zIndex = arg.zIndex;
       container.style.position = 'absolute';
       container.style.width = '100%';
       container.style.height = '100%';

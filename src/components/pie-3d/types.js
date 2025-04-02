@@ -1,11 +1,11 @@
 //@flow strict
 import type {
-  AddComponentConfig,
+  AddComponentArgument,
 } from '../../types.js';
 
 
-export type AddComponentPie3dConfig = {
-  ...Exclude<AddComponentConfig, AddComponentConfig['options']>,
+export type AddComponentPie3dArgument = {
+  ...Exclude<AddComponentArgument, AddComponentArgument['options']>,
   options: {
     +thicknessPx: number,
     +radiusPx: number,
