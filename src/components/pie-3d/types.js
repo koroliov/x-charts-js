@@ -26,7 +26,6 @@ export type SliceData = {
   +endPointTails: Point,
   angle: number,
   +value: number,
-  +percentValue: number,
   +color: string,
 }
 
@@ -37,6 +36,7 @@ export type EdgeData = {
 }
 
 export type PieData = {
+  +totalValue: number,
   +slices: $ReadOnlyArray<SliceData>,
   +leftEdge: EdgeData,
   +rightEdge: EdgeData,
