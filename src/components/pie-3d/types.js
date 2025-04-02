@@ -11,7 +11,7 @@ export type AddComponentPie3dArgument = {
     +radiusPx: number,
     +centerXPx: number,
     +centerYPx: number,
-    +startAtPx: number,
+    +startAtDeg: number,
     +rotationAroundCenterXAxisDeg: number,
     +rotationAroundCenterZAxisDeg: number,
   },

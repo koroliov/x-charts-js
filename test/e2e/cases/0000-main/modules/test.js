@@ -17,6 +17,7 @@ const addComponentArg = {
     radiusPx: 500,
     centerXPx: 400,
     centerYPx: 300,
+    startAtDeg: 20,
     rotationAroundCenterXAxisDeg: 60,
     rotationAroundCenterZAxisDeg: 45,
   },
