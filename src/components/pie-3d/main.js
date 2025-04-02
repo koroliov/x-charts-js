@@ -27,6 +27,7 @@ class Pie3d implements Component {
     this._container = container;
     const that = this;
     createCanvas();
+    const pieData = prepareData();
     draw();
 
     function createCanvas() {
@@ -45,6 +46,42 @@ class Pie3d implements Component {
       Object.freeze(arg.data);
       arg.data.forEach((d) => Object.freeze(d.meta));
     }
+
+    function prepareData(): PieData {
+      const pieData = {
+        heads: createSideData(0),
+        tails: createSideData(arg.options.thicknessPx),
+      };
+      return pieData;
+
+      function createSideData(centerZCoord: number): SideData {
+        return {
+          slices: arg.data.map((d) => {
+            return {
+              startPoint: [0, 0, 0,],
+              endPoint: [0, 0, 0,],
+              angle: 0,
+              value: d.value,
+              percentValue: 0,
+              color: d.meta.color,
+            };
+          }),
+          leftEdge: {
+            point: [0, 0, 0],
+            sliceIndex: 0,
+          },
+          rightEdge: {
+            point: [0, 0, 0],
+            sliceIndex: 0,
+          },
+          center: [arg.options.centerXPx, arg.options.centerYPx, centerZCoord,],
+        };
+      }
+      //create initial structure
+      //return it
+      //apply modifications
+    }
+
     function draw() {
       //calculate percentage
     }

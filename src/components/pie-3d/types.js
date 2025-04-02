@@ -37,7 +37,7 @@ export type SideData = {
   +slices: $ReadOnlyArray<SliceData>,
   +leftEdge: EdgeData,
   +rightEdge: EdgeData,
-  +center: [number, number],
+  +center: Point,
 }
 
 export type PieData = {
