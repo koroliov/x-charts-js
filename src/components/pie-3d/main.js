@@ -9,10 +9,6 @@ import XCharts, {
 
 import type {
   AddComponentPie3dArgument,
-  Point,
-  SliceData,
-  EdgeData,
-  SideData,
   PieData,
 } from './types.js';
 
@@ -49,46 +45,55 @@ class Pie3d implements Component {
 
     function prepareData(): PieData {
       const pieData = {
-        heads: createSideData(0),
-        tails: createSideData(arg.options.thicknessPx),
+        leftEdge: {
+          pointHeads: [0, 0, 0,],
+          pointTails: [0, 0, 0,],
+          sliceIndex: 0,
+        },
+        rightEdge: {
+          pointHeads: [0, 0, 0,],
+          pointTails: [0, 0, 0,],
+          sliceIndex: 0,
+        },
+        centerHeads: [arg.options.centerXPx, arg.options.centerYPx, 0,],
+        centerTails: [arg.options.centerXPx, arg.options.centerYPx,
+            arg.options.thicknessPx,],
+        slices: prepareSlices(),
       };
+
+      //apply modifications
       return pieData;
 
-      function createSideData(centerZCoord: number): SideData {
-        return {
-          slices: arg.data.map((d) => {
-            return {
-              startPoint: [0, 0, 0,],
-              endPoint: [0, 0, 0,],
-              angle: 0,
-              value: d.value,
-              percentValue: 0,
-              color: d.meta.color,
-            };
-          }),
-          leftEdge: {
-            point: [0, 0, 0],
-            sliceIndex: 0,
-          },
-          rightEdge: {
-            point: [0, 0, 0],
-            sliceIndex: 0,
-          },
-          center: [arg.options.centerXPx, arg.options.centerYPx, centerZCoord,],
-        };
+      function prepareSlices() {
+        let prevEndHeads = [0, 0, 0,];
+        let prevEndTails = [0, 0, 0,];
+        const rv = arg.data.map((d) => {
+          const rv = {
+            startPointHeads: prevEndHeads,
+            startPointTails: prevEndTails,
+            endPointHeads: [0, 0, 0,],
+            endPointTails: [0, 0, 0,],
+            angle: 0,
+            value: d.value,
+            percentValue: 0,
+            color: d.meta.color,
+          };
+          prevEndHeads = rv.endPointHeads;
+          prevEndTails = rv.endPointTails;
+          return rv;
+        });
+        rv[0].startPointHeads = rv[rv.length - 1].endPointHeads;
+        rv[0].startPointTails = rv[rv.length - 1].endPointTails;
+        return rv;
       }
-      //create initial structure
-      //return it
-      //apply modifications
     }
 
     function draw() {
-      //calculate percentage
     }
 
     function validateAddComponentArgument() {
-      //validate c.options
-      //validate c.data
+      //validate arg.options
+      //validate arg.data
     }
   }
 }
