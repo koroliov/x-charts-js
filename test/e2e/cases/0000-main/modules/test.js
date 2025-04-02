@@ -1,13 +1,15 @@
 import XCharts from '/dist/modules/main.js';
 import '/dist/modules/components/pie-3d/main.js';
 
-const ins = new XCharts({
+const xChartsConstructorArg = {
   containerDiv: document.getElementById('x-charts'),
   options: {
     backgroundColor: '#f7ffff',
   },
-});
-ins.add({
+};
+const ins = new XCharts(xChartsConstructorArg);
+
+const addComponentArg = {
   type: 'pie-3d',
   zIndex: '1',
   options: {
@@ -23,4 +25,5 @@ ins.add({
     { value: 25, meta: { color: '#37ff00', }, },
     { value: 35, meta: { color: '#000aff', }, },
   ],
-});
+};
+ins.add(addComponentArg);
