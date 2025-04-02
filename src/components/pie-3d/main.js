@@ -22,6 +22,7 @@ class Pie3d implements Component {
   _ctx: CanvasRenderingContext2D
 
   constructor(arg: AddComponentPie3dArgument, container: HTMLDivElement) {
+    freezeArgument();
     validateAddComponentArgument();
     this._container = container;
     const that = this;
@@ -38,6 +39,12 @@ class Pie3d implements Component {
       that._ctx = canvas.getContext('2d');
     }
 
+    function freezeArgument() {
+      Object.freeze(arg);
+      Object.freeze(arg.options);
+      Object.freeze(arg.data);
+      arg.data.forEach((d) => Object.freeze(d.meta));
+    }
     function draw() {
       //calculate percentage
     }
