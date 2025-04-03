@@ -1,16 +1,7 @@
 //@flow strict
-import type {
-  Component,
-} from '../../types.js';
-
-import XCharts, {
-  registerComponent,
-} from '../../main.js';
-
-import type {
-  AddComponentPie3dArgument,
-  PieData,
-} from './types.js';
+import type { Component, } from '../../types.js';
+import XCharts, { registerComponent, } from '../../main.js';
+import type { AddComponentPie3dArgument, PieData, } from './types.js';
 
 class Pie3d implements Component {
   static +_type = 'pie-3d'

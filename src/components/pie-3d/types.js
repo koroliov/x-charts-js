@@ -1,8 +1,5 @@
 //@flow strict
-import type {
-  AddComponentArgument,
-} from '../../types.js';
-
+import type { AddComponentArgument, } from '../../types.js';
 
 export type AddComponentPie3dArgument = {
   ...Exclude<AddComponentArgument, AddComponentArgument['options']>,
