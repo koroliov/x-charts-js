@@ -12,21 +12,19 @@ include ./Makefile.config
 	@echo "Something went wrong, check $@ file/target is present"
 	@exit 1
 
-.SILENT: help
 .PHONY: help
 help:
-	echo "Provide a target, type in the command prompt: \
+	@echo "Provide a target, type in the command prompt: \
 	make <space> <tab> <tab> to see all targets"
 
-.SILENT: help-list-cmd-options
 .PHONY: help-list-cmd-options
 help-list-cmd-options:
-	echo "FILE: file path + name in the project on the host and on the container"
-	echo "  no preceding slash, like ./"
-	echo "  Used with:"
-	echo "    podman-container-copy-from"
-	echo "    podman-container-copy-to"
-	echo "  example: make FILE=foo/bar.js podman-container-copy-to"
+	@echo "FILE: file path + name in the project on the host and on the container"
+	@echo "  no preceding slash, like ./"
+	@echo "  Used with:"
+	@echo "    podman-container-copy-from"
+	@echo "    podman-container-copy-to"
+	@echo "  example: make FILE=foo/bar.js podman-container-copy-to"
 
 .PHONY: podman-image-build
 podman-image-build:
