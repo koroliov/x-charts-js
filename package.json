@@ -9,7 +9,7 @@
   },
   "scripts": {
     "flow": "flow ./src/",
-    "flow-build-full": "rm -rf ./dist/modules/* && flow ./src/ && flow-remove-types ./src/ -d ./dist/modules/",
+    "flow-build-full": "rm -rf ./dist/modules/* && flow ./src/ && flow-remove-types -d ./dist/modules/ -i 'test\\.js$' ./src/",
     "flow-build": "flow-remove-types",
     "nodemon": "nodemon --watch ./test/e2e/utils/server/ -- ./cmd.js",
     "test": "echo \"Error: no test specified\" && exit 1"
