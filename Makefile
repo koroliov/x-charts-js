@@ -97,3 +97,26 @@ flow-build:
 .PHONY: flow-build-help
 flow-build-help:
 	@echo 'make flow-build FILE=./src/some/file.js'
+
+.PHONY: test-unit
+TEST_FILES_RUN = $(subst ./src/,./test/unit-tmp/src/,$(TEST_FILES))
+test-unit: create-test-unit-tmp-dir-if-not-exists
+	podman container exec -it $(CONTAINER_NAME) bash -c "rm -rf \
+	./test/unit-tmp/* && npm run flow && npm run flow-build-test $(BUILD_FILES) \
+	$(TEST_FILES) && npm run tape $(TEST_FILES_RUN)"
+
+.PHONY: test-unit-help
+test-unit-help:
+	@echo 'make test-unit BUILD_FILES="./src/foo.js ./src/bar/**" \<CR>'
+	@echo '  TEST_FILES="./src/foo-1.test.js ./src/foo-2.test.js"'
+
+.PHONY: test-unit-full
+test-unit-full: create-test-unit-tmp-dir-if-not-exists
+	podman container exec -it $(CONTAINER_NAME) bash -c "rm -rf \
+	./test/unit-tmp/* && npm run flow && npm run flow-build-test \
+	./src/ && npm run tape ./test/unit-tmp/*.test.js"
+
+.PHONY: create-test-unit-tmp-dir-if-not-exists
+create-test-unit-tmp-dir-if-not-exists:
+	podman container exec -it $(CONTAINER_NAME) bash -c \
+	"[[ -d './test/unit-tmp/' ]] || mkdir './test/unit-tmp/'"
