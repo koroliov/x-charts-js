@@ -108,7 +108,8 @@ test-unit: create-test-unit-tmp-dir-if-not-exists
 .PHONY: test-unit-help
 test-unit-help:
 	@echo 'make test-unit BUILD_FILES="./src/foo.js ./src/bar/**" \<CR>'
-	@echo '  TEST_FILES="./src/foo-1.test.js ./src/foo-2.test.js"'
+	@echo '  TEST_FILES="./src/test-unit/foo-1.test.js '
+	@echo '    ./src/test-unit/foo-2.test.js"'
 
 .PHONY: test-unit-full
 test-unit-full: create-test-unit-tmp-dir-if-not-exists

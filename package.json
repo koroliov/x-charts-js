@@ -9,7 +9,7 @@
   },
   "scripts": {
     "flow": "flow ./src/",
-    "flow-build-full": "rm -rf ./dist/modules/* && flow ./src/ && flow-remove-types -d ./dist/modules/ -i 'test\\.js$' ./src/",
+    "flow-build-full": "rm -rf ./dist/modules/* && flow ./src/ && flow-remove-types -d ./dist/modules/ -i '^src\\/test-unit\\/' ./src/",
     "flow-build": "flow-remove-types",
     "flow-build-test": "flow-remove-types -d ./test/unit-tmp/",
     "tape": "tape",
