@@ -36,22 +36,23 @@ class Pie3d implements Component {
 
     function prepareData(): PieData {
       const { slices, totalValue, } = traverseData();
+      const ops = arg.options;
       const pieData = {
         totalValue,
         slices,
-        leftEdge: {
+        pointTopHeads: [0, 0, 0,],
+        edgeLeft: {
           pointHeads: [0, 0, 0,],
           pointTails: [0, 0, 0,],
           sliceIndex: 0,
         },
-        rightEdge: {
+        edgeRight: {
           pointHeads: [0, 0, 0,],
           pointTails: [0, 0, 0,],
           sliceIndex: 0,
         },
-        centerHeads: [arg.options.centerXPx, arg.options.centerYPx, 0,],
-        centerTails: [arg.options.centerXPx, arg.options.centerYPx,
-            arg.options.thicknessPx,],
+        centerHeads: [ops.centerXPx, ops.centerYPx, 0,],
+        centerTails: [ops.centerXPx, ops.centerYPx, ops.thicknessPx,],
       };
 
       //apply modifications
@@ -59,16 +60,16 @@ class Pie3d implements Component {
 
       function traverseData() {
         let totalValue = 0;
+        const thickness = arg.options.thicknessPx;
         let prevEndHeads = [0, 0, 0,];
-        let prevEndTails = [0, 0, 0,];
+        let prevEndTails = [0, 0, thickness,];
         const slices = arg.data.map((d) => {
           totalValue += d.value;
           const rv = {
             startPointHeads: prevEndHeads,
             startPointTails: prevEndTails,
             endPointHeads: [0, 0, 0,],
-            endPointTails: [0, 0, 0,],
-            angle: 0,
+            endPointTails: [0, 0, thickness,],
             value: d.value,
             color: d.meta.color,
           };
@@ -78,7 +79,8 @@ class Pie3d implements Component {
         });
         slices[0].startPointHeads = slices[slices.length - 1].endPointHeads;
         slices[0].startPointTails = slices[slices.length - 1].endPointTails;
-        return { slices, totalValue, };
+
+        return { totalValue, slices, };
       }
     }
 

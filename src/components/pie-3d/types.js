@@ -14,29 +14,29 @@ export type AddComponentPie3dArgument = {
   },
 }
 
-export type Point = [number, number, number,]
+type Point = [number, number, number,]
 
-export type SliceData = {
+type SliceData = {
   +startPointHeads: Point,
   +startPointTails: Point,
   +endPointHeads: Point,
   +endPointTails: Point,
-  angle: number,
   +value: number,
   +color: string,
 }
 
-export type EdgeData = {
+type EdgeData = {
   +pointHeads: Point,
   +pointTails: Point,
-  +sliceIndex: number,
+  sliceIndex: number,
 }
 
 export type PieData = {
   +totalValue: number,
   +slices: $ReadOnlyArray<SliceData>,
-  +leftEdge: EdgeData,
-  +rightEdge: EdgeData,
+  +pointTopHeads: Point,
+  +edgeLeft: EdgeData,
+  +edgeRight: EdgeData,
   +centerHeads: Point,
   +centerTails: Point,
 }
