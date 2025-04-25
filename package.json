@@ -13,7 +13,7 @@
     "flow-build": "flow-remove-types",
     "flow-build-test": "flow-remove-types -d ./test/unit-tmp/",
     "tape": "tape",
-    "nodemon": "nodemon --watch ./test/e2e/utils/server/ -- ./cmd.js",
+    "nodemon": "nodemon --watch ./test/server/ -- ./cmd.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Dmitry Koroliov <d.koroliov@gmail.com>",

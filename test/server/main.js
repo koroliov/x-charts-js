@@ -2,8 +2,8 @@ import http2 from 'node:http2';
 import fs from 'node:fs';
 
 const server = http2.createSecureServer({
-  key: fs.readFileSync('./test/e2e/utils/server/privkey.pem'),
-  cert: fs.readFileSync('./test/e2e/utils/server/cert.pem'),
+  key: fs.readFileSync('./test/server/privkey.pem'),
+  cert: fs.readFileSync('./test/server/cert.pem'),
 });
 server.on('error', console.error);
 server.on('stream', handleStream);
