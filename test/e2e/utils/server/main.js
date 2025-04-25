@@ -80,6 +80,9 @@ function handleStream(stream, headers) {
       const dirEntries = fs.readdirSync(dirPath, { withFileTypes: true, });
       const testCasesOrGroupsOfTestCases =
           dirEntries.reduce(reduceReaddirDirents, []);
+      if (!testCasesOrGroupsOfTestCases) {
+        return;
+      }
       respondJson(testCasesOrGroupsOfTestCases);
 
       function respondJson(data) {
@@ -99,7 +102,8 @@ function handleStream(stream, headers) {
             'which are test cases or groups of test cases',
             `Problem is in path: ${ requestedPath }`,
           ].join('\n');
-          return respond500(errMsg);
+          respond500(errMsg);
+          return false;
         }
         const dirsToIgnore = ['common-files',];
         for (const di of dirsToIgnore) {
