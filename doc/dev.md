@@ -32,6 +32,22 @@ Currently this is handled manually
 - Commit the changes
 - Rebuild the image
 
+**How to modify/work with test/server/main.js w/o restarting container?**
+
+Since it may be incovenient to work with the server's main.js file, b/c in case
+of an error the developer will have to restart the container, here is a way to
+temporary enable 'the watch mode':
+
+- Kill the podman container
+- Comment/Uncomment the CMD instruction in the Containerfile to use nodemon
+- Rebuild the image (no need to update the tag)
+- Run the container with the *attached Makefile target
+  `$ make [appropriate target name]` (didn't mention the target name here to
+  have less places to do a rename, if one is needed)
+- Work with the tesst/server/main.js file
+- When everything is ready, kill the container, restore the Containerfile,
+  rebuild the image
+
 ============================= **Code style** ===================================
 
 **Flow/JavaScript**
