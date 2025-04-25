@@ -18,10 +18,16 @@ function handleStream(stream, headers) {
   isDirRequested() ? handleDirRequest() : handleFileRequest();
 
   function isLocationAllowed() {
-    const allowed = new Set([ '/', '/list-dir/', '/get-livereloadjs/',]);
+    const allowed = new Set([
+      '/',
+      '/list-dir/',
+      '/get-livereloadjs/',
+      '/test/served-tmp/',
+    ]);
     return allowed.has(requestedPath) ||
       requestedPath.startsWith('/test/e2e/cases/') ||
-      requestedPath.startsWith('/dist/');
+      requestedPath.startsWith('/dist/') ||
+      requestedPath.startsWith('/test/served-tmp/');
   }
 
   function isDirRequested() {
@@ -35,6 +41,8 @@ function handleStream(stream, headers) {
       handleLivereloadjsRequest();
     } else if (requestedPath === '/list-dir/') {
       handleListOfTestsRequest('./test/e2e/cases/');
+    } else if (requestedPath === '/test/served-tmp/') {
+      handleListOfTmpServedFiles('./test/served-tmp/');
     } else if (requestedPath.endsWith('/list-dir/')) {
       const relativePathForList = requestedPathRelative
           .substring(0, requestedPathRelative.length - 'list-dir/'.length);
@@ -67,6 +75,27 @@ function handleStream(stream, headers) {
         ':status': 308,
       });
       stream.end('');
+    }
+
+    function handleListOfTmpServedFiles(dirPath) {
+      const dirEntries = fs.readdirSync(dirPath, { withFileTypes: true, });
+      const filesHtmlUl = dirEntries.reduce(reduceReaddirDirents, ['<ul>']);
+      filesHtmlUl.push('</ul>');
+      respondWithHtmlList(filesHtmlUl.join('\n'));
+
+      function respondWithHtmlList(html) {
+        stream.respond({
+          'content-type': 'text/html; charset=utf-8',
+          ':status': 200,
+        });
+        stream.end(html);
+      }
+
+      function reduceReaddirDirents(accum, dirEntry) {
+        const href = `${ dirEntry.parentPath.substr(1) }${ dirEntry.name }`;
+        accum.push(`<li><a href="${ href }">${ href }</a></li>`);
+        return accum;
+      }
     }
 
     function handleListOfTestsRequest(dirPath) {

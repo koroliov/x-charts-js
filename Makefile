@@ -57,6 +57,8 @@ podman-container-run-attached podman-container-run-detached:
 	-v $(CURDIR)/test/:/home/$(PROJECT_NAME)/test/ \
 	$(DETACHED_FLAG) --name $(CONTAINER_NAME) \
 	$(PROJECT_NAME):$(PROJECT_IMAGE_TAG)
+	podman container exec -it $(CONTAINER_NAME) bash -c \
+	"[[ -d './test/served-tmp/' ]] || mkdir './test/served-tmp/'"
 
 .PHONY: podman-container-restart
 podman-container-restart:
