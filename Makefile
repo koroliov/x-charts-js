@@ -123,3 +123,7 @@ test-unit-full: create-test-unit-tmp-dir-if-not-exists
 create-test-unit-tmp-dir-if-not-exists:
 	podman container exec -it $(CONTAINER_NAME) bash -c \
 	"[[ -d './test/unit-tmp/' ]] || mkdir './test/unit-tmp/'"
+
+ifneq ($(wildcard ./Makefile.current), '')
+  include ./Makefile.current
+endif

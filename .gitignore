@@ -1,4 +1,5 @@
 !.editorconfig
 Makefile.config
+Makefile.current
 test/unit-tmp/
 test/served-tmp/
