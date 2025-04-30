@@ -31,6 +31,12 @@ type EdgeData = {
   sliceIndex: number,
 }
 
+type Context2dEllipseMethodArguments = {
+  radiusX: number,
+  radiusY: number,
+  rotationClockwise: number,
+}
+
 export type PieData = {
   +totalValue: number,
   +slices: $ReadOnlyArray<SliceData>,
@@ -39,4 +45,5 @@ export type PieData = {
   +edgeRight: EdgeData,
   +centerHeads: Point,
   +centerTails: Point,
+  +someEllipseMethodArgs: Context2dEllipseMethodArguments,
 }
