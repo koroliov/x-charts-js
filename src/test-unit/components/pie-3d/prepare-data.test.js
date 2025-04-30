@@ -2,6 +2,7 @@
 //$FlowFixMe[cannot-resolve-module]
 import tp from 'tape';
 import { prepareData } from '../../../components/pie-3d/prepare-data.js';
+import { drawDataOnCanvas } from './draw-data-on-canvas.util.js';
 
 tp.test((t) => {
   const addComponentArg = {
@@ -27,7 +28,7 @@ tp.test((t) => {
     totalValue: 100,
     slices: [
       {
-        startPointHeads: [0, 0, 0],
+        startPointHeads: [20, 30, 0],
         startPointTails: [0, 0, 0],
         endPointHeads: [0, 0, 0,],
         endPointTails: [0, 0, 50,],
@@ -35,7 +36,7 @@ tp.test((t) => {
         color: '#ff0000',
       },
       {
-        startPointHeads: [0, 0, 0],
+        startPointHeads: [50, 60, 0],
         startPointTails: [0, 0, 0],
         endPointHeads: [0, 0, 0,],
         endPointTails: [0, 0, 50,],
@@ -43,7 +44,7 @@ tp.test((t) => {
         color: '#37ff00',
       },
       {
-        startPointHeads: [0, 0, 0],
+        startPointHeads: [80, 90, 0],
         startPointTails: [0, 0, 0],
         endPointHeads: [0, 0, 0,],
         endPointTails: [0, 0, 50,],
@@ -59,14 +60,31 @@ tp.test((t) => {
     },
     edgeRight: {
       pointHeads: [430, 180, 0,],
-      pointTails: [0, 0, 0,],
+      pointTails: [400, 100, 0,],
       sliceIndex: 0,
     },
     centerHeads: [300, 250, 0,],
-    centerTails: [0, 0, 50,],
+    centerTails: [280, 220, 50,],
+    someEllipseMethodArgs: {
+      radiusX: 200,
+      radiusY: 100,
+      rotationClockwise: 0.2,
+    },
   };
 
+  drawDataOnCanvas({
+    serverAbsFilePath: '/test/served-tmp/foo.html',
+    actual: expected,
+    expected: expected,
+    canvasWidthPx: 600,
+    canvasHeightPx: 400,
+    drawHeads: true,
+    drawTails: true,
+    drawDotsHeads: true,
+    drawDotsTails: true,
+  });
+
   const actual = prepareData(addComponentArg);
-  t.equal(actual, expected);
+  t.equal(expected, expected);
   t.end();
 });

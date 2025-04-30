@@ -20,6 +20,11 @@ export function prepareData(arg: AddComponentPie3dArgument): PieData {
     },
     centerHeads: [ops.centerXPx, ops.centerYPx, 0,],
     centerTails: [ops.centerXPx, ops.centerYPx, ops.thicknessPx,],
+    someEllipseMethodArgs: {
+      radiusX: 0,
+      radiusY: 0,
+      rotationClockwise: 0,
+    },
   };
 
   //c.ellipse(x, y, radiusX, radiusY, rotation, startAng, endAng,
