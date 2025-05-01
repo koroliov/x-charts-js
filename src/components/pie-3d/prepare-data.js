@@ -6,9 +6,6 @@ export function prepareData(arg: AddComponentPie3dArgument): PieData {
   const { slices, totalValue, } = getTotalValueAndSlices();
   const pieData = getInitialPieData();
   setPointsOnNonRotatedCircle();
-  //console.log(pieData.slices[0]);
-  //console.log(pieData.slices[1]);
-  //console.log(pieData.slices[2]);
 
   // calculate points
     // edges by simple arithmethic
@@ -56,13 +53,10 @@ export function prepareData(arg: AddComponentPie3dArgument): PieData {
     pieData.edgeRight.pointTails[1] = centerY;
     pieData.edgeRight.pointTails[2] = thickness;
 
-    let startAngle = -ops.startAtDeg / 180 * Math.PI;
+    let startAngle = ops.startAtDeg / 180 * Math.PI;
     pieData.slices.forEach((sd, i) => {
-      const y = Math.sin(startAngle) * circleRadius + centerY;
-      const x = Math.cos(startAngle) * circleRadius + centerY;
-      if (i === 0) {
-        console.log(x, y);
-      }
+      const y = -(Math.sin(startAngle) * circleRadius) + centerY;
+      const x = Math.cos(startAngle) * circleRadius + centerX;
       sd.startPointHeads[0] = x;
       sd.startPointHeads[1] = y;
       sd.startPointHeads[2] = 0;
@@ -71,8 +65,8 @@ export function prepareData(arg: AddComponentPie3dArgument): PieData {
       sd.startPointTails[1] = y;
       sd.startPointTails[2] = thickness;
 
-      const endAngle = sd.value / totalValue * Math.PI * 2 - startAngle;
-      startAngle -= endAngle;
+      const endAngle = sd.value / totalValue * Math.PI * 2;
+      startAngle += endAngle;
     });
   }
 

@@ -10,7 +10,7 @@ tp.test((t) => {
     zIndex: '1',
     options: {
       thicknessPx: 50,
-      radiusPx: 250,
+      radiusPx: 150,
       centerXPx: 300,
       centerYPx: 250,
       startAtDeg: 20,
