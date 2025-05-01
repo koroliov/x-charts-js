@@ -10,7 +10,7 @@ tp.test((t) => {
     zIndex: '1',
     options: {
       thicknessPx: 50,
-      radiusPx: 200,
+      radiusPx: 250,
       centerXPx: 300,
       centerYPx: 250,
       startAtDeg: 20,
@@ -72,19 +72,21 @@ tp.test((t) => {
     },
   };
 
+  const actual = prepareData(addComponentArg);
+
   drawDataOnCanvas({
     serverAbsFilePath: '/test/served-tmp/foo.html',
-    actual: expected,
+    actual: actual,
     expected: expected,
     canvasWidthPx: 600,
     canvasHeightPx: 400,
     drawHeads: true,
-    drawTails: true,
+    drawTails: false,
     drawDotsHeads: true,
-    drawDotsTails: true,
+    drawDotsTails: false,
+    drawLineToRightEdgeHeads: true,
+    drawLineToRightEdgeTails: false,
   });
-
-  const actual = prepareData(addComponentArg);
   t.equal(expected, expected);
   t.end();
 });

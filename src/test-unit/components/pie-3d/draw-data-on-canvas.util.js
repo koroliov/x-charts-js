@@ -12,6 +12,8 @@ type Arg = {
   +drawTails: boolean,
   +drawDotsHeads: boolean,
   +drawDotsTails: boolean,
+  +drawLineToRightEdgeHeads: boolean,
+  +drawLineToRightEdgeTails: boolean,
 }
 
 export function drawDataOnCanvas(arg: Arg) {
@@ -75,6 +77,10 @@ export function drawDataOnCanvas(arg: Arg) {
       const drawTails = String(Boolean(arg.drawTails));
       const drawDotsHeads = String(Boolean(arg.drawDotsHeads));
       const drawDotsTails = String(Boolean(arg.drawDotsTails));
+      const drawLineToRightEdgeHeads =
+        String(Boolean(arg.drawLineToRightEdgeHeads));
+      const drawLineToRightEdgeTails =
+        String(Boolean(arg.drawLineToRightEdgeTails));
 
       return `
         'use strict';
@@ -98,6 +104,35 @@ export function drawDataOnCanvas(arg: Arg) {
         if (${ drawDotsTails }) {
           drawDots(canvasActual, actual, false);
           drawDots(canvasExpected, expected, false);
+        }
+        if (${ drawLineToRightEdgeHeads }) {
+          drawLineFromCenterToRightEdge(canvasActual, actual, true);
+          drawLineFromCenterToRightEdge(canvasExpected, expected, true);
+        }
+        if (${ drawLineToRightEdgeTails }) {
+          drawLineFromCenterToRightEdge(canvasActual, actual, false);
+          drawLineFromCenterToRightEdge(canvasExpected, expected, false);
+        }
+
+        function drawLineFromCenterToRightEdge(canvas, pieData, isHeads) {
+          const ctx = canvas.getContext('2d');
+
+          const cx = pieData[isHeads ? 'centerHeads' : 'centerTails'][0];
+          const cy = pieData[isHeads ? 'centerTails' : 'centerTails'][1];
+
+          const rx = pieData.edgeRight[isHeads ?
+            'pointHeads' : 'pointTails'][0];
+          const ry = pieData.edgeRight[isHeads ?
+            'pointTails' : 'pointTails'][1];
+
+          ctx.beginPath();
+          drawLine();
+
+          function drawLine() {
+            ctx.moveTo(cx, cy);
+            ctx.lineTo(rx, ry);
+            ctx.stroke();
+          }
         }
 
         function drawDots(canvas, pieData, isHeads) {
