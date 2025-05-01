@@ -74,19 +74,19 @@ tp.test((t) => {
 
   const actual = prepareData(addComponentArg);
 
-  drawDataOnCanvas({
-    serverAbsFilePath: '/test/served-tmp/foo.html',
-    actual: actual,
-    expected: expected,
-    canvasWidthPx: 600,
-    canvasHeightPx: 400,
-    drawHeads: true,
-    drawTails: false,
-    drawDotsHeads: true,
-    drawDotsTails: false,
-    drawLineToRightEdgeHeads: true,
-    drawLineToRightEdgeTails: false,
-  });
+  //drawDataOnCanvas({
+  //  serverAbsFilePath: '/test/served-tmp/foo.html',
+  //  actual: actual,
+  //  expected: expected,
+  //  canvasWidthPx: 600,
+  //  canvasHeightPx: 400,
+  //  drawHeads: true,
+  //  drawTails: false,
+  //  drawDotsHeads: true,
+  //  drawDotsTails: false,
+  //  drawLineToRightEdgeHeads: true,
+  //  drawLineToRightEdgeTails: false,
+  //});
   t.equal(expected, expected);
   t.end();
 });
