@@ -102,15 +102,28 @@ export function drawDataOnCanvas(arg: Arg) {
 
         function drawDots(canvas, pieData, isHeads) {
           const ctx = canvas.getContext('2d');
+
+          drawCenterDot();
           pieData.slices.forEach((s, i) => {
             ctx.beginPath();
             const x = s[isHeads ? 'startPointHeads' : 'startPointTails'][0];
             const y = s[isHeads ? 'startPointHeads' : 'startPointTails'][1];
-            ctx.arc(x, y, 4, 0, Math.PI * 2);
-            ctx.fillStyle = s.color;
-            ctx.fill();
-            ctx.strokeText(i, x + 8, y);
+            drawSingleDot(x, y, (isHeads ? 'h' : 't') + i, s.color);
           });
+
+          function drawCenterDot() {
+            ctx.beginPath();
+            const x = pieData[isHeads ? 'centerHeads' : 'centerTails'][0];
+            const y = pieData[isHeads ? 'centerTails' : 'centerTails'][1];
+            drawSingleDot(x, y, (isHeads ? 'hc' : 'tc'));
+          }
+
+          function drawSingleDot(x, y, text, color = 'black') {
+            ctx.arc(x, y, 4, 0, Math.PI * 2);
+            ctx.fillStyle = color;
+            ctx.fill();
+            ctx.strokeText(text, x + 8, y);
+          }
         }
 
         function drawEllipse(canvas, pieData, isHeads) {
