@@ -120,12 +120,12 @@ export function drawDataOnCanvas(arg: Arg) {
           const ctx = canvas.getContext('2d');
 
           const cx = pieData[isHeads ? 'centerHeads' : 'centerTails'][0];
-          const cy = pieData[isHeads ? 'centerTails' : 'centerTails'][1];
+          const cy = pieData[isHeads ? 'centerHeads' : 'centerTails'][1];
 
           const rx = pieData.edgeRight[isHeads ?
             'pointHeads' : 'pointTails'][0];
           const ry = pieData.edgeRight[isHeads ?
-            'pointTails' : 'pointTails'][1];
+            'pointHeads' : 'pointTails'][1];
 
           ctx.beginPath();
           drawLine();
@@ -151,7 +151,7 @@ export function drawDataOnCanvas(arg: Arg) {
           function drawCenterDot() {
             ctx.beginPath();
             const x = pieData[isHeads ? 'centerHeads' : 'centerTails'][0];
-            const y = pieData[isHeads ? 'centerTails' : 'centerTails'][1];
+            const y = pieData[isHeads ? 'centerHeads' : 'centerTails'][1];
             drawSingleDot(x, y, (isHeads ? 'hc' : 'tc'));
           }
 
