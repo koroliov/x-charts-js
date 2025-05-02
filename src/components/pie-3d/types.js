@@ -14,7 +14,7 @@ export type AddComponentPie3dArgument = {
   },
 }
 
-type Point = [number, number, number,]
+export type Point = [number, number, number,]
 
 type SliceData = {
   +startPointHeads: Point,

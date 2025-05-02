@@ -1,23 +1,85 @@
 //@flow strict
-import type { AddComponentPie3dArgument, PieData, } from './types.js';
+import type { AddComponentPie3dArgument, PieData, Point, } from './types.js';
 
 export function prepareData(arg: AddComponentPie3dArgument): PieData {
   const ops = arg.options;
   const { slices, totalValue, } = getTotalValueAndSlices();
   const pieData = getInitialPieData();
   setPointsOnNonRotatedCircle();
-
-  // calculate points
-    // edges by simple arithmethic
-    // points by:
-      // take length of the full arc
-      // find angle of a slice arc from its percent + prevAngle (startAng)
-      // calculate x, y, z by using the radius and the angle
-  // apply transformations for all points
-    // rotate over oX
-    // rotate over oZ
-  // calculate radiusX, Y, rotationClockwise
+  applyRotations();
+  calculateEllipseMethodArgs();
   return pieData;
+
+  function calculateEllipseMethodArgs() {
+    pieData.someEllipseMethodArgs.radiusY =
+      Math.sqrt(
+        Math.pow(
+          Math.abs(pieData.pointTopHeads[0] - pieData.centerHeads[0]), 2
+        ) +
+        Math.pow(
+          Math.abs(pieData.pointTopHeads[1] - pieData.centerHeads[1]), 2
+        )
+      );
+    
+    pieData.someEllipseMethodArgs.radiusX =
+      Math.sqrt(
+        Math.pow(
+          Math.abs(pieData.edgeRight.pointHeads[0] - pieData.centerHeads[0]), 2
+        ) +
+        Math.pow(
+          Math.abs(pieData.edgeRight.pointHeads[1] - pieData.centerHeads[1]), 2
+        )
+      );
+
+    pieData.someEllipseMethodArgs.rotationClockwise =
+      (ops.rotationAroundCenterZAxisDeg / 180 * Math.PI);
+  }
+
+  function applyRotations() {
+    const centerX = ops.centerXPx;
+    const centerY = ops.centerYPx;
+    const rotationCxRad = ops.rotationAroundCenterXAxisDeg / 180 * Math.PI;
+    const rotationCzRad = ops.rotationAroundCenterZAxisDeg / 180 * Math.PI;
+
+    const rotationMatrixX = [
+      [1, 0,                        0,                      ],
+      [0, Math.cos(rotationCxRad), -Math.sin(rotationCxRad),],
+      [0, Math.sin(rotationCxRad),  Math.cos(rotationCxRad),],
+    ];
+    const rotationMatrixZ = [
+      [Math.cos(rotationCzRad), -Math.sin(rotationCzRad), 0,],
+      [Math.sin(rotationCzRad),  Math.cos(rotationCzRad), 0,],
+      [0,                        0,                       1,],
+    ];
+    rotatePoint(pieData.pointTopHeads);
+    rotatePoint(pieData.centerHeads);
+    rotatePoint(pieData.centerTails);
+    rotatePoint(pieData.edgeLeft.pointHeads);
+    rotatePoint(pieData.edgeLeft.pointTails);
+    rotatePoint(pieData.edgeRight.pointHeads);
+    rotatePoint(pieData.edgeRight.pointTails);
+    pieData.slices.forEach((s) => {
+      rotatePoint(s.startPointHeads);
+      rotatePoint(s.startPointTails);
+    });
+
+    function rotatePoint(p: Point) {
+      p[0] -= centerX;
+      p[1] -= centerY;
+      let pRotated = Array.from(p);
+      pRotated = rotationMatrixX.map((row) => {
+        return row.reduce((sum, value, i) => sum + value * pRotated[i], 0)
+      });
+      pRotated = rotationMatrixZ.map((row) => {
+        return row.reduce((sum, value, i) => sum + value * pRotated[i], 0)
+      });
+      p[0] = pRotated[0];
+      p[1] = pRotated[1];
+      p[2] = pRotated[2];
+      p[0] += centerX;
+      p[1] += centerY;
+    }
+  }
 
   function setPointsOnNonRotatedCircle() {
     const circleRadius = ops.radiusPx;

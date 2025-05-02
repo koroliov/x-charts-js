@@ -15,7 +15,7 @@ tp.test((t) => {
       centerYPx: 250,
       startAtDeg: 20,
       rotationAroundCenterXAxisDeg: 60,
-      rotationAroundCenterZAxisDeg: 45,
+      rotationAroundCenterZAxisDeg: 0,
     },
     data: [
       { value: 40, meta: { color: '#ff0000', }, },
@@ -73,6 +73,7 @@ tp.test((t) => {
   };
 
   const actual = prepareData(addComponentArg);
+  //console.log(actual.someEllipseMethodArgs);
 
   //drawDataOnCanvas({
   //  serverAbsFilePath: '/test/served-tmp/foo.html',
@@ -81,12 +82,12 @@ tp.test((t) => {
   //  canvasWidthPx: 600,
   //  canvasHeightPx: 400,
   //  drawHeads: true,
-  //  drawTails: false,
+  //  drawTails: true,
   //  drawDotsHeads: true,
-  //  drawDotsTails: false,
+  //  drawDotsTails: true,
   //  drawLineToRightEdgeHeads: true,
-  //  drawLineToRightEdgeTails: false,
+  //  drawLineToRightEdgeTails: true,
   //});
-  t.equal(expected, expected);
+  //t.equal(expected, expected);
   t.end();
 });
