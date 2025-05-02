@@ -32,14 +32,14 @@ export function prepareData(arg: AddComponentPie3dArgument): PieData {
       );
 
     pieData.someEllipseMethodArgs.rotationClockwise =
-      (ops.rotationAroundCenterZAxisDeg / 180 * Math.PI);
+      -(ops.rotationAroundCenterZAxisDeg / 180 * Math.PI);
   }
 
   function applyRotations() {
     const centerX = ops.centerXPx;
     const centerY = ops.centerYPx;
-    const rotationCxRad = ops.rotationAroundCenterXAxisDeg / 180 * Math.PI;
-    const rotationCzRad = ops.rotationAroundCenterZAxisDeg / 180 * Math.PI;
+    const rotationCxRad = -ops.rotationAroundCenterXAxisDeg / 180 * Math.PI;
+    const rotationCzRad = -ops.rotationAroundCenterZAxisDeg / 180 * Math.PI;
 
     const rotationMatrixX = [
       [1, 0,                        0,                      ],
