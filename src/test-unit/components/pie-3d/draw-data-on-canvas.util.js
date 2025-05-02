@@ -52,7 +52,8 @@ export function drawDataOnCanvas(arg: Arg) {
       <body>
         <span>a dot marks the start of a slice.</span><br>
         <span>for hN, tN: h stands for heads, t stands for tails,
-          N — the index of the slice</span>
+          N — the index of the slice</span><br>
+        <span>the line is to the right edge</span>
         <div id="container">
           <div>
             <span>Actual<span><br>
