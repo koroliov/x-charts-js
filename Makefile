@@ -1,12 +1,12 @@
 FILE := ''
 PROJECT_NAME := x-charts
-PROJECT_IMAGE_TAG := 19
+PROJECT_IMAGE_TAG := 20
 CONTAINER_NAME := $(PROJECT_NAME)-$(PROJECT_IMAGE_TAG)
 NODE_VERSION_NUM := 23.11.0
-NPM_VERSION_NUM := 11.2.0
-FEDORA_VERSION_NUM := 41
+NPM_VERSION_NUM := 11.3.0
+FEDORA_VERSION_NUM := 42
 
-include ./Makefile.config
+include ./var/Makefile.config
 
 .DEFAULT:
 	@echo "Something went wrong, check $@ file/target is present"
@@ -50,9 +50,7 @@ podman-container-run-attached podman-container-run-detached:
 	--publish $(PORT):443 \
 	--publish $(LIVERELOAD_PORT):35729 \
 	--env LIVERELOAD_PORT=$(LIVERELOAD_PORT) \
-	-v $(CURDIR)/cmd.js:/home/$(PROJECT_NAME)/cmd.js \
-	-v $(CURDIR)/package.json:/home/$(PROJECT_NAME)/package.json \
-	-v $(CURDIR)/package-lock.json:/home/$(PROJECT_NAME)/package-lock.json \
+	-v $(CURDIR)/var/:/home/$(PROJECT_NAME)/var/ \
 	-v $(CURDIR)/dist/:/home/$(PROJECT_NAME)/dist/ \
 	-v $(CURDIR)/src/:/home/$(PROJECT_NAME)/src/ \
 	-v $(CURDIR)/test/:/home/$(PROJECT_NAME)/test/ \
@@ -91,24 +89,29 @@ podman-container-copy-to:
 	podman container cp $(FILE) \
 	$(CONTAINER_NAME):/home/$(PROJECT_NAME)/$(FILE)
 
+#npm section
+.PHONY: npm-outdated
+npm-outdated:
+	podman container exec -it $(CONTAINER_NAME) bash -c "npm outdated"
+
+.PHONY: npm-install-help
+npm-install-help:
+	@echo "make npm-install NPM_MOD='nodemon@3.1.10'"
+
+.PHONY: npm-install
+npm-install:
+	podman container exec -it $(CONTAINER_NAME) bash -c "npm i --save-dev \
+	$(NPM_MOD) && cp package.json ./var/ && cp package-lock.json ./var/ && \
+	echo 'DON''T FORGET TO REBUILD IMAGE'"
+
 #flow section
 .PHONY: flow-build-full
 flow-build-full:
 	podman container exec -it $(CONTAINER_NAME) bash -c "npm run flow-build-full"
 
-FILE_MAPPED_TO_DIST = $(subst ./src/,,$(FILE))
-.PHONY: flow-build
-flow-build:
-	podman container exec -it $(CONTAINER_NAME) bash -c "npm run flow-build \
-	$(FILE) > ./dist/modules/$(FILE_MAPPED_TO_DIST)"
-
-.PHONY: flow-build-help
-flow-build-help:
-	@echo 'make flow-build FILE=./src/some/file.js'
-
 #test section
 .PHONY: test-unit
-TEST_FILES_RUN = $(subst ./src/,./test/unit-tmp/src/,$(TEST_FILES))
+test-unit: TEST_FILES_RUN = $(subst ./src/,./test/unit-tmp/src/,$(TEST_FILES))
 test-unit: create-test-unit-tmp-dir-if-not-exists
 	podman container exec -it $(CONTAINER_NAME) bash -c "rm -rf \
 	./test/unit-tmp/* && npm run flow && npm run flow-build-test $(BUILD_FILES) \
@@ -132,5 +135,5 @@ create-test-unit-tmp-dir-if-not-exists:
 	"[[ -d './test/unit-tmp/' ]] || mkdir './test/unit-tmp/'"
 
 ifneq ($(wildcard ./Makefile.current), '')
-  include ./Makefile.current
+  include ./var/Makefile.current
 endif

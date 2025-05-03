@@ -13,7 +13,7 @@
     "flow-build": "flow-remove-types",
     "flow-build-test": "flow-remove-types -d ./test/unit-tmp/",
     "tape": "tape",
-    "nodemon": "nodemon --watch ./test/server/ -- ./cmd.js",
+    "nodemon": "nodemon --watch ./test/server/ -- ./var/cmd.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Dmitry Koroliov <d.koroliov@gmail.com>",
@@ -24,7 +24,7 @@
     "flow-bin": "^0.259.1",
     "flow-remove-types": "^2.259.1",
     "livereload": "^0.9.3",
-    "nodemon": "^3.1.9",
+    "nodemon": "^3.1.10",
     "tape": "^5.9.0"
   }
 }

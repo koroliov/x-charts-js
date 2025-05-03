@@ -65,7 +65,6 @@ export default class XCharts {
   }
 
   add(arg                      )            {
-    freezeArgument();
     const ComponentClass = componentsRegistry.get(arg.type);
     if (!ComponentClass) {
       throw new Error(getNoRegisteredComponentErrorMsg());
@@ -82,12 +81,6 @@ export default class XCharts {
         `registered components are:`,
         Array.from(componentsRegistry.keys()).join(),
       ].join('\n');
-    }
-
-    function freezeArgument() {
-      Object.freeze(arg);
-      Object.freeze(arg.options);
-      Object.freeze(arg.data);
     }
 
     function createContainer() {

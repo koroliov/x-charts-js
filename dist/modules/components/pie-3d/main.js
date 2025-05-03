@@ -1,20 +1,8 @@
 //      strict
-             
-            
-                        
-
-import XCharts, {
-  registerComponent,
-} from '../../main.js';
-
-             
-                            
-        
-            
-           
-           
-          
-                    
+                                                 
+import XCharts, { registerComponent, } from '../../main.js';
+                                                                      
+import { prepareData } from './prepare-data.js';
 
 class Pie3d                      {
   static  _type = 'pie-3d'
@@ -22,10 +10,12 @@ class Pie3d                      {
   _ctx                          
 
   constructor(arg                           , container                ) {
+    freezeArgument();
     validateAddComponentArgument();
     this._container = container;
     const that = this;
     createCanvas();
+    const pieData = prepareData(arg);
     draw();
 
     function createCanvas() {
@@ -38,13 +28,30 @@ class Pie3d                      {
       that._ctx = canvas.getContext('2d');
     }
 
+    function freezeArgument() {
+      Object.freeze(arg);
+      Object.freeze(arg.options);
+      Object.freeze(arg.data);
+      arg.data.forEach((d) => Object.freeze(d.meta));
+    }
+
     function draw() {
-      //calculate percentage
+      //determine heads or tails is to draw
+      //draw heads/tails
+        //from slice 0 for each slice
+        //draw, fill
+        //
+      //draw rim
+        //from left edge to right edge
+        //find slice index, color
+        //from edge to slice endpoint
+        //from start point to end point
+        //from start point to right edge
     }
 
     function validateAddComponentArgument() {
-      //validate c.options
-      //validate c.data
+      //validate arg.options
+      //validate arg.data
     }
   }
 }
