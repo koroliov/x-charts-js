@@ -50,7 +50,7 @@ podman-container-run-attached podman-container-run-detached:
 	--publish $(PORT):443 \
 	--publish $(LIVERELOAD_PORT):35729 \
 	--env LIVERELOAD_PORT=$(LIVERELOAD_PORT) \
-	-v $(CURDIR)/cmd.js:/home/$(PROJECT_NAME)/cmd.js \
+	-v $(CURDIR)/var/:/home/$(PROJECT_NAME)/var/ \
 	-v $(CURDIR)/package.json:/home/$(PROJECT_NAME)/package.json \
 	-v $(CURDIR)/package-lock.json:/home/$(PROJECT_NAME)/package-lock.json \
 	-v $(CURDIR)/dist/:/home/$(PROJECT_NAME)/dist/ \

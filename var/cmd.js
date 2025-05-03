@@ -1,4 +1,4 @@
-import './test/server/main.js';
+import '../test/server/main.js';
 import livereload from 'livereload';
 
 const server = livereload.createServer({
