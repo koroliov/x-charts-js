@@ -26,6 +26,7 @@ help-list-cmd-options:
 	@echo "    podman-container-copy-to"
 	@echo "  example: make FILE=foo/bar.js podman-container-copy-to"
 
+#podman section
 .PHONY: podman-image-build
 podman-image-build:
 	podman build . \
@@ -60,6 +61,10 @@ podman-container-run-attached podman-container-run-detached:
 	podman container exec -it $(CONTAINER_NAME) bash -c \
 	"[[ -d './test/served-tmp/' ]] || mkdir './test/served-tmp/'"
 
+.PHONY: podman-container-attach
+podman-container-attach:
+	podman container attach $(PROJECT_NAME)-$(PROJECT_IMAGE_TAG)
+
 .PHONY: podman-container-restart
 podman-container-restart:
 	podman container restart $(PROJECT_NAME)-$(PROJECT_IMAGE_TAG)
@@ -86,6 +91,7 @@ podman-container-copy-to:
 	podman container cp $(FILE) \
 	$(CONTAINER_NAME):/home/$(PROJECT_NAME)/$(FILE)
 
+#flow section
 .PHONY: flow-build-full
 flow-build-full:
 	podman container exec -it $(CONTAINER_NAME) bash -c "npm run flow-build-full"
@@ -100,6 +106,7 @@ flow-build:
 flow-build-help:
 	@echo 'make flow-build FILE=./src/some/file.js'
 
+#test section
 .PHONY: test-unit
 TEST_FILES_RUN = $(subst ./src/,./test/unit-tmp/src/,$(TEST_FILES))
 test-unit: create-test-unit-tmp-dir-if-not-exists
