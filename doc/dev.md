@@ -26,10 +26,9 @@ must always be a number.
 
 In case of changes in:
 
-- package.json (only in case it affects the Podman image/container, i.e. only if
-  npm modules were changed, not an 'npm run' script)
-- package-lock.json
-- Containerfile
+- package.json (any change)
+- package-lock.json (any change)
+- Containerfile (any change)
 - Makefile (only in case it affects the Podman image/container)
 
 the Podman image tag must be incremented by 1:

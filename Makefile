@@ -51,8 +51,6 @@ podman-container-run-attached podman-container-run-detached:
 	--publish $(LIVERELOAD_PORT):35729 \
 	--env LIVERELOAD_PORT=$(LIVERELOAD_PORT) \
 	-v $(CURDIR)/var/:/home/$(PROJECT_NAME)/var/ \
-	-v $(CURDIR)/package.json:/home/$(PROJECT_NAME)/package.json \
-	-v $(CURDIR)/package-lock.json:/home/$(PROJECT_NAME)/package-lock.json \
 	-v $(CURDIR)/dist/:/home/$(PROJECT_NAME)/dist/ \
 	-v $(CURDIR)/src/:/home/$(PROJECT_NAME)/src/ \
 	-v $(CURDIR)/test/:/home/$(PROJECT_NAME)/test/ \
@@ -90,6 +88,21 @@ podman-container-copy-from:
 podman-container-copy-to:
 	podman container cp $(FILE) \
 	$(CONTAINER_NAME):/home/$(PROJECT_NAME)/$(FILE)
+
+#npm section
+.PHONY: npm-outdated
+npm-outdated:
+	podman container exec -it $(CONTAINER_NAME) bash -c "npm outdated"
+
+.PHONY: npm-install-help
+npm-install-help:
+	@echo "make npm-install NPM_MOD='nodemon@3.1.10'"
+
+.PHONY: npm-install
+npm-install:
+	podman container exec -it $(CONTAINER_NAME) bash -c "npm i --save-dev \
+	$(NPM_MOD) && cp package.json ./var/ && cp package-lock.json ./var/ && \
+	echo 'DON''T FORGET TO REBUILD IMAGE'"
 
 #flow section
 .PHONY: flow-build-full

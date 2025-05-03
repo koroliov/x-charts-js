@@ -24,8 +24,8 @@ RUN rm ${NODE_DIR_NAME}.tar.xz
 
 WORKDIR /home/${PROJECT_NAME}
 
-COPY ./package.json .
-COPY ./package-lock.json .
+COPY ./var/package.json .
+COPY ./var/package-lock.json .
 RUN npm install -g npm@${NPM_VERSION_NUM}
 RUN npm ci
 
