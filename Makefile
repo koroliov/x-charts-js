@@ -6,7 +6,7 @@ NODE_VERSION_NUM := 23.11.0
 NPM_VERSION_NUM := 11.2.0
 FEDORA_VERSION_NUM := 41
 
-include ./Makefile.config
+include ./var/Makefile.config
 
 .DEFAULT:
 	@echo "Something went wrong, check $@ file/target is present"
@@ -132,5 +132,5 @@ create-test-unit-tmp-dir-if-not-exists:
 	"[[ -d './test/unit-tmp/' ]] || mkdir './test/unit-tmp/'"
 
 ifneq ($(wildcard ./Makefile.current), '')
-  include ./Makefile.current
+  include ./var/Makefile.current
 endif
