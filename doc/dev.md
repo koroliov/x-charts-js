@@ -1,19 +1,61 @@
 **Rules for development:**
 
-============================= **Various** ======================================
+============================= **Git** ==========================================
 
-**Increment image tag number**
+**Branching and merging**
 
-If any of:
-- package.json (only in case it affects the podman image/container, i.e. only if
-    npm modules were changed)
+- Logically separate units of work, *unless it's 1 single commit*, should be
+  done in a dedicated branch and merged with --no-ff. The purpose of this is
+  that it should be more convenient to view history.
+
+- Theoretically there may be problems with the container versions etc. E.g. the
+  developer worked on a feature in a branch, updated the container etc. Then
+  switched to another branch and forgot to rebuild the image. This can lead to
+  problems, but it's not a priority to deal with it now.
+
+  Only commits in the main branch which are marked for a Github release are
+  expected to be 100% tested, checked etc.
+
+============================= **Podman** =======================================
+
+**Image tag numbers**
+
+Podman images will be tagged with a number, no branch names etc. Locally the
+developer is free to use anything to tag any image, but in the repository it
+must always be a number.
+
+In case of changes in:
+
+- package.json (only in case it affects the Podman image/container, i.e. only if
+  npm modules were changed, not an 'npm run' script)
 - package-lock.json
 - Containerfile
-- Makefile (only in case it affects the podman image/container)
+- Makefile (only in case it affects the Podman image/container)
 
-have been changed, the podman image tag must be incremented by 1.
+the Podman image tag must be incremented by 1:
 
-Currently this is handled manually
+- currently this is handled manually.
+- it's okay to do it in another commit later (in the same branch)
+- merge conflicts are expected, will be handled manually
+
+============================= **Code style** ===================================
+
+**Flow/JavaScript**
+
+- Try to follow [Google JS style guide](https://google.github.io/styleguide/jsguide.html)
+- Additional rules:
+  - No semicolon after type declarations:
+  - Inside type declarations use comas:
+  ```
+  type foo = [0]
+  type bar = 0
+  type baz = {
+    +propA: number,
+    +propB: string,
+  }
+  ```
+
+============================= **Various how-tos** ==============================
 
 **How to install/update other software in container?**
 
@@ -38,7 +80,7 @@ Since it may be incovenient to work with the server's main.js file, b/c in case
 of an error the developer will have to restart the container, here is a way to
 temporary enable 'the watch mode':
 
-- Kill the podman container
+- Kill the Podman container
 - Comment/Uncomment the CMD instruction in the Containerfile to use nodemon
 - Rebuild the image (no need to update the tag)
 - Run the container with the *attached Makefile target
@@ -47,20 +89,3 @@ temporary enable 'the watch mode':
 - Work with the tesst/server/main.js file
 - When everything is ready, kill the container, restore the Containerfile,
   rebuild the image
-
-============================= **Code style** ===================================
-
-**Flow/JavaScript**
-
-- Try to follow [Google JS style guide](https://google.github.io/styleguide/jsguide.html)
-- Additional rules:
-  - No semicolon after type declarations:
-  - Inside type declarations use comas:
-  ```
-  type foo = [0]
-  type bar = 0
-  type baz = {
-    +propA: number,
-    +propB: string,
-  }
-  ```
