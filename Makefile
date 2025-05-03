@@ -109,19 +109,9 @@ npm-install:
 flow-build-full:
 	podman container exec -it $(CONTAINER_NAME) bash -c "npm run flow-build-full"
 
-FILE_MAPPED_TO_DIST = $(subst ./src/,,$(FILE))
-.PHONY: flow-build
-flow-build:
-	podman container exec -it $(CONTAINER_NAME) bash -c "npm run flow-build \
-	$(FILE) > ./dist/modules/$(FILE_MAPPED_TO_DIST)"
-
-.PHONY: flow-build-help
-flow-build-help:
-	@echo 'make flow-build FILE=./src/some/file.js'
-
 #test section
 .PHONY: test-unit
-TEST_FILES_RUN = $(subst ./src/,./test/unit-tmp/src/,$(TEST_FILES))
+test-unit: TEST_FILES_RUN = $(subst ./src/,./test/unit-tmp/src/,$(TEST_FILES))
 test-unit: create-test-unit-tmp-dir-if-not-exists
 	podman container exec -it $(CONTAINER_NAME) bash -c "rm -rf \
 	./test/unit-tmp/* && npm run flow && npm run flow-build-test $(BUILD_FILES) \
