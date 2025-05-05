@@ -95,11 +95,11 @@ npm-outdated:
 	podman container exec -it $(CONTAINER_NAME) bash -c "npm outdated"
 
 .PHONY: npm-install-help
-npm-install-help:
+npm-install-save-dev-help:
 	@echo "make npm-install NPM_MOD='nodemon@3.1.10'"
 
 .PHONY: npm-install
-npm-install:
+npm-install-save-dev:
 	podman container exec -it $(CONTAINER_NAME) bash -c "npm i --save-dev \
 	$(NPM_MOD) && cp package.json ./var/ && cp package-lock.json ./var/ && \
 	echo 'DON''T FORGET TO REBUILD IMAGE'"
