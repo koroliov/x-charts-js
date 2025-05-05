@@ -129,7 +129,7 @@ test-unit-help:
 test-unit-full: create-test-unit-tmp-dir-if-not-exists
 	podman container exec -it $(CONTAINER_NAME) bash -c "rm -rf \
 	./test/unit-tmp/* && npm run flow && npm run flow-build-test \
-	./src/ && npm run tape ./test/unit-tmp/*.test.js"
+	./src/ && npm run tape ./test/unit-tmp/**/*.test.js"
 
 .PHONY: create-test-unit-tmp-dir-if-not-exists
 create-test-unit-tmp-dir-if-not-exists:
