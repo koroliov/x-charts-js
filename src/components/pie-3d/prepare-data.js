@@ -20,7 +20,7 @@ export function prepareData(arg: AddComponentPie3dArgument): PieData {
           Math.abs(pieData.pointTopHeads[1] - pieData.centerHeads[1]), 2
         )
       );
-    
+
     pieData.someEllipseMethodArgs.radiusX =
       Math.sqrt(
         Math.pow(
@@ -116,6 +116,14 @@ export function prepareData(arg: AddComponentPie3dArgument): PieData {
     pieData.edgeRight.pointTails[2] = thickness;
 
     let startAngle = ops.startAtDeg / 180 * Math.PI;
+    let expectToPassRightEdge = false;
+    let expectToPassLeftEdge = false;
+    if (startAngle < Math.PI) {
+      expectToPassLeftEdge = true;
+    } else {
+      expectToPassRightEdge = true;
+    }
+
     pieData.slices.forEach((sd, i) => {
       const y = -(Math.sin(startAngle) * circleRadius) + centerY;
       const x = Math.cos(startAngle) * circleRadius + centerX;
@@ -129,6 +137,21 @@ export function prepareData(arg: AddComponentPie3dArgument): PieData {
 
       const endAngle = sd.value / totalValue * Math.PI * 2;
       startAngle += endAngle;
+
+      if (expectToPassLeftEdge) {
+        if (startAngle >= Math.PI) {
+          expectToPassLeftEdge = false;
+          expectToPassRightEdge = true;
+          pieData.edgeLeft.sliceIndex = i;
+        }
+      } else if (expectToPassRightEdge) {
+        if (startAngle >= 2 * Math.PI) {
+          expectToPassRightEdge = false;
+          expectToPassLeftEdge = true;
+          pieData.edgeRight.sliceIndex = i;
+        }
+      }
+
     });
   }
 

@@ -90,7 +90,6 @@ tp.test((t) => {
 
   const actual = prepareData(addComponentArg);
   //writeToTestDiffDir({ actual, expected, });
-
   //drawDataOnCanvas({
   //  serverAbsFilePath: '/test/served-tmp/foo.html',
   //  actual: actual,
@@ -104,6 +103,6 @@ tp.test((t) => {
   //  drawLineToRightEdgeHeads: true,
   //  drawLineToRightEdgeTails: true,
   //});
-  //t.equal(actual, expected);
+  t.deepEqual(actual, expected);
   t.end();
 });
