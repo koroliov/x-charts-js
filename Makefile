@@ -58,6 +58,8 @@ podman-container-run-attached podman-container-run-detached:
 	$(PROJECT_NAME):$(PROJECT_IMAGE_TAG)
 	podman container exec -it $(CONTAINER_NAME) bash -c \
 	"[[ -d './test/served-tmp/' ]] || mkdir './test/served-tmp/'"
+	podman container exec -it $(CONTAINER_NAME) bash -c \
+	"[[ -d './test/diff/' ]] || mkdir './test/diff/'"
 
 .PHONY: podman-container-attach
 podman-container-attach:
