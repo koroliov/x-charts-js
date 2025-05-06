@@ -41,7 +41,7 @@ the Podman image tag must be incremented by 1:
 
 **Flow/JavaScript**
 
-- Try to follow [Google JS style guide](https://google.github.io/styleguide/jsguide.html)
+- Try to follow [Google TS Style Guide](https://google.github.io/styleguide/tsguide.html)
 - Additional rules:
   - No semicolon after type declarations:
   - Inside type declarations use comas:
