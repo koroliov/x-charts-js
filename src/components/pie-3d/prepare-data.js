@@ -12,27 +12,17 @@ export function prepareData(arg: AddComponentPie3dArgument): PieData {
 
   function calculateEllipseMethodArgs() {
     pieData.someEllipseMethodArgs.radiusY =
-      Math.sqrt(
-        Math.pow(
-          Math.abs(pieData.pointTopHeads[0] - pieData.centerHeads[0]), 2
-        ) +
-        Math.pow(
-          Math.abs(pieData.pointTopHeads[1] - pieData.centerHeads[1]), 2
-        )
-      );
-
+      calculateDistance(pieData.pointTopHeads, pieData.centerHeads);
     pieData.someEllipseMethodArgs.radiusX =
-      Math.sqrt(
-        Math.pow(
-          Math.abs(pieData.edgeRight.pointHeads[0] - pieData.centerHeads[0]), 2
-        ) +
-        Math.pow(
-          Math.abs(pieData.edgeRight.pointHeads[1] - pieData.centerHeads[1]), 2
-        )
-      );
-
+      calculateDistance(pieData.edgeRight.pointHeads, pieData.centerHeads);
     pieData.someEllipseMethodArgs.rotationClockwise =
       -(ops.rotationAroundCenterZAxisDeg / 180 * Math.PI);
+
+    function calculateDistance(pStart: Point, pEnd: Point) {
+      const distanceX = Math.abs(pStart[0] - pEnd[0]);
+      const distanceY = Math.abs(pStart[1] - pEnd[1]);
+      return Math.sqrt(Math.pow(distanceX, 2) + Math.pow(distanceY, 2));
+    }
   }
 
   function applyRotations() {
@@ -116,13 +106,8 @@ export function prepareData(arg: AddComponentPie3dArgument): PieData {
     pieData.edgeRight.pointTails[2] = thickness;
 
     let startAngle = ops.startAtDeg / 180 * Math.PI;
-    let expectToPassRightEdge = false;
-    let expectToPassLeftEdge = false;
-    if (startAngle < Math.PI) {
-      expectToPassLeftEdge = true;
-    } else {
-      expectToPassRightEdge = true;
-    }
+    let { expectToPassRightEdge, expectToPassLeftEdge, } =
+      getInitialExpectedEdgeFlags();
 
     pieData.slices.forEach((sd, i) => {
       const y = -(Math.sin(startAngle) * circleRadius) + centerY;
@@ -137,22 +122,35 @@ export function prepareData(arg: AddComponentPie3dArgument): PieData {
 
       const endAngle = sd.value / totalValue * Math.PI * 2;
       startAngle += endAngle;
+      handleExpectedEdgeFlagsWhenPassingSlice(i);
+    });
 
+    function handleExpectedEdgeFlagsWhenPassingSlice(sliceIndex: number) {
       if (expectToPassLeftEdge) {
         if (startAngle >= Math.PI) {
           expectToPassLeftEdge = false;
           expectToPassRightEdge = true;
-          pieData.edgeLeft.sliceIndex = i;
+          pieData.edgeLeft.sliceIndex = sliceIndex;
         }
       } else if (expectToPassRightEdge) {
         if (startAngle >= 2 * Math.PI) {
           expectToPassRightEdge = false;
           expectToPassLeftEdge = true;
-          pieData.edgeRight.sliceIndex = i;
+          pieData.edgeRight.sliceIndex = sliceIndex;
         }
       }
+    }
 
-    });
+    function getInitialExpectedEdgeFlags() {
+      let expectToPassRightEdge = false;
+      let expectToPassLeftEdge = false;
+      if (startAngle < Math.PI) {
+        expectToPassLeftEdge = true;
+      } else {
+        expectToPassRightEdge = true;
+      }
+      return { expectToPassRightEdge, expectToPassLeftEdge, };
+    }
   }
 
   function getInitialPieData() {
