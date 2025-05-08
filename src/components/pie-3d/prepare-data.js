@@ -31,16 +31,22 @@ export function prepareData(arg: AddComponentPie3dArgument): PieData {
     const rotationCxRad = -ops.rotationAroundCenterXAxisDeg / 180 * Math.PI;
     const rotationCzRad = -ops.rotationAroundCenterZAxisDeg / 180 * Math.PI;
 
+    const sinRotationCx = Math.sin(rotationCxRad);
+    const cosRotationCx = Math.cos(rotationCxRad);
     const rotationMatrixX = [
-      [1, 0,                        0,                      ],
-      [0, Math.cos(rotationCxRad), -Math.sin(rotationCxRad),],
-      [0, Math.sin(rotationCxRad),  Math.cos(rotationCxRad),],
+      [1, 0,              0,],
+      [0, cosRotationCx, -sinRotationCx,],
+      [0, sinRotationCx,  cosRotationCx,],
     ];
+
+    const sinRotationCz = Math.sin(rotationCzRad);
+    const cosRotationCz = Math.cos(rotationCzRad);
     const rotationMatrixZ = [
-      [Math.cos(rotationCzRad), -Math.sin(rotationCzRad), 0,],
-      [Math.sin(rotationCzRad),  Math.cos(rotationCzRad), 0,],
-      [0,                        0,                       1,],
+      [cosRotationCz, -sinRotationCz, 0,],
+      [sinRotationCz,  cosRotationCz, 0,],
+      [0,              0,             1,],
     ];
+
     rotatePoint(pieData.pointTopHeads);
     rotatePoint(pieData.centerHeads);
     rotatePoint(pieData.centerTails);
