@@ -24,6 +24,8 @@ class Pie3d implements Component {
       canvas.style.height = '100%';
       canvas.style.position = 'absolute';
       canvas.style.zIndex = '100';
+      canvas.width = that._container.offsetWidth;
+      canvas.height = that._container.offsetHeight;
       that._container.appendChild(canvas);
       that._ctx = canvas.getContext('2d');
     }
