@@ -1,5 +1,6 @@
 //@flow strict
-import type { AddComponentPie3dArgument, PieData, Point, } from './types.js';
+import type { AddComponentPie3dArgument, PieData, } from './types.js';
+import type { Point, } from '../../types.js';
 
 export function prepareData(arg: AddComponentPie3dArgument): PieData {
   const ops = arg.options;

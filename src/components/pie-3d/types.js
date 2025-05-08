@@ -1,5 +1,5 @@
 //@flow strict
-import type { AddComponentArgument, } from '../../types.js';
+import type { AddComponentArgument, Point } from '../../types.js';
 
 export type AddComponentPie3dArgument = {
   ...Exclude<AddComponentArgument, AddComponentArgument['options']>,
@@ -13,8 +13,6 @@ export type AddComponentPie3dArgument = {
     +rotationAroundCenterZAxisDeg: number,
   },
 }
-
-export type Point = [number, number, number,]
 
 type SliceData = {
   +startPointHeads: Point,
