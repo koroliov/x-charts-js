@@ -1,6 +1,7 @@
 //@flow strict
 import type { AddComponentPie3dArgument, PieData, } from './types.js';
 import type { Point, } from '../../types.js';
+import { calculateDistance, } from '../../utils/math.js';
 
 export function prepareData(arg: AddComponentPie3dArgument): PieData {
   const ops = arg.options;
@@ -12,18 +13,16 @@ export function prepareData(arg: AddComponentPie3dArgument): PieData {
   return pieData;
 
   function calculateEllipseMethodArgs() {
-    pieData.someEllipseMethodArgs.radiusY =
-      calculateDistance(pieData.pointTopHeads, pieData.centerHeads);
-    pieData.someEllipseMethodArgs.radiusX =
-      calculateDistance(pieData.edgeRight.pointHeads, pieData.centerHeads);
+    pieData.someEllipseMethodArgs.radiusY = calculateDistance({
+      pointStart: pieData.centerHeads,
+      pointEnd: pieData.pointTopHeads,
+    });
+    pieData.someEllipseMethodArgs.radiusX = calculateDistance({
+      pointStart: pieData.centerHeads,
+      pointEnd: pieData.edgeRight.pointHeads,
+    });
     pieData.someEllipseMethodArgs.rotationClockwise =
       -(ops.rotationAroundCenterZAxisDeg / 180 * Math.PI);
-
-    function calculateDistance(pStart: Point, pEnd: Point) {
-      const distanceX = Math.abs(pStart[0] - pEnd[0]);
-      const distanceY = Math.abs(pStart[1] - pEnd[1]);
-      return Math.sqrt(Math.pow(distanceX, 2) + Math.pow(distanceY, 2));
-    }
   }
 
   function handleRotations() {
