@@ -147,6 +147,8 @@ tp.test((t) => {
       "radiusY": 74.99999999999999,
       "rotationClockwise": -0.7853981633974483,
     },
+    "isHeadsVisibleToUser": true,
+    "isTailsVisibleToUser": false,
   };
 
   const actual = prepareData(addComponentArg);

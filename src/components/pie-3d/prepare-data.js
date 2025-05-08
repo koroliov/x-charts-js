@@ -6,7 +6,7 @@ export function prepareData(arg: AddComponentPie3dArgument): PieData {
   const { slices, totalValue, } = getTotalValueAndSlices();
   const pieData = getInitialPieData();
   setPointsOnNonRotatedCircle();
-  applyRotations();
+  handleRotations();
   calculateEllipseMethodArgs();
   return pieData;
 
@@ -25,7 +25,8 @@ export function prepareData(arg: AddComponentPie3dArgument): PieData {
     }
   }
 
-  function applyRotations() {
+  function handleRotations() {
+    handleHeadsOrTailsVisibilityFlags();
     const centerX = ops.centerXPx;
     const centerY = ops.centerYPx;
     const rotationCxRad = -ops.rotationAroundCenterXAxisDeg / 180 * Math.PI;
@@ -74,6 +75,22 @@ export function prepareData(arg: AddComponentPie3dArgument): PieData {
       p[2] = pRotated[2];
       p[0] += centerX;
       p[1] += centerY;
+    }
+
+    function handleHeadsOrTailsVisibilityFlags() {
+      const angle = ops.rotationAroundCenterXAxisDeg;
+      if (angle === 90 || angle === 270) {
+        return;
+      } else if (angle < 90) {
+        pieData.isHeadsVisibleToUser = true;
+        return;
+      } else if (angle < 270) {
+        pieData.isTailsVisibleToUser = true;
+        return;
+      } else {
+        pieData.isHeadsVisibleToUser = true;
+        return;
+      }
     }
   }
 
@@ -181,6 +198,8 @@ export function prepareData(arg: AddComponentPie3dArgument): PieData {
         radiusY: 0,
         rotationClockwise: 0,
       },
+      isHeadsVisibleToUser: false,
+      isTailsVisibleToUser: false,
     };
   }
 
