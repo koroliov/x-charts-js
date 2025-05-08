@@ -46,4 +46,6 @@ export type PieData = {
   +centerHeads: Point,
   +centerTails: Point,
   +someEllipseMethodArgs: Context2dEllipseMethodArguments,
+  isHeadsVisibleToUser: boolean,
+  isTailsVisibleToUser: boolean,
 }

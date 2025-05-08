@@ -1,6 +1,6 @@
 FILE := ''
 PROJECT_NAME := x-charts
-PROJECT_IMAGE_TAG := 20
+PROJECT_IMAGE_TAG := 21
 CONTAINER_NAME := $(PROJECT_NAME)-$(PROJECT_IMAGE_TAG)
 NODE_VERSION_NUM := 23.11.0
 NPM_VERSION_NUM := 11.3.0
@@ -58,6 +58,10 @@ podman-container-run-attached podman-container-run-detached:
 	$(PROJECT_NAME):$(PROJECT_IMAGE_TAG)
 	podman container exec -it $(CONTAINER_NAME) bash -c \
 	"[[ -d './test/served-tmp/' ]] || mkdir './test/served-tmp/'"
+	podman container exec -it $(CONTAINER_NAME) bash -c \
+	"[[ -d './test/diff/' ]] || mkdir './test/diff/'"
+	podman container exec -it $(CONTAINER_NAME) bash -c \
+	"[[ -d './test/unit-tmp/' ]] || mkdir './test/unit-tmp/'"
 
 .PHONY: podman-container-attach
 podman-container-attach:
@@ -112,7 +116,7 @@ flow-build-full:
 #test section
 .PHONY: test-unit
 test-unit: TEST_FILES_RUN = $(subst ./src/,./test/unit-tmp/src/,$(TEST_FILES))
-test-unit: create-test-unit-tmp-dir-if-not-exists
+test-unit:
 	podman container exec -it $(CONTAINER_NAME) bash -c "rm -rf \
 	./test/unit-tmp/* && npm run flow && npm run flow-build-test $(BUILD_FILES) \
 	$(TEST_FILES) && npm run tape $(TEST_FILES_RUN)"
@@ -124,15 +128,10 @@ test-unit-help:
 	@echo '    ./src/test-unit/foo-2.test.js"'
 
 .PHONY: test-unit-full
-test-unit-full: create-test-unit-tmp-dir-if-not-exists
+test-unit-full:
 	podman container exec -it $(CONTAINER_NAME) bash -c "rm -rf \
 	./test/unit-tmp/* && npm run flow && npm run flow-build-test \
-	./src/ && npm run tape ./test/unit-tmp/*.test.js"
-
-.PHONY: create-test-unit-tmp-dir-if-not-exists
-create-test-unit-tmp-dir-if-not-exists:
-	podman container exec -it $(CONTAINER_NAME) bash -c \
-	"[[ -d './test/unit-tmp/' ]] || mkdir './test/unit-tmp/'"
+	./src/ && npm run tape ./test/unit-tmp/**/*.test.js"
 
 ifneq ($(wildcard ./Makefile.current), '')
   include ./var/Makefile.current
