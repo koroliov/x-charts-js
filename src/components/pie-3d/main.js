@@ -42,17 +42,17 @@ class Pie3d implements Component {
       const ctx = that._ctx;
       ctx.lineWidth = 0.5;
       if (pieData.isHeadsVisibleToUser) {
-        processEllipse({ isHeads: true, action: 'fill', });
+        processFace({ isHeads: true, action: 'fill', });
         if (pieData.isRimVisibleToUser) {
           fillRimElliptic(true);
         }
-        processEllipse({ isHeads: true, action: 'stroke', });
+        processFace({ isHeads: true, action: 'stroke', });
       } else if (pieData.isTailsVisibleToUser) {
-        processEllipse({ isHeads: false, action: 'fill', });
+        processFace({ isHeads: false, action: 'fill', });
         if (pieData.isRimVisibleToUser) {
           fillRimElliptic(false);
         }
-        processEllipse({ isHeads: false, action: 'stroke', });
+        processFace({ isHeads: false, action: 'stroke', });
       } else if (pieData.isRimVisibleToUser) {
         //drawRim(false);
       }
@@ -63,7 +63,7 @@ class Pie3d implements Component {
           'startPointTails';
       }
 
-      function processEllipse(arg: {
+      function processFace(arg: {
         isHeads: boolean,
         action: 'stroke' | 'fill',
       }) {
