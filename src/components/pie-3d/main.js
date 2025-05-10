@@ -2,7 +2,8 @@
 import type { Component, } from '../../types.js';
 import XCharts, { registerComponent, } from '../../main.js';
 import type { AddComponentPie3dArgument, PieData, } from './types.js';
-import { prepareData } from './prepare-data.js';
+import { prepareData, } from './prepare-data.js';
+import { getAngleClockwise, } from '../../utils/math.js';
 
 class Pie3d implements Component {
   static +_type = 'pie-3d'
@@ -38,17 +39,43 @@ class Pie3d implements Component {
     }
 
     function draw() {
-      //determine heads or tails is to draw
-      //draw heads/tails
-        //from slice 0 for each slice
-        //draw, fill
+      const ctx = that._ctx;
+      ctx.lineWidth = 0.5;
+      if (pieData.isHeadsVisibleToUser) {
+        drawEllipse(true);
+      } else if (pieData.isTailsVisibleToUser) {
         //
-      //draw rim
-        //from left edge to right edge
-        //find slice index, color
-        //from edge to slice endpoint
-        //from start point to end point
-        //from start point to right edge
+      } else {
+        //
+      }
+
+      function drawEllipse(isHeads: boolean) {
+        const centerPointPropName = isHeads ? 'centerHeads' : 'centerTails';
+        const startPointPropName = isHeads ? 'startPointHeads' :
+          'startPointTails';
+
+        pieData.slices.forEach((s, i) => {
+          ctx.moveTo(pieData[centerPointPropName][0],
+            pieData[centerPointPropName][1]);
+          ctx.beginPath();
+          ctx.lineTo(s[startPointPropName][0], s[startPointPropName][1]);
+          ctx.ellipse(
+            pieData[centerPointPropName][0],
+            pieData[centerPointPropName][1],
+            pieData.someEllipseMethodArgs.radiusX,
+            pieData.someEllipseMethodArgs.radiusY,
+            pieData.someEllipseMethodArgs.axesRotationCounterClockwise,
+            s.startAngleOnEllipseClockwise,
+            s.endAngleOnEllipseClockwise,
+            true,
+          );
+          ctx.lineTo(pieData[centerPointPropName][0],
+            pieData[centerPointPropName][1]);
+          ctx.fillStyle = s.color;
+          ctx.fill();
+          ctx.stroke();
+        });
+      }
     }
 
     function validateAddComponentArgument() {
