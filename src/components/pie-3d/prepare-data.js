@@ -7,7 +7,7 @@ export function prepareData(arg: AddComponentPie3dArgument): PieData {
   const ops = arg.options;
   const { slices, totalValue, } = getTotalValueAndSlices();
   const pieData = getInitialPieData();
-  setPointsOnNonRotatedCircle();
+  performBeforeRotationsProcessing();
   handleRotations();
   calculateEllipseMethodArgs();
   return pieData;
@@ -94,7 +94,7 @@ export function prepareData(arg: AddComponentPie3dArgument): PieData {
     }
   }
 
-  function setPointsOnNonRotatedCircle() {
+  function performBeforeRotationsProcessing() {
     const circleRadius = ops.radiusPx;
     const centerX = ops.centerXPx;
     const centerY = ops.centerYPx;
