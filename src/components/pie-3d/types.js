@@ -35,6 +35,7 @@ type Context2dEllipseMethodArguments = {
   radiusX: number,
   radiusY: number,
   axesRotationCounterClockwise: number,
+  isCounterClockwise: boolean,
 }
 
 export type PieData = {

@@ -67,7 +67,7 @@ class Pie3d implements Component {
             pieData.someEllipseMethodArgs.axesRotationCounterClockwise,
             s.startAngleOnEllipseClockwise,
             s.endAngleOnEllipseClockwise,
-            true,
+            pieData.someEllipseMethodArgs.isCounterClockwise,
           );
           ctx.lineTo(pieData[centerPointPropName][0],
             pieData[centerPointPropName][1]);
