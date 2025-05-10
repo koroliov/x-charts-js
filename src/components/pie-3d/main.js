@@ -42,19 +42,37 @@ class Pie3d implements Component {
       const ctx = that._ctx;
       ctx.lineWidth = 0.5;
       if (pieData.isHeadsVisibleToUser) {
-        drawEllipse(true);
+        processEllipse({ isHeads: true, action: 'fill', });
+        if (pieData.isRimVisibleToUser) {
+          fillRimElliptic(true);
+        }
+        processEllipse({ isHeads: true, action: 'stroke', });
       } else if (pieData.isTailsVisibleToUser) {
-        drawEllipse(false);
-      } else {
-        //
+        processEllipse({ isHeads: false, action: 'fill', });
+        if (pieData.isRimVisibleToUser) {
+          fillRimElliptic(false);
+        }
+        processEllipse({ isHeads: false, action: 'stroke', });
+      } else if (pieData.isRimVisibleToUser) {
+        //drawRim(false);
       }
 
-      function drawEllipse(isHeads: boolean) {
+      function fillRimElliptic(isHeads: boolean) {
         const centerPointPropName = isHeads ? 'centerHeads' : 'centerTails';
         const startPointPropName = isHeads ? 'startPointHeads' :
           'startPointTails';
+      }
 
-        pieData.slices.forEach((s, i) => {
+      function processEllipse(arg: {
+        isHeads: boolean,
+        action: 'stroke' | 'fill',
+      }) {
+        const centerPointPropName = arg.isHeads ? 'centerHeads' : 'centerTails';
+        const startPointPropName = arg.isHeads ? 'startPointHeads' :
+          'startPointTails';
+        pieData.slices.forEach(processSlice);
+
+        function processSlice(s: typeof pieData.slices[0], i: number) {
           ctx.moveTo(pieData[centerPointPropName][0],
             pieData[centerPointPropName][1]);
           ctx.beginPath();
@@ -71,10 +89,13 @@ class Pie3d implements Component {
           );
           ctx.lineTo(pieData[centerPointPropName][0],
             pieData[centerPointPropName][1]);
-          ctx.fillStyle = s.color;
-          ctx.fill();
-          ctx.stroke();
-        });
+          if (arg.action === 'fill') {
+            ctx.fillStyle = s.color;
+            ctx.fill();
+          } else {
+            ctx.stroke();
+          }
+        }
       }
     }
 
