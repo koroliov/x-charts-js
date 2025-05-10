@@ -156,6 +156,7 @@ tp.test((t) => {
     },
     "isHeadsVisibleToUser": true,
     "isTailsVisibleToUser": false,
+    "isRimVisibleToUser": true,
   };
 
   const actual = prepareData(addComponentArg);
@@ -330,6 +331,7 @@ tp.test((t) => {
     },
     "isHeadsVisibleToUser": false,
     "isTailsVisibleToUser": true,
+    "isRimVisibleToUser": true,
   };
 
   const actual = prepareData(addComponentArg);
