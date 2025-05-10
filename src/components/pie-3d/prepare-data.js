@@ -193,9 +193,6 @@ export function prepareData(arg: AddComponentPie3dArgument): PieData {
       } else {
         pieData.isHeadsVisibleToUser = true;
       }
-      if (ops.thicknessPx < 3) {
-        pieData.isRimVisibleToUser = false;
-      }
       if (pieData.isTailsVisibleToUser) {
         pieData.someEllipseMethodArgs.isCounterClockwise = false;
       }
