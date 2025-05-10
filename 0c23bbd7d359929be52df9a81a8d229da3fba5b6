@@ -1,5 +1,8 @@
 Amendment to the original message.
 
-Actually, as I see, the angle is calculated before any rotation is
-applied. Not even sure how it works, but since the unit tests pass,
-there should be no problem.
+1. It still doesn't work when the pie is rotated around cX axis over 90
+   deg. Fixed in a subsequent commit.
+
+2. Actually, as I see, the angle is calculated before any rotation is
+   applied. Not even sure how it works, but since the unit tests pass,
+   there should be no problem.
