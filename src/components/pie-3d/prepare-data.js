@@ -214,6 +214,8 @@ export function prepareData(arg: AddComponentPie3dArgument): PieData {
         startPointTails: prevEndTails,
         endPointHeads: [0, 0, 0,],
         endPointTails: [0, 0, 0,],
+        startAngleOnEllipseClockwise: 0,
+        endAngleOnEllipseClockwise: 0,
         value: d.value,
         color: d.meta.color,
       };
