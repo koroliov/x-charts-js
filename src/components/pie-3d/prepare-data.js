@@ -21,7 +21,7 @@ export function prepareData(arg: AddComponentPie3dArgument): PieData {
       pointStart: pieData.centerHeads,
       pointEnd: pieData.edgeRight.pointHeads,
     });
-    pieData.someEllipseMethodArgs.rotationClockwise =
+    pieData.someEllipseMethodArgs.axesRotationCounterClockwise =
       -(ops.rotationAroundCenterZAxisDeg / 180 * Math.PI);
   }
 
@@ -148,7 +148,8 @@ export function prepareData(arg: AddComponentPie3dArgument): PieData {
       handleExpectedEdgeFlagsWhenPassingSlice(i);
     });
 
-    function handleStartEndAnglesOnSlice(sliceIndex: number, startPoint: Point) {
+    function handleStartEndAnglesOnSlice(sliceIndex: number,
+      startPoint: Point) {
       const sd = pieData.slices[sliceIndex];
       const sdPrevious = sliceIndex > 0 ? pieData.slices[sliceIndex - 1] :
         pieData.slices[pieData.slices.length - 1];
@@ -208,7 +209,7 @@ export function prepareData(arg: AddComponentPie3dArgument): PieData {
       someEllipseMethodArgs: {
         radiusX: 0,
         radiusY: 0,
-        rotationClockwise: 0,
+        axesRotationCounterClockwise: 0,
       },
       isHeadsVisibleToUser: false,
       isTailsVisibleToUser: false,

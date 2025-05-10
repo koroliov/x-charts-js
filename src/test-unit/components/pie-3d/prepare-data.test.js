@@ -151,7 +151,7 @@ tp.test((t) => {
     "someEllipseMethodArgs": {
       "radiusX": 149.99999999999997,
       "radiusY": 74.99999999999999,
-      "rotationClockwise": -0.7853981633974483,
+      "axesRotationCounterClockwise": -0.7853981633974483,
     },
     "isHeadsVisibleToUser": true,
     "isTailsVisibleToUser": false,

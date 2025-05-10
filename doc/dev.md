@@ -54,6 +54,12 @@ the Podman image tag must be incremented by 1:
   }
   ```
 
+  - hex colors (and other colors, but currently only hex colors are supposed to
+    be allowed) must always have their human name right next to them, e.g.:
+  ```
+  { value: 50, meta: { color: '#f2b5f6' /* pinkish */, }, },
+  ```
+
 ============================= **Various how-tos** ==============================
 
 **How to install/update other software in container?**

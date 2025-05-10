@@ -175,7 +175,7 @@ export function drawDataOnCanvas(arg: Arg) {
             pieData[isHeads ? 'centerHeads' : 'centerTails'][1],
             pieData.someEllipseMethodArgs.radiusX,
             pieData.someEllipseMethodArgs.radiusY,
-            pieData.someEllipseMethodArgs.rotationClockwise,
+            pieData.someEllipseMethodArgs.axesRotationCounterClockwise,
             angleStart,
             angleEnd,
             true,
