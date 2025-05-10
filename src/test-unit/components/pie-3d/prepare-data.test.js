@@ -49,6 +49,8 @@ tp.test((t) => {
           352.6486321878351,
           48.30634285542375,
         ],
+        "startAngleOnEllipseClockwise": 5.934119456780721,
+        "endAngleOnEllipseClockwise": 3.420845333908886,
         "value": 40,
         "color": "#ff0000",
       },
@@ -73,6 +75,8 @@ tp.test((t) => {
           345.52366718633925,
           -112.3715572551245,
         ],
+        "startAngleOnEllipseClockwise": 3.420845333908886,
+        "endAngleOnEllipseClockwise": 1.85004900711399,
         "value": 25,
         "color": "#37ff00",
       },
@@ -97,6 +101,8 @@ tp.test((t) => {
           147.50150003549552,
           56.92971990890358,
         ],
+        "startAngleOnEllipseClockwise": 1.85004900711399,
+        "endAngleOnEllipseClockwise": 5.934119456780721,
         "value": 35,
         "color": "#000aff",
       },
@@ -165,6 +171,8 @@ tp.test((t) => {
   //  drawDotsTails: true,
   //  drawLineToRightEdgeHeads: true,
   //  drawLineToRightEdgeTails: true,
+  //  angleStartSliceIndex: 0,
+  //  angleEndSliceIndex: 1,
   //});
   t.deepEqual(actual, expected);
   t.end();

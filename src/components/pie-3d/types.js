@@ -19,6 +19,8 @@ type SliceData = {
   +startPointTails: Point,
   +endPointHeads: Point,
   +endPointTails: Point,
+  +startAngleOnEllipseClockwise: number,
+  +endAngleOnEllipseClockwise: number,
   +value: number,
   +color: string,
 }
