@@ -42,25 +42,94 @@ class Pie3d implements Component {
       const ctx = that._ctx;
       ctx.lineWidth = 0.5;
       if (pieData.isHeadsVisibleToUser) {
-        processFace({ isHeads: true, action: 'fill', });
+        //processFace({ isHeads: true, action: 'fill', });
         if (pieData.isRimVisibleToUser) {
-          fillRimElliptic(true);
+          processRimElliptic({ isHeadsVisible: true, action: 'fill', });
         }
-        processFace({ isHeads: true, action: 'stroke', });
+        //processFace({ isHeads: true, action: 'stroke', });
+        if (pieData.isRimVisibleToUser) {
+          processRimElliptic({ isHeadsVisible: true, action: 'stroke', });
+        }
       } else if (pieData.isTailsVisibleToUser) {
         processFace({ isHeads: false, action: 'fill', });
         if (pieData.isRimVisibleToUser) {
-          fillRimElliptic(false);
+          processRimElliptic({ isHeadsVisible: false, action: 'fill', });
         }
         processFace({ isHeads: false, action: 'stroke', });
       } else if (pieData.isRimVisibleToUser) {
         //drawRim(false);
       }
 
-      function fillRimElliptic(isHeads: boolean) {
-        const centerPointPropName = isHeads ? 'centerHeads' : 'centerTails';
-        const startPointPropName = isHeads ? 'startPointHeads' :
-          'startPointTails';
+      function processRimElliptic(arg: {
+        isHeadsVisible: boolean,
+        action: 'stroke' | 'fill',
+      }) {
+        const centerPointPropName = arg.isHeadsVisible ?
+          'centerHeads' : 'centerTails';
+
+        const sliceStart = pieData.slices[pieData.edgeLeft.sliceIndex];
+        const sliceEnd = pieData.slices[pieData.edgeRight.sliceIndex];
+        if (sliceStart === sliceEnd) {
+          //draw 1 single rim
+        }
+        drawLeftSlice();
+        //draw left slice
+        //draw middle slices
+        //draw right slice
+
+        function drawLeftSlice() {
+          const edgeLineStartPointPropName = arg.isHeadsVisible ?
+            'pointHeads' : 'pointTails';
+          const edgeLineEndPointPropName = arg.isHeadsVisible ?
+            'pointTails' : 'pointHeads';
+
+          console.log(edgeLineStartPointPropName, edgeLineEndPointPropName);
+          ctx.beginPath();
+          ctx.moveTo(pieData.edgeLeft[edgeLineStartPointPropName][0],
+            pieData.edgeLeft[edgeLineStartPointPropName][1]);
+          ctx.lineTo(pieData.edgeLeft[edgeLineEndPointPropName][0],
+            pieData.edgeLeft[edgeLineEndPointPropName][1]);
+
+          let centerPointPropName = arg.isHeadsVisible ?
+            'centerTails' : 'centerHeads';
+          console.log(centerPointPropName);
+          ctx.ellipse(
+            pieData[centerPointPropName][0],
+            pieData[centerPointPropName][1],
+            pieData.someEllipseMethodArgs.radiusX,
+            pieData.someEllipseMethodArgs.radiusY,
+            pieData.someEllipseMethodArgs.axesRotationCounterClockwise,
+            Math.PI,
+            sliceStart.endAngleOnEllipseClockwise,
+            pieData.someEllipseMethodArgs.isCounterClockwise,
+          );
+          const sliceEndLineToPointPropName = arg.isHeadsVisible ?
+            'endPointHeads' : 'endPointTails';
+          ctx.lineTo(sliceStart[sliceEndLineToPointPropName][0],
+            sliceStart[sliceEndLineToPointPropName][1]);
+
+          centerPointPropName = arg.isHeadsVisible ?
+            'centerHeads' : 'centerTails';
+          ctx.ellipse(
+            pieData[centerPointPropName][0],
+            pieData[centerPointPropName][1],
+            pieData.someEllipseMethodArgs.radiusX,
+            pieData.someEllipseMethodArgs.radiusY,
+            pieData.someEllipseMethodArgs.axesRotationCounterClockwise,
+            sliceStart.endAngleOnEllipseClockwise,
+            Math.PI,
+            !pieData.someEllipseMethodArgs.isCounterClockwise,
+          );
+
+          if (arg.action === 'fill') {
+            ctx.fillStyle = sliceStart.color;
+            console.log('filled');
+            ctx.fill();
+          } else {
+            console.log('stroked');
+            ctx.stroke();
+          }
+        }
       }
 
       function processFace(arg: {

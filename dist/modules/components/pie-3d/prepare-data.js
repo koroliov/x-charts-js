@@ -1,32 +1,31 @@
 //      strict
-                                                                             
+                                                                      
+                                             
+import { calculateDistance, getAngleClockwise, } from '../../utils/math.js';
 
 export function prepareData(arg                           )          {
   const ops = arg.options;
   const { slices, totalValue, } = getTotalValueAndSlices();
   const pieData = getInitialPieData();
-  setPointsOnNonRotatedCircle();
+  performBeforeRotationsProcessing();
   handleRotations();
   calculateEllipseMethodArgs();
   return pieData;
 
   function calculateEllipseMethodArgs() {
-    pieData.someEllipseMethodArgs.radiusY =
-      calculateDistance(pieData.pointTopHeads, pieData.centerHeads);
-    pieData.someEllipseMethodArgs.radiusX =
-      calculateDistance(pieData.edgeRight.pointHeads, pieData.centerHeads);
-    pieData.someEllipseMethodArgs.rotationClockwise =
+    pieData.someEllipseMethodArgs.radiusY = calculateDistance({
+      pointStart: pieData.centerHeads,
+      pointEnd: pieData.pointTopHeads,
+    });
+    pieData.someEllipseMethodArgs.radiusX = calculateDistance({
+      pointStart: pieData.centerHeads,
+      pointEnd: pieData.edgeRight.pointHeads,
+    });
+    pieData.someEllipseMethodArgs.axesRotationCounterClockwise =
       -(ops.rotationAroundCenterZAxisDeg / 180 * Math.PI);
-
-    function calculateDistance(pStart       , pEnd       ) {
-      const distanceX = Math.abs(pStart[0] - pEnd[0]);
-      const distanceY = Math.abs(pStart[1] - pEnd[1]);
-      return Math.sqrt(Math.pow(distanceX, 2) + Math.pow(distanceY, 2));
-    }
   }
 
   function handleRotations() {
-    handleHeadsOrTailsVisibilityFlags();
     const centerX = ops.centerXPx;
     const centerY = ops.centerYPx;
     const rotationCxRad = -ops.rotationAroundCenterXAxisDeg / 180 * Math.PI;
@@ -76,25 +75,10 @@ export function prepareData(arg                           )          {
       p[0] += centerX;
       p[1] += centerY;
     }
-
-    function handleHeadsOrTailsVisibilityFlags() {
-      const angle = ops.rotationAroundCenterXAxisDeg;
-      if (angle === 90 || angle === 270) {
-        return;
-      } else if (angle < 90) {
-        pieData.isHeadsVisibleToUser = true;
-        return;
-      } else if (angle < 270) {
-        pieData.isTailsVisibleToUser = true;
-        return;
-      } else {
-        pieData.isHeadsVisibleToUser = true;
-        return;
-      }
-    }
   }
 
-  function setPointsOnNonRotatedCircle() {
+  function performBeforeRotationsProcessing() {
+    handleHeadsTailsAndRimVisibility();
     const circleRadius = ops.radiusPx;
     const centerX = ops.centerXPx;
     const centerY = ops.centerYPx;
@@ -138,7 +122,7 @@ export function prepareData(arg                           )          {
       sd.startPointHeads[0] = x;
       sd.startPointHeads[1] = y;
       sd.startPointHeads[2] = -halfThickness;
-
+      handleStartEndAnglesOnSlice(i, sd.startPointHeads);
       sd.startPointTails[0] = x;
       sd.startPointTails[1] = y;
       sd.startPointTails[2] = halfThickness;
@@ -147,6 +131,23 @@ export function prepareData(arg                           )          {
       startAngle += endAngle;
       handleExpectedEdgeFlagsWhenPassingSlice(i);
     });
+
+    function handleStartEndAnglesOnSlice(sliceIndex        ,
+      startPoint       ) {
+      const sd = pieData.slices[sliceIndex];
+      const sdPrevious = sliceIndex > 0 ? pieData.slices[sliceIndex - 1] :
+        pieData.slices[pieData.slices.length - 1];
+      sdPrevious.endAngleOnEllipseClockwise = getAngleClockwise({
+        startPoint: pieData.edgeRight.pointHeads,
+        centerPoint: pieData.centerHeads,
+        endPoint: sd.startPointHeads,
+      });
+      if (!pieData.someEllipseMethodArgs.isCounterClockwise) {
+        sdPrevious.endAngleOnEllipseClockwise =
+          -sdPrevious.endAngleOnEllipseClockwise;
+      }
+      sd.startAngleOnEllipseClockwise = sdPrevious.endAngleOnEllipseClockwise;
+    }
 
     function handleExpectedEdgeFlagsWhenPassingSlice(sliceIndex        ) {
       if (expectToPassLeftEdge) {
@@ -174,6 +175,28 @@ export function prepareData(arg                           )          {
       }
       return { expectToPassRightEdge, expectToPassLeftEdge, };
     }
+
+    function handleHeadsTailsAndRimVisibility() {
+      const angle = ops.rotationAroundCenterXAxisDeg;
+      if (angle === 0) {
+        pieData.isHeadsVisibleToUser = true;
+        pieData.isRimVisibleToUser = false;
+      } else if (angle === 180) {
+        pieData.isTailsVisibleToUser = true;
+        pieData.isRimVisibleToUser = false;
+      } else if (angle === 90 || angle === 270) {
+        return;
+      } else if (angle < 90) {
+        pieData.isHeadsVisibleToUser = true;
+      } else if (angle < 270) {
+        pieData.isTailsVisibleToUser = true;
+      } else {
+        pieData.isHeadsVisibleToUser = true;
+      }
+      if (pieData.isTailsVisibleToUser) {
+        pieData.someEllipseMethodArgs.isCounterClockwise = false;
+      }
+    }
   }
 
   function getInitialPieData() {
@@ -196,10 +219,12 @@ export function prepareData(arg                           )          {
       someEllipseMethodArgs: {
         radiusX: 0,
         radiusY: 0,
-        rotationClockwise: 0,
+        axesRotationCounterClockwise: 0,
+        isCounterClockwise: true,
       },
       isHeadsVisibleToUser: false,
       isTailsVisibleToUser: false,
+      isRimVisibleToUser: true,
     };
   }
 
@@ -214,6 +239,8 @@ export function prepareData(arg                           )          {
         startPointTails: prevEndTails,
         endPointHeads: [0, 0, 0,],
         endPointTails: [0, 0, 0,],
+        startAngleOnEllipseClockwise: 0,
+        endAngleOnEllipseClockwise: 0,
         value: d.value,
         color: d.meta.color,
       };
