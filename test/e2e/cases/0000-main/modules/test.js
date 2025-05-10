@@ -4,7 +4,8 @@ import '/dist/modules/components/pie-3d/main.js';
 const xChartsConstructorArg = {
   containerDiv: document.getElementById('x-charts'),
   options: {
-    backgroundColor: '#f7ffff',
+    //backgroundColor: '#3300ff' /* blue */,
+    backgroundColor: '#ffffff' /* white */,
   },
 };
 const ins = new XCharts(xChartsConstructorArg);
@@ -14,17 +15,17 @@ const addComponentArg = {
   zIndex: '1',
   options: {
     thicknessPx: 50,
-    radiusPx: 500,
+    radiusPx: 200,
     centerXPx: 400,
-    centerYPx: 300,
-    startAtDeg: 20,
+    centerYPx: 250,
+    startAtDeg: 0,
     rotationAroundCenterXAxisDeg: 60,
     rotationAroundCenterZAxisDeg: 45,
   },
   data: [
-    { value: 40, meta: { color: '#ff0000', }, },
-    { value: 25, meta: { color: '#37ff00', }, },
-    { value: 35, meta: { color: '#000aff', }, },
+    { value: 15, meta: { color: '#ff0000' /* red */, }, },
+    { value: 4, meta: { color: '#37ff00' /* green */, }, },
+    //{ value: 55, meta: { color: '#000aff' /* blue */, }, },
   ],
 };
 ins.add(addComponentArg);
