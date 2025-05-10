@@ -1,7 +1,7 @@
 //@flow strict
 import type { AddComponentPie3dArgument, PieData, } from './types.js';
 import type { Point, } from '../../types.js';
-import { calculateDistance, } from '../../utils/math.js';
+import { calculateDistance, getAngleClockwise, } from '../../utils/math.js';
 
 export function prepareData(arg: AddComponentPie3dArgument): PieData {
   const ops = arg.options;
@@ -138,7 +138,7 @@ export function prepareData(arg: AddComponentPie3dArgument): PieData {
       sd.startPointHeads[0] = x;
       sd.startPointHeads[1] = y;
       sd.startPointHeads[2] = -halfThickness;
-
+      handleStartEndAnglesOnSlice(i, sd.startPointHeads);
       sd.startPointTails[0] = x;
       sd.startPointTails[1] = y;
       sd.startPointTails[2] = halfThickness;
@@ -147,6 +147,18 @@ export function prepareData(arg: AddComponentPie3dArgument): PieData {
       startAngle += endAngle;
       handleExpectedEdgeFlagsWhenPassingSlice(i);
     });
+
+    function handleStartEndAnglesOnSlice(sliceIndex: number, startPoint: Point) {
+      const sd = pieData.slices[sliceIndex];
+      const sdPrevious = sliceIndex > 0 ? pieData.slices[sliceIndex - 1] :
+        pieData.slices[pieData.slices.length - 1];
+      sdPrevious.endAngleOnEllipseClockwise = getAngleClockwise({
+        startPoint: pieData.edgeRight.pointHeads,
+        centerPoint: pieData.centerHeads,
+        endPoint: sd.startPointHeads,
+      });
+      sd.startAngleOnEllipseClockwise = sdPrevious.endAngleOnEllipseClockwise;
+    }
 
     function handleExpectedEdgeFlagsWhenPassingSlice(sliceIndex: number) {
       if (expectToPassLeftEdge) {
