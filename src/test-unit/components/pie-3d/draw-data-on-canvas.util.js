@@ -14,6 +14,8 @@ type Arg = {
   +drawDotsTails: boolean,
   +drawLineToRightEdgeHeads: boolean,
   +drawLineToRightEdgeTails: boolean,
+  +angleStartSliceIndex: number,
+  +angleEndSliceIndex: number,
 }
 
 export function drawDataOnCanvas(arg: Arg) {
@@ -76,14 +78,12 @@ export function drawDataOnCanvas(arg: Arg) {
     `;
 
     function generateJs() {
-      const drawHeads = String(Boolean(arg.drawHeads));
-      const drawTails = String(Boolean(arg.drawTails));
-      const drawDotsHeads = String(Boolean(arg.drawDotsHeads));
-      const drawDotsTails = String(Boolean(arg.drawDotsTails));
-      const drawLineToRightEdgeHeads =
-        String(Boolean(arg.drawLineToRightEdgeHeads));
-      const drawLineToRightEdgeTails =
-        String(Boolean(arg.drawLineToRightEdgeTails));
+      const drawHeads = String(arg.drawHeads);
+      const drawTails = String(arg.drawTails);
+      const drawDotsHeads = String(arg.drawDotsHeads);
+      const drawDotsTails = String(arg.drawDotsTails);
+      const drawLineToRightEdgeHeads = String(arg.drawLineToRightEdgeHeads);
+      const drawLineToRightEdgeTails = String(arg.drawLineToRightEdgeTails);
 
       return `
         'use strict';
