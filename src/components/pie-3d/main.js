@@ -44,7 +44,7 @@ class Pie3d implements Component {
       if (pieData.isHeadsVisibleToUser) {
         drawEllipse(true);
       } else if (pieData.isTailsVisibleToUser) {
-        //
+        drawEllipse(false);
       } else {
         //
       }
