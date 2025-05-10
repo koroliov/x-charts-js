@@ -18,14 +18,14 @@ const addComponentArg = {
     radiusPx: 200,
     centerXPx: 400,
     centerYPx: 250,
-    startAtDeg: 0,
-    rotationAroundCenterXAxisDeg: 60,
-    rotationAroundCenterZAxisDeg: 45,
+    startAtDeg: 135,
+    rotationAroundCenterXAxisDeg: 120,
+    rotationAroundCenterZAxisDeg: 0,
   },
   data: [
-    { value: 15, meta: { color: '#ff0000' /* red */, }, },
-    { value: 4, meta: { color: '#37ff00' /* green */, }, },
-    //{ value: 55, meta: { color: '#000aff' /* blue */, }, },
+    { value: 25, meta: { color: '#ff0000' /* red */, }, },
+    { value: 25, meta: { color: '#37ff00' /* green */, }, },
+    { value: 50, meta: { color: '#f2b5f6' /* pinkish */, }, },
   ],
 };
 ins.add(addComponentArg);

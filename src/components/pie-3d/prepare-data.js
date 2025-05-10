@@ -26,7 +26,6 @@ export function prepareData(arg: AddComponentPie3dArgument): PieData {
   }
 
   function handleRotations() {
-    handleHeadsOrTailsVisibilityFlags();
     const centerX = ops.centerXPx;
     const centerY = ops.centerYPx;
     const rotationCxRad = -ops.rotationAroundCenterXAxisDeg / 180 * Math.PI;
@@ -76,25 +75,10 @@ export function prepareData(arg: AddComponentPie3dArgument): PieData {
       p[0] += centerX;
       p[1] += centerY;
     }
-
-    function handleHeadsOrTailsVisibilityFlags() {
-      const angle = ops.rotationAroundCenterXAxisDeg;
-      if (angle === 90 || angle === 270) {
-        return;
-      } else if (angle < 90) {
-        pieData.isHeadsVisibleToUser = true;
-        return;
-      } else if (angle < 270) {
-        pieData.isTailsVisibleToUser = true;
-        return;
-      } else {
-        pieData.isHeadsVisibleToUser = true;
-        return;
-      }
-    }
   }
 
   function performBeforeRotationsProcessing() {
+    handleSomeStuffDependentOnCenterXRotationValue();
     const circleRadius = ops.radiusPx;
     const centerX = ops.centerXPx;
     const centerY = ops.centerYPx;
@@ -158,6 +142,10 @@ export function prepareData(arg: AddComponentPie3dArgument): PieData {
         centerPoint: pieData.centerHeads,
         endPoint: sd.startPointHeads,
       });
+      if (!pieData.someEllipseMethodArgs.isCounterClockwise) {
+        sdPrevious.endAngleOnEllipseClockwise =
+          -sdPrevious.endAngleOnEllipseClockwise;
+      }
       sd.startAngleOnEllipseClockwise = sdPrevious.endAngleOnEllipseClockwise;
     }
 
@@ -187,6 +175,22 @@ export function prepareData(arg: AddComponentPie3dArgument): PieData {
       }
       return { expectToPassRightEdge, expectToPassLeftEdge, };
     }
+
+    function handleSomeStuffDependentOnCenterXRotationValue() {
+      const angle = ops.rotationAroundCenterXAxisDeg;
+      if (angle === 90 || angle === 270) {
+        return;
+      } else if (angle < 90) {
+        pieData.isHeadsVisibleToUser = true;
+      } else if (angle < 270) {
+        pieData.isTailsVisibleToUser = true;
+      } else {
+        pieData.isHeadsVisibleToUser = true;
+      }
+      if (pieData.isTailsVisibleToUser) {
+        pieData.someEllipseMethodArgs.isCounterClockwise = false;
+      }
+    }
   }
 
   function getInitialPieData() {
@@ -210,6 +214,7 @@ export function prepareData(arg: AddComponentPie3dArgument): PieData {
         radiusX: 0,
         radiusY: 0,
         axesRotationCounterClockwise: 0,
+        isCounterClockwise: true,
       },
       isHeadsVisibleToUser: false,
       isTailsVisibleToUser: false,
