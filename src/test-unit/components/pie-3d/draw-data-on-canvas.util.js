@@ -84,6 +84,8 @@ export function drawDataOnCanvas(arg: Arg) {
       const drawDotsTails = String(arg.drawDotsTails);
       const drawLineToRightEdgeHeads = String(arg.drawLineToRightEdgeHeads);
       const drawLineToRightEdgeTails = String(arg.drawLineToRightEdgeTails);
+      const angleStartI = arg.angleStartSliceIndex;
+      const angleEndI = arg.angleEndSliceIndex;
 
       return `
         'use strict';
@@ -166,6 +168,7 @@ export function drawDataOnCanvas(arg: Arg) {
 
         function drawEllipse(canvas, pieData, isHeads) {
           const ctx = canvas.getContext('2d');
+          const { angleStart, angleEnd, } = getAngleArguments();
           ctx.beginPath();
           ctx.ellipse(
             pieData[isHeads ? 'centerHeads' : 'centerTails'][0],
@@ -173,10 +176,24 @@ export function drawDataOnCanvas(arg: Arg) {
             pieData.someEllipseMethodArgs.radiusX,
             pieData.someEllipseMethodArgs.radiusY,
             pieData.someEllipseMethodArgs.rotationClockwise,
-            0,
-            Math.PI * 2,
+            angleStart,
+            angleEnd,
+            true,
           );
           ctx.stroke();
+
+          function getAngleArguments() {
+            const angleStart =
+              pieData.slices[${ angleStartI }]?.startAngleOnEllipseClockwise ||
+                0;
+            const angleEnd =
+              pieData.slices[${ angleEndI }]?.endAngleOnEllipseClockwise ||
+                2 * Math.PI;
+            if (angleStart === angleEnd) {
+              return { angleStart: 0, angleEnd: 2 * Math.PI, };
+            }
+            return { angleStart, angleEnd, };
+          }
         }
       `;
     }
