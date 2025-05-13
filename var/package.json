@@ -25,6 +25,7 @@
     "flow-bin": "^0.259.1",
     "flow-remove-types": "^2.259.1",
     "livereload": "^0.9.3",
+    "looks-same": "^9.0.1",
     "nodemon": "^3.1.10",
     "stringify-any": "^0.0.1",
     "tape": "^5.9.0"
