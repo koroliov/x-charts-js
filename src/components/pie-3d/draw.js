@@ -40,9 +40,62 @@ export function draw(arg: {
     }
     drawLeftSlice();
     drawMiddleSlices();
+    drawRightSlice();
     //draw left slice
     //draw middle slices
     //draw right slice
+
+    function drawRightSlice() {
+      const edgeLineStartPointPropName = arg.isHeadsVisible ?
+        'pointHeads' : 'pointTails';
+      const edgeLineEndPointPropName = arg.isHeadsVisible ?
+        'pointTails' : 'pointHeads';
+
+      //console.log(edgeLineStartPointPropName, edgeLineEndPointPropName);
+      ctx.beginPath();
+      ctx.moveTo(sliceEnd.startPointHeads[0], sliceEnd.startPointHeads[1]);
+      ctx.lineTo(sliceEnd.startPointTails[0], sliceEnd.startPointTails[1]);
+
+      let centerPointPropName = arg.isHeadsVisible ?
+        'centerTails' : 'centerHeads';
+      //console.log(centerPointPropName);
+      ctx.ellipse(
+        pieData[centerPointPropName][0],
+        pieData[centerPointPropName][1],
+        pieData.someEllipseMethodArgs.radiusX,
+        pieData.someEllipseMethodArgs.radiusY,
+        pieData.someEllipseMethodArgs.axesRotationCounterClockwise,
+        sliceEnd.startAngleOnEllipseClockwise,
+        0,
+        pieData.someEllipseMethodArgs.isCounterClockwise,
+      );
+      const sliceEndLineToPointPropName = arg.isHeadsVisible ?
+        'endPointHeads' : 'endPointTails';
+      ctx.lineTo(pieData.edgeRight.pointHeads[0],
+        pieData.edgeRight.pointHeads[1]);
+
+      centerPointPropName = arg.isHeadsVisible ?
+        'centerHeads' : 'centerTails';
+      ctx.ellipse(
+        pieData[centerPointPropName][0],
+        pieData[centerPointPropName][1],
+        pieData.someEllipseMethodArgs.radiusX,
+        pieData.someEllipseMethodArgs.radiusY,
+        pieData.someEllipseMethodArgs.axesRotationCounterClockwise,
+        0,
+        sliceEnd.startAngleOnEllipseClockwise,
+        !pieData.someEllipseMethodArgs.isCounterClockwise,
+      );
+
+      if (arg.action === 'fill') {
+        ctx.fillStyle = sliceEnd.color;
+        //console.log('filled');
+        ctx.fill();
+      } else {
+        //console.log('stroked');
+        ctx.stroke();
+      }
+    }
 
     function drawMiddleSlices() {
       const sliceStartIndex = pieData.edgeLeft.sliceIndex;
