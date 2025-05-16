@@ -1,7 +1,7 @@
 //@flow strict
 import type { Component, } from '../../types.js';
 import XCharts, { registerComponent, } from '../../main.js';
-import type { AddComponentPie3dArgument, PieData, } from './types.js';
+import type { AddComponentPie3dArgument, } from './types.js';
 import { prepareData, } from './prepare-data.js';
 import { draw, } from './draw.js';
 import { getAngleClockwise, } from '../../utils/math.js';
