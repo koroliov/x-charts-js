@@ -53,7 +53,7 @@ tp.test.skip((t) => {
 function createCanvasContext2d(arg: {
   w: number,
   h: number,
-  fillStyle: string,
+  fillStyle: string | 'transparent',
 }): CanvasRenderingContext2D {
   const canvas = createCanvas(arg.w, arg.h);
   const ctx = canvas.getContext('2d');
