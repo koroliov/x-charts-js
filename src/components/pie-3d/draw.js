@@ -8,11 +8,11 @@ export function draw(arg: {
   const { pieData, ctx, } = arg;
   ctx.lineWidth = 0.5;
   if (pieData.isHeadsVisibleToUser) {
-    //processFace({ isHeads: true, action: 'fill', });
+    processFace({ isHeads: true, action: 'fill', });
     if (pieData.isRimVisibleToUser) {
       processRimElliptic({ isHeadsVisible: true, action: 'fill', });
     }
-    //processFace({ isHeads: true, action: 'stroke', });
+    processFace({ isHeads: true, action: 'stroke', });
     if (pieData.isRimVisibleToUser) {
       processRimElliptic({ isHeadsVisible: true, action: 'stroke', });
     }
@@ -35,12 +35,19 @@ export function draw(arg: {
 
     const sliceStart = pieData.slices[pieData.edgeLeft.sliceIndex];
     const sliceEnd = pieData.slices[pieData.edgeRight.sliceIndex];
-    if (sliceStart === sliceEnd) {
+
+    const sliceStartIndex = pieData.edgeLeft.sliceIndex;
+    const sliceEndIndex = pieData.edgeRight.sliceIndex;
+    //console.log('AA', sliceStartIndex, sliceEndIndex);
+    if (sliceStartIndex === sliceEndIndex) {
       //draw 1 single rim
+      //console.log('AA');
+      drawRightSlice();
+    } else {
+      drawLeftSlice();
+      drawMiddleSlices();
+      drawRightSlice();
     }
-    drawLeftSlice();
-    drawMiddleSlices();
-    drawRightSlice();
     //draw left slice
     //draw middle slices
     //draw right slice
@@ -73,6 +80,9 @@ export function draw(arg: {
         'endPointHeads' : 'endPointTails';
       ctx.lineTo(pieData.edgeRight.pointHeads[0],
         pieData.edgeRight.pointHeads[1]);
+      if (arg.action === 'stroke') {
+        ctx.stroke();
+      }
 
       centerPointPropName = arg.isHeadsVisible ?
         'centerHeads' : 'centerTails';
@@ -91,9 +101,9 @@ export function draw(arg: {
         ctx.fillStyle = sliceEnd.color;
         //console.log('filled');
         ctx.fill();
-      } else {
-        //console.log('stroked');
-        ctx.stroke();
+      //} else {
+      //  //console.log('stroked');
+      //  ctx.stroke();
       }
     }
 
@@ -121,6 +131,9 @@ export function draw(arg: {
           slice.endAngleOnEllipseClockwise,
           pieData.someEllipseMethodArgs.isCounterClockwise,
         );
+        if (arg.action === 'stroke') {
+          ctx.stroke();
+        }
 
         ctx.lineTo(slice.endPointHeads[0], slice.endPointHeads[1]);
 
@@ -142,9 +155,9 @@ export function draw(arg: {
           ctx.fillStyle = slice.color;
           //console.log('filled');
           ctx.fill();
-        } else {
-          //console.log('stroked');
-          ctx.stroke();
+        //} else {
+        //  //console.log('stroked');
+        //  ctx.stroke();
         }
       }
     }
@@ -175,6 +188,9 @@ export function draw(arg: {
         sliceStart.endAngleOnEllipseClockwise,
         pieData.someEllipseMethodArgs.isCounterClockwise,
       );
+      if (arg.action === 'stroke') {
+        ctx.stroke();
+      }
       const sliceEndLineToPointPropName = arg.isHeadsVisible ?
         'endPointHeads' : 'endPointTails';
       ctx.lineTo(sliceStart[sliceEndLineToPointPropName][0],
@@ -197,9 +213,9 @@ export function draw(arg: {
         ctx.fillStyle = sliceStart.color;
         //console.log('filled');
         ctx.fill();
-      } else {
-        //console.log('stroked');
-        ctx.stroke();
+      //} else {
+      //  //console.log('stroked');
+      //  ctx.stroke();
       }
     }
   }
