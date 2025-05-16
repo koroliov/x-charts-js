@@ -22,5 +22,5 @@ export function createCanvasContext2d(arg: {
     ctx.fillStyle = arg.fillStyle;
     ctx.fillRect(0, 0, 800, 600);
   }
-  return ctx;
+  return { canvas, ctx, };
 }
