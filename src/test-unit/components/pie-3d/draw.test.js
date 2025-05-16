@@ -1,7 +1,6 @@
 //@flow strict
 //$FlowFixMe[cannot-resolve-module]
 import tp from 'tape';
-import { prepareData, } from '../../../components/pie-3d/prepare-data.js';
 import { draw, } from '../../../components/pie-3d/draw.js';
 import { createCanvasContext2d, } from
   '../../test-utils/create-node-canvas-context-2d.util.js';
@@ -12,7 +11,6 @@ import { writeCanvasToTestDiffDir, } from
   '../../test-utils/write-canvas-to-test-diff-dir.util.js';
 
 tp.test.skip((t) => {
-
   const arg = {
     type: 'pie-3d',
     zIndex: '1',
@@ -32,8 +30,7 @@ tp.test.skip((t) => {
     ],
   };
   const ctx = createCanvasContext2d({ w: 470, h: 220, fillStyle: 'white', });
-  const pieData = prepareData(arg);
-  draw({ ctx, pieData, });
+  draw({ ctx, addComponentArg: arg, });
 
   //$FlowFixMe[prop-missing]
   ctx.canvas.toBuffer(async (err: null | Error, buff: Buffer) => {

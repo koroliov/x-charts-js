@@ -1,11 +1,13 @@
 //@flow strict
-import type { PieData, } from './types.js';
+import { prepareData, } from './prepare-data.js';
+import type { AddComponentPie3dArgument, PieData, } from './types.js';
 
 export function draw(arg: {
   ctx: CanvasRenderingContext2D,
-  pieData: PieData,
+  addComponentArg: AddComponentPie3dArgument,
 }) {
-  const { pieData, ctx, } = arg;
+  const { addComponentArg, ctx, } = arg;
+  const pieData = prepareData(addComponentArg);
   ctx.lineWidth = 0.5;
   if (pieData.isHeadsVisibleToUser) {
     processFace({ isHeads: true, action: 'fill', });

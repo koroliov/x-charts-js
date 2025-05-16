@@ -2,7 +2,6 @@
                                                  
 import XCharts, { registerComponent, } from '../../main.js';
                                                              
-import { prepareData, } from './prepare-data.js';
 import { draw, } from './draw.js';
 import { getAngleClockwise, } from '../../utils/math.js';
 
@@ -17,8 +16,7 @@ class Pie3d                      {
     this._container = container;
     const that = this;
     createCanvas();
-    const pieData = prepareData(arg);
-    draw({ ctx: this._ctx, pieData, });
+    draw({ ctx: this._ctx, addComponentArg: arg, });
 
     function createCanvas() {
       const canvas = document.createElement('canvas');

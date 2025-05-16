@@ -1,11 +1,13 @@
 //      strict
-                                           
+import { prepareData, } from './prepare-data.js';
+                                                                      
 
 export function draw(arg   
                                 
-                   
+                                             
  ) {
-  const { pieData, ctx, } = arg;
+  const { addComponentArg, ctx, } = arg;
+  const pieData = prepareData(addComponentArg);
   ctx.lineWidth = 0.5;
   if (pieData.isHeadsVisibleToUser) {
     processFace({ isHeads: true, action: 'fill', });
