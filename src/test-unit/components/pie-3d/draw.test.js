@@ -4,11 +4,12 @@ import tp from 'tape';
 import { prepareData, } from '../../../components/pie-3d/prepare-data.js';
 import { draw, } from '../../../components/pie-3d/draw.js';
 import { createCanvasContext2d, } from
-  '../../create-node-canvas-context-2d.util.js';
+  '../../test-utils/create-node-canvas-context-2d.util.js';
 //import type { AddComponentPie3dArgument, } from './types.js';
-//import { compareWithLooksSame, } from '../../compare-with-looks-same.util.js';
+//import { compareWithLooksSame, } from
+//  '../../test-utils/compare-with-looks-same.util.js';
 import { writeCanvasToTestDiffDir, } from
-  '../../write-canvas-to-test-diff-dir.util.js';
+  '../../test-utils/write-canvas-to-test-diff-dir.util.js';
 
 tp.test.skip((t) => {
 

@@ -3,7 +3,8 @@
 import tp from 'tape';
 import { prepareData } from '../../../components/pie-3d/prepare-data.js';
 import { drawDataOnCanvas } from './draw-data-on-canvas.util.js';
-import { writeToTestDiffDir } from '../../write-to-test-diff-dir.util.js';
+import { writeToTestDiffDir } from
+  '../../test-utils/write-to-test-diff-dir.util.js';
 
 tp.test((t) => {
   const addComponentArg = {
