@@ -3,9 +3,9 @@
 import tp from 'tape';
 import { prepareData, } from '../../../components/pie-3d/prepare-data.js';
 import { draw, } from '../../../components/pie-3d/draw.js';
+import { createCanvasContext2d, } from
+  '../../create-node-canvas-context-2d.util.js';
 //import type { AddComponentPie3dArgument, } from './types.js';
-//$FlowFixMe[cannot-resolve-module]
-import { createCanvas } from 'canvas';
 //import { compareWithLooksSame, } from '../../compare-with-looks-same.util.js';
 import { writeCanvasToTestDiffDir, } from
   '../../write-canvas-to-test-diff-dir.util.js';
@@ -49,18 +49,3 @@ tp.test.skip((t) => {
     t.end();
   });
 });
-
-function createCanvasContext2d(arg: {
-  w: number,
-  h: number,
-  fillStyle: string | 'transparent',
-}): CanvasRenderingContext2D {
-  const canvas = createCanvas(arg.w, arg.h);
-  const ctx = canvas.getContext('2d');
-
-  if (arg.fillStyle !== 'transparent') {
-    ctx.fillStyle = arg.fillStyle;
-    ctx.fillRect(0, 0, 800, 600);
-  }
-  return ctx;
-}
