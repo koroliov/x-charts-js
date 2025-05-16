@@ -29,11 +29,11 @@ tp.test.skip((t) => {
       { value: 50, meta: { color: '#f2b5f6' /* pinkish */, }, },
     ],
   };
-  const ctx = createCanvasContext2d({ w: 470, h: 220, fillStyle: 'white', });
+  const { ctx, canvas, } =
+    createCanvasContext2d({ w: 470, h: 220, fillStyle: 'white', });
   draw({ ctx, addComponentArg: arg, });
 
-  //$FlowFixMe[prop-missing]
-  ctx.canvas.toBuffer(async (err: null | Error, buff: Buffer) => {
+  canvas.toBuffer(async (err: null | Error, buff: Buffer) => {
     await writeCanvasToTestDiffDir({
       canvas: ctx.canvas,
       fileNameRelative: './test/diff/current.png',
