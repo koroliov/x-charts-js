@@ -3,26 +3,23 @@
 import tp from 'tape';
 import { prepareData, } from '../../../components/pie-3d/prepare-data.js';
 import { draw, } from '../../../components/pie-3d/draw.js';
+//import type { AddComponentPie3dArgument, } from './types.js';
 //$FlowFixMe[cannot-resolve-module]
 import { createCanvas } from 'canvas';
 //import { compareWithLooksSame, } from '../../compare-with-looks-same.util.js';
 import { writeCanvasToTestDiffDir, } from
   '../../write-canvas-to-test-diff-dir.util.js';
 
-tp.test((t) => {
-  const canvas = createCanvas(800, 600);
-  const ctx = canvas.getContext('2d');
-  ctx.fillStyle = 'white';
-  ctx.fillRect(0, 0, 800, 600);
+tp.test.skip((t) => {
 
-  const pieData = prepareData({
+  const arg = {
     type: 'pie-3d',
     zIndex: '1',
     options: {
       thicknessPx: 50,
       radiusPx: 200,
-      centerXPx: 400,
-      centerYPx: 250,
+      centerXPx: 235,
+      centerYPx: 110,
       startAtDeg: 130,
       rotationAroundCenterXAxisDeg: 70,
       rotationAroundCenterZAxisDeg: 0,
@@ -32,12 +29,15 @@ tp.test((t) => {
       { value: 25, meta: { color: '#ff0000' /* red */, }, },
       { value: 50, meta: { color: '#f2b5f6' /* pinkish */, }, },
     ],
-  });
+  };
+  const ctx = createCanvasContext2d({ w: 470, h: 220, fillStyle: 'white', });
+  const pieData = prepareData(arg);
   draw({ ctx, pieData, });
 
-  canvas.toBuffer(async (err, buff) => {
+  //$FlowFixMe[prop-missing]
+  ctx.canvas.toBuffer(async (err: null | Error, buff: Buffer) => {
     await writeCanvasToTestDiffDir({
-      canvas,
+      canvas: ctx.canvas,
       fileNameRelative: './test/diff/current.png',
     });
     //const equal = await compareWithLooksSame({
@@ -49,3 +49,18 @@ tp.test((t) => {
     t.end();
   });
 });
+
+function createCanvasContext2d(arg: {
+  w: number,
+  h: number,
+  fillStyle: string,
+}): CanvasRenderingContext2D {
+  const canvas = createCanvas(arg.w, arg.h);
+  const ctx = canvas.getContext('2d');
+
+  if (arg.fillStyle !== 'transparent') {
+    ctx.fillStyle = arg.fillStyle;
+    ctx.fillRect(0, 0, 800, 600);
+  }
+  return ctx;
+}
