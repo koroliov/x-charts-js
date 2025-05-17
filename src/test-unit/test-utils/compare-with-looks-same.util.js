@@ -1,11 +1,12 @@
 //@flow strict
 //$FlowFixMe[cannot-resolve-module]
 import looksSame from 'looks-same';
+//$FlowFixMe[cannot-resolve-module]
+import kleur from 'kleur';
 
 type Arg = {
   buffer: Buffer,
-  expectedFileNameRelative: StringSuffix<'.png'> &
-    StringPrefix<'./test/unit-permanent/'>,
+  expectedFileNameRelative: string,
   highlightColor?: StringPrefix<'#'>,
   strict?: boolean,
   tolerance?: number,
@@ -13,8 +14,7 @@ type Arg = {
   ignoreAntialiasing?: boolean,
   ignoreCaret?: boolean,
 
-  diffFileNameRelativeOnError: '' | (StringPrefix<'./test/diff'> &
-    StringSuffix<'.png'>),
+  diffFileNameRelativeOnError: '' | string,
 }
 
 type ComparisonOptions = {
@@ -30,6 +30,7 @@ type DiffOptions = {
 }
 
 export async function compareWithLooksSame(arg: Arg): Promise<boolean> {
+  checkArg();
   const comparisonOptions = getComparisonOptions();
   let result = false;
 
@@ -40,8 +41,10 @@ export async function compareWithLooksSame(arg: Arg): Promise<boolean> {
   } catch (e) {
     if (e?.nested?.code === 'ENOENT' &&
       e?.nested?.path === arg.expectedFileNameRelative) {
-      throw new Error(`NO FILE ERROR, CHECK FILE: ${
-        arg.expectedFileNameRelative } EXISTS`);
+      const msg = `NO FILE ERROR, CHECK FILE: ${
+        arg.expectedFileNameRelative } EXISTS`;
+      console.log(kleur.red().bold(msg));
+      throw new Error(msg);
     }
     throw e;
   }
@@ -50,6 +53,42 @@ export async function compareWithLooksSame(arg: Arg): Promise<boolean> {
     await writeDiffFile();
   }
   return result;
+
+  function checkArg() {
+    checkDiffFileNameRelativeOnError();
+    checkExpectedFileNameRelative();
+
+    function checkExpectedFileNameRelative() {
+      if (!arg.expectedFileNameRelative.startsWith('./test/unit-permanent/') ||
+        !arg.expectedFileNameRelative.endsWith('.png')) {
+        const msg = [
+          `File name in expectedFileNameRelative, must start with:`,
+          ` './test/unit-permanent/'`,
+          `and end with: '.png'`,
+          `current: ${arg.expectedFileNameRelative}`,
+        ].join('\n');
+        console.log(kleur.red().bold(msg));
+        throw new Error(msg);
+      }
+    }
+
+    function checkDiffFileNameRelativeOnError() {
+      if (arg.diffFileNameRelativeOnError === '') {
+        return;
+      }
+      if (!arg.diffFileNameRelativeOnError.startsWith('./test/diff/') ||
+        !arg.diffFileNameRelativeOnError.endsWith('.png')) {
+        const msg = [
+          `File name in diffFileNameRelativeOnError, must start with:`,
+          ` './test/diff/'`,
+          `and end with: '.png'`,
+          `current: ${arg.diffFileNameRelativeOnError}`,
+        ].join('\n');
+        console.log(kleur.red().bold(msg));
+        throw new Error(msg);
+      }
+    }
+  }
 
   async function writeDiffFile() {
     const diffOptions: DiffOptions = {
