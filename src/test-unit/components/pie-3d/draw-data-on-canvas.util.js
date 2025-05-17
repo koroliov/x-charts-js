@@ -178,7 +178,7 @@ export function drawDataOnCanvas(arg: Arg) {
             pieData.someEllipseMethodArgs.axesRotationCounterClockwise,
             angleStart,
             angleEnd,
-            pieData.someEllipseMethodArgs.isCounterClockwise,
+            pieData.someEllipseMethodArgs.isCounterClockwiseOnRimAdjacentEdge,
           );
           ctx.stroke();
 
