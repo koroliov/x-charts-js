@@ -9,75 +9,47 @@ export function draw(arg: {
   const { addComponentArg, ctx, } = arg;
   const pieData = prepareData(addComponentArg);
   ctx.lineWidth = 0.5;
-  if (pieData.isHeadsVisibleToUser) {
-    processFace({ isHeads: true, action: 'fill', });
-    if (pieData.isRimVisibleToUser) {
-      processRimElliptic({ isHeadsVisible: true, action: 'fill', });
-    }
-    processFace({ isHeads: true, action: 'stroke', });
-    if (pieData.isRimVisibleToUser) {
-      processRimElliptic({ isHeadsVisible: true, action: 'stroke', });
-    }
-  } else if (pieData.isTailsVisibleToUser) {
-    processFace({ isHeads: false, action: 'fill', });
-    if (pieData.isRimVisibleToUser) {
-      processRimElliptic({ isHeadsVisible: false, action: 'fill', });
-    }
-    processFace({ isHeads: false, action: 'stroke', });
-  } else if (pieData.isRimVisibleToUser) {
-    //drawRim(false);
+  if (!pieData.isHeadsVisibleToUser && !pieData.isTailsVisibleToUser) {
+  } else {
+    const isHeads = pieData.isHeadsVisibleToUser;
+    processFace({ isHeads, action: 'fill', });
+    processRimElliptic({ isHeadsVisible: isHeads, action: 'fill', });
+    processFace({ isHeads, action: 'stroke', });
+    processRimElliptic({ isHeadsVisible: isHeads, action: 'stroke', });
   }
 
   function processRimElliptic(arg: {
     isHeadsVisible: boolean,
     action: 'stroke' | 'fill',
   }) {
+    if (!pieData.isRimVisibleToUser) {
+      return;
+    }
     const centerPointPropName = arg.isHeadsVisible ?
       'centerHeads' : 'centerTails';
 
-    const sliceStart = pieData.slices[pieData.edgeLeft.sliceIndex];
-    const sliceEnd = pieData.slices[pieData.edgeRight.sliceIndex];
-
     const sliceStartIndex = pieData.edgeLeft.sliceIndex;
     const sliceEndIndex = pieData.edgeRight.sliceIndex;
-    //console.log('AA', sliceStartIndex, sliceEndIndex);
     if (sliceStartIndex === sliceEndIndex) {
-      //draw 1 single rim
-      //console.log('AA');
       drawRightSlice();
     } else {
       drawLeftSlice();
       drawMiddleSlices();
       drawRightSlice();
     }
-    //draw left slice
-    //draw middle slices
-    //draw right slice
 
     function drawRightSlice() {
+      const sliceEnd = pieData.slices[pieData.edgeRight.sliceIndex];
       const edgeLineStartPointPropName = arg.isHeadsVisible ?
         'pointHeads' : 'pointTails';
       const edgeLineEndPointPropName = arg.isHeadsVisible ?
         'pointTails' : 'pointHeads';
 
-      //console.log(edgeLineStartPointPropName, edgeLineEndPointPropName);
       ctx.beginPath();
       ctx.moveTo(sliceEnd.startPointHeads[0], sliceEnd.startPointHeads[1]);
       ctx.lineTo(sliceEnd.startPointTails[0], sliceEnd.startPointTails[1]);
 
-      let centerPointPropName = arg.isHeadsVisible ?
-        'centerTails' : 'centerHeads';
-      //console.log(centerPointPropName);
-      ctx.ellipse(
-        pieData[centerPointPropName][0],
-        pieData[centerPointPropName][1],
-        pieData.someEllipseMethodArgs.radiusX,
-        pieData.someEllipseMethodArgs.radiusY,
-        pieData.someEllipseMethodArgs.axesRotationCounterClockwise,
-        sliceEnd.startAngleOnEllipseClockwise,
-        0,
-        pieData.someEllipseMethodArgs.isCounterClockwise,
-      );
+      drawEllipse(true);
       const sliceEndLineToPointPropName = arg.isHeadsVisible ?
         'endPointHeads' : 'endPointTails';
       ctx.lineTo(pieData.edgeRight.pointHeads[0],
@@ -86,26 +58,35 @@ export function draw(arg: {
         ctx.stroke();
       }
 
-      centerPointPropName = arg.isHeadsVisible ?
-        'centerHeads' : 'centerTails';
-      ctx.ellipse(
-        pieData[centerPointPropName][0],
-        pieData[centerPointPropName][1],
-        pieData.someEllipseMethodArgs.radiusX,
-        pieData.someEllipseMethodArgs.radiusY,
-        pieData.someEllipseMethodArgs.axesRotationCounterClockwise,
-        0,
-        sliceEnd.startAngleOnEllipseClockwise,
-        !pieData.someEllipseMethodArgs.isCounterClockwise,
-      );
+      drawEllipse(false);
 
       if (arg.action === 'fill') {
         ctx.fillStyle = sliceEnd.color;
-        //console.log('filled');
         ctx.fill();
-      //} else {
-      //  //console.log('stroked');
-      //  ctx.stroke();
+      }
+
+      function drawEllipse(isForward: boolean) {
+        const centerPointPropName = getCenterPOintPropName();
+        ctx.ellipse(
+          pieData[centerPointPropName][0],
+          pieData[centerPointPropName][1],
+          pieData.someEllipseMethodArgs.radiusX,
+          pieData.someEllipseMethodArgs.radiusY,
+          pieData.someEllipseMethodArgs.axesRotationCounterClockwise,
+          isForward ? sliceEnd.startAngleOnEllipseClockwise : 0,
+          !isForward ? sliceEnd.startAngleOnEllipseClockwise : 0,
+          isForward ?
+            pieData.someEllipseMethodArgs.isCounterClockwise :
+            !pieData.someEllipseMethodArgs.isCounterClockwise,
+        );
+
+        function getCenterPOintPropName() {
+          if (arg.isHeadsVisible) {
+            return isForward ? 'centerTails' : 'centerHeads';
+          } else {
+            return !isForward ? 'centerHeads' : 'centerTails';
+          }
+        }
       }
     }
 
@@ -116,13 +97,11 @@ export function draw(arg: {
       for (let i = sliceStartIndex + 1; i < sliceEndIndex; i++) {
         const slice = pieData.slices[i];
         ctx.beginPath();
-        //console.log('HERE');
         ctx.moveTo(slice.startPointHeads[0], slice.startPointHeads[1]);
         ctx.lineTo(slice.startPointTails[0], slice.startPointTails[1]);
 
         let centerPointPropName = arg.isHeadsVisible ?
           'centerTails' : 'centerHeads';
-        //console.log(centerPointPropName);
         ctx.ellipse(
           pieData[centerPointPropName][0],
           pieData[centerPointPropName][1],
@@ -155,22 +134,18 @@ export function draw(arg: {
 
         if (arg.action === 'fill') {
           ctx.fillStyle = slice.color;
-          //console.log('filled');
           ctx.fill();
-        //} else {
-        //  //console.log('stroked');
-        //  ctx.stroke();
         }
       }
     }
 
     function drawLeftSlice() {
+      const sliceStart = pieData.slices[pieData.edgeLeft.sliceIndex];
       const edgeLineStartPointPropName = arg.isHeadsVisible ?
         'pointHeads' : 'pointTails';
       const edgeLineEndPointPropName = arg.isHeadsVisible ?
         'pointTails' : 'pointHeads';
 
-      //console.log(edgeLineStartPointPropName, edgeLineEndPointPropName);
       ctx.beginPath();
       ctx.moveTo(pieData.edgeLeft[edgeLineStartPointPropName][0],
         pieData.edgeLeft[edgeLineStartPointPropName][1]);
@@ -179,7 +154,6 @@ export function draw(arg: {
 
       let centerPointPropName = arg.isHeadsVisible ?
         'centerTails' : 'centerHeads';
-      //console.log(centerPointPropName);
       ctx.ellipse(
         pieData[centerPointPropName][0],
         pieData[centerPointPropName][1],
@@ -213,11 +187,7 @@ export function draw(arg: {
 
       if (arg.action === 'fill') {
         ctx.fillStyle = sliceStart.color;
-        //console.log('filled');
         ctx.fill();
-      //} else {
-      //  //console.log('stroked');
-      //  ctx.stroke();
       }
     }
   }
