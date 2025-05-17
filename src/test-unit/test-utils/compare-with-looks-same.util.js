@@ -107,19 +107,19 @@ export async function compareWithLooksSame(arg: Arg): Promise<boolean> {
     const comparisonOptions: ComparisonOptions = {
       highlightColor: arg.highlightColor || '#ff00ff' /* purple */,
       strict: arg.strict === true ? true : false,
-      tolerance: getTolerance(),
       antialiasingTolerance: Number.isFinite(arg.antialiasingTolerance) ?
       arg.antialiasingTolerance : 2.5,
       ignoreAntialiasing: arg.ignoreAntialiasing === false ? false : true,
       ignoreCaret: arg.ignoreCaret === false ? false : true,
     };
+    setTolerance();
     return comparisonOptions;
 
-    function getTolerance() {
+    function setTolerance() {
       if (arg.strict !== true) {
-        return Number.isFinite(arg.tolerance) ? arg.tolerance : 2.5;
+        comparisonOptions.tolerance =
+          Number.isFinite(arg.tolerance) ? arg.tolerance : 2.5;
       }
-      return 0;
     }
   }
 }
