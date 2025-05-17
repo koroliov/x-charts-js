@@ -1,6 +1,7 @@
 //@flow strict
 import { prepareData, } from './prepare-data.js';
 import type { AddComponentPie3dArgument, PieData, } from './types.js';
+import type { Point, } from '../../types.js';
 
 export function draw(arg: {
   ctx: CanvasRenderingContext2D,
@@ -188,6 +189,116 @@ export function draw(arg: {
       if (arg.action === 'fill') {
         ctx.fillStyle = sliceStart.color;
         ctx.fill();
+      }
+    }
+
+    function drawRimSlice(sliceIndex: number, isHeadsVisible: boolean) {
+      const slice = pieData.slices[sliceIndex];
+      const {
+        pointStartOnVisibleFace,
+        pointStartOnInvisibleFace,
+        centerPointOnVisibleFace,
+        centerPointOnInvisibleFace,
+        pointEndOnVisibleFace,
+        pointEndOnInvisibleFace,
+        startAngle,
+        endAngle,
+      } = getData();
+
+      ctx.beginPath();
+      ctx.moveTo(pointStartOnVisibleFace[0], pointStartOnVisibleFace[1]);
+      ctx.lineTo(pointStartOnInvisibleFace[0], pointStartOnInvisibleFace[1]);
+      drawEllipse(true);
+
+      //get pointStartOnVisibleFace
+      //get pointStartOnInvisibleFace
+      //ellipseOnInvisibleFace
+      //get pointEndOnInvisibleFace
+      //get pointEndOnInvisibleFace
+      //ellipseOnVisibleFace
+
+      function drawEllipse(isForward: boolean) {
+        const centerPointPropName = getCenterPOintPropName();
+        const isCc =
+          pieData.someEllipseMethodArgs.isCounterClockwiseOnRimAdjacentEdge;
+        const centerPoint = isForward ?
+          centerPointOnVisibleFace : centerPointOnInvisibleFace;
+
+        //ctx.ellipse(
+        //  centerPoint[0],
+        //  centerPoint[1],
+        //  pieData.someEllipseMethodArgs.radiusX,
+        //  pieData.someEllipseMethodArgs.radiusY,
+        //  pieData.someEllipseMethodArgs.axesRotationCounterClockwise,
+        //  isForward ? sliceEnd.startAngleOnEllipseClockwise : 0,
+        //  !isForward ? sliceEnd.startAngleOnEllipseClockwise : 0,
+        //  isForward ? isCc : !isCc,
+        //);
+
+        function getCenterPOintPropName() {
+          if (arg.isHeadsVisible) {
+            return isForward ? 'centerTails' : 'centerHeads';
+          } else {
+            return !isForward ? 'centerHeads' : 'centerTails';
+          }
+        }
+      }
+
+      function getData() {
+        const retVal: {
+          pointStartOnVisibleFace: Point,
+          pointStartOnInvisibleFace: Point,
+          centerPointOnVisibleFace: Point,
+          centerPointOnInvisibleFace: Point,
+          pointEndOnVisibleFace: Point,
+          pointEndOnInvisibleFace: Point,
+          startAngle: number,
+          endAngle: number,
+        } = {
+          pointStartOnVisibleFace: [0, 0, 0,],
+          pointStartOnInvisibleFace: [0, 0, 0,],
+          centerPointOnVisibleFace: pieData[isHeadsVisible ?
+            'centerHeads' : 'centerTails'],
+          centerPointOnInvisibleFace: pieData[isHeadsVisible ?
+            'centerTails' : 'centerHeads'],
+          pointEndOnVisibleFace: [0, 0, 0,],
+          pointEndOnInvisibleFace: [0, 0, 0,],
+          startAngle: 0,
+          endAngle: 0,
+        };
+        if (sliceIndex === pieData.edgeLeft.sliceIndex) {
+          retVal.pointStartOnVisibleFace = pieData.edgeLeft[isHeadsVisible ?
+            'pointHeads' : 'pointTails'];
+          retVal.pointStartOnInvisibleFace = pieData.edgeLeft[isHeadsVisible ?
+            'pointTails' : 'pointHeads' ];
+          retVal.startAngle = Math.PI;
+        } else if (sliceIndex === pieData.edgeRight.sliceIndex) {
+          retVal.pointStartOnVisibleFace = pieData.edgeRight[isHeadsVisible ?
+            'pointHeads' : 'pointTails'];
+          retVal.pointStartOnInvisibleFace = pieData.edgeRight[isHeadsVisible ?
+            'pointTails' : 'pointHeads' ];
+        } else {
+          retVal.pointStartOnVisibleFace = slice[isHeadsVisible ?
+            'startPointHeads' : 'startPointTails'];
+          retVal.pointStartOnInvisibleFace = slice[isHeadsVisible ?
+            'startPointTails' : 'startPointHeads'];
+        }
+        return retVal;
+
+        function getEndAngle() {
+          //const currentSlice = pieData.slices[sliceIndex];
+          //if (currentSlice.endAngleOnEllipseClockwise > ) {
+          //  retVal.endAngle = currentSlice.endAngleOnEllipseClockwise;
+          //}
+          //const nextSlice = pieData.slices[sliceIndex + 1];
+          //if (nextSlice.startAngleOnEllipseClockwise) {
+          //}
+        }
+      }
+
+      function getPointStartOnVisibleFace() {
+        return isHeadsVisible ? slice.startPointHeads :
+          slice.startPointTails;
       }
     }
   }
