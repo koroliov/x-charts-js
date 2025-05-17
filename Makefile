@@ -98,11 +98,11 @@ podman-container-copy-to:
 npm-outdated:
 	podman container exec -it $(CONTAINER_NAME) bash -c "npm outdated"
 
-.PHONY: npm-install-help
+.PHONY: npm-install-save-dev-help
 npm-install-save-dev-help:
 	@echo "make npm-install NPM_MOD='nodemon@3.1.10'"
 
-.PHONY: npm-install
+.PHONY: npm-install-save-dev
 npm-install-save-dev:
 	podman container exec -it $(CONTAINER_NAME) bash -c "npm i --save-dev \
 	$(NPM_MOD) && cp package.json ./var/ && cp package-lock.json ./var/ && \
