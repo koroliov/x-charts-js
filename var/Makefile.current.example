@@ -19,7 +19,8 @@
 #	echo "watch-run 'make current-target' ./src"
 #
 #.PHONY: current-target
-#current-target: BUILD_FILES="'./src/components/pie-3d/prepare-data.js ./src/test-unit/components/pie-3d/draw-data-on-canvas.util.js'"
+#current-target: BUILD_FILES="'./src/components/pie-3d/prepare-data.js \
+  ./src/test-unit/components/pie-3d/draw-data-on-canvas.util.js'"
 #current-target: TEST_FILES="./src/test-unit/components/pie-3d/prepare-data.test.js"
 #current-target: TEST_FILES_RUN = $(subst ./src/,./test/unit-tmp/src/,$(TEST_FILES))
 #current-target: test-unit
