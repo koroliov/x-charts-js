@@ -84,96 +84,123 @@ export function prepareData(arg                           )          {
     const centerY = ops.centerYPx;
     const halfThickness = ops.thicknessPx / 2;
 
-    pieData.pointTopHeads[0] = centerX;
-    pieData.pointTopHeads[1] = centerY - circleRadius;
-    pieData.pointTopHeads[2] = -halfThickness;
+    handlePointTopHeads();
+    handleCenterHeads();
+    handleCenterTails();
+    handleEdgeLeftPointHeads();
+    handleEdgeLeftPointTails();
+    handleEdgeRightPointHeads();
+    handleEdgeRightPointTails();
+    handleSlices();
 
-    pieData.centerHeads[0] = centerX;
-    pieData.centerHeads[1] = centerY;
-    pieData.centerHeads[2] = -halfThickness;
+    function handleSlices() {
+      let startAngle = ops.startAtDeg / 180 * Math.PI;
+      let { expectToPassRightEdge, expectToPassLeftEdge, } =
+        getInitialExpectedEdgeFlags();
 
-    pieData.centerTails[0] = centerX;
-    pieData.centerTails[1] = centerY;
-    pieData.centerTails[2] = halfThickness;
+      pieData.slices.forEach(handleSlice);
 
-    pieData.edgeLeft.pointHeads[0] = centerX - circleRadius;
-    pieData.edgeLeft.pointHeads[1] = centerY;
-    pieData.edgeLeft.pointHeads[2] = -halfThickness;
+      function handleSlice(sd                          , i        ) {
+        const y = -(Math.sin(startAngle) * circleRadius) + centerY;
+        const x = Math.cos(startAngle) * circleRadius + centerX;
+        sd.startPointHeads[0] = x;
+        sd.startPointHeads[1] = y;
+        sd.startPointHeads[2] = -halfThickness;
+        handleStartEndAnglesOnSlice(i, sd.startPointHeads);
+        sd.startPointTails[0] = x;
+        sd.startPointTails[1] = y;
+        sd.startPointTails[2] = halfThickness;
 
-    pieData.edgeLeft.pointTails[0] = centerX - circleRadius;
-    pieData.edgeLeft.pointTails[1] = centerY;
-    pieData.edgeLeft.pointTails[2] = halfThickness;
-
-    pieData.edgeRight.pointHeads[0] = centerX + circleRadius;
-    pieData.edgeRight.pointHeads[1] = centerY;
-    pieData.edgeRight.pointHeads[2] = -halfThickness;
-
-    pieData.edgeRight.pointTails[0] = centerX + circleRadius;
-    pieData.edgeRight.pointTails[1] = centerY;
-    pieData.edgeRight.pointTails[2] = halfThickness;
-
-    let startAngle = ops.startAtDeg / 180 * Math.PI;
-    let { expectToPassRightEdge, expectToPassLeftEdge, } =
-      getInitialExpectedEdgeFlags();
-
-    pieData.slices.forEach((sd, i) => {
-      const y = -(Math.sin(startAngle) * circleRadius) + centerY;
-      const x = Math.cos(startAngle) * circleRadius + centerX;
-      sd.startPointHeads[0] = x;
-      sd.startPointHeads[1] = y;
-      sd.startPointHeads[2] = -halfThickness;
-      handleStartEndAnglesOnSlice(i, sd.startPointHeads);
-      sd.startPointTails[0] = x;
-      sd.startPointTails[1] = y;
-      sd.startPointTails[2] = halfThickness;
-
-      const endAngle = sd.value / totalValue * Math.PI * 2;
-      startAngle += endAngle;
-      handleExpectedEdgeFlagsWhenPassingSlice(i);
-    });
-
-    function handleStartEndAnglesOnSlice(sliceIndex        ,
-      startPoint       ) {
-      const sd = pieData.slices[sliceIndex];
-      const sdPrevious = sliceIndex > 0 ? pieData.slices[sliceIndex - 1] :
-        pieData.slices[pieData.slices.length - 1];
-      sdPrevious.endAngleOnEllipseClockwise = getAngleClockwise({
-        startPoint: pieData.edgeRight.pointHeads,
-        centerPoint: pieData.centerHeads,
-        endPoint: sd.startPointHeads,
-      });
-      if (!pieData.someEllipseMethodArgs.isCounterClockwise) {
-        sdPrevious.endAngleOnEllipseClockwise =
-          -sdPrevious.endAngleOnEllipseClockwise;
+        const endAngle = sd.value / totalValue * Math.PI * 2;
+        startAngle += endAngle;
+        handleExpectedEdgeFlagsWhenPassingSlice(i);
       }
-      sd.startAngleOnEllipseClockwise = sdPrevious.endAngleOnEllipseClockwise;
-    }
 
-    function handleExpectedEdgeFlagsWhenPassingSlice(sliceIndex        ) {
-      if (expectToPassLeftEdge) {
-        if (startAngle >= Math.PI) {
-          expectToPassLeftEdge = false;
-          expectToPassRightEdge = true;
-          pieData.edgeLeft.sliceIndex = sliceIndex;
-        }
-      } else if (expectToPassRightEdge) {
-        if (startAngle >= 2 * Math.PI) {
-          expectToPassRightEdge = false;
+      function getInitialExpectedEdgeFlags() {
+        let expectToPassRightEdge = false;
+        let expectToPassLeftEdge = false;
+        if (startAngle < Math.PI) {
           expectToPassLeftEdge = true;
-          pieData.edgeRight.sliceIndex = sliceIndex;
+        } else {
+          expectToPassRightEdge = true;
+        }
+        return { expectToPassRightEdge, expectToPassLeftEdge, };
+      }
+
+      function handleStartEndAnglesOnSlice(sliceIndex        ,
+        startPoint       ) {
+        const sd = pieData.slices[sliceIndex];
+        const sdPrevious = sliceIndex > 0 ? pieData.slices[sliceIndex - 1] :
+          pieData.slices[pieData.slices.length - 1];
+        sdPrevious.endAngleOnEllipseClockwise = getAngleClockwise({
+          startPoint: pieData.edgeRight.pointHeads,
+          centerPoint: pieData.centerHeads,
+          endPoint: sd.startPointHeads,
+        });
+        if (!pieData.someEllipseMethodArgs.isCounterClockwise) {
+          sdPrevious.endAngleOnEllipseClockwise =
+            -sdPrevious.endAngleOnEllipseClockwise;
+        }
+        sd.startAngleOnEllipseClockwise = sdPrevious.endAngleOnEllipseClockwise;
+      }
+
+      function handleExpectedEdgeFlagsWhenPassingSlice(sliceIndex        ) {
+        if (expectToPassLeftEdge) {
+          if (startAngle >= Math.PI) {
+            expectToPassLeftEdge = false;
+            expectToPassRightEdge = true;
+            pieData.edgeLeft.sliceIndex = sliceIndex;
+          }
+        } else if (expectToPassRightEdge) {
+          if (startAngle >= 2 * Math.PI) {
+            expectToPassRightEdge = false;
+            expectToPassLeftEdge = true;
+            pieData.edgeRight.sliceIndex = sliceIndex;
+          }
         }
       }
     }
 
-    function getInitialExpectedEdgeFlags() {
-      let expectToPassRightEdge = false;
-      let expectToPassLeftEdge = false;
-      if (startAngle < Math.PI) {
-        expectToPassLeftEdge = true;
-      } else {
-        expectToPassRightEdge = true;
-      }
-      return { expectToPassRightEdge, expectToPassLeftEdge, };
+    function handlePointTopHeads() {
+      pieData.pointTopHeads[0] = centerX;
+      pieData.pointTopHeads[1] = centerY - circleRadius;
+      pieData.pointTopHeads[2] = -halfThickness;
+    }
+
+    function handleCenterHeads() {
+      pieData.centerHeads[0] = centerX;
+      pieData.centerHeads[1] = centerY;
+      pieData.centerHeads[2] = -halfThickness;
+    }
+
+    function handleCenterTails() {
+      pieData.centerTails[0] = centerX;
+      pieData.centerTails[1] = centerY;
+      pieData.centerTails[2] = halfThickness;
+    }
+
+    function handleEdgeLeftPointHeads() {
+      pieData.edgeLeft.pointHeads[0] = centerX - circleRadius;
+      pieData.edgeLeft.pointHeads[1] = centerY;
+      pieData.edgeLeft.pointHeads[2] = -halfThickness;
+    }
+
+    function handleEdgeLeftPointTails() {
+      pieData.edgeLeft.pointTails[0] = centerX - circleRadius;
+      pieData.edgeLeft.pointTails[1] = centerY;
+      pieData.edgeLeft.pointTails[2] = halfThickness;
+    }
+
+    function handleEdgeRightPointHeads() {
+      pieData.edgeRight.pointHeads[0] = centerX + circleRadius;
+      pieData.edgeRight.pointHeads[1] = centerY;
+      pieData.edgeRight.pointHeads[2] = -halfThickness;
+    }
+
+    function handleEdgeRightPointTails() {
+      pieData.edgeRight.pointTails[0] = centerX + circleRadius;
+      pieData.edgeRight.pointTails[1] = centerY;
+      pieData.edgeRight.pointTails[2] = halfThickness;
     }
 
     function handleHeadsTailsAndRimVisibility() {
