@@ -5,12 +5,13 @@ import { draw, } from '../../../components/pie-3d/draw.js';
 import { createCanvasContext2d, } from
   '../../test-utils/create-node-canvas-context-2d.util.js';
 //import type { AddComponentPie3dArgument, } from './types.js';
-//import { compareWithLooksSame, } from
-//  '../../test-utils/compare-with-looks-same.util.js';
+import { compareWithLooksSame, } from
+  '../../test-utils/compare-with-looks-same.util.js';
 import { writeCanvasToTestDiffDir, } from
   '../../test-utils/write-canvas-to-test-diff-dir.util.js';
 
-tp.test.skip((t) => {
+tp.test((t) => {
+  const testName = '0001-most-common-case';
   const arg = {
     type: 'pie-3d',
     zIndex: '1',
@@ -34,16 +35,17 @@ tp.test.skip((t) => {
   draw({ ctx, addComponentArg: arg, });
 
   canvas.toBuffer(async (err: null | Error, buff: Buffer) => {
-    await writeCanvasToTestDiffDir({
-      canvas: ctx.canvas,
-      fileNameRelative: './test/diff/current.png',
-    });
-    //const equal = await compareWithLooksSame({
-    //  buffer: buff,
-    //  expectedFileNameRelative: './test/unit-permanent/foo.png',
-    //  diffFileNameRelativeOnError: './test/diff/foo-biff.png',
+    //await writeCanvasToTestDiffDir({
+    //  canvas: ctx.canvas,
+    //  fileNameRelative: './test/diff/current.png',
     //});
-    t.ok(1);
+    const equal = await compareWithLooksSame({
+      buffer: buff,
+      expectedFileNameRelative:
+        `./test/unit-permanent/components/pie-3d/draw/${ testName }.png`,
+      diffFileNameRelativeOnError: `./test/diff/${ testName }.png`,
+    });
+    t.ok(equal);
     t.end();
   });
 });
