@@ -1,0 +1,4 @@
+The new name is misleading.
+
+The ellipse's edge cannot be adjacent to the rim, b/c it's always
+adjacent. Subsequently it was renamed to isCounterClockwiseOnVisibleFace
