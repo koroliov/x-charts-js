@@ -31,7 +31,7 @@ type EdgeData = {
   sliceIndex: number,
 }
 
-type Context2dEllipseMethodArguments = {
+type SomeContext2dEllipseMethodArguments = {
   radiusX: number,
   radiusY: number,
   axesRotationCounterClockwise: number,
@@ -46,7 +46,7 @@ export type PieData = {
   +edgeRight: EdgeData,
   +centerHeads: Point,
   +centerTails: Point,
-  +someEllipseMethodArgs: Context2dEllipseMethodArguments,
+  +someEllipseMethodArgs: SomeContext2dEllipseMethodArguments,
   isHeadsVisibleToUser: boolean,
   isTailsVisibleToUser: boolean,
   isRimVisibleToUser: boolean,
