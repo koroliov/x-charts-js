@@ -69,7 +69,7 @@ export function draw(arg: {
       function drawEllipse(isForward: boolean) {
         const centerPointPropName = getCenterPOintPropName();
         const isCc =
-          pieData.someEllipseMethodArgs.isCounterClockwiseOnRimAdjacentEdge;
+          pieData.someEllipseMethodArgs.isCounterClockwiseOnVisibleFace;
         ctx.ellipse(
           pieData[centerPointPropName][0],
           pieData[centerPointPropName][1],
@@ -111,7 +111,7 @@ export function draw(arg: {
           pieData.someEllipseMethodArgs.axesRotationCounterClockwise,
           slice.startAngleOnEllipseClockwise,
           slice.endAngleOnEllipseClockwise,
-          pieData.someEllipseMethodArgs.isCounterClockwiseOnRimAdjacentEdge,
+          pieData.someEllipseMethodArgs.isCounterClockwiseOnVisibleFace,
         );
         if (arg.action === 'stroke') {
           ctx.stroke();
@@ -129,7 +129,7 @@ export function draw(arg: {
           pieData.someEllipseMethodArgs.axesRotationCounterClockwise,
           slice.endAngleOnEllipseClockwise,
           slice.startAngleOnEllipseClockwise,
-          !pieData.someEllipseMethodArgs.isCounterClockwiseOnRimAdjacentEdge,
+          !pieData.someEllipseMethodArgs.isCounterClockwiseOnVisibleFace,
         );
         ctx.closePath();
 
@@ -163,7 +163,7 @@ export function draw(arg: {
         pieData.someEllipseMethodArgs.axesRotationCounterClockwise,
         Math.PI,
         sliceStart.endAngleOnEllipseClockwise,
-        pieData.someEllipseMethodArgs.isCounterClockwiseOnRimAdjacentEdge,
+        pieData.someEllipseMethodArgs.isCounterClockwiseOnVisibleFace,
       );
       if (arg.action === 'stroke') {
         ctx.stroke();
@@ -183,7 +183,7 @@ export function draw(arg: {
         pieData.someEllipseMethodArgs.axesRotationCounterClockwise,
         sliceStart.endAngleOnEllipseClockwise,
         Math.PI,
-        !pieData.someEllipseMethodArgs.isCounterClockwiseOnRimAdjacentEdge,
+        !pieData.someEllipseMethodArgs.isCounterClockwiseOnVisibleFace,
       );
 
       if (arg.action === 'fill') {
@@ -220,7 +220,7 @@ export function draw(arg: {
       function drawEllipse(isForward: boolean) {
         const centerPointPropName = getCenterPOintPropName();
         const isCc =
-          pieData.someEllipseMethodArgs.isCounterClockwiseOnRimAdjacentEdge;
+          pieData.someEllipseMethodArgs.isCounterClockwiseOnVisibleFace;
         const centerPoint = isForward ?
           centerPointOnVisibleFace : centerPointOnInvisibleFace;
 
@@ -325,7 +325,7 @@ export function draw(arg: {
         pieData.someEllipseMethodArgs.axesRotationCounterClockwise,
         s.startAngleOnEllipseClockwise,
         s.endAngleOnEllipseClockwise,
-        pieData.someEllipseMethodArgs.isCounterClockwiseOnRimAdjacentEdge,
+        pieData.someEllipseMethodArgs.isCounterClockwiseOnVisibleFace,
       );
       ctx.lineTo(pieData[centerPointPropName][0],
         pieData[centerPointPropName][1]);

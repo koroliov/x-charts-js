@@ -138,7 +138,7 @@ export function prepareData(arg                           )          {
           endPoint: sd.startPointHeads,
         });
         if (!pieData.someEllipseMethodArgs
-          .isCounterClockwiseOnRimAdjacentEdge) {
+          .isCounterClockwiseOnVisibleFace) {
           sdPrevious.endAngleOnEllipseClockwise =
             -sdPrevious.endAngleOnEllipseClockwise;
         }
@@ -223,7 +223,7 @@ export function prepareData(arg                           )          {
       }
       if (pieData.isTailsVisibleToUser) {
         pieData.someEllipseMethodArgs
-          .isCounterClockwiseOnRimAdjacentEdge = false;
+          .isCounterClockwiseOnVisibleFace = false;
       }
     }
   }
@@ -249,7 +249,7 @@ export function prepareData(arg                           )          {
         radiusX: 0,
         radiusY: 0,
         axesRotationCounterClockwise: 0,
-        isCounterClockwiseOnRimAdjacentEdge: true,
+        isCounterClockwiseOnVisibleFace: true,
       },
       isHeadsVisibleToUser: false,
       isTailsVisibleToUser: false,
