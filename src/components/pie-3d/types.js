@@ -51,14 +51,14 @@ export type RimSlicesData = Array<RimSliceData>
 type EdgeData = {
   +pointHeads: Point,
   +pointTails: Point,
-  sliceIndex: number,
+  +sliceIndex: number,
 }
 
 type SomeContext2dEllipseMethodArguments = {
-  radiusX: number,
-  radiusY: number,
-  axesRotationCounterClockwise: number,
-  isCounterClockwiseOnVisibleFace: boolean,
+  +radiusX: number,
+  +radiusY: number,
+  +axesRotationCounterClockwise: number,
+  +isCounterClockwiseOnVisibleFace: boolean,
 }
 
 export type PieData = {
@@ -70,7 +70,7 @@ export type PieData = {
   +centerHeads: Point,
   +centerTails: Point,
   +someEllipseMethodArgs: SomeContext2dEllipseMethodArguments,
-  isHeadsVisibleToUser: boolean,
-  isTailsVisibleToUser: boolean,
-  isRimVisibleToUser: boolean,
+  +isHeadsVisibleToUser: boolean,
+  +isTailsVisibleToUser: boolean,
+  +isRimVisibleToUser: boolean,
 }
