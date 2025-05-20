@@ -25,6 +25,29 @@ type SliceData = {
   +color: string,
 }
 
+type Context2dEllipseMethodArguments = {
+  +centerX: number,
+  +centerY: number,
+  +radiusX: number,
+  +radiusY: number,
+  +angleStart: number,
+  +angleEnd: number,
+  +axesRotationCounterClockwise: number,
+  +isCounterClockwise: boolean,
+}
+
+type RimSliceData = {
+  +pointStartOnVisibleFace: Point,
+  +pointStartOnInvisibleFace: Point,
+  +pointEndOnInvisibleFace: Point,
+  +pointEndOnVisibleFace: Point,
+  +ellipseArgumentsOnInvisibleFace: Context2dEllipseMethodArguments,
+  +ellipseArgumentsOnVisibleFace: Context2dEllipseMethodArguments,
+  +color: string,
+}
+
+export type RimSlicesData = Array<RimSliceData>
+
 type EdgeData = {
   +pointHeads: Point,
   +pointTails: Point,
