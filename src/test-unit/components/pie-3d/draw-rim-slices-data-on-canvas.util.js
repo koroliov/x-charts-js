@@ -78,43 +78,62 @@ export function drawRimSlicesDataOnCanvas(arg: Arg) {
 
         function drawSlices(canvas, rimSlicesData, isHeads) {
           const ctx = canvas.getContext('2d');
-          rimSlicesData.forEach((rsd) => {
-            ctx.beginPath();
-            ctx.moveTo(rsd.pointStartOnVisibleFace[0],
-              rsd.pointStartOnVisibleFace[1]);
-            ctx.lineTo(rsd.pointStartOnInvisibleFace[0],
-              rsd.pointStartOnInvisibleFace[1]);
-            ctx.ellipse(
-              rsd.ellipseArgumentsOnInvisibleFace.centerX,
-              rsd.ellipseArgumentsOnInvisibleFace.centerY,
-              rsd.ellipseArgumentsOnInvisibleFace.radiusX,
-              rsd.ellipseArgumentsOnInvisibleFace.radiusY,
-              rsd.ellipseArgumentsOnInvisibleFace.axesRotationCounterClockwise,
-              rsd.ellipseArgumentsOnInvisibleFace.angleStart,
-              rsd.ellipseArgumentsOnInvisibleFace.angleEnd,
-              rsd.ellipseArgumentsOnInvisibleFace.isCounterClockwise,
-            );
-            ctx.lineTo(rsd.pointEndOnVisibleFace[0],
-              rsd.pointEndOnVisibleFace[1]);
-            ctx.ellipse(
-              rsd.ellipseArgumentsOnVisibleFace.centerX,
-              rsd.ellipseArgumentsOnVisibleFace.centerY,
-              rsd.ellipseArgumentsOnVisibleFace.radiusX,
-              rsd.ellipseArgumentsOnVisibleFace.radiusY,
-              rsd.ellipseArgumentsOnVisibleFace.axesRotationCounterClockwise,
-              rsd.ellipseArgumentsOnVisibleFace.angleStart,
-              rsd.ellipseArgumentsOnVisibleFace.angleEnd,
-              rsd.ellipseArgumentsOnVisibleFace.isCounterClockwise,
-            );
-            ctx.fillStyle = rsd.color;
-            ctx.fill();
-          });
-          drawEllipse(true);
-          drawEllipse(false);
+          if (!rimSlicesData?.[0]?.ellipseArgumentsOnVisibleFace) {
+            rimSlicesData.forEach((rsd) => {
+              ctx.beginPath();
+              ctx.moveTo(rsd.pointStartOnVisibleFace[0],
+                rsd.pointStartOnVisibleFace[1]);
+              ctx.lineTo(rsd.pointStartOnInvisibleFace[0],
+                rsd.pointStartOnInvisibleFace[1]);
+              ctx.lineTo(rsd.pointEndOnInvisibleFace[0],
+                rsd.pointEndOnInvisibleFace[1]);
+              ctx.lineTo(rsd.pointEndOnVisibleFace[0],
+                rsd.pointEndOnVisibleFace[1]);
+              ctx.lineTo(rsd.pointStartOnVisibleFace[0],
+                rsd.pointStartOnVisibleFace[1]);
+              ctx.fillStyle = rsd.color;
+              ctx.fill();
+            });
+          } else {
+            rimSlicesData.forEach((rsd) => {
+              ctx.beginPath();
+              ctx.moveTo(rsd.pointStartOnVisibleFace[0],
+                rsd.pointStartOnVisibleFace[1]);
+              ctx.lineTo(rsd.pointStartOnInvisibleFace[0],
+                rsd.pointStartOnInvisibleFace[1]);
+              ctx.ellipse(
+                rsd.ellipseArgumentsOnInvisibleFace.centerX,
+                rsd.ellipseArgumentsOnInvisibleFace.centerY,
+                rsd.ellipseArgumentsOnInvisibleFace.radiusX,
+                rsd.ellipseArgumentsOnInvisibleFace.radiusY,
+                rsd.ellipseArgumentsOnInvisibleFace
+                  .axesRotationCounterClockwise,
+                rsd.ellipseArgumentsOnInvisibleFace.angleStart,
+                rsd.ellipseArgumentsOnInvisibleFace.angleEnd,
+                rsd.ellipseArgumentsOnInvisibleFace.isCounterClockwise,
+              );
+              ctx.lineTo(rsd.pointEndOnVisibleFace[0],
+                rsd.pointEndOnVisibleFace[1]);
+              ctx.ellipse(
+                rsd.ellipseArgumentsOnVisibleFace.centerX,
+                rsd.ellipseArgumentsOnVisibleFace.centerY,
+                rsd.ellipseArgumentsOnVisibleFace.radiusX,
+                rsd.ellipseArgumentsOnVisibleFace.radiusY,
+                rsd.ellipseArgumentsOnVisibleFace.axesRotationCounterClockwise,
+                rsd.ellipseArgumentsOnVisibleFace.angleStart,
+                rsd.ellipseArgumentsOnVisibleFace.angleEnd,
+                rsd.ellipseArgumentsOnVisibleFace.isCounterClockwise,
+              );
+              ctx.fillStyle = rsd.color;
+              ctx.fill();
+            });
+            drawEllipse(true);
+            drawEllipse(false);
+          }
 
           function drawEllipse(isVisible) {
             const propName = isVisible ? 'ellipseArgumentsOnVisibleFace' :
-            'ellipseArgumentsOnInvisibleFace';
+              'ellipseArgumentsOnInvisibleFace';
 
             ctx.beginPath();
             ctx.ellipse(
