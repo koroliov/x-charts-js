@@ -20,9 +20,9 @@ tp.test((t) => {
       rotationAroundCenterZAxisDeg: 45,
     },
     data: [
-      { value: 40, meta: { color: '#ff0000', }, },
-      { value: 25, meta: { color: '#37ff00', }, },
-      { value: 35, meta: { color: '#000aff', }, },
+      { value: 40, meta: { color: '#ff0000' /* red */, }, },
+      { value: 25, meta: { color: '#37ff00' /* green */, }, },
+      { value: 35, meta: { color: '#000aff' /* blue */, }, },
     ],
   };
 
