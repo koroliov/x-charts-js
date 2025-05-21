@@ -34,10 +34,13 @@ export function draw(arg
       ctx.lineTo(sd.pointStartOnInvisibleFace[0],
         sd.pointStartOnInvisibleFace[1]);
       drawEllipse(sd.ellipseArgumentsOnInvisibleFace);
-      if (arg.action === 'stroke') {
+      if (arg.action === 'stroke' && i !== arg.rimSlicesData.length - 1) {
         ctx.stroke();
       }
-      ctx.lineTo(sd.pointEndOnInvisibleFace[0], sd.pointEndOnInvisibleFace[1]);
+      ctx.lineTo(sd.pointEndOnVisibleFace[0], sd.pointEndOnVisibleFace[1]);
+      if (arg.action === 'stroke' && i === arg.rimSlicesData.length - 1) {
+        ctx.stroke();
+      }
       drawEllipse(sd.ellipseArgumentsOnVisibleFace);
       ctx.closePath();
       if (arg.action === 'fill') {
