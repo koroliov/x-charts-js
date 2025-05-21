@@ -20,13 +20,7 @@ type Arg = {
 type ComparisonOptions = {
   ...Omit<Arg, 'buffer' | 'expectedFileNameRelative' |
     'diffFileNameRelativeOnError' >,
-}
-
-type DiffOptions = {
-  current: Arg['buffer'],
-  reference: Arg['expectedFileNameRelative'],
-  diff: Arg['diffFileNameRelativeOnError'],
-  ...ComparisonOptions,
+  createDiffImage: boolean,
 }
 
 export async function compareWithLooksSame(arg: Arg): Promise<boolean> {
@@ -35,8 +29,17 @@ export async function compareWithLooksSame(arg: Arg): Promise<boolean> {
   let result = false;
 
   try {
-    const { equal, } = await looksSame(arg.buffer, arg.expectedFileNameRelative,
-      comparisonOptions);
+    const {
+      equal,
+      diffBounds,
+      diffImage,
+      differentPixels,
+    } = await looksSame(arg.buffer,
+      arg.expectedFileNameRelative, comparisonOptions);
+    if (!equal && arg.diffFileNameRelativeOnError !== '') {
+      showInfoMessageOnTestFailure({ diffBounds, differentPixels, });
+      diffImage.save(arg.diffFileNameRelativeOnError);
+    }
     result = equal;
   } catch (e) {
     if (e?.nested?.code === 'ENOENT' &&
@@ -49,10 +52,21 @@ export async function compareWithLooksSame(arg: Arg): Promise<boolean> {
     throw e;
   }
 
-  if (!result && arg.diffFileNameRelativeOnError) {
-    await writeDiffFile();
-  }
   return result;
+
+  function showInfoMessageOnTestFailure(a: {
+    //it's actuall an object, but for Flow to work, set it as string
+    diffBounds: string,
+    differentPixels: number,
+  }) {
+      console.log(
+        kleur.blue().bold(`DIFF BOUNDS on image ${
+          arg.diffFileNameRelativeOnError }:`),
+        a.diffBounds,
+        kleur.blue().bold('differentPixels:'),
+        a.differentPixels
+      );
+  }
 
   function checkArg() {
     checkDiffFileNameRelativeOnError();
@@ -90,35 +104,26 @@ export async function compareWithLooksSame(arg: Arg): Promise<boolean> {
     }
   }
 
-  async function writeDiffFile() {
-    const diffOptions: DiffOptions = {
-      ...comparisonOptions,
-      reference: arg.expectedFileNameRelative,
-      current: arg.buffer,
-      diff: arg.diffFileNameRelativeOnError,
-    };
-    await looksSame.createDiff(diffOptions);
-  }
-
   function getComparisonOptions(): ComparisonOptions {
     if (arg.strict === true && Number.isFinite(arg.tolerance)) {
       throw new Error(`Can't use strict & tolerance in compareWithLooksSame()`);
     }
     const comparisonOptions: ComparisonOptions = {
       highlightColor: arg.highlightColor || '#ff00ff' /* purple */,
-      strict: arg.strict === true ? true : false,
+      strict: arg.strict === false ? false : true,
       antialiasingTolerance: Number.isFinite(arg.antialiasingTolerance) ?
-      arg.antialiasingTolerance : 2.5,
-      ignoreAntialiasing: arg.ignoreAntialiasing === false ? false : true,
-      ignoreCaret: arg.ignoreCaret === false ? false : true,
+        arg.antialiasingTolerance : 0,
+      ignoreAntialiasing: arg.ignoreAntialiasing === true,
+      ignoreCaret: arg.ignoreCaret === true,
+      createDiffImage: arg.diffFileNameRelativeOnError !== '',
     };
     setTolerance();
     return comparisonOptions;
 
     function setTolerance() {
-      if (arg.strict !== true) {
+      if (comparisonOptions.strict !== true) {
         comparisonOptions.tolerance =
-          Number.isFinite(arg.tolerance) ? arg.tolerance : 2.5;
+          Number.isFinite(arg.tolerance) ? arg.tolerance : 0;
       }
     }
   }

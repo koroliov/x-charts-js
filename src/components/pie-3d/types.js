@@ -25,17 +25,40 @@ type SliceData = {
   +color: string,
 }
 
+type Context2dEllipseMethodArguments = {
+  +centerX: number,
+  +centerY: number,
+  +radiusX: number,
+  +radiusY: number,
+  +angleStart: number,
+  +angleEnd: number,
+  +axesRotationCounterClockwise: number,
+  +isCounterClockwise: boolean,
+}
+
+type RimSliceData = {
+  +pointStartOnVisibleFace: Point,
+  +pointStartOnInvisibleFace: Point,
+  +pointEndOnInvisibleFace: Point,
+  +pointEndOnVisibleFace: Point,
+  +ellipseArgumentsOnInvisibleFace: Context2dEllipseMethodArguments,
+  +ellipseArgumentsOnVisibleFace: Context2dEllipseMethodArguments,
+  +color: string,
+}
+
+export type RimSlicesData = Array<RimSliceData>
+
 type EdgeData = {
   +pointHeads: Point,
   +pointTails: Point,
-  sliceIndex: number,
+  +sliceIndex: number,
 }
 
-type Context2dEllipseMethodArguments = {
-  radiusX: number,
-  radiusY: number,
-  axesRotationCounterClockwise: number,
-  isCounterClockwiseOnRimAdjacentEdge: boolean,
+type SomeContext2dEllipseMethodArguments = {
+  +radiusX: number,
+  +radiusY: number,
+  +axesRotationCounterClockwise: number,
+  +isCounterClockwiseOnVisibleFace: boolean,
 }
 
 export type PieData = {
@@ -46,8 +69,8 @@ export type PieData = {
   +edgeRight: EdgeData,
   +centerHeads: Point,
   +centerTails: Point,
-  +someEllipseMethodArgs: Context2dEllipseMethodArguments,
-  isHeadsVisibleToUser: boolean,
-  isTailsVisibleToUser: boolean,
-  isRimVisibleToUser: boolean,
+  +someEllipseMethodArgs: SomeContext2dEllipseMethodArguments,
+  +isHeadsVisibleToUser: boolean,
+  +isTailsVisibleToUser: boolean,
+  +isRimVisibleToUser: boolean,
 }

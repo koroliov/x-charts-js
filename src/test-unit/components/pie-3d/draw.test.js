@@ -42,6 +42,7 @@ tp.test((t) => {
       buffer: buff,
       expectedFileNameRelative:
         `./test/unit-permanent/components/pie-3d/draw/${ testName }.png`,
+      highlightColor: '#000000',
       diffFileNameRelativeOnError: `./test/diff/${ testName }.png`,
     });
     t.ok(equal);

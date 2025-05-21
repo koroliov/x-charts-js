@@ -1,9 +1,9 @@
 //@flow strict
 //$FlowFixMe[cannot-resolve-module]
 import tp from 'tape';
-import { prepareData } from '../../../components/pie-3d/prepare-data.js';
-import { drawDataOnCanvas } from './draw-data-on-canvas.util.js';
-import { writeToTestDiffDir } from
+import { prepareData, } from '../../../components/pie-3d/prepare-data.js';
+import { drawDataOnCanvas, } from './draw-data-on-canvas.util.js';
+import { writeToTestDiffDir, } from
   '../../test-utils/write-to-test-diff-dir.util.js';
 
 tp.test((t) => {
@@ -20,9 +20,9 @@ tp.test((t) => {
       rotationAroundCenterZAxisDeg: 45,
     },
     data: [
-      { value: 40, meta: { color: '#ff0000', }, },
-      { value: 25, meta: { color: '#37ff00', }, },
-      { value: 35, meta: { color: '#000aff', }, },
+      { value: 40, meta: { color: '#ff0000' /* red */, }, },
+      { value: 25, meta: { color: '#37ff00' /* green */, }, },
+      { value: 35, meta: { color: '#000aff' /* blue */, }, },
     ],
   };
 
@@ -153,7 +153,7 @@ tp.test((t) => {
       "radiusX": 149.99999999999997,
       "radiusY": 74.99999999999999,
       "axesRotationCounterClockwise": -0.7853981633974483,
-      "isCounterClockwiseOnRimAdjacentEdge": true,
+      "isCounterClockwiseOnVisibleFace": true,
     },
     "isHeadsVisibleToUser": true,
     "isTailsVisibleToUser": false,
@@ -328,7 +328,7 @@ tp.test((t) => {
       "radiusX": 200,
       "radiusY": 99.99999999999997,
       "axesRotationCounterClockwise": -0,
-      "isCounterClockwiseOnRimAdjacentEdge": false,
+      "isCounterClockwiseOnVisibleFace": false,
     },
     "isHeadsVisibleToUser": false,
     "isTailsVisibleToUser": true,
