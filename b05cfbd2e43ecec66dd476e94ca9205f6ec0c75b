@@ -1,0 +1,11 @@
+Comment on taken approach:
+
+It's been decided to just take 2 possible cases:
+
+- if the heads is visible to the user
+- of if the tails is visible to the user
+
+and handle them with seemingly duplicated code, with 2 loops. B/c
+otherwise, if we just had a single loop it would require us to have
+numerous if/else checks in that single loop. Which is way more
+complicated to handle etc.
