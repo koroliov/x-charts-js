@@ -28,26 +28,30 @@ export function draw(arg: {
     if (!pieData.isRimVisibleToUser) {
       return;
     }
-    arg.rimSlicesData.forEach((sd, i) => {
+    const isFill = arg.action === 'fill';
+    const isStroke = !isFill;
+    arg.rimSlicesData.forEach(drawSlice);
+
+    function drawSlice(sd: typeof arg.rimSlicesData[0], i: number) {
       ctx.beginPath();
       ctx.moveTo(sd.pointStartOnVisibleFace[0], sd.pointStartOnVisibleFace[1]);
       ctx.lineTo(sd.pointStartOnInvisibleFace[0],
         sd.pointStartOnInvisibleFace[1]);
       drawEllipse(sd.ellipseArgumentsOnInvisibleFace);
-      if (arg.action === 'stroke' && i !== arg.rimSlicesData.length - 1) {
+      if (isStroke && i !== arg.rimSlicesData.length - 1) {
         ctx.stroke();
       }
       ctx.lineTo(sd.pointEndOnVisibleFace[0], sd.pointEndOnVisibleFace[1]);
-      if (arg.action === 'stroke' && i === arg.rimSlicesData.length - 1) {
+      if (isStroke && i === arg.rimSlicesData.length - 1) {
         ctx.stroke();
       }
       drawEllipse(sd.ellipseArgumentsOnVisibleFace);
       ctx.closePath();
-      if (arg.action === 'fill') {
+      if (isFill) {
         ctx.fillStyle = sd.color;
         ctx.fill();
       }
-    });
+    }
 
     function drawEllipse(ellipsArg: ReturnType<
       typeof prepareRimSlicesData>[0]['ellipseArgumentsOnVisibleFace'] ) {
