@@ -52,7 +52,6 @@ export function prepareRimSlicesData(pieData         )                {
             Math.PI * 2 : pieData.slices[i].endAngleOnEllipseClockwise,
           isCounterClockwise: true,
         },
-
       };
       rimSlicesData.push(sd);
     }

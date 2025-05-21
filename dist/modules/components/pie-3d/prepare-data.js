@@ -147,12 +147,19 @@ export function prepareData(arg                           )          {
 
       function handleExpectedEdgeFlagsWhenPassingSlice(sliceIndex        ) {
         if (expectToPassLeftEdge) {
+          if (pieData.edgeLeft.sliceIndex) {
+            return;
+          }
           if (startAngle >= Math.PI) {
             expectToPassLeftEdge = false;
             expectToPassRightEdge = true;
-            pieData.edgeLeft.sliceIndex = sliceIndex;
+            pieData.edgeLeft.sliceIndex = startAngle === Math.PI ?
+              sliceIndex + 1 : sliceIndex;
           }
         } else if (expectToPassRightEdge) {
+          if (pieData.edgeRight.sliceIndex) {
+            return;
+          }
           if (startAngle >= 2 * Math.PI) {
             expectToPassRightEdge = false;
             expectToPassLeftEdge = true;
