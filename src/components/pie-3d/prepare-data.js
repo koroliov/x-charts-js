@@ -151,10 +151,15 @@ export function prepareData(arg: AddComponentPie3dArgument): PieData {
             return;
           }
           if (startAngle >= Math.PI) {
-            expectToPassLeftEdge = false;
-            expectToPassRightEdge = true;
-            pieData.edgeLeft.sliceIndex = startAngle === Math.PI ?
-              sliceIndex + 1 : sliceIndex;
+            if (startAngle > Math.PI * 2) {
+              pieData.edgeLeft.sliceIndex = sliceIndex;
+              pieData.edgeRight.sliceIndex = sliceIndex;
+            } else {
+              expectToPassLeftEdge = false;
+              expectToPassRightEdge = true;
+              pieData.edgeLeft.sliceIndex = startAngle === Math.PI ?
+                sliceIndex + 1 : sliceIndex;
+            }
           }
         } else if (expectToPassRightEdge) {
           if (pieData.edgeRight.sliceIndex) {
