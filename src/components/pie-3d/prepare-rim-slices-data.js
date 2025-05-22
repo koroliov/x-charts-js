@@ -9,9 +9,11 @@ export function prepareRimSlicesData(pieData: PieData): RimSlicesData {
   }
   const startSliceIndex = pieData.edgeLeft.sliceIndex;
   const endSliceIndex = pieData.edgeRight.sliceIndex;
+  const indicesToPassThru = getIndicesToPassThru();
 
   if (pieData.isHeadsVisibleToUser) {
-    for (let i = startSliceIndex; i <= endSliceIndex; i++) {
+    for (let j = 0; j <= indicesToPassThru.length - 1; j++) {
+      const i = indicesToPassThru[j];
       const sd: RimSlicesData[0] = {
         color: pieData.slices[i].color,
         pointStartOnVisibleFace: i === startSliceIndex ?
@@ -103,4 +105,23 @@ export function prepareRimSlicesData(pieData: PieData): RimSlicesData {
     //}
   }
   return rimSlicesData;
+
+  function getIndicesToPassThru() {
+    if (startSliceIndex === endSliceIndex) {
+      return [startSliceIndex];
+    }
+    let i = startSliceIndex;
+    const indices: number[] = [];
+    do {
+      indices.push(i);
+      if (++i > pieData.slices.length - 1) {
+        i = 0;
+      }
+      if (i === endSliceIndex) {
+        indices.push(i);
+        break;
+      }
+    } while (i !== endSliceIndex);
+    return indices;
+  }
 }
