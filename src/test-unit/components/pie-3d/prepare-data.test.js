@@ -163,7 +163,7 @@ tp.test((t) => {
   const actual = prepareData(addComponentArg);
   //writeToTestDiffDir({ actual, expected, });
   //drawDataOnCanvas({
-  //  serverAbsFilePath: '/test/served-tmp/foo.html',
+  //  serverAbsFilePath: '/test/served-tmp/prepare-data-test.html',
   //  actual: actual,
   //  expected: expected,
   //  canvasWidthPx: 600,
@@ -338,7 +338,7 @@ tp.test((t) => {
   const actual = prepareData(addComponentArg);
   //writeToTestDiffDir({ actual, expected, });
   //drawDataOnCanvas({
-  //  serverAbsFilePath: '/test/served-tmp/foo.html',
+  //  serverAbsFilePath: '/test/served-tmp/prepare-data-test.html',
   //  actual: actual,
   //  expected: expected,
   //  canvasWidthPx: 800,
@@ -540,7 +540,7 @@ tp.test((t) => {
   const actual = prepareData(addComponentArg);
   //writeToTestDiffDir({ actual, expected, });
   //drawDataOnCanvas({
-  //  serverAbsFilePath: '/test/served-tmp/foo.html',
+  //  serverAbsFilePath: '/test/served-tmp/prepare-data-test.html',
   //  actual: actual,
   //  expected: expected,
   //  canvasWidthPx: 470,
@@ -688,7 +688,7 @@ tp.test((t) => {
   const actual = prepareData(addComponentArg);
   //writeToTestDiffDir({ actual, expected, });
   //drawDataOnCanvas({
-  //  serverAbsFilePath: '/test/served-tmp/foo.html',
+  //  serverAbsFilePath: '/test/served-tmp/prepare-data-test.html',
   //  actual: actual,
   //  expected: expected,
   //  canvasWidthPx: 470,
