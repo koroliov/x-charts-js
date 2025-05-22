@@ -99,6 +99,16 @@ export function prepareData(arg                           )          {
         getInitialExpectedEdgeFlags();
 
       pieData.slices.forEach(handleSlice);
+      handleLastSliceTakesAllVisibleRimCase();
+
+      function handleLastSliceTakesAllVisibleRimCase() {
+        if (pieData.edgeRight.sliceIndex === -1) {
+          pieData.edgeRight.sliceIndex = pieData.slices.length - 1;
+        }
+        if (pieData.edgeLeft.sliceIndex === -1) {
+          pieData.edgeLeft.sliceIndex = pieData.slices.length - 1;
+        }
+      }
 
       function handleSlice(sd                          , i        ) {
         const y = -(Math.sin(startAngle) * circleRadius) + centerY;
@@ -147,17 +157,22 @@ export function prepareData(arg                           )          {
 
       function handleExpectedEdgeFlagsWhenPassingSlice(sliceIndex        ) {
         if (expectToPassLeftEdge) {
-          if (pieData.edgeLeft.sliceIndex) {
+          if (pieData.edgeLeft.sliceIndex !== -1) {
             return;
           }
-          if (startAngle >= Math.PI) {
+          if (startAngle > Math.PI * 3) {
+            pieData.edgeLeft.sliceIndex = sliceIndex;
+          } else if (startAngle > Math.PI * 2) {
+            if (pieData.edgeRight.sliceIndex === -1) {
+              pieData.edgeRight.sliceIndex = sliceIndex;
+            }
+          } else if (startAngle > Math.PI) {
             expectToPassLeftEdge = false;
             expectToPassRightEdge = true;
-            pieData.edgeLeft.sliceIndex = startAngle === Math.PI ?
-              sliceIndex + 1 : sliceIndex;
+            pieData.edgeLeft.sliceIndex = sliceIndex;
           }
         } else if (expectToPassRightEdge) {
-          if (pieData.edgeRight.sliceIndex) {
+          if (pieData.edgeRight.sliceIndex !== -1) {
             return;
           }
           if (startAngle >= 2 * Math.PI) {
@@ -243,12 +258,12 @@ export function prepareData(arg                           )          {
       edgeLeft: {
         pointHeads: [0, 0, 0,],
         pointTails: [0, 0, 0,],
-        sliceIndex: 0,
+        sliceIndex: -1,
       },
       edgeRight: {
         pointHeads: [0, 0, 0,],
         pointTails: [0, 0, 0,],
-        sliceIndex: 0,
+        sliceIndex: -1,
       },
       centerHeads: [0, 0, 0,],
       centerTails: [0, 0, 0,],
