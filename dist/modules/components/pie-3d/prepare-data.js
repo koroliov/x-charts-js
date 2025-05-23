@@ -102,12 +102,11 @@ export function prepareData(arg                           )          {
       handleLastSliceTakesAllVisibleRimCase();
 
       function handleLastSliceTakesAllVisibleRimCase() {
-        if (pieData.edgeRight.sliceIndex === -1) {
-          pieData.edgeRight.sliceIndex = pieData.slices.length - 1;
-        }
-        if (pieData.edgeLeft.sliceIndex === -1) {
-          pieData.edgeLeft.sliceIndex = pieData.slices.length - 1;
-        }
+        ['edgeLeft', 'edgeRight',].forEach((edge) => {
+          if (pieData[edge].sliceIndex === -1) {
+            pieData[edge].sliceIndex = pieData.slices.length - 1;
+          }
+        });
       }
 
       function handleSlice(sd                          , i        ) {
