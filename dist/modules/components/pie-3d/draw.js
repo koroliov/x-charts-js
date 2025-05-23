@@ -1,8 +1,7 @@
 //      strict
 import { prepareData, } from './prepare-data.js';
 import { prepareRimSlicesData, } from './prepare-rim-slices-data.js';
-                                                                      
-                                             
+                                                             
 
 export function draw(arg   
                                 
