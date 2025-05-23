@@ -74,11 +74,36 @@ export function draw(arg
                               
    ) {
     const centerPointPropName = arg.isHeads ? 'centerHeads' : 'centerTails';
+    if (pieData.slices.length === 1) {
+      return processSliceWhenOnlyOne();
+    }
     const startPointPropName = arg.isHeads ? 'startPointHeads' :
       'startPointTails';
-    pieData.slices.forEach(processSlice);
+    pieData.slices.forEach(processSliceWhenMultiple);
 
-    function processSlice(s                          , i        ) {
+    function processSliceWhenOnlyOne() {
+      const s = pieData.slices[0];
+      ctx.beginPath();
+      ctx.ellipse(
+        pieData[centerPointPropName][0],
+        pieData[centerPointPropName][1],
+        pieData.someEllipseMethodArgs.radiusX,
+        pieData.someEllipseMethodArgs.radiusY,
+        pieData.someEllipseMethodArgs.axesRotationCounterClockwise,
+        0,
+        Math.PI * 2,
+        false,
+      );
+      if (arg.action === 'fill') {
+        ctx.fillStyle = s.color;
+        ctx.fill();
+      } else {
+        ctx.stroke();
+      }
+      return;
+    }
+
+    function processSliceWhenMultiple(s                          , i        ) {
       ctx.moveTo(pieData[centerPointPropName][0],
         pieData[centerPointPropName][1]);
       ctx.beginPath();
