@@ -82,7 +82,7 @@ export function prepareRimSlicesData(pieData: PieData): RimSlicesData {
             Math.PI :
             pieData.slices[i].startAngleOnEllipseClockwise,
           angleEnd: i === endSliceIndex ?
-            Math.PI * 2 : pieData.slices[i].endAngleOnEllipseClockwise,
+            0 : pieData.slices[i].endAngleOnEllipseClockwise,
           isCounterClockwise: false,
         },
 

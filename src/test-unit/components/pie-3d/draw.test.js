@@ -173,3 +173,43 @@ tp.test((t) => {
     t.end();
   });
 });
+
+tp.test((t) => {
+  const testName = '0005-tails-visible';
+  const arg = {
+    type: 'pie-3d',
+    zIndex: '1',
+    options: {
+      thicknessPx: 50,
+      radiusPx: 200,
+      centerXPx: 230,
+      centerYPx: 110,
+      startAtDeg: 0,
+      rotationAroundCenterXAxisDeg: 110,
+      rotationAroundCenterZAxisDeg: 0,
+    },
+    data: [
+      { value: 45, meta: { color: '#37ff00' /* green */, }, },
+      { value: 25, meta: { color: '#fffd00' /* yellow */, }, },
+    ],
+  };
+  const { ctx, canvas, } =
+    createCanvasContext2d({ w: 470, h: 220, fillStyle: 'white', });
+  draw({ ctx, addComponentArg: arg, });
+
+  canvas.toBuffer(async (err: null | Error, buff: Buffer) => {
+    //await writeCanvasToTestDiffDir({
+    //  canvas: ctx.canvas,
+    //  fileNameRelative: './test/diff/current.png',
+    //});
+    const equal = await compareWithLooksSame({
+      buffer: buff,
+      expectedFileNameRelative:
+        `./test/unit-permanent/components/pie-3d/draw/${ testName }.png`,
+      highlightColor: '#000000',
+      diffFileNameRelativeOnError: `./test/diff/${ testName }.png`,
+    });
+    t.ok(equal);
+    t.end();
+  });
+});
