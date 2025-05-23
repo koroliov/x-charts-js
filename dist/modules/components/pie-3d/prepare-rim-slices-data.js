@@ -1,9 +1,10 @@
 //      strict
-                                                          
+                                                                     
                                              
 
-export function prepareRimSlicesData(pieData         )                {
-  const rimSlicesData                = [];
+export function prepareRimSlicesData(pieData         ) 
+                           {
+  const rimSlicesData                           = [];
   if (!pieData.isRimVisibleToUser) {
     return rimSlicesData;
   }
@@ -14,7 +15,7 @@ export function prepareRimSlicesData(pieData         )                {
   if (pieData.isHeadsVisibleToUser) {
     for (let j = 0; j <= indicesToPassThru.length - 1; j++) {
       const i = indicesToPassThru[j];
-      const sd                   = {
+      const sd                              = {
         color: pieData.slices[i].color,
         pointStartOnVisibleFace: i === startSliceIndex ?
           pieData.edgeLeft.pointHeads : pieData.slices[i].startPointHeads,
@@ -60,7 +61,7 @@ export function prepareRimSlicesData(pieData         )                {
   } else {
     for (let j = 0; j <= indicesToPassThru.length - 1; j++) {
       const i = indicesToPassThru[j];
-      const sd                   = {
+      const sd                              = {
         color: pieData.slices[i].color,
         pointStartOnVisibleFace: i === startSliceIndex ?
           pieData.edgeLeft.pointTails : pieData.slices[i].startPointTails,
