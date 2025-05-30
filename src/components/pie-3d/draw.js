@@ -10,16 +10,41 @@ export function draw(arg: {
   const { addComponentArg, ctx, } = arg;
   const pieData = prepareData(addComponentArg);
   ctx.lineWidth = 0.5;
+  const rimSlicesData = prepareRimSlicesData(pieData);
   if (!pieData.isHeadsVisibleToUser && !pieData.isTailsVisibleToUser) {
+    processRimBar({ action: 'fill', });
+    processRimBar({ action: 'stroke', });
   } else {
     const isHeads = pieData.isHeadsVisibleToUser;
-    const rimSlicesData = prepareRimSlicesData(pieData);
     processFace({ isHeads, action: 'fill', });
     processRimElliptic({ isHeadsVisible: isHeads, rimSlicesData,
       action: 'fill', });
     processFace({ isHeads, action: 'stroke', });
     processRimElliptic({ isHeadsVisible: isHeads, rimSlicesData,
       action: 'stroke', });
+  }
+
+  function processRimBar(arg: { action: 'stroke' | 'fill', }) {
+    const isFill = arg.action === 'fill';
+    const isStroke = !isFill;
+    rimSlicesData.forEach((sd, i) => {
+      ctx.beginPath();
+      ctx.moveTo(sd.pointEndOnHeads[0], sd.pointEndOnHeads[1]);
+      ctx.lineTo(sd.pointStartOnHeads[0], sd.pointStartOnHeads[1]);
+      ctx.lineTo(sd.pointStartOnTails[0], sd.pointStartOnTails[1]);
+      ctx.lineTo(sd.pointEndOnTails[0], sd.pointEndOnTails[1]);
+      if (isStroke && i <= rimSlicesData.length - 1) {
+        ctx.stroke();
+      }
+      ctx.lineTo(sd.pointEndOnHeads[0], sd.pointEndOnHeads[1]);
+      if (isStroke && i === rimSlicesData.length - 1) {
+        ctx.stroke();
+      }
+      if (isFill) {
+        ctx.fillStyle = sd.color;
+        ctx.fill();
+      }
+    });
   }
 
   function processRimElliptic(arg: {
