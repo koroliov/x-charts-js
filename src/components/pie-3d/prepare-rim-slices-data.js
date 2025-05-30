@@ -23,14 +23,14 @@ export function prepareRimSlicesData(pieData: PieData): RimSlicesData {
       const i = indicesToPassThru[j];
       const sd: RimSlicesData[0] = {
         color: pieData.slices[i].color,
-        pointStartOnTails: i === startSliceIndex ?
-          pieData.edgeLeft.pointTails : pieData.slices[i].startPointTails,
         pointStartOnHeads: i === startSliceIndex ?
           pieData.edgeLeft.pointHeads : pieData.slices[i].startPointHeads,
-        pointEndOnHeads: i === endSliceIndex ?
-          pieData.edgeRight.pointHeads : pieData.slices[i].endPointHeads,
+        pointStartOnTails: i === startSliceIndex ?
+          pieData.edgeLeft.pointTails : pieData.slices[i].startPointTails,
         pointEndOnTails: i === endSliceIndex ?
           pieData.edgeRight.pointTails : pieData.slices[i].endPointTails,
+        pointEndOnHeads: i === endSliceIndex ?
+          pieData.edgeRight.pointHeads : pieData.slices[i].endPointHeads,
 
         ellipseArgumentsOnHeads: {
           centerX: pieData.centerHeads[0],
