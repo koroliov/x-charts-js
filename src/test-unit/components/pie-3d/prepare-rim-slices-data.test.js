@@ -33,27 +33,27 @@ tp.test((t) => {
   const expected: ReturnType<typeof prepareRimSlicesData> = [
     {
       "color": "#37ff00",
-      "pointStartOnVisibleFace": [
+      "pointStartOnHeads": [
         178.624671929623,
         340.75670628558726,
         -12.500000000000004,
       ],
-      "pointStartOnInvisibleFace": [
+      "pointStartOnTails": [
         209.24329371441274,
         371.375328070377,
         12.500000000000004,
       ],
-      "pointEndOnInvisibleFace": [
+      "pointEndOnTails": [
         337.05215415238035,
         345.52366718633925,
         -112.3715572551245,
       ],
-      "pointEndOnVisibleFace": [
+      "pointEndOnHeads": [
         306.43353236759066,
         314.90504540154956,
         -137.37155725512451,
       ],
-      "ellipseArgumentsOnVisibleFace": {
+      "ellipseArgumentsOnHeads": {
         "centerX": 284.6906891076051,
         "centerY": 234.69068910760512,
         "radiusX": 149.99999999999997,
@@ -63,7 +63,7 @@ tp.test((t) => {
         "angleEnd": 3.141592653589793,
         "isCounterClockwise": false,
       },
-      "ellipseArgumentsOnInvisibleFace": {
+      "ellipseArgumentsOnTails": {
         "centerX": 315.3093108923949,
         "centerY": 265.3093108923949,
         "radiusX": 149.99999999999997,
@@ -76,27 +76,27 @@ tp.test((t) => {
     },
     {
       "color": "#000aff",
-      "pointStartOnVisibleFace": [
+      "pointStartOnHeads": [
         306.43353236759066,
         314.90504540154956,
         -137.37155725512451,
       ],
-      "pointStartOnInvisibleFace": [
+      "pointStartOnTails": [
         337.05215415238035,
         345.52366718633925,
         -112.3715572551245,
       ],
-      "pointEndOnInvisibleFace": [
+      "pointEndOnTails": [
         421.375328070377,
         159.24329371441274,
         12.500000000000004,
       ],
-      "pointEndOnVisibleFace": [
+      "pointEndOnHeads": [
         390.75670628558726,
         128.62467192962302,
         -12.500000000000004,
       ],
-      "ellipseArgumentsOnVisibleFace": {
+      "ellipseArgumentsOnHeads": {
         "centerX": 284.6906891076051,
         "centerY": 234.69068910760512,
         "radiusX": 149.99999999999997,
@@ -106,7 +106,7 @@ tp.test((t) => {
         "angleEnd": 1.85004900711399,
         "isCounterClockwise": false,
       },
-      "ellipseArgumentsOnInvisibleFace": {
+      "ellipseArgumentsOnTails": {
         "centerX": 315.3093108923949,
         "centerY": 265.3093108923949,
         "radiusX": 149.99999999999997,
@@ -171,27 +171,27 @@ tp.test((t) => {
   const expected: ReturnType<typeof prepareRimSlicesData> = [
     {
       "color": "#f2b5f6",
-      "pointStartOnVisibleFace": [
+      "pointStartOnHeads": [
         35,
         86.5076844803523,
         -8.55050358314172,
       ],
-      "pointStartOnInvisibleFace": [
+      "pointStartOnTails": [
         35,
         133.49231551964772,
         8.55050358314172,
       ],
-      "pointEndOnInvisibleFace": [
+      "pointEndOnTails": [
         106.44247806269212,
         185.8928415655247,
         -135.41875849544908,
       ],
-      "pointEndOnVisibleFace": [
+      "pointEndOnHeads": [
         106.44247806269212,
         138.90821052622928,
         -152.51976566173255,
       ],
-      "ellipseArgumentsOnVisibleFace": {
+      "ellipseArgumentsOnHeads": {
         "centerX": 235,
         "centerY": 86.5076844803523,
         "radiusX": 200,
@@ -201,7 +201,7 @@ tp.test((t) => {
         "angleEnd": 3.141592653589793,
         "isCounterClockwise": false,
       },
-      "ellipseArgumentsOnInvisibleFace": {
+      "ellipseArgumentsOnTails": {
         "centerX": 235,
         "centerY": 133.49231551964772,
         "radiusX": 200,
@@ -214,27 +214,27 @@ tp.test((t) => {
     },
     {
       "color": "#37ff00",
-      "pointStartOnVisibleFace": [
+      "pointStartOnHeads": [
         106.44247806269212,
         138.90821052622928,
         -152.51976566173255,
       ],
-      "pointStartOnInvisibleFace": [
+      "pointStartOnTails": [
         106.44247806269212,
         185.8928415655247,
         -135.41875849544908,
       ],
-      "pointEndOnInvisibleFace": [
+      "pointEndOnTails": [
         340.98385284664096,
         191.50222179854399,
         -150.83040402280471,
       ],
-      "pointEndOnVisibleFace": [
+      "pointEndOnHeads": [
         340.98385284664096,
         144.5175907592486,
         -167.93141118908818,
       ],
-      "ellipseArgumentsOnVisibleFace": {
+      "ellipseArgumentsOnHeads": {
         "centerX": 235,
         "centerY": 86.5076844803523,
         "radiusX": 200,
@@ -244,7 +244,7 @@ tp.test((t) => {
         "angleEnd": 2.2689280275926285,
         "isCounterClockwise": false,
       },
-      "ellipseArgumentsOnInvisibleFace": {
+      "ellipseArgumentsOnTails": {
         "centerX": 235,
         "centerY": 133.49231551964772,
         "radiusX": 200,
@@ -257,27 +257,27 @@ tp.test((t) => {
     },
     {
       "color": "#ff0000",
-      "pointStartOnVisibleFace": [
+      "pointStartOnHeads": [
         340.98385284664096,
         144.5175907592486,
         -167.93141118908818,
       ],
-      "pointStartOnInvisibleFace": [
+      "pointStartOnTails": [
         340.98385284664096,
         191.50222179854399,
         -150.83040402280471,
       ],
-      "pointEndOnInvisibleFace": [
+      "pointEndOnTails": [
         435,
         133.49231551964772,
         8.55050358314172,
       ],
-      "pointEndOnVisibleFace": [
+      "pointEndOnHeads": [
         435,
         86.5076844803523,
         -8.55050358314172,
       ],
-      "ellipseArgumentsOnVisibleFace": {
+      "ellipseArgumentsOnHeads": {
         "centerX": 235,
         "centerY": 86.5076844803523,
         "radiusX": 200,
@@ -287,7 +287,7 @@ tp.test((t) => {
         "angleEnd": 1.0122909661567114,
         "isCounterClockwise": false,
       },
-      "ellipseArgumentsOnInvisibleFace": {
+      "ellipseArgumentsOnTails": {
         "centerX": 235,
         "centerY": 133.49231551964772,
         "radiusX": 200,
@@ -350,27 +350,27 @@ tp.test((t) => {
   const expected: ReturnType<typeof prepareRimSlicesData> = [
     {
       "color": "#f2b5f6",
-      "pointStartOnVisibleFace": [
+      "pointStartOnHeads": [
         35,
         86.5076844803523,
         -8.55050358314172,
       ],
-      "pointStartOnInvisibleFace": [
+      "pointStartOnTails": [
         35,
         133.49231551964772,
         8.55050358314172,
       ],
-      "pointEndOnInvisibleFace": [
+      "pointEndOnTails": [
         435,
         133.49231551964772,
         8.55050358314172,
       ],
-      "pointEndOnVisibleFace": [
+      "pointEndOnHeads": [
         435,
         86.5076844803523,
         -8.55050358314172,
       ],
-      "ellipseArgumentsOnVisibleFace": {
+      "ellipseArgumentsOnHeads": {
         "centerX": 235,
         "centerY": 86.5076844803523,
         "radiusX": 200,
@@ -380,7 +380,7 @@ tp.test((t) => {
         "angleEnd": 3.141592653589793,
         "isCounterClockwise": false,
       },
-      "ellipseArgumentsOnInvisibleFace": {
+      "ellipseArgumentsOnTails": {
         "centerX": 235,
         "centerY": 133.49231551964772,
         "radiusX": 200,

@@ -37,12 +37,12 @@ type Context2dEllipseMethodArguments = {
 }
 
 type RimSliceData = {
-  +pointStartOnVisibleFace: Point,
-  +pointStartOnInvisibleFace: Point,
-  +pointEndOnInvisibleFace: Point,
-  +pointEndOnVisibleFace: Point,
-  +ellipseArgumentsOnInvisibleFace: Context2dEllipseMethodArguments,
-  +ellipseArgumentsOnVisibleFace: Context2dEllipseMethodArguments,
+  +pointStartOnHeads: Point,
+  +pointStartOnTails: Point,
+  +pointEndOnTails: Point,
+  +pointEndOnHeads: Point,
+  +ellipseArgumentsOnTails: Context2dEllipseMethodArguments,
+  +ellipseArgumentsOnHeads: Context2dEllipseMethodArguments,
   +color: string,
 }
 
