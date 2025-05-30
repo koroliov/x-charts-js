@@ -1,12 +1,11 @@
 //@flow strict
-import type { RimSlicesDataFaceVisible, } from
-  '../../../components/pie-3d/types.js';
+import type { RimSlicesData, } from '../../../components/pie-3d/types.js';
 import fs from 'fs';
 
 type Arg = {
   +serverAbsFilePath: StringPrefix<'/test/served-tmp/'>,
-  +actual: RimSlicesDataFaceVisible,
-  +expected: RimSlicesDataFaceVisible,
+  +actual: RimSlicesData,
+  +expected: RimSlicesData,
   +canvasWidthPx: number,
   +canvasHeightPx: number,
 }

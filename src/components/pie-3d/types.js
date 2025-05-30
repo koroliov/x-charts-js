@@ -36,7 +36,7 @@ type Context2dEllipseMethodArguments = {
   +isCounterClockwise: boolean,
 }
 
-type RimSliceDataFaceVisible = {
+type RimSliceData = {
   +pointStartOnVisibleFace: Point,
   +pointStartOnInvisibleFace: Point,
   +pointEndOnInvisibleFace: Point,
@@ -46,7 +46,7 @@ type RimSliceDataFaceVisible = {
   +color: string,
 }
 
-export type RimSlicesDataFaceVisible = Array<RimSliceDataFaceVisible>
+export type RimSlicesData = Array<RimSliceData>
 
 type EdgeData = {
   +pointHeads: Point,

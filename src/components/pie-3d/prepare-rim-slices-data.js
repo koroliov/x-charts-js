@@ -1,10 +1,9 @@
 //@flow strict
-import type { PieData, RimSlicesDataFaceVisible, } from './types.js';
+import type { PieData, RimSlicesData, } from './types.js';
 import type { Point, } from '../../types.js';
 
-export function prepareRimSlicesData(pieData: PieData):
-  RimSlicesDataFaceVisible {
-  const rimSlicesData: RimSlicesDataFaceVisible = [];
+export function prepareRimSlicesData(pieData: PieData): RimSlicesData {
+  const rimSlicesData: RimSlicesData = [];
   if (!pieData.isRimVisibleToUser) {
     return rimSlicesData;
   }
@@ -22,7 +21,7 @@ export function prepareRimSlicesData(pieData: PieData):
   function setRimSlicesDataTailsVisible() {
     for (let j = 0; j <= indicesToPassThru.length - 1; j++) {
       const i = indicesToPassThru[j];
-      const sd: RimSlicesDataFaceVisible[0] = {
+      const sd: RimSlicesData[0] = {
         color: pieData.slices[i].color,
         pointStartOnVisibleFace: i === startSliceIndex ?
           pieData.edgeLeft.pointTails : pieData.slices[i].startPointTails,
@@ -70,7 +69,7 @@ export function prepareRimSlicesData(pieData: PieData):
   function setRimSlicesDataHeadsVisible() {
     for (let j = 0; j <= indicesToPassThru.length - 1; j++) {
       const i = indicesToPassThru[j];
-      const sd: RimSlicesDataFaceVisible[0] = {
+      const sd: RimSlicesData[0] = {
         color: pieData.slices[i].color,
         pointStartOnVisibleFace: i === startSliceIndex ?
           pieData.edgeLeft.pointHeads : pieData.slices[i].startPointHeads,
