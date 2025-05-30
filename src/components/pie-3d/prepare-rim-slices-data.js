@@ -1,10 +1,9 @@
 //@flow strict
-import type { PieData, RimSlicesDataFaceVisible, } from './types.js';
+import type { PieData, RimSlicesData, } from './types.js';
 import type { Point, } from '../../types.js';
 
-export function prepareRimSlicesData(pieData: PieData):
-  RimSlicesDataFaceVisible {
-  const rimSlicesData: RimSlicesDataFaceVisible = [];
+export function prepareRimSlicesData(pieData: PieData): RimSlicesData {
+  const rimSlicesData: RimSlicesData = [];
   if (!pieData.isRimVisibleToUser) {
     return rimSlicesData;
   }
@@ -22,18 +21,18 @@ export function prepareRimSlicesData(pieData: PieData):
   function setRimSlicesDataTailsVisible() {
     for (let j = 0; j <= indicesToPassThru.length - 1; j++) {
       const i = indicesToPassThru[j];
-      const sd: RimSlicesDataFaceVisible[0] = {
+      const sd: RimSlicesData[0] = {
         color: pieData.slices[i].color,
-        pointStartOnVisibleFace: i === startSliceIndex ?
+        pointStartOnTails: i === startSliceIndex ?
           pieData.edgeLeft.pointTails : pieData.slices[i].startPointTails,
-        pointStartOnInvisibleFace: i === startSliceIndex ?
+        pointStartOnHeads: i === startSliceIndex ?
           pieData.edgeLeft.pointHeads : pieData.slices[i].startPointHeads,
-        pointEndOnInvisibleFace: i === endSliceIndex ?
+        pointEndOnHeads: i === endSliceIndex ?
           pieData.edgeRight.pointHeads : pieData.slices[i].endPointHeads,
-        pointEndOnVisibleFace: i === endSliceIndex ?
+        pointEndOnTails: i === endSliceIndex ?
           pieData.edgeRight.pointTails : pieData.slices[i].endPointTails,
 
-        ellipseArgumentsOnInvisibleFace: {
+        ellipseArgumentsOnHeads: {
           centerX: pieData.centerHeads[0],
           centerY: pieData.centerHeads[1],
           radiusX: pieData.someEllipseMethodArgs.radiusX,
@@ -48,7 +47,7 @@ export function prepareRimSlicesData(pieData: PieData):
           isCounterClockwise: false,
         },
 
-        ellipseArgumentsOnVisibleFace: {
+        ellipseArgumentsOnTails: {
           centerX: pieData.centerTails[0],
           centerY: pieData.centerTails[1],
           radiusX: pieData.someEllipseMethodArgs.radiusX,
@@ -70,18 +69,18 @@ export function prepareRimSlicesData(pieData: PieData):
   function setRimSlicesDataHeadsVisible() {
     for (let j = 0; j <= indicesToPassThru.length - 1; j++) {
       const i = indicesToPassThru[j];
-      const sd: RimSlicesDataFaceVisible[0] = {
+      const sd: RimSlicesData[0] = {
         color: pieData.slices[i].color,
-        pointStartOnVisibleFace: i === startSliceIndex ?
+        pointStartOnHeads: i === startSliceIndex ?
           pieData.edgeLeft.pointHeads : pieData.slices[i].startPointHeads,
-        pointStartOnInvisibleFace: i === startSliceIndex ?
+        pointStartOnTails: i === startSliceIndex ?
           pieData.edgeLeft.pointTails : pieData.slices[i].startPointTails,
-        pointEndOnInvisibleFace: i === endSliceIndex ?
+        pointEndOnTails: i === endSliceIndex ?
           pieData.edgeRight.pointTails : pieData.slices[i].endPointTails,
-        pointEndOnVisibleFace: i === endSliceIndex ?
+        pointEndOnHeads: i === endSliceIndex ?
           pieData.edgeRight.pointHeads : pieData.slices[i].endPointHeads,
 
-        ellipseArgumentsOnVisibleFace: {
+        ellipseArgumentsOnHeads: {
           centerX: pieData.centerHeads[0],
           centerY: pieData.centerHeads[1],
           radiusX: pieData.someEllipseMethodArgs.radiusX,
@@ -96,7 +95,7 @@ export function prepareRimSlicesData(pieData: PieData):
           isCounterClockwise: false,
         },
 
-        ellipseArgumentsOnInvisibleFace: {
+        ellipseArgumentsOnTails: {
           centerX: pieData.centerTails[0],
           centerY: pieData.centerTails[1],
           radiusX: pieData.someEllipseMethodArgs.radiusX,

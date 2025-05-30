@@ -15,12 +15,15 @@ export function draw(arg: {
     const isHeads = pieData.isHeadsVisibleToUser;
     const rimSlicesData = prepareRimSlicesData(pieData);
     processFace({ isHeads, action: 'fill', });
-    processRimElliptic({ rimSlicesData, action: 'fill', });
+    processRimElliptic({ isHeadsVisible: isHeads, rimSlicesData,
+      action: 'fill', });
     processFace({ isHeads, action: 'stroke', });
-    processRimElliptic({ rimSlicesData, action: 'stroke', });
+    processRimElliptic({ isHeadsVisible: isHeads, rimSlicesData,
+      action: 'stroke', });
   }
 
   function processRimElliptic(arg: {
+    isHeadsVisible: boolean,
     rimSlicesData: ReturnType<typeof prepareRimSlicesData>,
     action: 'stroke' | 'fill',
   }) {
@@ -29,31 +32,65 @@ export function draw(arg: {
     }
     const isFill = arg.action === 'fill';
     const isStroke = !isFill;
+    const isHeadsVisible = arg.isHeadsVisible;
     arg.rimSlicesData.forEach(drawSlice);
 
     function drawSlice(sd: typeof arg.rimSlicesData[0], i: number) {
+      const {
+        pointStartOnVisibleFace,
+        pointStartOnInvisibleFace,
+        pointEndOnVisibleFace,
+        pointEndOnInvisibleFace,
+        ellipseArgumentsOnInvisibleFace,
+        ellipseArgumentsOnVisibleFace,
+      } = getPropNames();
+
       ctx.beginPath();
-      ctx.moveTo(sd.pointStartOnVisibleFace[0], sd.pointStartOnVisibleFace[1]);
-      ctx.lineTo(sd.pointStartOnInvisibleFace[0],
-        sd.pointStartOnInvisibleFace[1]);
-      drawEllipse(sd.ellipseArgumentsOnInvisibleFace);
+      ctx.moveTo(sd[pointStartOnVisibleFace][0],
+        sd[pointStartOnVisibleFace][1]);
+      ctx.lineTo(sd[pointStartOnInvisibleFace][0],
+        sd[pointStartOnInvisibleFace][1]);
+      drawEllipse(sd[ellipseArgumentsOnInvisibleFace]);
       if (isStroke && i !== arg.rimSlicesData.length - 1) {
         ctx.stroke();
       }
-      ctx.lineTo(sd.pointEndOnVisibleFace[0], sd.pointEndOnVisibleFace[1]);
+      ctx.lineTo(sd[pointEndOnVisibleFace][0], sd[pointEndOnVisibleFace][1]);
       if (isStroke && i === arg.rimSlicesData.length - 1) {
         ctx.stroke();
       }
-      drawEllipse(sd.ellipseArgumentsOnVisibleFace);
+      drawEllipse(sd[ellipseArgumentsOnVisibleFace]);
       ctx.closePath();
       if (isFill) {
         ctx.fillStyle = sd.color;
         ctx.fill();
       }
+
+      function getPropNames() {
+        if (isHeadsVisible) {
+          return {
+            pointStartOnVisibleFace: 'pointStartOnHeads',
+            pointStartOnInvisibleFace: 'pointStartOnTails',
+            pointEndOnVisibleFace: 'pointEndOnHeads',
+            pointEndOnInvisibleFace: 'pointEndOnTails',
+            ellipseArgumentsOnInvisibleFace: 'ellipseArgumentsOnTails',
+            ellipseArgumentsOnVisibleFace: 'ellipseArgumentsOnHeads',
+          };
+        } else {
+          return {
+            pointStartOnVisibleFace: 'pointStartOnTails',
+            pointStartOnInvisibleFace: 'pointStartOnHeads',
+            pointEndOnVisibleFace: 'pointEndOnTails',
+            pointEndOnInvisibleFace: 'pointEndOnHeads',
+            ellipseArgumentsOnInvisibleFace: 'ellipseArgumentsOnHeads',
+            ellipseArgumentsOnVisibleFace: 'ellipseArgumentsOnTails',
+          };
+        }
+
+      }
     }
 
     function drawEllipse(ellipsArg: ReturnType<
-      typeof prepareRimSlicesData>[0]['ellipseArgumentsOnVisibleFace'] ) {
+      typeof prepareRimSlicesData>[0]['ellipseArgumentsOnHeads'] ) {
 
       ctx.ellipse(
         ellipsArg.centerX,

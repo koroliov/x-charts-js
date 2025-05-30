@@ -1,12 +1,11 @@
 //@flow strict
-import type { RimSlicesDataFaceVisible, } from
-  '../../../components/pie-3d/types.js';
+import type { RimSlicesData, } from '../../../components/pie-3d/types.js';
 import fs from 'fs';
 
 type Arg = {
   +serverAbsFilePath: StringPrefix<'/test/served-tmp/'>,
-  +actual: RimSlicesDataFaceVisible,
-  +expected: RimSlicesDataFaceVisible,
+  +actual: RimSlicesData,
+  +expected: RimSlicesData,
   +canvasWidthPx: number,
   +canvasHeightPx: number,
 }
@@ -79,51 +78,43 @@ export function drawRimSlicesDataOnCanvas(arg: Arg) {
 
         function drawSlices(canvas, rimSlicesData, isHeads) {
           const ctx = canvas.getContext('2d');
-          if (!rimSlicesData?.[0]?.ellipseArgumentsOnVisibleFace) {
+          if (!rimSlicesData?.[0]?.ellipseArgumentsOnHeads) {
             rimSlicesData.forEach((rsd) => {
               ctx.beginPath();
-              ctx.moveTo(rsd.pointStartOnVisibleFace[0],
-                rsd.pointStartOnVisibleFace[1]);
-              ctx.lineTo(rsd.pointStartOnInvisibleFace[0],
-                rsd.pointStartOnInvisibleFace[1]);
-              ctx.lineTo(rsd.pointEndOnInvisibleFace[0],
-                rsd.pointEndOnInvisibleFace[1]);
-              ctx.lineTo(rsd.pointEndOnVisibleFace[0],
-                rsd.pointEndOnVisibleFace[1]);
-              ctx.lineTo(rsd.pointStartOnVisibleFace[0],
-                rsd.pointStartOnVisibleFace[1]);
+              ctx.moveTo(rsd.pointStartOnHeads[0], rsd.pointStartOnHeads[1]);
+              ctx.lineTo(rsd.pointStartOnTails[0], rsd.pointStartOnTails[1]);
+              ctx.lineTo(rsd.pointEndOnTails[0], rsd.pointEndOnTails[1]);
+              ctx.lineTo(rsd.pointEndOnHeads[0], rsd.pointEndOnHeads[1]);
+              ctx.lineTo(rsd.pointStartOnHeads[0], rsd.pointStartOnHeads[1]);
               ctx.fillStyle = rsd.color;
               ctx.fill();
             });
           } else {
             rimSlicesData.forEach((rsd) => {
               ctx.beginPath();
-              ctx.moveTo(rsd.pointStartOnVisibleFace[0],
-                rsd.pointStartOnVisibleFace[1]);
-              ctx.lineTo(rsd.pointStartOnInvisibleFace[0],
-                rsd.pointStartOnInvisibleFace[1]);
+              ctx.moveTo(rsd.pointStartOnHeads[0], rsd.pointStartOnHeads[1]);
+              ctx.lineTo(rsd.pointStartOnTails[0], rsd.pointStartOnTails[1]);
               ctx.ellipse(
-                rsd.ellipseArgumentsOnInvisibleFace.centerX,
-                rsd.ellipseArgumentsOnInvisibleFace.centerY,
-                rsd.ellipseArgumentsOnInvisibleFace.radiusX,
-                rsd.ellipseArgumentsOnInvisibleFace.radiusY,
-                rsd.ellipseArgumentsOnInvisibleFace
+                rsd.ellipseArgumentsOnTails.centerX,
+                rsd.ellipseArgumentsOnTails.centerY,
+                rsd.ellipseArgumentsOnTails.radiusX,
+                rsd.ellipseArgumentsOnTails.radiusY,
+                rsd.ellipseArgumentsOnTails
                   .axesRotationCounterClockwise,
-                rsd.ellipseArgumentsOnInvisibleFace.angleStart,
-                rsd.ellipseArgumentsOnInvisibleFace.angleEnd,
-                rsd.ellipseArgumentsOnInvisibleFace.isCounterClockwise,
+                rsd.ellipseArgumentsOnTails.angleStart,
+                rsd.ellipseArgumentsOnTails.angleEnd,
+                rsd.ellipseArgumentsOnTails.isCounterClockwise,
               );
-              ctx.lineTo(rsd.pointEndOnVisibleFace[0],
-                rsd.pointEndOnVisibleFace[1]);
+              ctx.lineTo(rsd.pointEndOnHeads[0], rsd.pointEndOnHeads[1]);
               ctx.ellipse(
-                rsd.ellipseArgumentsOnVisibleFace.centerX,
-                rsd.ellipseArgumentsOnVisibleFace.centerY,
-                rsd.ellipseArgumentsOnVisibleFace.radiusX,
-                rsd.ellipseArgumentsOnVisibleFace.radiusY,
-                rsd.ellipseArgumentsOnVisibleFace.axesRotationCounterClockwise,
-                rsd.ellipseArgumentsOnVisibleFace.angleStart,
-                rsd.ellipseArgumentsOnVisibleFace.angleEnd,
-                rsd.ellipseArgumentsOnVisibleFace.isCounterClockwise,
+                rsd.ellipseArgumentsOnHeads.centerX,
+                rsd.ellipseArgumentsOnHeads.centerY,
+                rsd.ellipseArgumentsOnHeads.radiusX,
+                rsd.ellipseArgumentsOnHeads.radiusY,
+                rsd.ellipseArgumentsOnHeads.axesRotationCounterClockwise,
+                rsd.ellipseArgumentsOnHeads.angleStart,
+                rsd.ellipseArgumentsOnHeads.angleEnd,
+                rsd.ellipseArgumentsOnHeads.isCounterClockwise,
               );
               ctx.fillStyle = rsd.color;
               ctx.fill();
@@ -133,8 +124,8 @@ export function drawRimSlicesDataOnCanvas(arg: Arg) {
           }
 
           function drawEllipse(isVisible) {
-            const propName = isVisible ? 'ellipseArgumentsOnVisibleFace' :
-              'ellipseArgumentsOnInvisibleFace';
+            const propName = isVisible ? 'ellipseArgumentsOnHeads' :
+              'ellipseArgumentsOnTails';
 
             ctx.beginPath();
             ctx.ellipse(
