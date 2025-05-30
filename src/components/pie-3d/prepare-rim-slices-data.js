@@ -1,5 +1,10 @@
 //@flow strict
-import type { PieData, RimSlicesData, } from './types.js';
+import type {
+  PieData,
+  RimSlicesData,
+  Context2dEllipseMethodArguments,
+  RimSliceData,
+} from './types.js';
 import type { Point, } from '../../types.js';
 
 export function prepareRimSlicesData(pieData: PieData): RimSlicesData {
@@ -10,18 +15,13 @@ export function prepareRimSlicesData(pieData: PieData): RimSlicesData {
   const startSliceIndex = pieData.edgeLeft.sliceIndex;
   const endSliceIndex = pieData.edgeRight.sliceIndex;
   const indicesToPassThru = getIndicesToPassThru();
-
-  if (pieData.isHeadsVisibleToUser) {
-    setRimSlicesDataHeadsVisible();
-  } else {
-    setRimSlicesDataTailsVisible();
-  }
+  setRimSlicesData();
   return rimSlicesData;
 
-  function setRimSlicesDataTailsVisible() {
+  function setRimSlicesData() {
     for (let j = 0; j <= indicesToPassThru.length - 1; j++) {
       const i = indicesToPassThru[j];
-      const sd: RimSlicesData[0] = {
+      const sd: RimSliceData = {
         color: pieData.slices[i].color,
         pointStartOnHeads: i === startSliceIndex ?
           pieData.edgeLeft.pointHeads : pieData.slices[i].startPointHeads,
@@ -32,85 +32,64 @@ export function prepareRimSlicesData(pieData: PieData): RimSlicesData {
         pointEndOnHeads: i === endSliceIndex ?
           pieData.edgeRight.pointHeads : pieData.slices[i].endPointHeads,
 
-        ellipseArgumentsOnHeads: {
-          centerX: pieData.centerHeads[0],
-          centerY: pieData.centerHeads[1],
-          radiusX: pieData.someEllipseMethodArgs.radiusX,
-          radiusY: pieData.someEllipseMethodArgs.radiusY,
-          axesRotationCounterClockwise:
-            pieData.someEllipseMethodArgs.axesRotationCounterClockwise,
-          angleStart: i === startSliceIndex ?
-            Math.PI :
-            pieData.slices[i].startAngleOnEllipseClockwise,
-          angleEnd: i === endSliceIndex ?
-            0 : pieData.slices[i].endAngleOnEllipseClockwise,
-          isCounterClockwise: false,
-        },
-
-        ellipseArgumentsOnTails: {
-          centerX: pieData.centerTails[0],
-          centerY: pieData.centerTails[1],
-          radiusX: pieData.someEllipseMethodArgs.radiusX,
-          radiusY: pieData.someEllipseMethodArgs.radiusY,
-          axesRotationCounterClockwise:
-            pieData.someEllipseMethodArgs.axesRotationCounterClockwise,
-          angleStart: i === endSliceIndex ?
-            0 :
-            pieData.slices[i].endAngleOnEllipseClockwise,
-          angleEnd: i === startSliceIndex ?
-            Math.PI : pieData.slices[i].startAngleOnEllipseClockwise,
-          isCounterClockwise: true,
-        },
+        ellipseArgumentsOnHeads: getEllipseMethodArg({ isHeadsEllipse: true,
+          i, }),
+        ellipseArgumentsOnTails: getEllipseMethodArg({ isHeadsEllipse: false,
+          i, }),
       };
       rimSlicesData.push(sd);
     }
-  }
 
-  function setRimSlicesDataHeadsVisible() {
-    for (let j = 0; j <= indicesToPassThru.length - 1; j++) {
-      const i = indicesToPassThru[j];
-      const sd: RimSlicesData[0] = {
-        color: pieData.slices[i].color,
-        pointStartOnHeads: i === startSliceIndex ?
-          pieData.edgeLeft.pointHeads : pieData.slices[i].startPointHeads,
-        pointStartOnTails: i === startSliceIndex ?
-          pieData.edgeLeft.pointTails : pieData.slices[i].startPointTails,
-        pointEndOnTails: i === endSliceIndex ?
-          pieData.edgeRight.pointTails : pieData.slices[i].endPointTails,
-        pointEndOnHeads: i === endSliceIndex ?
-          pieData.edgeRight.pointHeads : pieData.slices[i].endPointHeads,
-
-        ellipseArgumentsOnHeads: {
-          centerX: pieData.centerHeads[0],
-          centerY: pieData.centerHeads[1],
-          radiusX: pieData.someEllipseMethodArgs.radiusX,
-          radiusY: pieData.someEllipseMethodArgs.radiusY,
-          axesRotationCounterClockwise:
-            pieData.someEllipseMethodArgs.axesRotationCounterClockwise,
-          angleStart: i === endSliceIndex ?
-            0 :
-            pieData.slices[i].endAngleOnEllipseClockwise,
-          angleEnd: i === startSliceIndex ?
-            Math.PI : pieData.slices[i].startAngleOnEllipseClockwise,
-          isCounterClockwise: false,
-        },
-
-        ellipseArgumentsOnTails: {
-          centerX: pieData.centerTails[0],
-          centerY: pieData.centerTails[1],
-          radiusX: pieData.someEllipseMethodArgs.radiusX,
-          radiusY: pieData.someEllipseMethodArgs.radiusY,
-          axesRotationCounterClockwise:
-            pieData.someEllipseMethodArgs.axesRotationCounterClockwise,
-          angleStart: i === startSliceIndex ?
-            Math.PI :
-            pieData.slices[i].startAngleOnEllipseClockwise,
-          angleEnd: i === endSliceIndex ?
-            Math.PI * 2 : pieData.slices[i].endAngleOnEllipseClockwise,
-          isCounterClockwise: true,
-        },
+    function getEllipseMethodArg(
+      arg: { isHeadsEllipse: boolean, i: number, }
+    ): Context2dEllipseMethodArguments {
+      const i = arg.i;
+      const isHeadsEllipse = arg.isHeadsEllipse;
+      const retVal: RimSlicesData[0]['ellipseArgumentsOnHeads'] = {
+        centerX: pieData[isHeadsEllipse ? 'centerHeads' : 'centerTails'][0],
+        centerY: pieData[isHeadsEllipse ? 'centerHeads' : 'centerTails'][1],
+        radiusX: pieData.someEllipseMethodArgs.radiusX,
+        radiusY: pieData.someEllipseMethodArgs.radiusY,
+        axesRotationCounterClockwise:
+          pieData.someEllipseMethodArgs.axesRotationCounterClockwise,
+        angleStart: 0,
+        angleEnd: 0,
+        isCounterClockwise: !isHeadsEllipse,
       };
-      rimSlicesData.push(sd);
+      if (pieData.isHeadsVisibleToUser) {
+        processHeadsVisible();
+      } else if (pieData.isTailsVisibleToUser) {
+        processTailsVisible();
+      }
+      return retVal;
+
+      function processHeadsVisible() {
+        if (isHeadsEllipse) {
+          retVal.angleStart = i === endSliceIndex ?
+            0 : pieData.slices[i].endAngleOnEllipseClockwise;
+          retVal.angleEnd = i === startSliceIndex ?
+            Math.PI : pieData.slices[i].startAngleOnEllipseClockwise;
+        } else {
+          retVal.angleStart = i === startSliceIndex ?
+            Math.PI : pieData.slices[i].startAngleOnEllipseClockwise;
+          retVal.angleEnd = i === endSliceIndex ?
+            Math.PI * 2 : pieData.slices[i].endAngleOnEllipseClockwise;
+        }
+      }
+
+      function processTailsVisible() {
+        if (isHeadsEllipse) {
+          retVal.angleStart = i === startSliceIndex ?
+            Math.PI : pieData.slices[i].startAngleOnEllipseClockwise;
+          retVal.angleEnd = i === endSliceIndex ?
+            0 : pieData.slices[i].endAngleOnEllipseClockwise;
+        } else {
+          retVal.angleStart = i === endSliceIndex ?
+            0 : pieData.slices[i].endAngleOnEllipseClockwise;
+          retVal.angleEnd = i === startSliceIndex ?
+            Math.PI : pieData.slices[i].startAngleOnEllipseClockwise;
+        }
+      }
     }
   }
 

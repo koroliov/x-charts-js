@@ -25,18 +25,18 @@ type SliceData = {
   +color: string,
 }
 
-type Context2dEllipseMethodArguments = {
+export type Context2dEllipseMethodArguments = {
   +centerX: number,
   +centerY: number,
   +radiusX: number,
   +radiusY: number,
-  +angleStart: number,
-  +angleEnd: number,
+  angleStart: number,
+  angleEnd: number,
   +axesRotationCounterClockwise: number,
-  +isCounterClockwise: boolean,
+  isCounterClockwise: boolean,
 }
 
-type RimSliceData = {
+export type RimSliceData = {
   +pointStartOnHeads: Point,
   +pointStartOnTails: Point,
   +pointEndOnTails: Point,
