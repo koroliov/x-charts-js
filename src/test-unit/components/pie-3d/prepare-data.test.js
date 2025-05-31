@@ -1055,3 +1055,151 @@ tp.test((t) => {
   t.deepEqual(actual, expected);
   t.end();
 });
+
+tp.test((t) => {
+  const addComponentArg = {
+    type: 'pie-3d',
+    zIndex: '1',
+    options: {
+      thicknessPx: 50,
+      radiusPx: 200,
+      centerXPx: 235,
+      centerYPx: 110,
+      startAtDeg: 315,
+      rotationAroundCenterXAxisDeg: 70,
+      rotationAroundCenterZAxisDeg: 0,
+    },
+    data: [
+      { value: 75, meta: { color: '#37ff00' /* green */, }, },
+      { value: 25, meta: { color: '#fffd00' /* yellow */, }, },
+    ],
+  };
+
+  const expected = {
+    "totalValue": 100,
+    "slices": [
+      {
+        "startPointHeads": [
+          376.4213562373095,
+          134.87663700994736,
+          -141.4431084608767,
+        ],
+        "startPointTails": [
+          376.4213562373095,
+          181.86126804924277,
+          -124.34210129459323,
+        ],
+        "endPointHeads": [
+          93.57864376269058,
+          134.8766370099474,
+          -141.44310846087672,
+        ],
+        "endPointTails": [
+          93.57864376269058,
+          181.8612680492428,
+          -124.34210129459326,
+        ],
+        "startAngleOnEllipseClockwise": 0.7853981633974484,
+        "endAngleOnEllipseClockwise": 2.3561944901923444,
+        "value": 75,
+        "color": "#37ff00",
+      },
+      {
+        "startPointHeads": [
+          93.57864376269058,
+          134.8766370099474,
+          -141.44310846087672,
+        ],
+        "startPointTails": [
+          93.57864376269058,
+          181.8612680492428,
+          -124.34210129459326,
+        ],
+        "endPointHeads": [
+          376.4213562373095,
+          134.87663700994736,
+          -141.4431084608767,
+        ],
+        "endPointTails": [
+          376.4213562373095,
+          181.86126804924277,
+          -124.34210129459323,
+        ],
+        "startAngleOnEllipseClockwise": 2.3561944901923444,
+        "endAngleOnEllipseClockwise": 0.7853981633974484,
+        "value": 25,
+        "color": "#fffd00",
+      },
+    ],
+    "pointTopHeads": [
+      235,
+      18.10365581521853,
+      179.38802057403993,
+    ],
+    "edgeLeft": {
+      "pointHeads": [
+        35,
+        86.5076844803523,
+        -8.55050358314172,
+      ],
+      "pointTails": [
+        35,
+        133.49231551964772,
+        8.55050358314172,
+      ],
+      "sliceIndex": 0,
+    },
+    "edgeRight": {
+      "pointHeads": [
+        435,
+        86.5076844803523,
+        -8.55050358314172,
+      ],
+      "pointTails": [
+        435,
+        133.49231551964772,
+        8.55050358314172,
+      ],
+      "sliceIndex": 0,
+    },
+    "centerHeads": [
+      235,
+      86.5076844803523,
+      -8.55050358314172,
+    ],
+    "centerTails": [
+      235,
+      133.49231551964772,
+      8.55050358314172,
+    ],
+    "someEllipseMethodArgs": {
+      "radiusX": 200,
+      "radiusY": 68.40402866513377,
+      "axesRotationCounterClockwise": -0,
+      "isCounterClockwiseOnVisibleFace": true,
+    },
+    "isHeadsVisibleToUser": true,
+    "isTailsVisibleToUser": false,
+    "isRimVisibleToUser": true,
+  };
+
+  const actual = prepareData(addComponentArg);
+  //writeToTestDiffDir({ actual, expected, });
+  //drawDataOnCanvas({
+  //  serverAbsFilePath: '/test/served-tmp/prepare-data-test.html',
+  //  actual: actual,
+  //  expected: expected,
+  //  canvasWidthPx: 470,
+  //  canvasHeightPx: 220,
+  //  drawHeads: true,
+  //  drawTails: true,
+  //  drawDotsHeads: true,
+  //  drawDotsTails: true,
+  //  drawLineToRightEdgeHeads: true,
+  //  drawLineToRightEdgeTails: true,
+  //  angleStartSliceIndex: 0,
+  //  angleEndSliceIndex: 0,
+  //});
+  t.deepEqual(actual, expected);
+  t.end();
+});

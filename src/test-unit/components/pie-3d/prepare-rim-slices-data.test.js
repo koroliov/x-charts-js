@@ -513,3 +513,96 @@ tp.test((t) => {
   t.deepEqual(actual, expected);
   t.end();
 });
+
+tp.test.skip((t) => {
+  const addComponentArg = {
+    type: 'pie-3d',
+    zIndex: '1',
+    options: {
+      thicknessPx: 50,
+      radiusPx: 200,
+      centerXPx: 235,
+      centerYPx: 110,
+      startAtDeg: 315,
+      rotationAroundCenterXAxisDeg: 70,
+      rotationAroundCenterZAxisDeg: 0,
+    },
+    data: [
+      { value: 75, meta: { color: '#37ff00' /* green */, }, },
+      { value: 25, meta: { color: '#fffd00' /* yellow */, }, },
+    ],
+  };
+  const pieData = prepareData(addComponentArg);
+  const expected: ReturnType<typeof prepareRimSlicesData> = [
+    {
+      "color": "#37ff00",
+      "pointStartOnHeads": [
+        35,
+        86.5076844803523,
+        -8.55050358314172,
+      ],
+      "pointStartOnTails": [
+        35,
+        133.49231551964772,
+        8.55050358314172,
+      ],
+      "pointEndOnTails": [
+        435,
+        133.49231551964772,
+        8.55050358314172,
+      ],
+      "pointEndOnHeads": [
+        435,
+        86.5076844803523,
+        -8.55050358314172,
+      ],
+      "ellipseArgumentsOnHeads": {
+        "centerX": 235,
+        "centerY": 86.5076844803523,
+        "radiusX": 200,
+        "radiusY": 68.40402866513377,
+        "axesRotationCounterClockwise": -0,
+        "angleStart": 0,
+        "angleEnd": 3.141592653589793,
+        "isCounterClockwise": false,
+      },
+      "ellipseArgumentsOnTails": {
+        "centerX": 235,
+        "centerY": 133.49231551964772,
+        "radiusX": 200,
+        "radiusY": 68.40402866513377,
+        "axesRotationCounterClockwise": -0,
+        "angleStart": 3.141592653589793,
+        "angleEnd": 6.283185307179586,
+        "isCounterClockwise": true,
+      },
+    },
+  ];
+
+  const actual = prepareRimSlicesData(pieData);
+  //writeToTestDiffDir({ actual, expected, });
+  //drawDataOnCanvas({
+  //  serverAbsFilePath: '/test/served-tmp/rim-slices.html',
+  //  actual: pieData,
+  //  expected: pieData,
+  //  canvasWidthPx: 470,
+  //  canvasHeightPx: 220,
+  //  drawHeads: true,
+  //  drawTails: true,
+  //  drawDotsHeads: true,
+  //  drawDotsTails: true,
+  //  drawLineToRightEdgeHeads: true,
+  //  drawLineToRightEdgeTails: true,
+  //  angleStartSliceIndex: 1,
+  //  angleEndSliceIndex: 1,
+  //});
+  //drawRimSlicesDataOnCanvas({
+  //  serverAbsFilePath: '/test/served-tmp/rim-slices.html',
+  //  actual: actual,
+  //  expected: expected,
+  //  canvasWidthPx: 470,
+  //  canvasHeightPx: 220,
+  //});
+  t.deepEqual(actual, expected);
+  t.end();
+});
