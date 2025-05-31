@@ -196,3 +196,17 @@ tp.test((t) => {
   t.equal(actual, 1 / 4 * Math.PI);
   t.end();
 });
+
+//special cases
+
+tp.test((t) => {
+  //angle 90deg
+  const actual = getAngleBetweenTwoPoints({
+    startPoint: [1, 1, 0],
+    endPoint: [1, -1, 0],
+    centerPoint: [0, 0, 0],
+    isCounterClockwise: true,
+  });
+  t.equal(actual, 1 / 2 * Math.PI);
+  t.end();
+});
