@@ -19,8 +19,8 @@ type SliceData = {
   +startPointTails: Point,
   +endPointHeads: Point,
   +endPointTails: Point,
-  +startAngleOnEllipseClockwise: number,
-  +endAngleOnEllipseClockwise: number,
+  +startAngleCounterClockwise: number,
+  +endAngleCounterClockwise: number,
   +value: number,
   +color: string,
 }
@@ -52,6 +52,7 @@ type EdgeData = {
   +pointHeads: Point,
   +pointTails: Point,
   +sliceIndex: number,
+  +angleCounterClockwise: number,
 }
 
 type SomeContext2dEllipseMethodArguments = {

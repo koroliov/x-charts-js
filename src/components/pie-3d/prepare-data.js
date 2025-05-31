@@ -1,7 +1,7 @@
 //@flow strict
 import type { AddComponentPie3dArgument, PieData, } from './types.js';
 import type { Point, } from '../../types.js';
-import { calculateDistance, getAngleClockwise, } from '../../utils/math.js';
+import { calculateDistance, getAngleBetweenTwoPoints, } from '../../utils/math.js';
 
 export function prepareData(arg: AddComponentPie3dArgument): PieData {
   const ops = arg.options;
@@ -96,7 +96,7 @@ export function prepareData(arg: AddComponentPie3dArgument): PieData {
     function handleSlices() {
       let startAngle = ops.startAtDeg / 180 * Math.PI;
       let endAngle = 0;
-      let { leftEdgeAngle, rightEdgeAngle, } = getEdgeAngles();
+      handleEdgeAngles();
 
       pieData.slices.forEach(handleSlice);
       handleLastSliceTakesAllVisibleRimCase();
@@ -115,7 +115,7 @@ export function prepareData(arg: AddComponentPie3dArgument): PieData {
         sd.startPointHeads[0] = x;
         sd.startPointHeads[1] = y;
         sd.startPointHeads[2] = -halfThickness;
-        handleStartEndAnglesOnSlice(i, sd.startPointHeads);
+        handleStartEndAnglesOnSlice(i);
         sd.startPointTails[0] = x;
         sd.startPointTails[1] = y;
         sd.startPointTails[2] = halfThickness;
@@ -125,41 +125,37 @@ export function prepareData(arg: AddComponentPie3dArgument): PieData {
         startAngle += endAngle;
       }
 
-      function getEdgeAngles() {
+      function handleEdgeAngles() {
         if (startAngle >= Math.PI) {
-          return {
-            leftEdgeAngle: Math.PI * 3,
-            rightEdgeAngle: Math.PI * 2,
-          }
+          pieData.edgeLeft.angleCounterClockwise = Math.PI * 3;
+          pieData.edgeRight.angleCounterClockwise = Math.PI * 2;
         } else {
-          return {
-            leftEdgeAngle: Math.PI,
-            rightEdgeAngle: Math.PI * 2,
-          }
+          pieData.edgeLeft.angleCounterClockwise = Math.PI;
+          pieData.edgeRight.angleCounterClockwise = Math.PI * 2;
         }
       }
 
-      function handleStartEndAnglesOnSlice(sliceIndex: number,
-        startPoint: Point) {
+      function handleStartEndAnglesOnSlice(sliceIndex: number) {
         const sd = pieData.slices[sliceIndex];
         const sdPrevious = sliceIndex > 0 ? pieData.slices[sliceIndex - 1] :
           pieData.slices[pieData.slices.length - 1];
-        sdPrevious.endAngleOnEllipseClockwise = getAngleClockwise({
+        sdPrevious.endAngleCounterClockwise = getAngleBetweenTwoPoints({
           startPoint: pieData.edgeRight.pointHeads,
           centerPoint: pieData.centerHeads,
           endPoint: sd.startPointHeads,
+          isCounterClockwise: true,
         });
-        if (!pieData.someEllipseMethodArgs
-          .isCounterClockwiseOnVisibleFace) {
-          sdPrevious.endAngleOnEllipseClockwise =
-            -sdPrevious.endAngleOnEllipseClockwise;
+        sd.startAngleCounterClockwise = sdPrevious.endAngleCounterClockwise;
+        if (sliceIndex === pieData.slices.length - 1) {
+          sd.endAngleCounterClockwise += Math.PI * 2;
         }
-        sd.startAngleOnEllipseClockwise = sdPrevious.endAngleOnEllipseClockwise;
       }
 
       function findIfSliceIsOnEdge(sliceIndex: number) {
         const endAngleOfSlice = endAngle + startAngle;
         const startAngleOfSlice = startAngle;
+        const leftEdgeAngle = pieData.edgeLeft.angleCounterClockwise;
+        const rightEdgeAngle = pieData.edgeRight.angleCounterClockwise;
         if (isInThisSliceRange(leftEdgeAngle)) {
           handleLeftEdge();
         }
@@ -266,11 +262,13 @@ export function prepareData(arg: AddComponentPie3dArgument): PieData {
         pointHeads: [0, 0, 0,],
         pointTails: [0, 0, 0,],
         sliceIndex: -1,
+        angleCounterClockwise: 0,
       },
       edgeRight: {
         pointHeads: [0, 0, 0,],
         pointTails: [0, 0, 0,],
         sliceIndex: -1,
+        angleCounterClockwise: 0,
       },
       centerHeads: [0, 0, 0,],
       centerTails: [0, 0, 0,],
@@ -297,8 +295,8 @@ export function prepareData(arg: AddComponentPie3dArgument): PieData {
         startPointTails: prevEndTails,
         endPointHeads: [0, 0, 0,],
         endPointTails: [0, 0, 0,],
-        startAngleOnEllipseClockwise: 0,
-        endAngleOnEllipseClockwise: 0,
+        startAngleCounterClockwise: 0,
+        endAngleCounterClockwise: 0,
         value: d.value,
         color: d.meta.color,
       };
