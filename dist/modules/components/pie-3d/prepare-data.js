@@ -95,8 +95,8 @@ export function prepareData(arg                           )          {
 
     function handleSlices() {
       let startAngle = ops.startAtDeg / 180 * Math.PI;
-      let { expectToPassRightEdge, expectToPassLeftEdge, } =
-        getInitialExpectedEdgeFlags();
+      let endAngle = 0;
+      let { leftEdgeAngle, rightEdgeAngle, } = getEdgeAngles();
 
       pieData.slices.forEach(handleSlice);
       handleLastSliceTakesAllVisibleRimCase();
@@ -120,20 +120,23 @@ export function prepareData(arg                           )          {
         sd.startPointTails[1] = y;
         sd.startPointTails[2] = halfThickness;
 
-        const endAngle = sd.value / totalValue * Math.PI * 2;
+        endAngle = sd.value / totalValue * Math.PI * 2;
+        findIfSliceIsOnEdge(i);
         startAngle += endAngle;
-        handleExpectedEdgeFlagsWhenPassingSlice(i);
       }
 
-      function getInitialExpectedEdgeFlags() {
-        let expectToPassRightEdge = false;
-        let expectToPassLeftEdge = false;
-        if (startAngle < Math.PI) {
-          expectToPassLeftEdge = true;
+      function getEdgeAngles() {
+        if (startAngle >= Math.PI) {
+          return {
+            leftEdgeAngle: Math.PI * 3,
+            rightEdgeAngle: Math.PI * 2,
+          }
         } else {
-          expectToPassRightEdge = true;
+          return {
+            leftEdgeAngle: Math.PI,
+            rightEdgeAngle: Math.PI * 2,
+          }
         }
-        return { expectToPassRightEdge, expectToPassLeftEdge, };
       }
 
       function handleStartEndAnglesOnSlice(sliceIndex        ,
@@ -154,31 +157,36 @@ export function prepareData(arg                           )          {
         sd.startAngleOnEllipseClockwise = sdPrevious.endAngleOnEllipseClockwise;
       }
 
-      function handleExpectedEdgeFlagsWhenPassingSlice(sliceIndex        ) {
-        if (expectToPassLeftEdge) {
-          if (pieData.edgeLeft.sliceIndex !== -1) {
-            return;
-          }
-          if (startAngle > Math.PI * 3) {
-            pieData.edgeLeft.sliceIndex = sliceIndex;
-          } else if (startAngle > Math.PI * 2) {
-            if (pieData.edgeRight.sliceIndex === -1) {
-              pieData.edgeRight.sliceIndex = sliceIndex;
-            }
-          } else if (startAngle > Math.PI) {
-            expectToPassLeftEdge = false;
-            expectToPassRightEdge = true;
-            pieData.edgeLeft.sliceIndex = sliceIndex;
-          }
-        } else if (expectToPassRightEdge) {
-          if (pieData.edgeRight.sliceIndex !== -1) {
-            return;
-          }
-          if (startAngle >= 2 * Math.PI) {
-            expectToPassRightEdge = false;
-            expectToPassLeftEdge = true;
+      function findIfSliceIsOnEdge(sliceIndex        ) {
+        const endAngleOfSlice = endAngle + startAngle;
+        const startAngleOfSlice = startAngle;
+        if (isInThisSliceRange(leftEdgeAngle)) {
+          handleLeftEdge();
+        }
+        if (isInThisSliceRange(rightEdgeAngle)) {
+          if (pieData.edgeRight.sliceIndex === -1) {
             pieData.edgeRight.sliceIndex = sliceIndex;
           }
+        }
+
+        function handleLeftEdge() {
+          if (pieData.edgeLeft.sliceIndex > -1) {
+            return;
+          }
+          if (startAngleOfSlice === leftEdgeAngle) {
+            pieData.edgeLeft.sliceIndex = sliceIndex -
+              (ops.rotationAroundCenterXAxisDeg > 90 ? 1 : 0);
+          } else if (leftEdgeAngle === endAngleOfSlice) {
+            pieData.edgeLeft.sliceIndex = sliceIndex -
+              (ops.rotationAroundCenterXAxisDeg > 90 ? 0 : 1);
+          } else {
+            pieData.edgeLeft.sliceIndex = sliceIndex;
+          }
+        }
+
+        function isInThisSliceRange(angle        ) {
+          return startAngleOfSlice <= angle &&
+            angle <= endAngleOfSlice;
         }
       }
     }
