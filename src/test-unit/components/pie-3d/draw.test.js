@@ -293,3 +293,43 @@ tp.test((t) => {
     t.end();
   });
 });
+
+tp.test((t) => {
+  const testName = '0008-rim-bar-1-slice';
+  const arg = {
+    type: 'pie-3d',
+    zIndex: '1',
+    options: {
+      thicknessPx: 50,
+      radiusPx: 200,
+      centerXPx: 235,
+      centerYPx: 35,
+      startAtDeg: 90,
+      rotationAroundCenterXAxisDeg: 90,
+      rotationAroundCenterZAxisDeg: 0,
+    },
+    data: [
+      { value: 75, meta: { color: '#37ff00' /* green */, }, },
+      { value: 25, meta: { color: '#fffd00' /* yellow */, }, },
+    ],
+  };
+  const { ctx, canvas, } =
+    createCanvasContext2d({ w: 470, h: 70, fillStyle: 'white', });
+  draw({ ctx, addComponentArg: arg, });
+
+  canvas.toBuffer(async (err: null | Error, buff: Buffer) => {
+    //await writeCanvasToTestDiffDir({
+    //  canvas: ctx.canvas,
+    //  fileNameRelative: './test/diff/current.png',
+    //});
+    const equal = await compareWithLooksSame({
+      buffer: buff,
+      expectedFileNameRelative:
+        `./test/unit-permanent/components/pie-3d/draw/${ testName }.png`,
+      highlightColor: '#000000',
+      diffFileNameRelativeOnError: `./test/diff/${ testName }.png`,
+    });
+    t.ok(equal);
+    t.end();
+  });
+});

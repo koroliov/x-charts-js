@@ -33,7 +33,7 @@ export function draw(arg
       ctx.lineTo(sd.pointStartOnHeads[0], sd.pointStartOnHeads[1]);
       ctx.lineTo(sd.pointStartOnTails[0], sd.pointStartOnTails[1]);
       ctx.lineTo(sd.pointEndOnTails[0], sd.pointEndOnTails[1]);
-      if (isStroke && i <= rimSlicesData.length - 1) {
+      if (isStroke && i < rimSlicesData.length - 1) {
         ctx.stroke();
       }
       ctx.lineTo(sd.pointEndOnHeads[0], sd.pointEndOnHeads[1]);
