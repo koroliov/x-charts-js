@@ -43,7 +43,8 @@ tp.test((t) => {
       expectedFileNameRelative:
         `./test/unit-permanent/components/pie-3d/draw/${ testName }.png`,
       highlightColor: '#000000',
-      diffFileNameRelativeOnError: `./test/diff/${ testName }.png`,
+      //diffFileNameRelativeOnError: `./test/diff/${ testName }.png`,
+      diffFileNameRelativeOnError: '',
     });
     t.ok(equal);
     t.end();
@@ -85,7 +86,8 @@ tp.test((t) => {
       expectedFileNameRelative:
         `./test/unit-permanent/components/pie-3d/draw/${ testName }.png`,
       highlightColor: '#000000',
-      diffFileNameRelativeOnError: `./test/diff/${ testName }.png`,
+      //diffFileNameRelativeOnError: `./test/diff/${ testName }.png`,
+      diffFileNameRelativeOnError: '',
     });
     t.ok(equal);
     t.end();
@@ -125,7 +127,8 @@ tp.test((t) => {
       expectedFileNameRelative:
         `./test/unit-permanent/components/pie-3d/draw/${ testName }.png`,
       highlightColor: '#000000',
-      diffFileNameRelativeOnError: `./test/diff/${ testName }.png`,
+      //diffFileNameRelativeOnError: `./test/diff/${ testName }.png`,
+      diffFileNameRelativeOnError: '',
     });
     t.ok(equal);
     t.end();
@@ -167,7 +170,8 @@ tp.test((t) => {
       expectedFileNameRelative:
         `./test/unit-permanent/components/pie-3d/draw/${ testName }.png`,
       highlightColor: '#000000',
-      diffFileNameRelativeOnError: `./test/diff/${ testName }.png`,
+      //diffFileNameRelativeOnError: `./test/diff/${ testName }.png`,
+      diffFileNameRelativeOnError: '',
     });
     t.ok(equal);
     t.end();
@@ -207,7 +211,8 @@ tp.test((t) => {
       expectedFileNameRelative:
         `./test/unit-permanent/components/pie-3d/draw/${ testName }.png`,
       highlightColor: '#000000',
-      diffFileNameRelativeOnError: `./test/diff/${ testName }.png`,
+      //diffFileNameRelativeOnError: `./test/diff/${ testName }.png`,
+      diffFileNameRelativeOnError: '',
     });
     t.ok(equal);
     t.end();
@@ -247,7 +252,8 @@ tp.test((t) => {
       expectedFileNameRelative:
         `./test/unit-permanent/components/pie-3d/draw/${ testName }.png`,
       highlightColor: '#000000',
-      diffFileNameRelativeOnError: `./test/diff/${ testName }.png`,
+      //diffFileNameRelativeOnError: `./test/diff/${ testName }.png`,
+      diffFileNameRelativeOnError: '',
     });
     t.ok(equal);
     t.end();
@@ -287,7 +293,8 @@ tp.test((t) => {
       expectedFileNameRelative:
         `./test/unit-permanent/components/pie-3d/draw/${ testName }.png`,
       highlightColor: '#000000',
-      diffFileNameRelativeOnError: `./test/diff/${ testName }.png`,
+      //diffFileNameRelativeOnError: `./test/diff/${ testName }.png`,
+      diffFileNameRelativeOnError: '',
     });
     t.ok(equal);
     t.end();
@@ -327,7 +334,8 @@ tp.test((t) => {
       expectedFileNameRelative:
         `./test/unit-permanent/components/pie-3d/draw/${ testName }.png`,
       highlightColor: '#000000',
-      diffFileNameRelativeOnError: `./test/diff/${ testName }.png`,
+      //diffFileNameRelativeOnError: `./test/diff/${ testName }.png`,
+      diffFileNameRelativeOnError: '',
     });
     t.ok(equal);
     t.end();
@@ -367,7 +375,8 @@ tp.test.skip((t) => {
       expectedFileNameRelative:
         `./test/unit-permanent/components/pie-3d/draw/${ testName }.png`,
       highlightColor: '#000000',
-      diffFileNameRelativeOnError: `./test/diff/${ testName }.png`,
+      //diffFileNameRelativeOnError: `./test/diff/${ testName }.png`,
+      diffFileNameRelativeOnError: '',
     });
     t.ok(equal);
     t.end();
