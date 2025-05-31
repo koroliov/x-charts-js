@@ -1,7 +1,7 @@
 //@flow strict
 //$FlowFixMe[cannot-resolve-module]
 import tp from 'tape';
-import { getAngleClockwise } from '../../utils/math.js';
+import { getAngleClockwise, } from '../../utils/math.js';
 
 //test data angles are measured counter clockwise
 tp.test((t) => {
