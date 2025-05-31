@@ -66,28 +66,32 @@ export function prepareRimSlicesData(pieData: PieData): RimSlicesData {
       function processHeadsVisible() {
         if (isHeadsEllipse) {
           retVal.angleStart = i === endSliceIndex ?
-            0 : pieData.slices[i].endAngleOnEllipseClockwise;
+            -pieData.edgeRight.angleCounterClockwise :
+            -pieData.slices[i].endAngleCounterClockwise;
           retVal.angleEnd = i === startSliceIndex ?
-            Math.PI : pieData.slices[i].startAngleOnEllipseClockwise;
+            -pieData.edgeLeft.angleCounterClockwise :
+            -pieData.slices[i].startAngleCounterClockwise;
         } else {
           retVal.angleStart = i === startSliceIndex ?
-            Math.PI : pieData.slices[i].startAngleOnEllipseClockwise;
+            -pieData.edgeLeft.angleCounterClockwise :
+            -pieData.slices[i].startAngleCounterClockwise;
           retVal.angleEnd = i === endSliceIndex ?
-            Math.PI * 2 : pieData.slices[i].endAngleOnEllipseClockwise;
+            -pieData.edgeRight.angleCounterClockwise :
+            -pieData.slices[i].endAngleCounterClockwise;
         }
       }
 
       function processTailsVisible() {
         if (isHeadsEllipse) {
           retVal.angleStart = i === startSliceIndex ?
-            Math.PI : pieData.slices[i].startAngleOnEllipseClockwise;
+            Math.PI : pieData.slices[i].startAngleCounterClockwise;
           retVal.angleEnd = i === endSliceIndex ?
-            0 : pieData.slices[i].endAngleOnEllipseClockwise;
+            0 : pieData.slices[i].endAngleCounterClockwise;
         } else {
           retVal.angleStart = i === endSliceIndex ?
-            0 : pieData.slices[i].endAngleOnEllipseClockwise;
+            0 : pieData.slices[i].endAngleCounterClockwise;
           retVal.angleEnd = i === startSliceIndex ?
-            Math.PI : pieData.slices[i].startAngleOnEllipseClockwise;
+            Math.PI : pieData.slices[i].startAngleCounterClockwise;
         }
       }
     }
