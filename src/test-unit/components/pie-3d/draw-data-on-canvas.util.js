@@ -183,14 +183,19 @@ export function drawDataOnCanvas(arg: Arg) {
           ctx.stroke();
 
           function getAngleArguments() {
-            const angleStart = Math.PI * 6 -
+            let angleStart = Math.PI * 6 -
               (pieData.slices[${ angleStartI }].startAngleCounterClockwise ||
               0);
-            const angleEnd = Math.PI * 6 -
+            let angleEnd = Math.PI * 6 -
               (pieData.slices[${ angleEndI }].endAngleCounterClockwise ||
               2 * Math.PI);
             if (angleStart === angleEnd) {
               return { angleStart: 0, angleEnd: 2 * Math.PI, };
+            }
+            if (!pieData.someEllipseMethodArgs
+              .isCounterClockwiseOnVisibleFace) {
+              angleStart = -angleStart;
+              angleEnd = -angleEnd;
             }
             return { angleStart, angleEnd, };
           }
