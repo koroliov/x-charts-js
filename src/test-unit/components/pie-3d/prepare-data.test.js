@@ -183,6 +183,183 @@ tp.test((t) => {
   t.end();
 });
 
+tp.test('0001-most-common-case', (t) => {
+  const addComponentArg = {
+    type: 'pie-3d',
+    zIndex: '1',
+    options: {
+      thicknessPx: 50,
+      radiusPx: 200,
+      centerXPx: 235,
+      centerYPx: 110,
+      startAtDeg: 130,
+      rotationAroundCenterXAxisDeg: 70,
+      rotationAroundCenterZAxisDeg: 0,
+    },
+    data: [
+      { value: 25, meta: { color: '#37ff00' /* green */, }, },
+      { value: 25, meta: { color: '#ff0000' /* red */, }, },
+      { value: 50, meta: { color: '#f2b5f6' /* pinkish */, }, },
+    ],
+  };
+
+  const expected = {
+    "totalValue": 100,
+    "slices": [
+      {
+        "startPointHeads": [
+          106.44247806269212,
+          34.10715843447528,
+          135.4187584954491,
+        ],
+        "startPointTails": [
+          106.44247806269212,
+          81.0917894737707,
+          152.51976566173258,
+        ],
+        "endPointHeads": [
+          81.79111137620438,
+          130.47694655894313,
+          -129.35505829415246,
+        ],
+        "endPointTails": [
+          81.79111137620438,
+          177.46157759823853,
+          -112.254051127869,
+        ],
+        "startAngleCounterClockwise": 2.2689280275926285,
+        "endAngleCounterClockwise": 3.839724354387525,
+        "value": 25,
+        "color": "#37ff00",
+      },
+      {
+        "startPointHeads": [
+          81.79111137620438,
+          130.47694655894313,
+          -129.35505829415246,
+        ],
+        "startPointTails": [
+          81.79111137620438,
+          177.46157759823853,
+          -112.254051127869,
+        ],
+        "endPointHeads": [
+          363.55752193730785,
+          138.90821052622928,
+          -152.51976566173255,
+        ],
+        "endPointTails": [
+          363.55752193730785,
+          185.8928415655247,
+          -135.41875849544908,
+        ],
+        "startAngleCounterClockwise": 3.839724354387525,
+        "endAngleCounterClockwise": 5.410520681182422,
+        "value": 25,
+        "color": "#ff0000",
+      },
+      {
+        "startPointHeads": [
+          363.55752193730785,
+          138.90821052622928,
+          -152.51976566173255,
+        ],
+        "startPointTails": [
+          363.55752193730785,
+          185.8928415655247,
+          -135.41875849544908,
+        ],
+        "endPointHeads": [
+          106.44247806269212,
+          34.10715843447528,
+          135.4187584954491,
+        ],
+        "endPointTails": [
+          106.44247806269212,
+          81.0917894737707,
+          152.51976566173258,
+        ],
+        "startAngleCounterClockwise": 5.410520681182422,
+        "endAngleCounterClockwise": 8.552113334772216,
+        "value": 50,
+        "color": "#f2b5f6",
+      },
+    ],
+    "pointTopHeads": [
+      235,
+      18.10365581521853,
+      179.38802057403993,
+    ],
+    "edgeLeft": {
+      "pointHeads": [
+        35,
+        86.5076844803523,
+        -8.55050358314172,
+      ],
+      "pointTails": [
+        35,
+        133.49231551964772,
+        8.55050358314172,
+      ],
+      "sliceIndex": 0,
+      "angleCounterClockwise": 3.141592653589793,
+    },
+    "edgeRight": {
+      "pointHeads": [
+        435,
+        86.5076844803523,
+        -8.55050358314172,
+      ],
+      "pointTails": [
+        435,
+        133.49231551964772,
+        8.55050358314172,
+      ],
+      "sliceIndex": 2,
+      "angleCounterClockwise": 6.283185307179586,
+    },
+    "centerHeads": [
+      235,
+      86.5076844803523,
+      -8.55050358314172,
+    ],
+    "centerTails": [
+      235,
+      133.49231551964772,
+      8.55050358314172,
+    ],
+    "someEllipseMethodArgs": {
+      "radiusX": 200,
+      "radiusY": 68.40402866513377,
+      "axesRotationCounterClockwise": -0,
+      "isCounterClockwiseOnVisibleFace": true,
+    },
+    "isHeadsVisibleToUser": true,
+    "isTailsVisibleToUser": false,
+    "isRimVisibleToUser": true,
+  };
+
+  const actual = prepareData(addComponentArg);
+  //writeToTestDiffDir({ actual, expected, });
+  //drawDataOnCanvas({
+  //  serverAbsFilePath: '/test/served-tmp/prepare-data-test.html',
+  //  actual: actual,
+  //  expected: expected,
+  //  canvasWidthPx: 470,
+  //  canvasHeightPx: 220,
+  //  drawHeads: true,
+  //  drawTails: true,
+  //  drawDotsHeads: true,
+  //  drawDotsTails: true,
+  //  drawLineToRightEdgeHeads: true,
+  //  drawLineToRightEdgeTails: true,
+  //  angleStartSliceIndex: 0,
+  //  angleEndSliceIndex: 1,
+  //});
+  t.deepEqual(actual, expected);
+  t.end();
+});
+
 tp.test((t) => {
   const addComponentArg = {
     type: 'pie-3d',
