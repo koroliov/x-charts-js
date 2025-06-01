@@ -1,0 +1,8 @@
+Angles on slices are inconsistent
+
+ The intention was to have consistent start/end angles on slices, (as
+ it's been described many times in different commit messages), but in
+ this commit, despite the utils drew everything correctly, the angles
+ were inconsistent, e.g. on, say, slice[1] end angle was 5 and on
+ slice[2] the end angle was 0.5, because it passed the PI * 2 boundary
+ and was reset. This went unnoticed. Fixed in subsequent commit/s.
