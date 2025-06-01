@@ -3,7 +3,6 @@
 import XCharts, { registerComponent, } from '../../main.js';
                                                              
 import { draw, } from './draw.js';
-import { getAngleClockwise, } from '../../utils/math.js';
 
 class Pie3d                      {
   static  _type = 'pie-3d'

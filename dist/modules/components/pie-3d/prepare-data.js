@@ -1,7 +1,7 @@
 //      strict
                                                                       
                                              
-import { calculateDistance, getAngleClockwise, } from '../../utils/math.js';
+import { calculateDistance, getAngleBetweenTwoPoints, } from '../../utils/math.js';
 
 export function prepareData(arg                           )          {
   const ops = arg.options;
@@ -95,11 +95,44 @@ export function prepareData(arg                           )          {
 
     function handleSlices() {
       let startAngle = ops.startAtDeg / 180 * Math.PI;
+      let previousStartAngle = startAngle;
       let endAngle = 0;
-      let { leftEdgeAngle, rightEdgeAngle, } = getEdgeAngles();
-
-      pieData.slices.forEach(handleSlice);
+      handleEdgeAngles();
+      for (let i = 0, l = pieData.slices.length; i <= l; i++) {
+        if (i !== l) {
+          setStartPointsOnSlice(i);
+          handleStartEndAnglesOnSlice(i);
+          findIfSliceIsOnEdge(i);
+        }
+        const startAngleCurrent = startAngle;
+        startAngle += endAngle;
+        if (i === 0) {
+          continue;
+        }
+        setAnglesOnPreviousSlice(i, startAngleCurrent);
+        previousStartAngle = startAngleCurrent;
+      }
       handleLastSliceTakesAllVisibleRimCase();
+
+      function setAnglesOnPreviousSlice(currentSliceIndex        ,
+        startAngleCurrent        ) {
+        const sdPrevious = pieData.slices[currentSliceIndex - 1];
+        sdPrevious.endAngleCounterClockwise = startAngleCurrent;
+        sdPrevious.startAngleCounterClockwise = previousStartAngle;
+      }
+
+      function setStartPointsOnSlice(i        ) {
+        const y = -(Math.sin(startAngle) * circleRadius) + centerY;
+        const x = Math.cos(startAngle) * circleRadius + centerX;
+        const sd = pieData.slices[i];
+        sd.startPointHeads[0] = x;
+        sd.startPointHeads[1] = y;
+        sd.startPointHeads[2] = -halfThickness;
+        sd.startPointTails[0] = x;
+        sd.startPointTails[1] = y;
+        sd.startPointTails[2] = halfThickness;
+        endAngle = sd.value / totalValue * Math.PI * 2;
+      }
 
       function handleLastSliceTakesAllVisibleRimCase() {
         ['edgeLeft', 'edgeRight',].forEach((edge) => {
@@ -109,57 +142,47 @@ export function prepareData(arg                           )          {
         });
       }
 
-      function handleSlice(sd                          , i        ) {
-        const y = -(Math.sin(startAngle) * circleRadius) + centerY;
-        const x = Math.cos(startAngle) * circleRadius + centerX;
-        sd.startPointHeads[0] = x;
-        sd.startPointHeads[1] = y;
-        sd.startPointHeads[2] = -halfThickness;
-        handleStartEndAnglesOnSlice(i, sd.startPointHeads);
-        sd.startPointTails[0] = x;
-        sd.startPointTails[1] = y;
-        sd.startPointTails[2] = halfThickness;
-
-        endAngle = sd.value / totalValue * Math.PI * 2;
-        findIfSliceIsOnEdge(i);
-        startAngle += endAngle;
-      }
-
-      function getEdgeAngles() {
+      function handleEdgeAngles() {
         if (startAngle >= Math.PI) {
-          return {
-            leftEdgeAngle: Math.PI * 3,
-            rightEdgeAngle: Math.PI * 2,
-          }
+          pieData.edgeLeft.angleCounterClockwise = Math.PI * 3;
+          pieData.edgeRight.angleCounterClockwise = Math.PI * 2;
         } else {
-          return {
-            leftEdgeAngle: Math.PI,
-            rightEdgeAngle: Math.PI * 2,
-          }
+          pieData.edgeLeft.angleCounterClockwise = Math.PI;
+          pieData.edgeRight.angleCounterClockwise = Math.PI * 2;
         }
       }
 
-      function handleStartEndAnglesOnSlice(sliceIndex        ,
-        startPoint       ) {
+      function handleStartEndAnglesOnSlice(sliceIndex        ) {
         const sd = pieData.slices[sliceIndex];
-        const sdPrevious = sliceIndex > 0 ? pieData.slices[sliceIndex - 1] :
-          pieData.slices[pieData.slices.length - 1];
-        sdPrevious.endAngleOnEllipseClockwise = getAngleClockwise({
-          startPoint: pieData.edgeRight.pointHeads,
+        const startAngle = getStartAngle();
+        const sliceAngle = getAngleBetweenTwoPoints({
+          startPoint: sd.startPointHeads,
           centerPoint: pieData.centerHeads,
-          endPoint: sd.startPointHeads,
+          endPoint: sd.endPointHeads,
+          isCounterClockwise: true,
         });
-        if (!pieData.someEllipseMethodArgs
-          .isCounterClockwiseOnVisibleFace) {
-          sdPrevious.endAngleOnEllipseClockwise =
-            -sdPrevious.endAngleOnEllipseClockwise;
+        sd.endAngleCounterClockwise = startAngle + sliceAngle;
+        sd.startAngleCounterClockwise = startAngle;
+
+        function getStartAngle() {
+          if (sliceIndex === 0) {
+            return getAngleBetweenTwoPoints({
+              startPoint: pieData.edgeRight.pointHeads,
+              centerPoint: pieData.centerHeads,
+              endPoint: sd.startPointHeads,
+              isCounterClockwise: true,
+            });
+          }
+          const sdPrevious = pieData.slices[sliceIndex - 1];
+          return sdPrevious.endAngleCounterClockwise;
         }
-        sd.startAngleOnEllipseClockwise = sdPrevious.endAngleOnEllipseClockwise;
       }
 
       function findIfSliceIsOnEdge(sliceIndex        ) {
         const endAngleOfSlice = endAngle + startAngle;
         const startAngleOfSlice = startAngle;
+        const leftEdgeAngle = pieData.edgeLeft.angleCounterClockwise;
+        const rightEdgeAngle = pieData.edgeRight.angleCounterClockwise;
         if (isInThisSliceRange(leftEdgeAngle)) {
           handleLeftEdge();
         }
@@ -266,11 +289,13 @@ export function prepareData(arg                           )          {
         pointHeads: [0, 0, 0,],
         pointTails: [0, 0, 0,],
         sliceIndex: -1,
+        angleCounterClockwise: 0,
       },
       edgeRight: {
         pointHeads: [0, 0, 0,],
         pointTails: [0, 0, 0,],
         sliceIndex: -1,
+        angleCounterClockwise: 0,
       },
       centerHeads: [0, 0, 0,],
       centerTails: [0, 0, 0,],
@@ -297,8 +322,8 @@ export function prepareData(arg                           )          {
         startPointTails: prevEndTails,
         endPointHeads: [0, 0, 0,],
         endPointTails: [0, 0, 0,],
-        startAngleOnEllipseClockwise: 0,
-        endAngleOnEllipseClockwise: 0,
+        startAngleCounterClockwise: 0,
+        endAngleCounterClockwise: 0,
         value: d.value,
         color: d.meta.color,
       };
