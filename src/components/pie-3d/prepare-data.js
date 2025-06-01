@@ -95,11 +95,44 @@ export function prepareData(arg: AddComponentPie3dArgument): PieData {
 
     function handleSlices() {
       let startAngle = ops.startAtDeg / 180 * Math.PI;
+      let previousStartAngle = startAngle;
       let endAngle = 0;
       handleEdgeAngles();
-
-      pieData.slices.forEach(handleSlice);
+      for (let i = 0, l = pieData.slices.length; i <= l; i++) {
+        if (i !== l) {
+          setStartPointsOnSlice(i);
+          handleStartEndAnglesOnSlice(i);
+          findIfSliceIsOnEdge(i);
+        }
+        const startAngleCurrent = startAngle;
+        startAngle += endAngle;
+        if (i === 0) {
+          continue;
+        }
+        setAnglesOnPreviousSlice(i, startAngleCurrent);
+        previousStartAngle = startAngleCurrent;
+      }
       handleLastSliceTakesAllVisibleRimCase();
+
+      function setAnglesOnPreviousSlice(currentSliceIndex: number,
+        startAngleCurrent: number) {
+        const sdPrevious = pieData.slices[currentSliceIndex - 1];
+        sdPrevious.endAngleCounterClockwise = startAngleCurrent;
+        sdPrevious.startAngleCounterClockwise = previousStartAngle;
+      }
+
+      function setStartPointsOnSlice(i: number) {
+        const y = -(Math.sin(startAngle) * circleRadius) + centerY;
+        const x = Math.cos(startAngle) * circleRadius + centerX;
+        const sd = pieData.slices[i];
+        sd.startPointHeads[0] = x;
+        sd.startPointHeads[1] = y;
+        sd.startPointHeads[2] = -halfThickness;
+        sd.startPointTails[0] = x;
+        sd.startPointTails[1] = y;
+        sd.startPointTails[2] = halfThickness;
+        endAngle = sd.value / totalValue * Math.PI * 2;
+      }
 
       function handleLastSliceTakesAllVisibleRimCase() {
         ['edgeLeft', 'edgeRight',].forEach((edge) => {
@@ -107,22 +140,6 @@ export function prepareData(arg: AddComponentPie3dArgument): PieData {
             pieData[edge].sliceIndex = pieData.slices.length - 1;
           }
         });
-      }
-
-      function handleSlice(sd: typeof pieData.slices[0], i: number) {
-        const y = -(Math.sin(startAngle) * circleRadius) + centerY;
-        const x = Math.cos(startAngle) * circleRadius + centerX;
-        sd.startPointHeads[0] = x;
-        sd.startPointHeads[1] = y;
-        sd.startPointHeads[2] = -halfThickness;
-        handleStartEndAnglesOnSlice(i);
-        sd.startPointTails[0] = x;
-        sd.startPointTails[1] = y;
-        sd.startPointTails[2] = halfThickness;
-
-        endAngle = sd.value / totalValue * Math.PI * 2;
-        findIfSliceIsOnEdge(i);
-        startAngle += endAngle;
       }
 
       function handleEdgeAngles() {
@@ -137,17 +154,27 @@ export function prepareData(arg: AddComponentPie3dArgument): PieData {
 
       function handleStartEndAnglesOnSlice(sliceIndex: number) {
         const sd = pieData.slices[sliceIndex];
-        const sdPrevious = sliceIndex > 0 ? pieData.slices[sliceIndex - 1] :
-          pieData.slices[pieData.slices.length - 1];
-        sdPrevious.endAngleCounterClockwise = getAngleBetweenTwoPoints({
-          startPoint: pieData.edgeRight.pointHeads,
+        const startAngle = getStartAngle();
+        const sliceAngle = getAngleBetweenTwoPoints({
+          startPoint: sd.startPointHeads,
           centerPoint: pieData.centerHeads,
-          endPoint: sd.startPointHeads,
+          endPoint: sd.endPointHeads,
           isCounterClockwise: true,
         });
-        sd.startAngleCounterClockwise = sdPrevious.endAngleCounterClockwise;
-        if (sliceIndex === pieData.slices.length - 1) {
-          sd.endAngleCounterClockwise += Math.PI * 2;
+        sd.endAngleCounterClockwise = startAngle + sliceAngle;
+        sd.startAngleCounterClockwise = startAngle;
+
+        function getStartAngle() {
+          if (sliceIndex === 0) {
+            return getAngleBetweenTwoPoints({
+              startPoint: pieData.edgeRight.pointHeads,
+              centerPoint: pieData.centerHeads,
+              endPoint: sd.startPointHeads,
+              isCounterClockwise: true,
+            });
+          }
+          const sdPrevious = pieData.slices[sliceIndex - 1];
+          return sdPrevious.endAngleCounterClockwise;
         }
       }
 
