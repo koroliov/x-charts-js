@@ -1,7 +1,7 @@
 //@flow strict
 import type { AddComponentPie3dArgument, PieData, } from './types.js';
 import type { Point, } from '../../types.js';
-import { calculateDistance, getAngleBetweenTwoPoints, } from '../../utils/math.js';
+import { calculateDistance, } from '../../utils/math.js';
 
 export function prepareData(arg: AddComponentPie3dArgument): PieData {
   const ops = arg.options;
@@ -101,7 +101,6 @@ export function prepareData(arg: AddComponentPie3dArgument): PieData {
       for (let i = 0, l = pieData.slices.length; i <= l; i++) {
         if (i !== l) {
           setStartPointsOnSlice(i);
-          handleStartEndAnglesOnSlice(i);
           findIfSliceIsOnEdge(i);
         }
         const startAngleCurrent = startAngle;
@@ -149,32 +148,6 @@ export function prepareData(arg: AddComponentPie3dArgument): PieData {
         } else {
           pieData.edgeLeft.angleCounterClockwise = Math.PI;
           pieData.edgeRight.angleCounterClockwise = Math.PI * 2;
-        }
-      }
-
-      function handleStartEndAnglesOnSlice(sliceIndex: number) {
-        const sd = pieData.slices[sliceIndex];
-        const startAngle = getStartAngle();
-        const sliceAngle = getAngleBetweenTwoPoints({
-          startPoint: sd.startPointHeads,
-          centerPoint: pieData.centerHeads,
-          endPoint: sd.endPointHeads,
-          isCounterClockwise: true,
-        });
-        sd.endAngleCounterClockwise = startAngle + sliceAngle;
-        sd.startAngleCounterClockwise = startAngle;
-
-        function getStartAngle() {
-          if (sliceIndex === 0) {
-            return getAngleBetweenTwoPoints({
-              startPoint: pieData.edgeRight.pointHeads,
-              centerPoint: pieData.centerHeads,
-              endPoint: sd.startPointHeads,
-              isCounterClockwise: true,
-            });
-          }
-          const sdPrevious = pieData.slices[sliceIndex - 1];
-          return sdPrevious.endAngleCounterClockwise;
         }
       }
 
