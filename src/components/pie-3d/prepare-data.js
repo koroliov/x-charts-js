@@ -118,6 +118,13 @@ export function prepareData(arg: AddComponentPie3dArgument): PieData {
         const sdPrevious = pieData.slices[currentSliceIndex - 1];
         sdPrevious.endAngleCounterClockwise = startAngleCurrent;
         sdPrevious.startAngleCounterClockwise = previousStartAngle;
+
+        const sa = Math.PI * 6 - previousStartAngle;
+        const ea = Math.PI * 6 - startAngleCurrent;
+        sdPrevious.faceEllipseMethodArguments.startAngle =
+          pieData.ellipseMethodArgs.isCounterClockwiseOnVisibleFace ? sa : -sa;
+        sdPrevious.faceEllipseMethodArguments.endAngle =
+          pieData.ellipseMethodArgs.isCounterClockwiseOnVisibleFace ? ea : -ea;
       }
 
       function setStartPointsOnSlice(i: number) {
@@ -296,6 +303,10 @@ export function prepareData(arg: AddComponentPie3dArgument): PieData {
         endPointTails: [0, 0, 0,],
         startAngleCounterClockwise: 0,
         endAngleCounterClockwise: 0,
+        faceEllipseMethodArguments: {
+          startAngle: 0,
+          endAngle: 0,
+        },
         value: d.value,
         color: d.meta.color,
       };

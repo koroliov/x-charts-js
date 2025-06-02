@@ -21,6 +21,10 @@ type SliceData = {
   +endPointTails: Point,
   +startAngleCounterClockwise: number,
   +endAngleCounterClockwise: number,
+  +faceEllipseMethodArguments: {
+    +startAngle: number,
+    +endAngle: number,
+  },
   +value: number,
   +color: string,
 }

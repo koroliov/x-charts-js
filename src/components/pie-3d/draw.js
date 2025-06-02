@@ -169,15 +169,14 @@ export function draw(arg: {
         pieData[centerPointPropName][1]);
       ctx.beginPath();
       ctx.lineTo(s[startPointPropName][0], s[startPointPropName][1]);
-      const { startAngle, endAngle, } = getAngles();
       ctx.ellipse(
         pieData[centerPointPropName][0],
         pieData[centerPointPropName][1],
         pieData.ellipseMethodArgs.radiusX,
         pieData.ellipseMethodArgs.radiusY,
         pieData.ellipseMethodArgs.axesRotationCounterClockwise,
-        startAngle,
-        endAngle,
+        s.faceEllipseMethodArguments.startAngle,
+        s.faceEllipseMethodArguments.endAngle,
         pieData.ellipseMethodArgs.isCounterClockwiseOnVisibleFace,
       );
       ctx.lineTo(pieData[centerPointPropName][0],
@@ -187,15 +186,6 @@ export function draw(arg: {
         ctx.fill();
       } else {
         ctx.stroke();
-      }
-
-      function getAngles() {
-        const start = Math.PI * 6 - s.startAngleCounterClockwise
-        const end = Math.PI * 6 - s.endAngleCounterClockwise;
-        return {
-          startAngle: arg.isHeads ? start : -start,
-          endAngle: arg.isHeads ? end : -end,
-        };
       }
     }
   }
