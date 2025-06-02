@@ -13,15 +13,15 @@ export function prepareData(arg                           )          {
   return pieData;
 
   function calculateEllipseMethodArgs() {
-    pieData.someEllipseMethodArgs.radiusY = calculateDistance({
+    pieData.ellipseMethodArgs.radiusY = calculateDistance({
       pointStart: pieData.centerHeads,
       pointEnd: pieData.pointTopHeads,
     });
-    pieData.someEllipseMethodArgs.radiusX = calculateDistance({
+    pieData.ellipseMethodArgs.radiusX = calculateDistance({
       pointStart: pieData.centerHeads,
       pointEnd: pieData.edgeRight.pointHeads,
     });
-    pieData.someEllipseMethodArgs.axesRotationCounterClockwise =
+    pieData.ellipseMethodArgs.axesRotationCounterClockwise =
       -(ops.rotationAroundCenterZAxisDeg / 180 * Math.PI);
   }
 
@@ -118,6 +118,13 @@ export function prepareData(arg                           )          {
         const sdPrevious = pieData.slices[currentSliceIndex - 1];
         sdPrevious.endAngleCounterClockwise = startAngleCurrent;
         sdPrevious.startAngleCounterClockwise = previousStartAngle;
+
+        const sa = Math.PI * 6 - previousStartAngle;
+        const ea = Math.PI * 6 - startAngleCurrent;
+        sdPrevious.faceEllipseMethodArguments.startAngle =
+          pieData.ellipseMethodArgs.isCounterClockwiseOnVisibleFace ? sa : -sa;
+        sdPrevious.faceEllipseMethodArguments.endAngle =
+          pieData.ellipseMethodArgs.isCounterClockwiseOnVisibleFace ? ea : -ea;
       }
 
       function setStartPointsOnSlice(i        ) {
@@ -247,8 +254,7 @@ export function prepareData(arg                           )          {
         pieData.isHeadsVisibleToUser = true;
       }
       if (pieData.isTailsVisibleToUser) {
-        pieData.someEllipseMethodArgs
-          .isCounterClockwiseOnVisibleFace = false;
+        pieData.ellipseMethodArgs.isCounterClockwiseOnVisibleFace = false;
       }
     }
   }
@@ -272,7 +278,7 @@ export function prepareData(arg                           )          {
       },
       centerHeads: [0, 0, 0,],
       centerTails: [0, 0, 0,],
-      someEllipseMethodArgs: {
+      ellipseMethodArgs: {
         radiusX: 0,
         radiusY: 0,
         axesRotationCounterClockwise: 0,
@@ -297,6 +303,10 @@ export function prepareData(arg                           )          {
         endPointTails: [0, 0, 0,],
         startAngleCounterClockwise: 0,
         endAngleCounterClockwise: 0,
+        faceEllipseMethodArguments: {
+          startAngle: 0,
+          endAngle: 0,
+        },
         value: d.value,
         color: d.meta.color,
       };
