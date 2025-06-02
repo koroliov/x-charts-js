@@ -55,13 +55,6 @@ type EdgeData = {
   +angleCounterClockwise: number,
 }
 
-type SomeContext2dEllipseMethodArguments = {
-  +radiusX: number,
-  +radiusY: number,
-  +axesRotationCounterClockwise: number,
-  +isCounterClockwiseOnVisibleFace: boolean,
-}
-
 export type PieData = {
   +totalValue: number,
   +slices: $ReadOnlyArray<SliceData>,
@@ -70,7 +63,12 @@ export type PieData = {
   +edgeRight: EdgeData,
   +centerHeads: Point,
   +centerTails: Point,
-  +someEllipseMethodArgs: SomeContext2dEllipseMethodArguments,
+  +ellipseMethodArgs: {
+    +radiusX: number,
+    +radiusY: number,
+    +axesRotationCounterClockwise: number,
+    +isCounterClockwiseOnVisibleFace: boolean,
+  },
   +isHeadsVisibleToUser: boolean,
   +isTailsVisibleToUser: boolean,
   +isRimVisibleToUser: boolean,

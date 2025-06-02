@@ -13,15 +13,15 @@ export function prepareData(arg: AddComponentPie3dArgument): PieData {
   return pieData;
 
   function calculateEllipseMethodArgs() {
-    pieData.someEllipseMethodArgs.radiusY = calculateDistance({
+    pieData.ellipseMethodArgs.radiusY = calculateDistance({
       pointStart: pieData.centerHeads,
       pointEnd: pieData.pointTopHeads,
     });
-    pieData.someEllipseMethodArgs.radiusX = calculateDistance({
+    pieData.ellipseMethodArgs.radiusX = calculateDistance({
       pointStart: pieData.centerHeads,
       pointEnd: pieData.edgeRight.pointHeads,
     });
-    pieData.someEllipseMethodArgs.axesRotationCounterClockwise =
+    pieData.ellipseMethodArgs.axesRotationCounterClockwise =
       -(ops.rotationAroundCenterZAxisDeg / 180 * Math.PI);
   }
 
@@ -247,8 +247,7 @@ export function prepareData(arg: AddComponentPie3dArgument): PieData {
         pieData.isHeadsVisibleToUser = true;
       }
       if (pieData.isTailsVisibleToUser) {
-        pieData.someEllipseMethodArgs
-          .isCounterClockwiseOnVisibleFace = false;
+        pieData.ellipseMethodArgs.isCounterClockwiseOnVisibleFace = false;
       }
     }
   }
@@ -272,7 +271,7 @@ export function prepareData(arg: AddComponentPie3dArgument): PieData {
       },
       centerHeads: [0, 0, 0,],
       centerTails: [0, 0, 0,],
-      someEllipseMethodArgs: {
+      ellipseMethodArgs: {
         radiusX: 0,
         radiusY: 0,
         axesRotationCounterClockwise: 0,

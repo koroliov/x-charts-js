@@ -148,9 +148,9 @@ export function draw(arg: {
       ctx.ellipse(
         pieData[centerPointPropName][0],
         pieData[centerPointPropName][1],
-        pieData.someEllipseMethodArgs.radiusX,
-        pieData.someEllipseMethodArgs.radiusY,
-        pieData.someEllipseMethodArgs.axesRotationCounterClockwise,
+        pieData.ellipseMethodArgs.radiusX,
+        pieData.ellipseMethodArgs.radiusY,
+        pieData.ellipseMethodArgs.axesRotationCounterClockwise,
         0,
         Math.PI * 2,
         false,
@@ -173,12 +173,12 @@ export function draw(arg: {
       ctx.ellipse(
         pieData[centerPointPropName][0],
         pieData[centerPointPropName][1],
-        pieData.someEllipseMethodArgs.radiusX,
-        pieData.someEllipseMethodArgs.radiusY,
-        pieData.someEllipseMethodArgs.axesRotationCounterClockwise,
+        pieData.ellipseMethodArgs.radiusX,
+        pieData.ellipseMethodArgs.radiusY,
+        pieData.ellipseMethodArgs.axesRotationCounterClockwise,
         startAngle,
         endAngle,
-        pieData.someEllipseMethodArgs.isCounterClockwiseOnVisibleFace,
+        pieData.ellipseMethodArgs.isCounterClockwiseOnVisibleFace,
       );
       ctx.lineTo(pieData[centerPointPropName][0],
         pieData[centerPointPropName][1]);

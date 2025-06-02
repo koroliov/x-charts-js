@@ -173,12 +173,12 @@ export function drawDataOnCanvas(arg: Arg) {
           ctx.ellipse(
             pieData[isHeads ? 'centerHeads' : 'centerTails'][0],
             pieData[isHeads ? 'centerHeads' : 'centerTails'][1],
-            pieData.someEllipseMethodArgs.radiusX,
-            pieData.someEllipseMethodArgs.radiusY,
-            pieData.someEllipseMethodArgs.axesRotationCounterClockwise,
+            pieData.ellipseMethodArgs.radiusX,
+            pieData.ellipseMethodArgs.radiusY,
+            pieData.ellipseMethodArgs.axesRotationCounterClockwise,
             angleStart,
             angleEnd,
-            pieData.someEllipseMethodArgs.isCounterClockwiseOnVisibleFace,
+            pieData.ellipseMethodArgs.isCounterClockwiseOnVisibleFace,
           );
           ctx.stroke();
 

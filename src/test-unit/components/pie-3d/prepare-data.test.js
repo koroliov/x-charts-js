@@ -151,7 +151,7 @@ tp.test((t) => {
       265.3093108923949,
       12.500000000000004,
     ],
-    "someEllipseMethodArgs": {
+    "ellipseMethodArgs": {
       "radiusX": 149.99999999999997,
       "radiusY": 74.99999999999999,
       "axesRotationCounterClockwise": -0.7853981633974483,
@@ -328,7 +328,7 @@ tp.test('0001-most-common-case', (t) => {
       133.49231551964772,
       8.55050358314172,
     ],
-    "someEllipseMethodArgs": {
+    "ellipseMethodArgs": {
       "radiusX": 200,
       "radiusY": 68.40402866513377,
       "axesRotationCounterClockwise": -0,
@@ -505,7 +505,7 @@ tp.test((t) => {
       271.65063509461095,
       -12.499999999999995,
     ],
-    "someEllipseMethodArgs": {
+    "ellipseMethodArgs": {
       "radiusX": 200,
       "radiusY": 99.99999999999997,
       "axesRotationCounterClockwise": -0,
@@ -709,7 +709,7 @@ tp.test((t) => {
       133.49231551964772,
       8.55050358314172,
     ],
-    "someEllipseMethodArgs": {
+    "ellipseMethodArgs": {
       "radiusX": 200,
       "radiusY": 68.40402866513377,
       "axesRotationCounterClockwise": -0,
@@ -859,7 +859,7 @@ tp.test((t) => {
       133.49231551964772,
       8.55050358314172,
     ],
-    "someEllipseMethodArgs": {
+    "ellipseMethodArgs": {
       "radiusX": 200,
       "radiusY": 68.40402866513377,
       "axesRotationCounterClockwise": -0,
@@ -1063,7 +1063,7 @@ tp.test('0004-left-edge-slice-index-bigger-right-one', (t) => {
       133.49231551964772,
       8.55050358314172,
     ],
-    "someEllipseMethodArgs": {
+    "ellipseMethodArgs": {
       "radiusX": 200,
       "radiusY": 68.40402866513377,
       "axesRotationCounterClockwise": -0,
@@ -1213,7 +1213,7 @@ tp.test((t) => {
       133.49231551964772,
       8.55050358314172,
     ],
-    "someEllipseMethodArgs": {
+    "ellipseMethodArgs": {
       "radiusX": 200,
       "radiusY": 68.40402866513377,
       "axesRotationCounterClockwise": -0,
@@ -1363,7 +1363,7 @@ tp.test((t) => {
       133.49231551964772,
       8.55050358314172,
     ],
-    "someEllipseMethodArgs": {
+    "ellipseMethodArgs": {
       "radiusX": 200,
       "radiusY": 68.40402866513377,
       "axesRotationCounterClockwise": -0,

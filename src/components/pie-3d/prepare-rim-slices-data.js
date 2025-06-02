@@ -48,10 +48,10 @@ export function prepareRimSlicesData(pieData: PieData): RimSlicesData {
       const retVal: RimSlicesData[0]['ellipseArgumentsOnHeads'] = {
         centerX: pieData[isHeadsEllipse ? 'centerHeads' : 'centerTails'][0],
         centerY: pieData[isHeadsEllipse ? 'centerHeads' : 'centerTails'][1],
-        radiusX: pieData.someEllipseMethodArgs.radiusX,
-        radiusY: pieData.someEllipseMethodArgs.radiusY,
+        radiusX: pieData.ellipseMethodArgs.radiusX,
+        radiusY: pieData.ellipseMethodArgs.radiusY,
         axesRotationCounterClockwise:
-          pieData.someEllipseMethodArgs.axesRotationCounterClockwise,
+          pieData.ellipseMethodArgs.axesRotationCounterClockwise,
         angleStart: 0,
         angleEnd: 0,
         isCounterClockwise: !isHeadsEllipse,
