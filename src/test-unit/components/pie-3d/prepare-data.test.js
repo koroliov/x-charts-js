@@ -171,7 +171,8 @@ tp.test((t) => {
     },
     "isHeadsVisibleToUser": true,
     "isTailsVisibleToUser": false,
-    "isRimVisibleToUser": true,
+    "isTopRimVisibleToUser": false,
+    "isBottomRimVisibleToUser": true,
   };
 
   const actual = prepareData(addComponentArg);
@@ -360,7 +361,8 @@ tp.test('0001-most-common-case', (t) => {
     },
     "isHeadsVisibleToUser": true,
     "isTailsVisibleToUser": false,
-    "isRimVisibleToUser": true,
+    "isTopRimVisibleToUser": false,
+    "isBottomRimVisibleToUser": true,
   };
 
   const actual = prepareData(addComponentArg);
@@ -549,7 +551,8 @@ tp.test((t) => {
     },
     "isHeadsVisibleToUser": false,
     "isTailsVisibleToUser": true,
-    "isRimVisibleToUser": true,
+    "isTopRimVisibleToUser": false,
+    "isBottomRimVisibleToUser": true,
   };
 
   const actual = prepareData(addComponentArg);
@@ -769,7 +772,8 @@ tp.test((t) => {
     },
     "isHeadsVisibleToUser": true,
     "isTailsVisibleToUser": false,
-    "isRimVisibleToUser": true,
+    "isTopRimVisibleToUser": false,
+    "isBottomRimVisibleToUser": true,
   };
 
   const actual = prepareData(addComponentArg);
@@ -927,7 +931,8 @@ tp.test((t) => {
     },
     "isHeadsVisibleToUser": true,
     "isTailsVisibleToUser": false,
-    "isRimVisibleToUser": true,
+    "isTopRimVisibleToUser": false,
+    "isBottomRimVisibleToUser": true,
   };
 
   const actual = prepareData(addComponentArg);
@@ -1147,7 +1152,8 @@ tp.test('0004-left-edge-slice-index-bigger-right-one', (t) => {
     },
     "isHeadsVisibleToUser": true,
     "isTailsVisibleToUser": false,
-    "isRimVisibleToUser": true,
+    "isTopRimVisibleToUser": false,
+    "isBottomRimVisibleToUser": true,
   };
 
   const actual = prepareData(addComponentArg);
@@ -1305,7 +1311,8 @@ tp.test((t) => {
     },
     "isHeadsVisibleToUser": true,
     "isTailsVisibleToUser": false,
-    "isRimVisibleToUser": true,
+    "isTopRimVisibleToUser": false,
+    "isBottomRimVisibleToUser": true,
   };
 
   const actual = prepareData(addComponentArg);
@@ -1463,7 +1470,8 @@ tp.test((t) => {
     },
     "isHeadsVisibleToUser": true,
     "isTailsVisibleToUser": false,
-    "isRimVisibleToUser": true,
+    "isTopRimVisibleToUser": false,
+    "isBottomRimVisibleToUser": true,
   };
 
   const actual = prepareData(addComponentArg);

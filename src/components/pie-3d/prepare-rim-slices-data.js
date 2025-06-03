@@ -9,7 +9,7 @@ import type { Point, } from '../../types.js';
 
 export function prepareRimSlicesData(pieData: PieData): RimSlicesData {
   const rimSlicesData: RimSlicesData = [];
-  if (!pieData.isRimVisibleToUser) {
+  if (!pieData.isTopRimVisibleToUser && !pieData.isBottomRimVisibleToUser) {
     return rimSlicesData;
   }
   const startSliceIndex = pieData.edgeLeft.sliceIndex;

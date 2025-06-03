@@ -78,7 +78,7 @@ export function prepareData(arg: AddComponentPie3dArgument): PieData {
   }
 
   function performBeforeRotationsProcessing() {
-    handleHeadsTailsAndRimVisibility();
+    handleFaceAndRimVisibility();
     const circleRadius = ops.radiusPx;
     const centerX = ops.centerXPx;
     const centerY = ops.centerYPx;
@@ -236,23 +236,30 @@ export function prepareData(arg: AddComponentPie3dArgument): PieData {
       pieData.edgeRight.pointTails[2] = halfThickness;
     }
 
-    function handleHeadsTailsAndRimVisibility() {
+    function handleFaceAndRimVisibility() {
       const angle = ops.rotationAroundCenterXAxisDeg;
-      if (angle === 0) {
-        pieData.isHeadsVisibleToUser = true;
-        pieData.isRimVisibleToUser = false;
-      } else if (angle === 180) {
+      if (angle <= 90) {
+        if (angle > 0) {
+          pieData.isBottomRimVisibleToUser = true;
+        }
+        if (angle < 90) {
+          pieData.isHeadsVisibleToUser = true;
+        }
+      } else if (angle <= 180) {
         pieData.isTailsVisibleToUser = true;
-        pieData.isRimVisibleToUser = false;
-      } else if (angle === 90 || angle === 270) {
-        return;
-      } else if (angle < 90) {
-        pieData.isHeadsVisibleToUser = true;
-      } else if (angle < 270) {
-        pieData.isTailsVisibleToUser = true;
+        if (angle < 180) {
+          pieData.isBottomRimVisibleToUser = true;
+        }
+      } else if (angle <= 270) {
+        pieData.isTopRimVisibleToUser = true;
+        if (angle < 270) {
+          pieData.isTailsVisibleToUser = true;
+        }
       } else {
         pieData.isHeadsVisibleToUser = true;
+        pieData.isTopRimVisibleToUser = true;
       }
+
       if (pieData.isTailsVisibleToUser) {
         pieData.ellipseMethodArgs.isCounterClockwiseOnVisibleFace = false;
       }
@@ -286,7 +293,8 @@ export function prepareData(arg: AddComponentPie3dArgument): PieData {
       },
       isHeadsVisibleToUser: false,
       isTailsVisibleToUser: false,
-      isRimVisibleToUser: true,
+      isTopRimVisibleToUser: false,
+      isBottomRimVisibleToUser: false,
     };
   }
 
