@@ -1,7 +1,7 @@
 //@flow strict
 import type { AddComponentPie3dArgument, PieData, } from './types.js';
 import type { Point, } from '../../types.js';
-import { calculateDistance, getAngleClockwise, } from '../../utils/math.js';
+import { calculateDistance, } from '../../utils/math.js';
 
 export function prepareData(arg: AddComponentPie3dArgument): PieData {
   const ops = arg.options;
@@ -13,15 +13,15 @@ export function prepareData(arg: AddComponentPie3dArgument): PieData {
   return pieData;
 
   function calculateEllipseMethodArgs() {
-    pieData.someEllipseMethodArgs.radiusY = calculateDistance({
+    pieData.ellipseMethodArgs.radiusY = calculateDistance({
       pointStart: pieData.centerHeads,
       pointEnd: pieData.pointTopHeads,
     });
-    pieData.someEllipseMethodArgs.radiusX = calculateDistance({
+    pieData.ellipseMethodArgs.radiusX = calculateDistance({
       pointStart: pieData.centerHeads,
       pointEnd: pieData.edgeRight.pointHeads,
     });
-    pieData.someEllipseMethodArgs.axesRotationCounterClockwise =
+    pieData.ellipseMethodArgs.axesRotationCounterClockwise =
       -(ops.rotationAroundCenterZAxisDeg / 180 * Math.PI);
   }
 
@@ -78,7 +78,7 @@ export function prepareData(arg: AddComponentPie3dArgument): PieData {
   }
 
   function performBeforeRotationsProcessing() {
-    handleHeadsTailsAndRimVisibility();
+    handleFaceAndRimVisibility();
     const circleRadius = ops.radiusPx;
     const centerX = ops.centerXPx;
     const centerY = ops.centerYPx;
@@ -95,11 +95,50 @@ export function prepareData(arg: AddComponentPie3dArgument): PieData {
 
     function handleSlices() {
       let startAngle = ops.startAtDeg / 180 * Math.PI;
+      let previousStartAngle = startAngle;
       let endAngle = 0;
-      let { leftEdgeAngle, rightEdgeAngle, } = getEdgeAngles();
-
-      pieData.slices.forEach(handleSlice);
+      handleEdgeAngles();
+      for (let i = 0, l = pieData.slices.length; i <= l; i++) {
+        if (i !== l) {
+          setStartPointsOnSlice(i);
+          findIfSliceIsOnEdge(i);
+        }
+        const startAngleCurrent = startAngle;
+        startAngle += endAngle;
+        if (i === 0) {
+          continue;
+        }
+        setAnglesOnPreviousSlice(i, startAngleCurrent);
+        previousStartAngle = startAngleCurrent;
+      }
       handleLastSliceTakesAllVisibleRimCase();
+
+      function setAnglesOnPreviousSlice(currentSliceIndex: number,
+        startAngleCurrent: number) {
+        const sdPrevious = pieData.slices[currentSliceIndex - 1];
+        sdPrevious.endAngleCounterClockwise = startAngleCurrent;
+        sdPrevious.startAngleCounterClockwise = previousStartAngle;
+
+        const sa = Math.PI * 6 - previousStartAngle;
+        const ea = Math.PI * 6 - startAngleCurrent;
+        sdPrevious.faceEllipseMethodArguments.startAngle =
+          pieData.ellipseMethodArgs.isCounterClockwiseOnVisibleFace ? sa : -sa;
+        sdPrevious.faceEllipseMethodArguments.endAngle =
+          pieData.ellipseMethodArgs.isCounterClockwiseOnVisibleFace ? ea : -ea;
+      }
+
+      function setStartPointsOnSlice(i: number) {
+        const y = -(Math.sin(startAngle) * circleRadius) + centerY;
+        const x = Math.cos(startAngle) * circleRadius + centerX;
+        const sd = pieData.slices[i];
+        sd.startPointHeads[0] = x;
+        sd.startPointHeads[1] = y;
+        sd.startPointHeads[2] = -halfThickness;
+        sd.startPointTails[0] = x;
+        sd.startPointTails[1] = y;
+        sd.startPointTails[2] = halfThickness;
+        endAngle = sd.value / totalValue * Math.PI * 2;
+      }
 
       function handleLastSliceTakesAllVisibleRimCase() {
         ['edgeLeft', 'edgeRight',].forEach((edge) => {
@@ -109,57 +148,21 @@ export function prepareData(arg: AddComponentPie3dArgument): PieData {
         });
       }
 
-      function handleSlice(sd: typeof pieData.slices[0], i: number) {
-        const y = -(Math.sin(startAngle) * circleRadius) + centerY;
-        const x = Math.cos(startAngle) * circleRadius + centerX;
-        sd.startPointHeads[0] = x;
-        sd.startPointHeads[1] = y;
-        sd.startPointHeads[2] = -halfThickness;
-        handleStartEndAnglesOnSlice(i, sd.startPointHeads);
-        sd.startPointTails[0] = x;
-        sd.startPointTails[1] = y;
-        sd.startPointTails[2] = halfThickness;
-
-        endAngle = sd.value / totalValue * Math.PI * 2;
-        findIfSliceIsOnEdge(i);
-        startAngle += endAngle;
-      }
-
-      function getEdgeAngles() {
+      function handleEdgeAngles() {
         if (startAngle >= Math.PI) {
-          return {
-            leftEdgeAngle: Math.PI * 3,
-            rightEdgeAngle: Math.PI * 2,
-          }
+          pieData.edgeLeft.angleCounterClockwise = Math.PI * 3;
+          pieData.edgeRight.angleCounterClockwise = Math.PI * 2;
         } else {
-          return {
-            leftEdgeAngle: Math.PI,
-            rightEdgeAngle: Math.PI * 2,
-          }
+          pieData.edgeLeft.angleCounterClockwise = Math.PI;
+          pieData.edgeRight.angleCounterClockwise = Math.PI * 2;
         }
-      }
-
-      function handleStartEndAnglesOnSlice(sliceIndex: number,
-        startPoint: Point) {
-        const sd = pieData.slices[sliceIndex];
-        const sdPrevious = sliceIndex > 0 ? pieData.slices[sliceIndex - 1] :
-          pieData.slices[pieData.slices.length - 1];
-        sdPrevious.endAngleOnEllipseClockwise = getAngleClockwise({
-          startPoint: pieData.edgeRight.pointHeads,
-          centerPoint: pieData.centerHeads,
-          endPoint: sd.startPointHeads,
-        });
-        if (!pieData.someEllipseMethodArgs
-          .isCounterClockwiseOnVisibleFace) {
-          sdPrevious.endAngleOnEllipseClockwise =
-            -sdPrevious.endAngleOnEllipseClockwise;
-        }
-        sd.startAngleOnEllipseClockwise = sdPrevious.endAngleOnEllipseClockwise;
       }
 
       function findIfSliceIsOnEdge(sliceIndex: number) {
         const endAngleOfSlice = endAngle + startAngle;
         const startAngleOfSlice = startAngle;
+        const leftEdgeAngle = pieData.edgeLeft.angleCounterClockwise;
+        const rightEdgeAngle = pieData.edgeRight.angleCounterClockwise;
         if (isInThisSliceRange(leftEdgeAngle)) {
           handleLeftEdge();
         }
@@ -233,26 +236,32 @@ export function prepareData(arg: AddComponentPie3dArgument): PieData {
       pieData.edgeRight.pointTails[2] = halfThickness;
     }
 
-    function handleHeadsTailsAndRimVisibility() {
+    function handleFaceAndRimVisibility() {
       const angle = ops.rotationAroundCenterXAxisDeg;
-      if (angle === 0) {
-        pieData.isHeadsVisibleToUser = true;
-        pieData.isRimVisibleToUser = false;
-      } else if (angle === 180) {
+      if (angle <= 90) {
+        if (angle > 0) {
+          pieData.isBottomRimVisibleToUser = true;
+        }
+        if (angle < 90) {
+          pieData.isHeadsVisibleToUser = true;
+        }
+      } else if (angle <= 180) {
         pieData.isTailsVisibleToUser = true;
-        pieData.isRimVisibleToUser = false;
-      } else if (angle === 90 || angle === 270) {
-        return;
-      } else if (angle < 90) {
-        pieData.isHeadsVisibleToUser = true;
-      } else if (angle < 270) {
-        pieData.isTailsVisibleToUser = true;
+        if (angle < 180) {
+          pieData.isBottomRimVisibleToUser = true;
+        }
+      } else if (angle <= 270) {
+        pieData.isTopRimVisibleToUser = true;
+        if (angle < 270) {
+          pieData.isTailsVisibleToUser = true;
+        }
       } else {
         pieData.isHeadsVisibleToUser = true;
+        pieData.isTopRimVisibleToUser = true;
       }
+
       if (pieData.isTailsVisibleToUser) {
-        pieData.someEllipseMethodArgs
-          .isCounterClockwiseOnVisibleFace = false;
+        pieData.ellipseMethodArgs.isCounterClockwiseOnVisibleFace = false;
       }
     }
   }
@@ -266,15 +275,17 @@ export function prepareData(arg: AddComponentPie3dArgument): PieData {
         pointHeads: [0, 0, 0,],
         pointTails: [0, 0, 0,],
         sliceIndex: -1,
+        angleCounterClockwise: 0,
       },
       edgeRight: {
         pointHeads: [0, 0, 0,],
         pointTails: [0, 0, 0,],
         sliceIndex: -1,
+        angleCounterClockwise: 0,
       },
       centerHeads: [0, 0, 0,],
       centerTails: [0, 0, 0,],
-      someEllipseMethodArgs: {
+      ellipseMethodArgs: {
         radiusX: 0,
         radiusY: 0,
         axesRotationCounterClockwise: 0,
@@ -282,7 +293,8 @@ export function prepareData(arg: AddComponentPie3dArgument): PieData {
       },
       isHeadsVisibleToUser: false,
       isTailsVisibleToUser: false,
-      isRimVisibleToUser: true,
+      isTopRimVisibleToUser: false,
+      isBottomRimVisibleToUser: false,
     };
   }
 
@@ -297,8 +309,12 @@ export function prepareData(arg: AddComponentPie3dArgument): PieData {
         startPointTails: prevEndTails,
         endPointHeads: [0, 0, 0,],
         endPointTails: [0, 0, 0,],
-        startAngleOnEllipseClockwise: 0,
-        endAngleOnEllipseClockwise: 0,
+        startAngleCounterClockwise: 0,
+        endAngleCounterClockwise: 0,
+        faceEllipseMethodArguments: {
+          startAngle: 0,
+          endAngle: 0,
+        },
         value: d.value,
         color: d.meta.color,
       };

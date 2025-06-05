@@ -50,8 +50,12 @@ tp.test((t) => {
           352.6486321878351,
           48.30634285542375,
         ],
-        "startAngleOnEllipseClockwise": 5.934119456780721,
-        "endAngleOnEllipseClockwise": 3.420845333908886,
+        "startAngleCounterClockwise": 0.3490658503988659,
+        "endAngleCounterClockwise": 2.8623399732707004,
+        "faceEllipseMethodArguments": {
+          "startAngle": 18.500490071139893,
+          "endAngle": 15.987215948268059,
+        },
         "value": 40,
         "color": "#ff0000",
       },
@@ -76,8 +80,12 @@ tp.test((t) => {
           345.52366718633925,
           -112.3715572551245,
         ],
-        "startAngleOnEllipseClockwise": 3.420845333908886,
-        "endAngleOnEllipseClockwise": 1.85004900711399,
+        "startAngleCounterClockwise": 2.8623399732707004,
+        "endAngleCounterClockwise": 4.433136300065597,
+        "faceEllipseMethodArguments": {
+          "startAngle": 15.987215948268059,
+          "endAngle": 14.416419621473162,
+        },
         "value": 25,
         "color": "#37ff00",
       },
@@ -102,8 +110,12 @@ tp.test((t) => {
           147.50150003549552,
           56.92971990890358,
         ],
-        "startAngleOnEllipseClockwise": 1.85004900711399,
-        "endAngleOnEllipseClockwise": 5.934119456780721,
+        "startAngleCounterClockwise": 4.433136300065597,
+        "endAngleCounterClockwise": 6.632251157578452,
+        "faceEllipseMethodArguments": {
+          "startAngle": 14.416419621473162,
+          "endAngle": 12.217304763960307,
+        },
         "value": 35,
         "color": "#000aff",
       },
@@ -125,6 +137,7 @@ tp.test((t) => {
         12.500000000000004,
       ],
       "sliceIndex": 1,
+      "angleCounterClockwise": 3.141592653589793,
     },
     "edgeRight": {
       "pointHeads": [
@@ -138,6 +151,7 @@ tp.test((t) => {
         12.500000000000004,
       ],
       "sliceIndex": 2,
+      "angleCounterClockwise": 6.283185307179586,
     },
     "centerHeads": [
       284.6906891076051,
@@ -149,7 +163,7 @@ tp.test((t) => {
       265.3093108923949,
       12.500000000000004,
     ],
-    "someEllipseMethodArgs": {
+    "ellipseMethodArgs": {
       "radiusX": 149.99999999999997,
       "radiusY": 74.99999999999999,
       "axesRotationCounterClockwise": -0.7853981633974483,
@@ -157,7 +171,8 @@ tp.test((t) => {
     },
     "isHeadsVisibleToUser": true,
     "isTailsVisibleToUser": false,
-    "isRimVisibleToUser": true,
+    "isTopRimVisibleToUser": false,
+    "isBottomRimVisibleToUser": true,
   };
 
   const actual = prepareData(addComponentArg);
@@ -168,6 +183,196 @@ tp.test((t) => {
   //  expected: expected,
   //  canvasWidthPx: 600,
   //  canvasHeightPx: 500,
+  //  drawHeads: true,
+  //  drawTails: true,
+  //  drawDotsHeads: true,
+  //  drawDotsTails: true,
+  //  drawLineToRightEdgeHeads: true,
+  //  drawLineToRightEdgeTails: true,
+  //  angleStartSliceIndex: 0,
+  //  angleEndSliceIndex: 1,
+  //});
+  t.deepEqual(actual, expected);
+  t.end();
+});
+
+tp.test('0001-most-common-case', (t) => {
+  const addComponentArg = {
+    type: 'pie-3d',
+    zIndex: '1',
+    options: {
+      thicknessPx: 50,
+      radiusPx: 200,
+      centerXPx: 235,
+      centerYPx: 110,
+      startAtDeg: 130,
+      rotationAroundCenterXAxisDeg: 70,
+      rotationAroundCenterZAxisDeg: 0,
+    },
+    data: [
+      { value: 25, meta: { color: '#37ff00' /* green */, }, },
+      { value: 25, meta: { color: '#ff0000' /* red */, }, },
+      { value: 50, meta: { color: '#f2b5f6' /* pinkish */, }, },
+    ],
+  };
+
+  const expected = {
+    "totalValue": 100,
+    "slices": [
+      {
+        "startPointHeads": [
+          106.44247806269212,
+          34.10715843447528,
+          135.4187584954491,
+        ],
+        "startPointTails": [
+          106.44247806269212,
+          81.0917894737707,
+          152.51976566173258,
+        ],
+        "endPointHeads": [
+          81.79111137620438,
+          130.47694655894313,
+          -129.35505829415246,
+        ],
+        "endPointTails": [
+          81.79111137620438,
+          177.46157759823853,
+          -112.254051127869,
+        ],
+        "startAngleCounterClockwise": 2.2689280275926285,
+        "endAngleCounterClockwise": 3.839724354387525,
+        "faceEllipseMethodArguments": {
+          "startAngle": 16.58062789394613,
+          "endAngle": 15.009831567151235,
+        },
+        "value": 25,
+        "color": "#37ff00",
+      },
+      {
+        "startPointHeads": [
+          81.79111137620438,
+          130.47694655894313,
+          -129.35505829415246,
+        ],
+        "startPointTails": [
+          81.79111137620438,
+          177.46157759823853,
+          -112.254051127869,
+        ],
+        "endPointHeads": [
+          363.55752193730785,
+          138.90821052622928,
+          -152.51976566173255,
+        ],
+        "endPointTails": [
+          363.55752193730785,
+          185.8928415655247,
+          -135.41875849544908,
+        ],
+        "startAngleCounterClockwise": 3.839724354387525,
+        "endAngleCounterClockwise": 5.410520681182422,
+        "faceEllipseMethodArguments": {
+          "startAngle": 15.009831567151235,
+          "endAngle": 13.439035240356336,
+        },
+        "value": 25,
+        "color": "#ff0000",
+      },
+      {
+        "startPointHeads": [
+          363.55752193730785,
+          138.90821052622928,
+          -152.51976566173255,
+        ],
+        "startPointTails": [
+          363.55752193730785,
+          185.8928415655247,
+          -135.41875849544908,
+        ],
+        "endPointHeads": [
+          106.44247806269212,
+          34.10715843447528,
+          135.4187584954491,
+        ],
+        "endPointTails": [
+          106.44247806269212,
+          81.0917894737707,
+          152.51976566173258,
+        ],
+        "startAngleCounterClockwise": 5.410520681182422,
+        "endAngleCounterClockwise": 8.552113334772216,
+        "faceEllipseMethodArguments": {
+          "startAngle": 13.439035240356336,
+          "endAngle": 10.297442586766543,
+        },
+        "value": 50,
+        "color": "#f2b5f6",
+      },
+    ],
+    "pointTopHeads": [
+      235,
+      18.10365581521853,
+      179.38802057403993,
+    ],
+    "edgeLeft": {
+      "pointHeads": [
+        35,
+        86.5076844803523,
+        -8.55050358314172,
+      ],
+      "pointTails": [
+        35,
+        133.49231551964772,
+        8.55050358314172,
+      ],
+      "sliceIndex": 0,
+      "angleCounterClockwise": 3.141592653589793,
+    },
+    "edgeRight": {
+      "pointHeads": [
+        435,
+        86.5076844803523,
+        -8.55050358314172,
+      ],
+      "pointTails": [
+        435,
+        133.49231551964772,
+        8.55050358314172,
+      ],
+      "sliceIndex": 2,
+      "angleCounterClockwise": 6.283185307179586,
+    },
+    "centerHeads": [
+      235,
+      86.5076844803523,
+      -8.55050358314172,
+    ],
+    "centerTails": [
+      235,
+      133.49231551964772,
+      8.55050358314172,
+    ],
+    "ellipseMethodArgs": {
+      "radiusX": 200,
+      "radiusY": 68.40402866513377,
+      "axesRotationCounterClockwise": -0,
+      "isCounterClockwiseOnVisibleFace": true,
+    },
+    "isHeadsVisibleToUser": true,
+    "isTailsVisibleToUser": false,
+    "isTopRimVisibleToUser": false,
+    "isBottomRimVisibleToUser": true,
+  };
+
+  const actual = prepareData(addComponentArg);
+  //writeToTestDiffDir({ actual, expected, });
+  //drawDataOnCanvas({
+  //  serverAbsFilePath: '/test/served-tmp/prepare-data-test.html',
+  //  actual: actual,
+  //  expected: expected,
+  //  canvasWidthPx: 470,
+  //  canvasHeightPx: 220,
   //  drawHeads: true,
   //  drawTails: true,
   //  drawDotsHeads: true,
@@ -225,8 +430,12 @@ tp.test((t) => {
           200.93995697595625,
           -134.97448713915892,
         ],
-        "startAngleOnEllipseClockwise": -3.9269908169872414,
-        "endAngleOnEllipseClockwise": -2.356194490192345,
+        "startAngleCounterClockwise": 2.356194490192345,
+        "endAngleCounterClockwise": 3.9269908169872414,
+        "faceEllipseMethodArguments": {
+          "startAngle": -16.493361431346415,
+          "endAngle": -14.922565104551516,
+        },
         "value": 25,
         "color": "#ff0000",
       },
@@ -251,8 +460,12 @@ tp.test((t) => {
           200.93995697595625,
           -134.97448713915892,
         ],
-        "startAngleOnEllipseClockwise": -2.356194490192345,
-        "endAngleOnEllipseClockwise": -0.7853981633974483,
+        "startAngleCounterClockwise": 3.9269908169872414,
+        "endAngleCounterClockwise": 5.497787143782138,
+        "faceEllipseMethodArguments": {
+          "startAngle": -14.922565104551516,
+          "endAngle": -13.351768777756622,
+        },
         "value": 25,
         "color": "#37ff00",
       },
@@ -277,8 +490,12 @@ tp.test((t) => {
           342.3613132132657,
           109.97448713915892,
         ],
-        "startAngleOnEllipseClockwise": -0.7853981633974483,
-        "endAngleOnEllipseClockwise": -3.9269908169872414,
+        "startAngleCounterClockwise": 5.497787143782138,
+        "endAngleCounterClockwise": 8.63937979737193,
+        "faceEllipseMethodArguments": {
+          "startAngle": -13.351768777756622,
+          "endAngle": -10.210176124166829,
+        },
         "value": 50,
         "color": "#f2b5f6",
       },
@@ -300,6 +517,7 @@ tp.test((t) => {
         -12.499999999999995,
       ],
       "sliceIndex": 0,
+      "angleCounterClockwise": 3.141592653589793,
     },
     "edgeRight": {
       "pointHeads": [
@@ -313,6 +531,7 @@ tp.test((t) => {
         -12.499999999999995,
       ],
       "sliceIndex": 2,
+      "angleCounterClockwise": 6.283185307179586,
     },
     "centerHeads": [
       400,
@@ -324,7 +543,7 @@ tp.test((t) => {
       271.65063509461095,
       -12.499999999999995,
     ],
-    "someEllipseMethodArgs": {
+    "ellipseMethodArgs": {
       "radiusX": 200,
       "radiusY": 99.99999999999997,
       "axesRotationCounterClockwise": -0,
@@ -332,7 +551,8 @@ tp.test((t) => {
     },
     "isHeadsVisibleToUser": false,
     "isTailsVisibleToUser": true,
-    "isRimVisibleToUser": true,
+    "isTopRimVisibleToUser": false,
+    "isBottomRimVisibleToUser": true,
   };
 
   const actual = prepareData(addComponentArg);
@@ -401,8 +621,12 @@ tp.test((t) => {
           133.4923155196477,
           8.550503583141747,
         ],
-        "startAngleOnEllipseClockwise": 4.71238898038469,
-        "endAngleOnEllipseClockwise": 3.141592653589793,
+        "startAngleCounterClockwise": 1.5707963267948966,
+        "endAngleCounterClockwise": 3.141592653589793,
+        "faceEllipseMethodArguments": {
+          "startAngle": 17.27875959474386,
+          "endAngle": 15.707963267948966,
+        },
         "value": 25,
         "color": "#f2b5f6",
       },
@@ -427,8 +651,12 @@ tp.test((t) => {
           201.89634418478147,
           -179.38802057403993,
         ],
-        "startAngleOnEllipseClockwise": 3.141592653589793,
-        "endAngleOnEllipseClockwise": 1.5707963267948968,
+        "startAngleCounterClockwise": 3.141592653589793,
+        "endAngleCounterClockwise": 4.71238898038469,
+        "faceEllipseMethodArguments": {
+          "startAngle": 15.707963267948966,
+          "endAngle": 14.137166941154069,
+        },
         "value": 25,
         "color": "#00fff5",
       },
@@ -453,8 +681,12 @@ tp.test((t) => {
           133.49231551964772,
           8.55050358314168,
         ],
-        "startAngleOnEllipseClockwise": 1.5707963267948968,
-        "endAngleOnEllipseClockwise": 2.1316282072803005e-16,
+        "startAngleCounterClockwise": 4.71238898038469,
+        "endAngleCounterClockwise": 6.283185307179586,
+        "faceEllipseMethodArguments": {
+          "startAngle": 14.137166941154069,
+          "endAngle": 12.566370614359172,
+        },
         "value": 25,
         "color": "#feed00",
       },
@@ -479,8 +711,12 @@ tp.test((t) => {
           65.08828685451394,
           196.4890277403234,
         ],
-        "startAngleOnEllipseClockwise": 2.1316282072803005e-16,
-        "endAngleOnEllipseClockwise": 4.71238898038469,
+        "startAngleCounterClockwise": 6.283185307179586,
+        "endAngleCounterClockwise": 7.853981633974483,
+        "faceEllipseMethodArguments": {
+          "startAngle": 12.566370614359172,
+          "endAngle": 10.995574287564276,
+        },
         "value": 25,
         "color": "#ff0010",
       },
@@ -502,6 +738,7 @@ tp.test((t) => {
         8.55050358314172,
       ],
       "sliceIndex": 1,
+      "angleCounterClockwise": 3.141592653589793,
     },
     "edgeRight": {
       "pointHeads": [
@@ -515,6 +752,7 @@ tp.test((t) => {
         8.55050358314172,
       ],
       "sliceIndex": 2,
+      "angleCounterClockwise": 6.283185307179586,
     },
     "centerHeads": [
       235,
@@ -526,7 +764,7 @@ tp.test((t) => {
       133.49231551964772,
       8.55050358314172,
     ],
-    "someEllipseMethodArgs": {
+    "ellipseMethodArgs": {
       "radiusX": 200,
       "radiusY": 68.40402866513377,
       "axesRotationCounterClockwise": -0,
@@ -534,7 +772,8 @@ tp.test((t) => {
     },
     "isHeadsVisibleToUser": true,
     "isTailsVisibleToUser": false,
-    "isRimVisibleToUser": true,
+    "isTopRimVisibleToUser": false,
+    "isBottomRimVisibleToUser": true,
   };
 
   const actual = prepareData(addComponentArg);
@@ -601,8 +840,12 @@ tp.test((t) => {
           110.0967598315455,
           72.82926455179567,
         ],
-        "startAngleOnEllipseClockwise": 5.585053606381854,
-        "endAngleOnEllipseClockwise": 3.490658503988659,
+        "startAngleCounterClockwise": 0.6981317007977318,
+        "endAngleCounterClockwise": 2.792526803190927,
+        "faceEllipseMethodArguments": {
+          "startAngle": 18.151424220741028,
+          "endAngle": 16.05702911834783,
+        },
         "value": 25,
         "color": "#37ff00",
       },
@@ -627,8 +870,12 @@ tp.test((t) => {
           89.52305344105686,
           129.35505829415246,
         ],
-        "startAngleOnEllipseClockwise": 3.490658503988659,
-        "endAngleOnEllipseClockwise": 5.585053606381854,
+        "startAngleCounterClockwise": 2.792526803190927,
+        "endAngleCounterClockwise": 6.981317007977317,
+        "faceEllipseMethodArguments": {
+          "startAngle": 16.05702911834783,
+          "endAngle": 11.868238913561441,
+        },
         "value": 50,
         "color": "#f2b5f6",
       },
@@ -650,6 +897,7 @@ tp.test((t) => {
         8.55050358314172,
       ],
       "sliceIndex": 1,
+      "angleCounterClockwise": 3.141592653589793,
     },
     "edgeRight": {
       "pointHeads": [
@@ -663,6 +911,7 @@ tp.test((t) => {
         8.55050358314172,
       ],
       "sliceIndex": 1,
+      "angleCounterClockwise": 6.283185307179586,
     },
     "centerHeads": [
       235,
@@ -674,7 +923,7 @@ tp.test((t) => {
       133.49231551964772,
       8.55050358314172,
     ],
-    "someEllipseMethodArgs": {
+    "ellipseMethodArgs": {
       "radiusX": 200,
       "radiusY": 68.40402866513377,
       "axesRotationCounterClockwise": -0,
@@ -682,7 +931,8 @@ tp.test((t) => {
     },
     "isHeadsVisibleToUser": true,
     "isTailsVisibleToUser": false,
-    "isRimVisibleToUser": true,
+    "isTopRimVisibleToUser": false,
+    "isBottomRimVisibleToUser": true,
   };
 
   const actual = prepareData(addComponentArg);
@@ -706,7 +956,7 @@ tp.test((t) => {
   t.end();
 });
 
-tp.test((t) => {
+tp.test('0004-left-edge-slice-index-bigger-right-one', (t) => {
   const addComponentArg = {
     type: 'pie-3d',
     zIndex: '1',
@@ -751,8 +1001,12 @@ tp.test((t) => {
           191.50222179854399,
           -150.83040402280471,
         ],
-        "startAngleOnEllipseClockwise": 2.2689280275926285,
-        "endAngleOnEllipseClockwise": 1.0122909661567114,
+        "startAngleCounterClockwise": 4.014257279586958,
+        "endAngleCounterClockwise": 5.270894341022875,
+        "faceEllipseMethodArguments": {
+          "startAngle": 14.835298641951802,
+          "endAngle": 13.578661580515885,
+        },
         "value": 25,
         "color": "#37ff00",
       },
@@ -777,8 +1031,12 @@ tp.test((t) => {
           116.94388323832456,
           54.01694760345098,
         ],
-        "startAngleOnEllipseClockwise": 1.0122909661567114,
-        "endAngleOnEllipseClockwise": 6.03883921190038,
+        "startAngleCounterClockwise": 5.270894341022875,
+        "endAngleCounterClockwise": 6.527531402458792,
+        "faceEllipseMethodArguments": {
+          "startAngle": 13.578661580515885,
+          "endAngle": 12.322024519079967,
+        },
         "value": 25,
         "color": "#ff0000",
       },
@@ -803,8 +1061,12 @@ tp.test((t) => {
           65.25491563036775,
           196.03121894123367,
         ],
-        "startAngleOnEllipseClockwise": 6.03883921190038,
-        "endAngleOnEllipseClockwise": 4.782202150464463,
+        "startAngleCounterClockwise": 6.527531402458792,
+        "endAngleCounterClockwise": 7.7841684638947095,
+        "faceEllipseMethodArguments": {
+          "startAngle": 12.322024519079967,
+          "endAngle": 11.06538745764405,
+        },
         "value": 25,
         "color": "#37ff00",
       },
@@ -829,8 +1091,12 @@ tp.test((t) => {
           185.8928415655247,
           -135.41875849544908,
         ],
-        "startAngleOnEllipseClockwise": 4.782202150464463,
-        "endAngleOnEllipseClockwise": 2.2689280275926285,
+        "startAngleCounterClockwise": 7.7841684638947095,
+        "endAngleCounterClockwise": 10.297442586766543,
+        "faceEllipseMethodArguments": {
+          "startAngle": 11.06538745764405,
+          "endAngle": 8.552113334772216,
+        },
         "value": 50,
         "color": "#f2b5f6",
       },
@@ -852,6 +1118,7 @@ tp.test((t) => {
         8.55050358314172,
       ],
       "sliceIndex": 3,
+      "angleCounterClockwise": 9.42477796076938,
     },
     "edgeRight": {
       "pointHeads": [
@@ -865,6 +1132,7 @@ tp.test((t) => {
         8.55050358314172,
       ],
       "sliceIndex": 1,
+      "angleCounterClockwise": 6.283185307179586,
     },
     "centerHeads": [
       235,
@@ -876,7 +1144,7 @@ tp.test((t) => {
       133.49231551964772,
       8.55050358314172,
     ],
-    "someEllipseMethodArgs": {
+    "ellipseMethodArgs": {
       "radiusX": 200,
       "radiusY": 68.40402866513377,
       "axesRotationCounterClockwise": -0,
@@ -884,7 +1152,8 @@ tp.test((t) => {
     },
     "isHeadsVisibleToUser": true,
     "isTailsVisibleToUser": false,
-    "isRimVisibleToUser": true,
+    "isTopRimVisibleToUser": false,
+    "isBottomRimVisibleToUser": true,
   };
 
   const actual = prepareData(addComponentArg);
@@ -951,8 +1220,12 @@ tp.test((t) => {
           133.49230358089252,
           8.550536384602022,
         ],
-        "startAngleOnEllipseClockwise": 4.712388805851764,
-        "endAngleOnEllipseClockwise": 6.283185132646661,
+        "startAngleCounterClockwise": 1.570796501327822,
+        "endAngleCounterClockwise": 6.283185481712511,
+        "faceEllipseMethodArguments": {
+          "startAngle": 17.278759420210935,
+          "endAngle": 12.566370439826247,
+        },
         "value": 75,
         "color": "#37ff00",
       },
@@ -977,8 +1250,12 @@ tp.test((t) => {
           65.08828685451498,
           196.48902774032055,
         ],
-        "startAngleOnEllipseClockwise": 6.283185132646661,
-        "endAngleOnEllipseClockwise": 4.712388805851764,
+        "startAngleCounterClockwise": 6.283185481712511,
+        "endAngleCounterClockwise": 7.853981808507408,
+        "faceEllipseMethodArguments": {
+          "startAngle": 12.566370439826247,
+          "endAngle": 10.995574113031351,
+        },
         "value": 25,
         "color": "#fffd00",
       },
@@ -1000,6 +1277,7 @@ tp.test((t) => {
         8.55050358314172,
       ],
       "sliceIndex": 0,
+      "angleCounterClockwise": 3.141592653589793,
     },
     "edgeRight": {
       "pointHeads": [
@@ -1013,6 +1291,7 @@ tp.test((t) => {
         8.55050358314172,
       ],
       "sliceIndex": 0,
+      "angleCounterClockwise": 6.283185307179586,
     },
     "centerHeads": [
       235,
@@ -1024,7 +1303,7 @@ tp.test((t) => {
       133.49231551964772,
       8.55050358314172,
     ],
-    "someEllipseMethodArgs": {
+    "ellipseMethodArgs": {
       "radiusX": 200,
       "radiusY": 68.40402866513377,
       "axesRotationCounterClockwise": -0,
@@ -1032,7 +1311,8 @@ tp.test((t) => {
     },
     "isHeadsVisibleToUser": true,
     "isTailsVisibleToUser": false,
-    "isRimVisibleToUser": true,
+    "isTopRimVisibleToUser": false,
+    "isBottomRimVisibleToUser": true,
   };
 
   const actual = prepareData(addComponentArg);
@@ -1099,8 +1379,12 @@ tp.test((t) => {
           181.8612680492428,
           -124.34210129459326,
         ],
-        "startAngleOnEllipseClockwise": 0.7853981633974484,
-        "endAngleOnEllipseClockwise": 2.3561944901923444,
+        "startAngleCounterClockwise": 5.497787143782138,
+        "endAngleCounterClockwise": 10.210176124166829,
+        "faceEllipseMethodArguments": {
+          "startAngle": 13.351768777756622,
+          "endAngle": 8.63937979737193,
+        },
         "value": 75,
         "color": "#37ff00",
       },
@@ -1125,8 +1409,12 @@ tp.test((t) => {
           181.86126804924277,
           -124.34210129459323,
         ],
-        "startAngleOnEllipseClockwise": 2.3561944901923444,
-        "endAngleOnEllipseClockwise": 0.7853981633974484,
+        "startAngleCounterClockwise": 10.210176124166829,
+        "endAngleCounterClockwise": 11.780972450961725,
+        "faceEllipseMethodArguments": {
+          "startAngle": 8.63937979737193,
+          "endAngle": 7.068583470577034,
+        },
         "value": 25,
         "color": "#fffd00",
       },
@@ -1148,6 +1436,7 @@ tp.test((t) => {
         8.55050358314172,
       ],
       "sliceIndex": 0,
+      "angleCounterClockwise": 9.42477796076938,
     },
     "edgeRight": {
       "pointHeads": [
@@ -1161,6 +1450,7 @@ tp.test((t) => {
         8.55050358314172,
       ],
       "sliceIndex": 0,
+      "angleCounterClockwise": 6.283185307179586,
     },
     "centerHeads": [
       235,
@@ -1172,7 +1462,7 @@ tp.test((t) => {
       133.49231551964772,
       8.55050358314172,
     ],
-    "someEllipseMethodArgs": {
+    "ellipseMethodArgs": {
       "radiusX": 200,
       "radiusY": 68.40402866513377,
       "axesRotationCounterClockwise": -0,
@@ -1180,7 +1470,8 @@ tp.test((t) => {
     },
     "isHeadsVisibleToUser": true,
     "isTailsVisibleToUser": false,
-    "isRimVisibleToUser": true,
+    "isTopRimVisibleToUser": false,
+    "isBottomRimVisibleToUser": true,
   };
 
   const actual = prepareData(addComponentArg);

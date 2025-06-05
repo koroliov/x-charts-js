@@ -173,25 +173,20 @@ export function drawDataOnCanvas(arg: Arg) {
           ctx.ellipse(
             pieData[isHeads ? 'centerHeads' : 'centerTails'][0],
             pieData[isHeads ? 'centerHeads' : 'centerTails'][1],
-            pieData.someEllipseMethodArgs.radiusX,
-            pieData.someEllipseMethodArgs.radiusY,
-            pieData.someEllipseMethodArgs.axesRotationCounterClockwise,
+            pieData.ellipseMethodArgs.radiusX,
+            pieData.ellipseMethodArgs.radiusY,
+            pieData.ellipseMethodArgs.axesRotationCounterClockwise,
             angleStart,
             angleEnd,
-            pieData.someEllipseMethodArgs.isCounterClockwiseOnVisibleFace,
+            pieData.ellipseMethodArgs.isCounterClockwiseOnVisibleFace,
           );
           ctx.stroke();
 
           function getAngleArguments() {
-            const angleStart =
-              pieData.slices[${ angleStartI }]?.startAngleOnEllipseClockwise ||
-                0;
-            const angleEnd =
-              pieData.slices[${ angleEndI }]?.endAngleOnEllipseClockwise ||
-                2 * Math.PI;
-            if (angleStart === angleEnd) {
-              return { angleStart: 0, angleEnd: 2 * Math.PI, };
-            }
+            const angleStart = pieData.slices[${ angleStartI
+              }].faceEllipseMethodArguments.startAngle;
+            const angleEnd = pieData.slices[${ angleEndI
+              }].faceEllipseMethodArguments.endAngle;
             return { angleStart, angleEnd, };
           }
         }

@@ -52,7 +52,7 @@ export function draw(arg
                                                            
                               
    ) {
-    if (!pieData.isRimVisibleToUser) {
+    if (!pieData.isTopRimVisibleToUser && !pieData.isBottomRimVisibleToUser) {
       return;
     }
     const isFill = arg.action === 'fill';
@@ -148,9 +148,9 @@ export function draw(arg
       ctx.ellipse(
         pieData[centerPointPropName][0],
         pieData[centerPointPropName][1],
-        pieData.someEllipseMethodArgs.radiusX,
-        pieData.someEllipseMethodArgs.radiusY,
-        pieData.someEllipseMethodArgs.axesRotationCounterClockwise,
+        pieData.ellipseMethodArgs.radiusX,
+        pieData.ellipseMethodArgs.radiusY,
+        pieData.ellipseMethodArgs.axesRotationCounterClockwise,
         0,
         Math.PI * 2,
         false,
@@ -172,12 +172,12 @@ export function draw(arg
       ctx.ellipse(
         pieData[centerPointPropName][0],
         pieData[centerPointPropName][1],
-        pieData.someEllipseMethodArgs.radiusX,
-        pieData.someEllipseMethodArgs.radiusY,
-        pieData.someEllipseMethodArgs.axesRotationCounterClockwise,
-        s.startAngleOnEllipseClockwise,
-        s.endAngleOnEllipseClockwise,
-        pieData.someEllipseMethodArgs.isCounterClockwiseOnVisibleFace,
+        pieData.ellipseMethodArgs.radiusX,
+        pieData.ellipseMethodArgs.radiusY,
+        pieData.ellipseMethodArgs.axesRotationCounterClockwise,
+        s.faceEllipseMethodArguments.startAngle,
+        s.faceEllipseMethodArguments.endAngle,
+        pieData.ellipseMethodArgs.isCounterClockwiseOnVisibleFace,
       );
       ctx.lineTo(pieData[centerPointPropName][0],
         pieData[centerPointPropName][1]);

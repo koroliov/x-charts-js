@@ -9,7 +9,7 @@ import type { Point, } from '../../types.js';
 
 export function prepareRimSlicesData(pieData: PieData): RimSlicesData {
   const rimSlicesData: RimSlicesData = [];
-  if (!pieData.isRimVisibleToUser) {
+  if (!pieData.isTopRimVisibleToUser && !pieData.isBottomRimVisibleToUser) {
     return rimSlicesData;
   }
   const startSliceIndex = pieData.edgeLeft.sliceIndex;
@@ -20,38 +20,41 @@ export function prepareRimSlicesData(pieData: PieData): RimSlicesData {
 
   function setRimSlicesData() {
     for (let j = 0; j <= indicesToPassThru.length - 1; j++) {
-      const i = indicesToPassThru[j];
+      const sliceIndex = indicesToPassThru[j];
+      const slice = pieData.slices[sliceIndex];
       const sd: RimSliceData = {
-        color: pieData.slices[i].color,
-        pointStartOnHeads: i === startSliceIndex ?
-          pieData.edgeLeft.pointHeads : pieData.slices[i].startPointHeads,
-        pointStartOnTails: i === startSliceIndex ?
-          pieData.edgeLeft.pointTails : pieData.slices[i].startPointTails,
-        pointEndOnTails: i === endSliceIndex ?
-          pieData.edgeRight.pointTails : pieData.slices[i].endPointTails,
-        pointEndOnHeads: i === endSliceIndex ?
-          pieData.edgeRight.pointHeads : pieData.slices[i].endPointHeads,
+        color: slice.color,
+        pointStartOnHeads: j === 0 ?
+          pieData.edgeLeft.pointHeads : slice.startPointHeads,
+        pointStartOnTails: j === 0 ?
+          pieData.edgeLeft.pointTails : slice.startPointTails,
+        pointEndOnTails: j === indicesToPassThru.length - 1 ?
+          pieData.edgeRight.pointTails : slice.endPointTails,
+        pointEndOnHeads: j === indicesToPassThru.length - 1 ?
+          pieData.edgeRight.pointHeads : slice.endPointHeads,
 
         ellipseArgumentsOnHeads: getEllipseMethodArg({ isHeadsEllipse: true,
-          i, }),
+          sliceIndex, loopIndex: j, }),
         ellipseArgumentsOnTails: getEllipseMethodArg({ isHeadsEllipse: false,
-          i, }),
+          sliceIndex, loopIndex: j, }),
       };
       rimSlicesData.push(sd);
     }
 
     function getEllipseMethodArg(
-      arg: { isHeadsEllipse: boolean, i: number, }
+      arg: { isHeadsEllipse: boolean, sliceIndex: number, loopIndex: number, }
     ): Context2dEllipseMethodArguments {
-      const i = arg.i;
+      const sliceIndex = arg.sliceIndex;
+      const slice = pieData.slices[sliceIndex];
+      const loopIndex = arg.loopIndex;
       const isHeadsEllipse = arg.isHeadsEllipse;
       const retVal: RimSlicesData[0]['ellipseArgumentsOnHeads'] = {
         centerX: pieData[isHeadsEllipse ? 'centerHeads' : 'centerTails'][0],
         centerY: pieData[isHeadsEllipse ? 'centerHeads' : 'centerTails'][1],
-        radiusX: pieData.someEllipseMethodArgs.radiusX,
-        radiusY: pieData.someEllipseMethodArgs.radiusY,
+        radiusX: pieData.ellipseMethodArgs.radiusX,
+        radiusY: pieData.ellipseMethodArgs.radiusY,
         axesRotationCounterClockwise:
-          pieData.someEllipseMethodArgs.axesRotationCounterClockwise,
+          pieData.ellipseMethodArgs.axesRotationCounterClockwise,
         angleStart: 0,
         angleEnd: 0,
         isCounterClockwise: !isHeadsEllipse,
@@ -65,50 +68,79 @@ export function prepareRimSlicesData(pieData: PieData): RimSlicesData {
 
       function processHeadsVisible() {
         if (isHeadsEllipse) {
-          retVal.angleStart = i === endSliceIndex ?
-            0 : pieData.slices[i].endAngleOnEllipseClockwise;
-          retVal.angleEnd = i === startSliceIndex ?
-            Math.PI : pieData.slices[i].startAngleOnEllipseClockwise;
+          retVal.angleStart = loopIndex === indicesToPassThru.length - 1 ?
+            -pieData.edgeRight.angleCounterClockwise :
+            -slice.endAngleCounterClockwise;
+          retVal.angleEnd = loopIndex === 0 ?
+            -pieData.edgeLeft.angleCounterClockwise :
+            -slice.startAngleCounterClockwise;
         } else {
-          retVal.angleStart = i === startSliceIndex ?
-            Math.PI : pieData.slices[i].startAngleOnEllipseClockwise;
-          retVal.angleEnd = i === endSliceIndex ?
-            Math.PI * 2 : pieData.slices[i].endAngleOnEllipseClockwise;
+          retVal.angleStart = loopIndex === 0 ?
+            -pieData.edgeLeft.angleCounterClockwise :
+            -slice.startAngleCounterClockwise;
+          retVal.angleEnd = loopIndex === indicesToPassThru.length - 1 ?
+            -pieData.edgeRight.angleCounterClockwise :
+            -slice.endAngleCounterClockwise;
         }
       }
 
       function processTailsVisible() {
         if (isHeadsEllipse) {
-          retVal.angleStart = i === startSliceIndex ?
-            Math.PI : pieData.slices[i].startAngleOnEllipseClockwise;
-          retVal.angleEnd = i === endSliceIndex ?
-            0 : pieData.slices[i].endAngleOnEllipseClockwise;
+          retVal.angleStart = sliceIndex === startSliceIndex ?
+            Math.PI : slice.startAngleCounterClockwise;
+          retVal.angleEnd = sliceIndex === endSliceIndex ?
+            0 : slice.endAngleCounterClockwise;
         } else {
-          retVal.angleStart = i === endSliceIndex ?
-            0 : pieData.slices[i].endAngleOnEllipseClockwise;
-          retVal.angleEnd = i === startSliceIndex ?
-            Math.PI : pieData.slices[i].startAngleOnEllipseClockwise;
+          retVal.angleStart = sliceIndex === endSliceIndex ?
+            0 : slice.endAngleCounterClockwise;
+          retVal.angleEnd = sliceIndex === startSliceIndex ?
+            Math.PI : slice.startAngleCounterClockwise;
         }
       }
     }
   }
 
   function getIndicesToPassThru() {
-    if (startSliceIndex === endSliceIndex) {
-      return [startSliceIndex];
+    const indices: number[] = [startSliceIndex];
+    const leftEdgeAngle = pieData.edgeLeft.angleCounterClockwise;
+    const rigthEdgeAngle = getRightEdgeAngle();
+
+    if (pieData.isBottomRimVisibleToUser) {
+      processBottomRimVisible();
+    } else {
+      //will cause bugs, amend as they are discovered
     }
-    let i = startSliceIndex;
-    const indices: number[] = [];
-    do {
-      indices.push(i);
-      if (++i > pieData.slices.length - 1) {
-        i = 0;
-      }
-      if (i === endSliceIndex) {
-        indices.push(i);
-        break;
-      }
-    } while (i !== endSliceIndex);
     return indices;
+
+    function processBottomRimVisible() {
+      let i = startSliceIndex;
+      do {
+        if (++i === pieData.slices.length) {
+          i = 0;
+        }
+        const nextSlice = pieData.slices[i];
+        if (isSliceOnVisibleRim(nextSlice)) {
+          indices.push(i);
+        }
+      } while (i !== endSliceIndex);
+    }
+
+    function isSliceOnVisibleRim(slice: typeof pieData.slices[0]): boolean {
+      if (slice.startAngleCounterClockwise < rigthEdgeAngle) {
+        if (leftEdgeAngle < Math.PI * 3 ) {
+          return slice.startAngleCounterClockwise > leftEdgeAngle;
+        }
+        return true;
+      }
+      return false;
+    }
+
+    function getRightEdgeAngle() {
+      let a = pieData.edgeRight.angleCounterClockwise;
+      if (leftEdgeAngle > pieData.edgeRight.angleCounterClockwise) {
+        a += Math.PI * 2;
+      }
+      return a;
+    }
   }
 }

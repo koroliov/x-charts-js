@@ -19,8 +19,12 @@ type SliceData = {
   +startPointTails: Point,
   +endPointHeads: Point,
   +endPointTails: Point,
-  +startAngleOnEllipseClockwise: number,
-  +endAngleOnEllipseClockwise: number,
+  +startAngleCounterClockwise: number,
+  +endAngleCounterClockwise: number,
+  +faceEllipseMethodArguments: {
+    +startAngle: number,
+    +endAngle: number,
+  },
   +value: number,
   +color: string,
 }
@@ -52,13 +56,7 @@ type EdgeData = {
   +pointHeads: Point,
   +pointTails: Point,
   +sliceIndex: number,
-}
-
-type SomeContext2dEllipseMethodArguments = {
-  +radiusX: number,
-  +radiusY: number,
-  +axesRotationCounterClockwise: number,
-  +isCounterClockwiseOnVisibleFace: boolean,
+  +angleCounterClockwise: number,
 }
 
 export type PieData = {
@@ -69,8 +67,14 @@ export type PieData = {
   +edgeRight: EdgeData,
   +centerHeads: Point,
   +centerTails: Point,
-  +someEllipseMethodArgs: SomeContext2dEllipseMethodArguments,
+  +ellipseMethodArgs: {
+    +radiusX: number,
+    +radiusY: number,
+    +axesRotationCounterClockwise: number,
+    +isCounterClockwiseOnVisibleFace: boolean,
+  },
   +isHeadsVisibleToUser: boolean,
   +isTailsVisibleToUser: boolean,
-  +isRimVisibleToUser: boolean,
+  +isTopRimVisibleToUser: boolean,
+  +isBottomRimVisibleToUser: boolean,
 }

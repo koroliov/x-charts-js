@@ -3,7 +3,6 @@ import type { Component, } from '../../types.js';
 import XCharts, { registerComponent, } from '../../main.js';
 import type { AddComponentPie3dArgument, } from './types.js';
 import { draw, } from './draw.js';
-import { getAngleClockwise, } from '../../utils/math.js';
 
 class Pie3d implements Component {
   static +_type = 'pie-3d'

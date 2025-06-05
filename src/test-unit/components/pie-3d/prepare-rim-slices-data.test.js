@@ -59,8 +59,8 @@ tp.test((t) => {
         "radiusX": 149.99999999999997,
         "radiusY": 74.99999999999999,
         "axesRotationCounterClockwise": -0.7853981633974483,
-        "angleStart": 1.85004900711399,
-        "angleEnd": 3.141592653589793,
+        "angleStart": -4.433136300065597,
+        "angleEnd": -3.141592653589793,
         "isCounterClockwise": false,
       },
       "ellipseArgumentsOnTails": {
@@ -69,8 +69,8 @@ tp.test((t) => {
         "radiusX": 149.99999999999997,
         "radiusY": 74.99999999999999,
         "axesRotationCounterClockwise": -0.7853981633974483,
-        "angleStart": 3.141592653589793,
-        "angleEnd": 1.85004900711399,
+        "angleStart": -3.141592653589793,
+        "angleEnd": -4.433136300065597,
         "isCounterClockwise": true,
       },
     },
@@ -102,8 +102,8 @@ tp.test((t) => {
         "radiusX": 149.99999999999997,
         "radiusY": 74.99999999999999,
         "axesRotationCounterClockwise": -0.7853981633974483,
-        "angleStart": 0,
-        "angleEnd": 1.85004900711399,
+        "angleStart": -6.283185307179586,
+        "angleEnd": -4.433136300065597,
         "isCounterClockwise": false,
       },
       "ellipseArgumentsOnTails": {
@@ -112,8 +112,8 @@ tp.test((t) => {
         "radiusX": 149.99999999999997,
         "radiusY": 74.99999999999999,
         "axesRotationCounterClockwise": -0.7853981633974483,
-        "angleStart": 1.85004900711399,
-        "angleEnd": 6.283185307179586,
+        "angleStart": -4.433136300065597,
+        "angleEnd": -6.283185307179586,
         "isCounterClockwise": true,
       },
     },
@@ -122,7 +122,7 @@ tp.test((t) => {
   const actual = prepareRimSlicesData(pieData);
   //writeToTestDiffDir({ actual, expected, });
   //drawDataOnCanvas({
-  //  serverAbsFilePath: '/test/served-tmp/pie-data.html',
+  //  serverAbsFilePath: '/test/served-tmp/rim-slices.html',
   //  actual: pieData,
   //  expected: pieData,
   //  canvasWidthPx: 800,
@@ -197,8 +197,8 @@ tp.test((t) => {
         "radiusX": 200,
         "radiusY": 68.40402866513377,
         "axesRotationCounterClockwise": -0,
-        "angleStart": 2.2689280275926285,
-        "angleEnd": 3.141592653589793,
+        "angleStart": -10.297442586766543,
+        "angleEnd": -9.42477796076938,
         "isCounterClockwise": false,
       },
       "ellipseArgumentsOnTails": {
@@ -207,8 +207,8 @@ tp.test((t) => {
         "radiusX": 200,
         "radiusY": 68.40402866513377,
         "axesRotationCounterClockwise": -0,
-        "angleStart": 3.141592653589793,
-        "angleEnd": 2.2689280275926285,
+        "angleStart": -9.42477796076938,
+        "angleEnd": -10.297442586766543,
         "isCounterClockwise": true,
       },
     },
@@ -240,8 +240,8 @@ tp.test((t) => {
         "radiusX": 200,
         "radiusY": 68.40402866513377,
         "axesRotationCounterClockwise": -0,
-        "angleStart": 1.0122909661567114,
-        "angleEnd": 2.2689280275926285,
+        "angleStart": -5.270894341022875,
+        "angleEnd": -4.014257279586958,
         "isCounterClockwise": false,
       },
       "ellipseArgumentsOnTails": {
@@ -250,8 +250,8 @@ tp.test((t) => {
         "radiusX": 200,
         "radiusY": 68.40402866513377,
         "axesRotationCounterClockwise": -0,
-        "angleStart": 2.2689280275926285,
-        "angleEnd": 1.0122909661567114,
+        "angleStart": -4.014257279586958,
+        "angleEnd": -5.270894341022875,
         "isCounterClockwise": true,
       },
     },
@@ -283,8 +283,8 @@ tp.test((t) => {
         "radiusX": 200,
         "radiusY": 68.40402866513377,
         "axesRotationCounterClockwise": -0,
-        "angleStart": 0,
-        "angleEnd": 1.0122909661567114,
+        "angleStart": -6.283185307179586,
+        "angleEnd": -5.270894341022875,
         "isCounterClockwise": false,
       },
       "ellipseArgumentsOnTails": {
@@ -293,8 +293,8 @@ tp.test((t) => {
         "radiusX": 200,
         "radiusY": 68.40402866513377,
         "axesRotationCounterClockwise": -0,
-        "angleStart": 1.0122909661567114,
-        "angleEnd": 6.283185307179586,
+        "angleStart": -5.270894341022875,
+        "angleEnd": -6.283185307179586,
         "isCounterClockwise": true,
       },
     },
@@ -303,7 +303,7 @@ tp.test((t) => {
   const actual = prepareRimSlicesData(pieData);
   //writeToTestDiffDir({ actual, expected, });
   //drawDataOnCanvas({
-  //  serverAbsFilePath: '/test/served-tmp/pie-data.html',
+  //  serverAbsFilePath: '/test/served-tmp/rim-slices.html',
   //  actual: pieData,
   //  expected: pieData,
   //  canvasWidthPx: 800,
@@ -376,8 +376,8 @@ tp.test((t) => {
         "radiusX": 200,
         "radiusY": 68.40402866513377,
         "axesRotationCounterClockwise": -0,
-        "angleStart": 0,
-        "angleEnd": 3.141592653589793,
+        "angleStart": -6.283185307179586,
+        "angleEnd": -3.141592653589793,
         "isCounterClockwise": false,
       },
       "ellipseArgumentsOnTails": {
@@ -386,8 +386,8 @@ tp.test((t) => {
         "radiusX": 200,
         "radiusY": 68.40402866513377,
         "axesRotationCounterClockwise": -0,
-        "angleStart": 3.141592653589793,
-        "angleEnd": 6.283185307179586,
+        "angleStart": -3.141592653589793,
+        "angleEnd": -6.283185307179586,
         "isCounterClockwise": true,
       },
     },
@@ -396,7 +396,7 @@ tp.test((t) => {
   const actual = prepareRimSlicesData(pieData);
   //writeToTestDiffDir({ actual, expected, });
   //drawDataOnCanvas({
-  //  serverAbsFilePath: '/test/served-tmp/pie-data.html',
+  //  serverAbsFilePath: '/test/served-tmp/rim-slices.html',
   //  actual: pieData,
   //  expected: pieData,
   //  canvasWidthPx: 800,
@@ -469,8 +469,8 @@ tp.test((t) => {
         "radiusX": 200,
         "radiusY": 68.40402866513377,
         "axesRotationCounterClockwise": -0,
-        "angleStart": 0,
-        "angleEnd": 3.141592653589793,
+        "angleStart": -6.283185307179586,
+        "angleEnd": -3.141592653589793,
         "isCounterClockwise": false,
       },
       "ellipseArgumentsOnTails": {
@@ -479,8 +479,8 @@ tp.test((t) => {
         "radiusX": 200,
         "radiusY": 68.40402866513377,
         "axesRotationCounterClockwise": -0,
-        "angleStart": 3.141592653589793,
-        "angleEnd": 6.283185307179586,
+        "angleStart": -3.141592653589793,
+        "angleEnd": -6.283185307179586,
         "isCounterClockwise": true,
       },
     },
@@ -489,7 +489,7 @@ tp.test((t) => {
   const actual = prepareRimSlicesData(pieData);
   //writeToTestDiffDir({ actual, expected, });
   //drawDataOnCanvas({
-  //  serverAbsFilePath: '/test/served-tmp/pie-data.html',
+  //  serverAbsFilePath: '/test/served-tmp/rim-slices.html',
   //  actual: pieData,
   //  expected: pieData,
   //  canvasWidthPx: 800,
@@ -514,7 +514,7 @@ tp.test((t) => {
   t.end();
 });
 
-tp.test.skip((t) => {
+tp.test((t) => {
   const addComponentArg = {
     type: 'pie-3d',
     zIndex: '1',
@@ -547,6 +547,92 @@ tp.test.skip((t) => {
         8.55050358314172,
       ],
       "pointEndOnTails": [
+        93.57864376269058,
+        181.8612680492428,
+        -124.34210129459326,
+      ],
+      "pointEndOnHeads": [
+        93.57864376269058,
+        134.8766370099474,
+        -141.44310846087672,
+      ],
+      "ellipseArgumentsOnHeads": {
+        "centerX": 235,
+        "centerY": 86.5076844803523,
+        "radiusX": 200,
+        "radiusY": 68.40402866513377,
+        "axesRotationCounterClockwise": -0,
+        "angleStart": -10.210176124166829,
+        "angleEnd": -9.42477796076938,
+        "isCounterClockwise": false,
+      },
+      "ellipseArgumentsOnTails": {
+        "centerX": 235,
+        "centerY": 133.49231551964772,
+        "radiusX": 200,
+        "radiusY": 68.40402866513377,
+        "axesRotationCounterClockwise": -0,
+        "angleStart": -9.42477796076938,
+        "angleEnd": -10.210176124166829,
+        "isCounterClockwise": true,
+      },
+    },
+    {
+      "color": "#fffd00",
+      "pointStartOnHeads": [
+        93.57864376269058,
+        134.8766370099474,
+        -141.44310846087672,
+      ],
+      "pointStartOnTails": [
+        93.57864376269058,
+        181.8612680492428,
+        -124.34210129459326,
+      ],
+      "pointEndOnTails": [
+        376.4213562373095,
+        181.86126804924277,
+        -124.34210129459323,
+      ],
+      "pointEndOnHeads": [
+        376.4213562373095,
+        134.87663700994736,
+        -141.4431084608767,
+      ],
+      "ellipseArgumentsOnHeads": {
+        "centerX": 235,
+        "centerY": 86.5076844803523,
+        "radiusX": 200,
+        "radiusY": 68.40402866513377,
+        "axesRotationCounterClockwise": -0,
+        "angleStart": -11.780972450961725,
+        "angleEnd": -10.210176124166829,
+        "isCounterClockwise": false,
+      },
+      "ellipseArgumentsOnTails": {
+        "centerX": 235,
+        "centerY": 133.49231551964772,
+        "radiusX": 200,
+        "radiusY": 68.40402866513377,
+        "axesRotationCounterClockwise": -0,
+        "angleStart": -10.210176124166829,
+        "angleEnd": -11.780972450961725,
+        "isCounterClockwise": true,
+      },
+    },
+    {
+      "color": "#37ff00",
+      "pointStartOnHeads": [
+        376.4213562373095,
+        134.87663700994736,
+        -141.4431084608767,
+      ],
+      "pointStartOnTails": [
+        376.4213562373095,
+        181.86126804924277,
+        -124.34210129459323,
+      ],
+      "pointEndOnTails": [
         435,
         133.49231551964772,
         8.55050358314172,
@@ -562,8 +648,8 @@ tp.test.skip((t) => {
         "radiusX": 200,
         "radiusY": 68.40402866513377,
         "axesRotationCounterClockwise": -0,
-        "angleStart": 0,
-        "angleEnd": 3.141592653589793,
+        "angleStart": -6.283185307179586,
+        "angleEnd": -5.497787143782138,
         "isCounterClockwise": false,
       },
       "ellipseArgumentsOnTails": {
@@ -572,8 +658,8 @@ tp.test.skip((t) => {
         "radiusX": 200,
         "radiusY": 68.40402866513377,
         "axesRotationCounterClockwise": -0,
-        "angleStart": 3.141592653589793,
-        "angleEnd": 6.283185307179586,
+        "angleStart": -5.497787143782138,
+        "angleEnd": -6.283185307179586,
         "isCounterClockwise": true,
       },
     },
