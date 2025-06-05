@@ -342,8 +342,8 @@ tp.test((t) => {
   });
 });
 
-tp.test.skip((t) => {
-  const testName = '0009-';
+tp.test((t) => {
+  const testName = '0009-1-big-slice-on-invisible-rim';
   const arg = {
     type: 'pie-3d',
     zIndex: '1',

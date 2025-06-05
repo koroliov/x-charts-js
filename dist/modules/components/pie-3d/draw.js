@@ -52,7 +52,7 @@ export function draw(arg
                                                            
                               
    ) {
-    if (!pieData.isRimVisibleToUser) {
+    if (!pieData.isTopRimVisibleToUser && !pieData.isBottomRimVisibleToUser) {
       return;
     }
     const isFill = arg.action === 'fill';

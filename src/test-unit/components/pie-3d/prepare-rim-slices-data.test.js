@@ -514,7 +514,7 @@ tp.test((t) => {
   t.end();
 });
 
-tp.test.skip((t) => {
+tp.test((t) => {
   const addComponentArg = {
     type: 'pie-3d',
     zIndex: '1',
@@ -547,6 +547,92 @@ tp.test.skip((t) => {
         8.55050358314172,
       ],
       "pointEndOnTails": [
+        93.57864376269058,
+        181.8612680492428,
+        -124.34210129459326,
+      ],
+      "pointEndOnHeads": [
+        93.57864376269058,
+        134.8766370099474,
+        -141.44310846087672,
+      ],
+      "ellipseArgumentsOnHeads": {
+        "centerX": 235,
+        "centerY": 86.5076844803523,
+        "radiusX": 200,
+        "radiusY": 68.40402866513377,
+        "axesRotationCounterClockwise": -0,
+        "angleStart": -10.210176124166829,
+        "angleEnd": -9.42477796076938,
+        "isCounterClockwise": false,
+      },
+      "ellipseArgumentsOnTails": {
+        "centerX": 235,
+        "centerY": 133.49231551964772,
+        "radiusX": 200,
+        "radiusY": 68.40402866513377,
+        "axesRotationCounterClockwise": -0,
+        "angleStart": -9.42477796076938,
+        "angleEnd": -10.210176124166829,
+        "isCounterClockwise": true,
+      },
+    },
+    {
+      "color": "#fffd00",
+      "pointStartOnHeads": [
+        93.57864376269058,
+        134.8766370099474,
+        -141.44310846087672,
+      ],
+      "pointStartOnTails": [
+        93.57864376269058,
+        181.8612680492428,
+        -124.34210129459326,
+      ],
+      "pointEndOnTails": [
+        376.4213562373095,
+        181.86126804924277,
+        -124.34210129459323,
+      ],
+      "pointEndOnHeads": [
+        376.4213562373095,
+        134.87663700994736,
+        -141.4431084608767,
+      ],
+      "ellipseArgumentsOnHeads": {
+        "centerX": 235,
+        "centerY": 86.5076844803523,
+        "radiusX": 200,
+        "radiusY": 68.40402866513377,
+        "axesRotationCounterClockwise": -0,
+        "angleStart": -11.780972450961725,
+        "angleEnd": -10.210176124166829,
+        "isCounterClockwise": false,
+      },
+      "ellipseArgumentsOnTails": {
+        "centerX": 235,
+        "centerY": 133.49231551964772,
+        "radiusX": 200,
+        "radiusY": 68.40402866513377,
+        "axesRotationCounterClockwise": -0,
+        "angleStart": -10.210176124166829,
+        "angleEnd": -11.780972450961725,
+        "isCounterClockwise": true,
+      },
+    },
+    {
+      "color": "#37ff00",
+      "pointStartOnHeads": [
+        376.4213562373095,
+        134.87663700994736,
+        -141.4431084608767,
+      ],
+      "pointStartOnTails": [
+        376.4213562373095,
+        181.86126804924277,
+        -124.34210129459323,
+      ],
+      "pointEndOnTails": [
         435,
         133.49231551964772,
         8.55050358314172,
@@ -562,8 +648,8 @@ tp.test.skip((t) => {
         "radiusX": 200,
         "radiusY": 68.40402866513377,
         "axesRotationCounterClockwise": -0,
-        "angleStart": 0,
-        "angleEnd": 3.141592653589793,
+        "angleStart": -6.283185307179586,
+        "angleEnd": -5.497787143782138,
         "isCounterClockwise": false,
       },
       "ellipseArgumentsOnTails": {
@@ -572,8 +658,8 @@ tp.test.skip((t) => {
         "radiusX": 200,
         "radiusY": 68.40402866513377,
         "axesRotationCounterClockwise": -0,
-        "angleStart": 3.141592653589793,
-        "angleEnd": 6.283185307179586,
+        "angleStart": -5.497787143782138,
+        "angleEnd": -6.283185307179586,
         "isCounterClockwise": true,
       },
     },
