@@ -5,7 +5,8 @@ import { calculateDistance, } from '../../utils/math.js';
 
 export function prepareData(arg                           )          {
   const ops = arg.options;
-  const { slices, totalValue, } = getTotalValueAndSlices();
+  const { slices, totalValue, startAtDegActual, isPieReversed,
+    rotationAroundCenterXAxisDegActual, } = getSomePreliminaryData();
   const pieData = getInitialPieData();
   performBeforeRotationsProcessing();
   handleRotations();
@@ -28,7 +29,7 @@ export function prepareData(arg                           )          {
   function handleRotations() {
     const centerX = ops.centerXPx;
     const centerY = ops.centerYPx;
-    const rotationCxRad = -ops.rotationAroundCenterXAxisDeg / 180 * Math.PI;
+    const rotationCxRad = -rotationAroundCenterXAxisDegActual / 180 * Math.PI;
     const rotationCzRad = -ops.rotationAroundCenterZAxisDeg / 180 * Math.PI;
 
     const sinRotationCx = Math.sin(rotationCxRad);
@@ -94,7 +95,7 @@ export function prepareData(arg                           )          {
     handleSlices();
 
     function handleSlices() {
-      let startAngle = ops.startAtDeg / 180 * Math.PI;
+      let startAngle = startAtDegActual / 180 * Math.PI;
       let previousStartAngle = startAngle;
       let endAngle = 0;
       handleEdgeAngles();
@@ -178,10 +179,10 @@ export function prepareData(arg                           )          {
           }
           if (startAngleOfSlice === leftEdgeAngle) {
             pieData.edgeLeft.sliceIndex = sliceIndex -
-              (ops.rotationAroundCenterXAxisDeg > 90 ? 1 : 0);
+              (rotationAroundCenterXAxisDegActual > 90 ? 1 : 0);
           } else if (leftEdgeAngle === endAngleOfSlice) {
             pieData.edgeLeft.sliceIndex = sliceIndex -
-              (ops.rotationAroundCenterXAxisDeg > 90 ? 0 : 1);
+              (rotationAroundCenterXAxisDegActual > 90 ? 0 : 1);
           } else {
             pieData.edgeLeft.sliceIndex = sliceIndex;
           }
@@ -237,7 +238,7 @@ export function prepareData(arg                           )          {
     }
 
     function handleFaceAndRimVisibility() {
-      const angle = ops.rotationAroundCenterXAxisDeg;
+      const angle = rotationAroundCenterXAxisDegActual;
       if (angle <= 90) {
         if (angle > 0) {
           pieData.isBottomRimVisibleToUser = true;
@@ -270,6 +271,7 @@ export function prepareData(arg                           )          {
     return {
       totalValue,
       slices,
+      isPieReversed,
       pointTopHeads: [0, 0, 0,],
       edgeLeft: {
         pointHeads: [0, 0, 0,],
@@ -298,11 +300,17 @@ export function prepareData(arg                           )          {
     };
   }
 
-  function getTotalValueAndSlices() {
+  function getSomePreliminaryData() {
+    const isPieReversed =
+      ops.rotationAroundCenterXAxisDeg >= 180 ? true : false;
     let totalValue = 0;
     let prevEndHeads = [0, 0, 0,];
     let prevEndTails = [0, 0, 0,];
-    const slices = arg.data.map((d) => {
+    const slices                    = [];
+    const ll = getLoopLogic(isPieReversed, arg.data.length);
+
+    for (; ll.shouldContinue;) {
+      const d = arg.data[ll.i];
       totalValue += d.value;
       const rv = {
         startPointHeads: prevEndHeads,
@@ -315,16 +323,57 @@ export function prepareData(arg                           )          {
           startAngle: 0,
           endAngle: 0,
         },
+        indexInUserProvidedArray: ll.i,
         value: d.value,
         color: d.meta.color,
       };
       prevEndHeads = rv.endPointHeads;
       prevEndTails = rv.endPointTails;
-      return rv;
-    });
+      slices.push(rv);
+      ll.onLoopEnd();
+    }
+
     slices[0].startPointHeads = slices[slices.length - 1].endPointHeads;
     slices[0].startPointTails = slices[slices.length - 1].endPointTails;
 
-    return { totalValue, slices, };
+    return {
+      isPieReversed,
+      totalValue,
+      slices,
+      rotationAroundCenterXAxisDegActual:
+        ops.rotationAroundCenterXAxisDeg - (isPieReversed ? 180 : 0),
+      startAtDegActual: getStartAtDEgActualValue(),
+    };
+
+    function getStartAtDEgActualValue() {
+      const v = Math.abs(ops.startAtDeg - (isPieReversed ? 360 : 0));
+      return v === 360 ? 0 : v;
+    }
+
+    function getLoopLogic(isPieReversed         , slicesLength        ) {
+      class LoopLogic {
+        i         = 0;
+        isPieReversed         ;
+        slicesLength         = 0;
+        shouldContinue          = true;
+
+        constructor(isPieReversed         , slicesLength        ) {
+          this.isPieReversed = isPieReversed;
+          this.i = isPieReversed ? slicesLength - 1 : 0;
+          this.slicesLength = slicesLength;
+        }
+
+        onLoopEnd() {
+          if (this.isPieReversed) {
+            this.i--;
+          } else {
+            this.i++;
+          }
+          this.shouldContinue = this.isPieReversed ?
+            this.i >= 0 : this.i < this.slicesLength
+        }
+      }
+      return new LoopLogic(isPieReversed, slicesLength);
+    }
   }
 }

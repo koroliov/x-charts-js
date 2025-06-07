@@ -383,7 +383,7 @@ tp.test((t) => {
   });
 });
 
-tp.test.skip((t) => {
+tp.test((t) => {
   const testName = '0010-rotation-over-center-x-axis-greater-180-deg';
   const arg = {
     type: 'pie-3d',
