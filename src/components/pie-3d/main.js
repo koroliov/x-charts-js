@@ -1,8 +1,8 @@
 //@flow strict
 import type { Component, } from '../../types.js';
 import XCharts, { registerComponent, } from '../../main.js';
-import type { AddComponentPie3dArgument, PieData, } from './types.js';
-import { prepareData } from './prepare-data.js';
+import type { AddComponentPie3dArgument, } from './types.js';
+import { draw, } from './draw.js';
 
 class Pie3d implements Component {
   static +_type = 'pie-3d'
@@ -15,8 +15,7 @@ class Pie3d implements Component {
     this._container = container;
     const that = this;
     createCanvas();
-    const pieData = prepareData(arg);
-    draw();
+    draw({ ctx: this._ctx, addComponentArg: arg, });
 
     function createCanvas() {
       const canvas = document.createElement('canvas');
@@ -24,6 +23,8 @@ class Pie3d implements Component {
       canvas.style.height = '100%';
       canvas.style.position = 'absolute';
       canvas.style.zIndex = '100';
+      canvas.width = that._container.offsetWidth;
+      canvas.height = that._container.offsetHeight;
       that._container.appendChild(canvas);
       that._ctx = canvas.getContext('2d');
     }
@@ -33,20 +34,6 @@ class Pie3d implements Component {
       Object.freeze(arg.options);
       Object.freeze(arg.data);
       arg.data.forEach((d) => Object.freeze(d.meta));
-    }
-
-    function draw() {
-      //determine heads or tails is to draw
-      //draw heads/tails
-        //from slice 0 for each slice
-        //draw, fill
-        //
-      //draw rim
-        //from left edge to right edge
-        //find slice index, color
-        //from edge to slice endpoint
-        //from start point to end point
-        //from start point to right edge
     }
 
     function validateAddComponentArgument() {

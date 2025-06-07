@@ -17,9 +17,45 @@
 #.SILENT: current-target-help
 #current-target-help:
 #	echo "watch-run 'make current-target' ./src"
+
+#.PHONY: current-prepare-data-test
+#current-prepare-data-test: BUILD_FILES="'./src/components/pie-3d/prepare-data.js \
+#  ./src/test-unit/components/pie-3d/draw-data-on-canvas.util.js \
+#  ./src/utils/math.js \
+#  ./src/test-unit/test-utils/write-to-test-diff-dir.util.js'"
+#current-prepare-data-test: TEST_FILES="./src/test-unit/components/pie-3d/prepare-data.test.js"
+#current-prepare-data-test: TEST_FILES_RUN = $(subst ./src/,./test/unit-tmp/src/,$(TEST_FILES))
+#current-prepare-data-test: test-unit
 #
-#.PHONY: current-target
-#current-target: BUILD_FILES="'./src/components/pie-3d/prepare-data.js ./src/test-unit/components/pie-3d/draw-data-on-canvas.util.js'"
-#current-target: TEST_FILES="./src/test-unit/components/pie-3d/prepare-data.test.js"
-#current-target: TEST_FILES_RUN = $(subst ./src/,./test/unit-tmp/src/,$(TEST_FILES))
-#current-target: test-unit
+#.PHONY: current-prepare-rim-slices-data-test
+#current-prepare-rim-slices-data-test: BUILD_FILES="'\
+#  ./src/components/pie-3d/prepare-rim-slices-data.js \
+#  ./src/components/pie-3d/prepare-data.js \
+#  ./src/utils/math.js \
+#  ./src/test-unit/components/pie-3d/draw-data-on-canvas.util.js \
+#  ./src/test-unit/components/pie-3d/draw-rim-slices-data-on-canvas.util.js \
+#  ./src/test-unit/test-utils/write-to-test-diff-dir.util.js'"
+#current-prepare-rim-slices-data-test: TEST_FILES="'\
+#  ./src/test-unit/components/pie-3d/prepare-rim-slices-data.test.js'"
+#current-prepare-rim-slices-data-test: TEST_FILES_RUN =
+#  $(subst ./src/,./test/unit-tmp/src/,$(TEST_FILES))
+#current-prepare-rim-slices-data-test: test-unit
+#
+#.PHONY: current-utils-math-test
+#current-utils-math-test: BUILD_FILES="'./src/utils/math.js'"
+#current-utils-math-test: TEST_FILES="./src/test-unit/utils/math.test.js"
+#current-utils-math-test: TEST_FILES_RUN = $(subst ./src/,./test/unit-tmp/src/,$(TEST_FILES))
+#current-utils-math-test: test-unit
+#
+#.PHONY: current-draw-test
+#current-draw-test: BUILD_FILES="'\
+#  ./src/test-unit/test-utils/compare-with-looks-same.util.js \
+#  ./src/test-unit/test-utils/write-canvas-to-test-diff-dir.util.js \
+#  ./src/components/pie-3d/draw.js \
+#  ./src/components/pie-3d/prepare-data.js \
+#  ./src/components/pie-3d/prepare-rim-slices-data.js \
+#  ./src/utils/math.js \
+#  ./src/test-unit/test-utils/create-node-canvas-context-2d.util.js'"
+#current-draw-test: TEST_FILES="./src/test-unit/components/pie-3d/draw.test.js"
+#current-draw-test: TEST_FILES_RUN = $(subst ./src/,./test/unit-tmp/src/,$(TEST_FILES))
+#current-draw-test: test-unit

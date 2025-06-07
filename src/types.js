@@ -22,3 +22,5 @@ export type AddComponentArgument = {
   +options: {},
   +data: $ReadOnlyArray<ComponentDatum>,
 }
+
+export type Point = [number, number, number,]

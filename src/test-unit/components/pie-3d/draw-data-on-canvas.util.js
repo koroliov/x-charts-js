@@ -14,6 +14,8 @@ type Arg = {
   +drawDotsTails: boolean,
   +drawLineToRightEdgeHeads: boolean,
   +drawLineToRightEdgeTails: boolean,
+  +angleStartSliceIndex: number,
+  +angleEndSliceIndex: number,
 }
 
 export function drawDataOnCanvas(arg: Arg) {
@@ -47,6 +49,10 @@ export function drawDataOnCanvas(arg: Arg) {
             background-color: white;
             margin-right: 20px;
           }
+          .notice {
+            font-size: 2em;
+            font-style: bold;
+          }
         </style>
       </head>
       <body>
@@ -56,12 +62,14 @@ export function drawDataOnCanvas(arg: Arg) {
         <span>the line is to the right edge</span>
         <div id="container">
           <div>
-            <span>Actual<span><br>
+            <span>Actual${ arg.actual.isPieReversed ?
+                ' <b class="notice">Reversed</b>' : '' }<span><br>
             <canvas id="actual" width="${ arg.canvasWidthPx }" height="${
               arg.canvasHeightPx }"></canvas>
           </div>
           <div>
-            <span>Expected<span><br>
+            <span>Expected${ arg.expected.isPieReversed ?
+                ' <b class="notice">Reversed</b>' : '' }<span><br>
             <canvas id="expected" width="${ arg.canvasWidthPx }" height="${
               arg.canvasHeightPx }"></canvas>
           </div>
@@ -76,14 +84,14 @@ export function drawDataOnCanvas(arg: Arg) {
     `;
 
     function generateJs() {
-      const drawHeads = String(Boolean(arg.drawHeads));
-      const drawTails = String(Boolean(arg.drawTails));
-      const drawDotsHeads = String(Boolean(arg.drawDotsHeads));
-      const drawDotsTails = String(Boolean(arg.drawDotsTails));
-      const drawLineToRightEdgeHeads =
-        String(Boolean(arg.drawLineToRightEdgeHeads));
-      const drawLineToRightEdgeTails =
-        String(Boolean(arg.drawLineToRightEdgeTails));
+      const drawHeads = String(arg.drawHeads);
+      const drawTails = String(arg.drawTails);
+      const drawDotsHeads = String(arg.drawDotsHeads);
+      const drawDotsTails = String(arg.drawDotsTails);
+      const drawLineToRightEdgeHeads = String(arg.drawLineToRightEdgeHeads);
+      const drawLineToRightEdgeTails = String(arg.drawLineToRightEdgeTails);
+      const angleStartI = arg.angleStartSliceIndex;
+      const angleEndI = arg.angleEndSliceIndex;
 
       return `
         'use strict';
@@ -166,17 +174,27 @@ export function drawDataOnCanvas(arg: Arg) {
 
         function drawEllipse(canvas, pieData, isHeads) {
           const ctx = canvas.getContext('2d');
+          const { angleStart, angleEnd, } = getAngleArguments();
           ctx.beginPath();
           ctx.ellipse(
             pieData[isHeads ? 'centerHeads' : 'centerTails'][0],
             pieData[isHeads ? 'centerHeads' : 'centerTails'][1],
-            pieData.someEllipseMethodArgs.radiusX,
-            pieData.someEllipseMethodArgs.radiusY,
-            pieData.someEllipseMethodArgs.rotationClockwise,
-            0,
-            Math.PI * 2,
+            pieData.ellipseMethodArgs.radiusX,
+            pieData.ellipseMethodArgs.radiusY,
+            pieData.ellipseMethodArgs.axesRotationCounterClockwise,
+            angleStart,
+            angleEnd,
+            pieData.ellipseMethodArgs.isCounterClockwiseOnVisibleFace,
           );
           ctx.stroke();
+
+          function getAngleArguments() {
+            const angleStart = pieData.slices[${ angleStartI
+              }].faceEllipseMethodArguments.startAngle;
+            const angleEnd = pieData.slices[${ angleEndI
+              }].faceEllipseMethodArguments.endAngle;
+            return { angleStart, angleEnd, };
+          }
         }
       `;
     }
