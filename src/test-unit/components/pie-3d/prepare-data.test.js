@@ -1526,7 +1526,7 @@ tp.test((t) => {
   t.end();
 });
 
-tp.test.skip('0010-rotation-over-center-x-axis-greater-180-deg', (t) => {
+tp.test('0010-rotation-over-center-x-axis-greater-180-deg', (t) => {
   const addComponentArg = {
     type: 'pie-3d',
     zIndex: '1',
@@ -1547,118 +1547,149 @@ tp.test.skip('0010-rotation-over-center-x-axis-greater-180-deg', (t) => {
   };
 
   const expected = {
-    "totalValue": 100,
+    "totalValue": 105,
     "slices": [
       {
         "startPointHeads": [
-          376.4213562373095,
-          134.87663700994736,
-          -141.4431084608767,
+          435,
+          183.9303097578365,
+          -19.151111077974452,
         ],
         "startPointTails": [
-          376.4213562373095,
-          181.86126804924277,
-          -124.34210129459323,
+          435,
+          216.0696902421635,
+          19.151111077974452,
         ],
         "endPointHeads": [
-          93.57864376269058,
-          134.8766370099474,
-          -141.44310846087672,
+          249.9460187172849,
+          31.14982426027902,
+          109.04693795411181,
         ],
         "endPointTails": [
-          93.57864376269058,
-          181.8612680492428,
-          -124.34210129459326,
+          249.9460187172849,
+          63.289204744605996,
+          147.34916011006072,
         ],
-        "startAngleCounterClockwise": 5.497787143782138,
-        "endAngleCounterClockwise": 10.210176124166829,
+        "startAngleCounterClockwise": 0,
+        "endAngleCounterClockwise": 1.4959965017094252,
         "faceEllipseMethodArguments": {
-          "startAngle": 13.351768777756622,
-          "endAngle": 8.63937979737193,
+          "startAngle": 18.84955592153876,
+          "endAngle": 17.353559419829335,
+        },
+        "indexInUserProvidedArray": 2,
+        "value": 25,
+        "color": "#fffd00",
+      },
+      {
+        "startPointHeads": [
+          249.9460187172849,
+          31.14982426027902,
+          109.04693795411181,
+        ],
+        "startPointTails": [
+          249.9460187172849,
+          63.289204744605996,
+          147.34916011006072,
+        ],
+        "endPointHeads": [
+          190.49581320873713,
+          34.56268784414192,
+          106.18320537963409,
+        ],
+        "endPointTails": [
+          190.49581320873713,
+          66.7020683284689,
+          144.485427535583,
+        ],
+        "startAngleCounterClockwise": 1.4959965017094252,
+        "endAngleCounterClockwise": 1.7951958020513104,
+        "faceEllipseMethodArguments": {
+          "startAngle": 17.353559419829335,
+          "endAngle": 17.05436011948745,
+        },
+        "indexInUserProvidedArray": 1,
+        "value": 5,
+        "color": "#21f0f5",
+      },
+      {
+        "startPointHeads": [
+          190.49581320873713,
+          34.56268784414192,
+          106.18320537963409,
+        ],
+        "startPointTails": [
+          190.49581320873713,
+          66.7020683284689,
+          144.485427535583,
+        ],
+        "endPointHeads": [
+          435,
+          183.9303097578365,
+          -19.151111077974452,
+        ],
+        "endPointTails": [
+          435,
+          216.0696902421635,
+          19.151111077974452,
+        ],
+        "startAngleCounterClockwise": 1.7951958020513104,
+        "endAngleCounterClockwise": 6.283185307179586,
+        "faceEllipseMethodArguments": {
+          "startAngle": 17.05436011948745,
+          "endAngle": 12.566370614359172,
         },
         "indexInUserProvidedArray": 0,
         "value": 75,
         "color": "#37ff00",
       },
-      {
-        "startPointHeads": [
-          93.57864376269058,
-          134.8766370099474,
-          -141.44310846087672,
-        ],
-        "startPointTails": [
-          93.57864376269058,
-          181.8612680492428,
-          -124.34210129459326,
-        ],
-        "endPointHeads": [
-          376.4213562373095,
-          134.87663700994736,
-          -141.4431084608767,
-        ],
-        "endPointTails": [
-          376.4213562373095,
-          181.86126804924277,
-          -124.34210129459323,
-        ],
-        "startAngleCounterClockwise": 10.210176124166829,
-        "endAngleCounterClockwise": 11.780972450961725,
-        "faceEllipseMethodArguments": {
-          "startAngle": 8.63937979737193,
-          "endAngle": 7.068583470577034,
-        },
-        "indexInUserProvidedArray": 1,
-        "value": 25,
-        "color": "#fffd00",
-      },
     ],
-    "isPieReversed": false,
+    "isPieReversed": true,
     "pointTopHeads": [
       235,
-      18.10365581521853,
-      179.38802057403993,
+      30.721421134040895,
+      109.4064108593334,
     ],
     "edgeLeft": {
       "pointHeads": [
         35,
-        86.5076844803523,
-        -8.55050358314172,
+        183.9303097578365,
+        -19.151111077974452,
       ],
       "pointTails": [
         35,
-        133.49231551964772,
-        8.55050358314172,
+        216.0696902421635,
+        19.151111077974452,
       ],
-      "sliceIndex": 0,
-      "angleCounterClockwise": 9.42477796076938,
+      "sliceIndex": 2,
+      "angleCounterClockwise": 3.141592653589793,
     },
     "edgeRight": {
       "pointHeads": [
         435,
-        86.5076844803523,
-        -8.55050358314172,
+        183.9303097578365,
+        -19.151111077974452,
       ],
       "pointTails": [
         435,
-        133.49231551964772,
-        8.55050358314172,
+        216.0696902421635,
+        19.151111077974452,
       ],
-      "sliceIndex": 0,
+      "sliceIndex": 2,
       "angleCounterClockwise": 6.283185307179586,
     },
     "centerHeads": [
       235,
-      86.5076844803523,
-      -8.55050358314172,
+      183.9303097578365,
+      -19.151111077974452,
     ],
     "centerTails": [
       235,
-      133.49231551964772,
-      8.55050358314172,
+      216.0696902421635,
+      19.151111077974452,
     ],
     "ellipseMethodArgs": {
       "radiusX": 200,
-      "radiusY": 68.40402866513377,
+      "radiusY": 153.20888862379562,
       "axesRotationCounterClockwise": -0,
       "isCounterClockwiseOnVisibleFace": true,
     },
