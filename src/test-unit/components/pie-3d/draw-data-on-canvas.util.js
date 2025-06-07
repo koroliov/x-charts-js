@@ -49,6 +49,10 @@ export function drawDataOnCanvas(arg: Arg) {
             background-color: white;
             margin-right: 20px;
           }
+          .notice {
+            font-size: 2em;
+            font-style: bold;
+          }
         </style>
       </head>
       <body>
@@ -58,12 +62,14 @@ export function drawDataOnCanvas(arg: Arg) {
         <span>the line is to the right edge</span>
         <div id="container">
           <div>
-            <span>Actual<span><br>
+            <span>Actual${ arg.actual.isPieReversed ?
+                ' <b class="notice">Reversed</b>' : '' }<span><br>
             <canvas id="actual" width="${ arg.canvasWidthPx }" height="${
               arg.canvasHeightPx }"></canvas>
           </div>
           <div>
-            <span>Expected<span><br>
+            <span>Expected${ arg.expected.isPieReversed ?
+                ' <b class="notice">Reversed</b>' : '' }<span><br>
             <canvas id="expected" width="${ arg.canvasWidthPx }" height="${
               arg.canvasHeightPx }"></canvas>
           </div>

@@ -15,16 +15,17 @@ export type AddComponentPie3dArgument = {
 }
 
 type SliceData = {
-  +startPointHeads: Point,
-  +startPointTails: Point,
+  startPointHeads: Point,
+  startPointTails: Point,
   +endPointHeads: Point,
   +endPointTails: Point,
-  +startAngleCounterClockwise: number,
-  +endAngleCounterClockwise: number,
+  startAngleCounterClockwise: number,
+  endAngleCounterClockwise: number,
   +faceEllipseMethodArguments: {
-    +startAngle: number,
-    +endAngle: number,
+    startAngle: number,
+    endAngle: number,
   },
+  +indexInUserProvidedArray: number,
   +value: number,
   +color: string,
 }
@@ -61,7 +62,8 @@ type EdgeData = {
 
 export type PieData = {
   +totalValue: number,
-  +slices: $ReadOnlyArray<SliceData>,
+  +slices: SliceData[],
+  +isPieReversed: boolean,
   +pointTopHeads: Point,
   +edgeLeft: EdgeData,
   +edgeRight: EdgeData,
