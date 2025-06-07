@@ -270,7 +270,7 @@ export function prepareData(arg: AddComponentPie3dArgument): PieData {
     return {
       totalValue,
       slices,
-      areSlicesReverted: false,
+      isPieReversed: false,
       pointTopHeads: [0, 0, 0,],
       edgeLeft: {
         pointHeads: [0, 0, 0,],

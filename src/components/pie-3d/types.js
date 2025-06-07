@@ -63,7 +63,7 @@ type EdgeData = {
 export type PieData = {
   +totalValue: number,
   +slices: $ReadOnlyArray<SliceData>,
-  +areSlicesReverted: boolean,
+  +isPieReversed: boolean,
   +pointTopHeads: Point,
   +edgeLeft: EdgeData,
   +edgeRight: EdgeData,

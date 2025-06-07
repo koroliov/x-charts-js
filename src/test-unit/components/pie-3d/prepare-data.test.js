@@ -123,7 +123,7 @@ tp.test((t) => {
         "color": "#000aff",
       },
     ],
-    "areSlicesReverted": false,
+    "isPieReversed": false,
     "pointTopHeads": [
       231.6576805186141,
       181.65768051861406,
@@ -317,7 +317,7 @@ tp.test('0001-most-common-case', (t) => {
         "color": "#f2b5f6",
       },
     ],
-    "areSlicesReverted": false,
+    "isPieReversed": false,
     "pointTopHeads": [
       235,
       18.10365581521853,
@@ -511,7 +511,7 @@ tp.test((t) => {
         "color": "#f2b5f6",
       },
     ],
-    "areSlicesReverted": false,
+    "isPieReversed": false,
     "pointTopHeads": [
       400,
       328.349364905389,
@@ -737,7 +737,7 @@ tp.test((t) => {
         "color": "#ff0010",
       },
     ],
-    "areSlicesReverted": false,
+    "isPieReversed": false,
     "pointTopHeads": [
       235,
       18.10365581521853,
@@ -899,7 +899,7 @@ tp.test((t) => {
         "color": "#f2b5f6",
       },
     ],
-    "areSlicesReverted": false,
+    "isPieReversed": false,
     "pointTopHeads": [
       235,
       18.10365581521853,
@@ -1125,7 +1125,7 @@ tp.test('0004-left-edge-slice-index-bigger-right-one', (t) => {
         "color": "#f2b5f6",
       },
     ],
-    "areSlicesReverted": false,
+    "isPieReversed": false,
     "pointTopHeads": [
       235,
       18.10365581521853,
@@ -1287,7 +1287,7 @@ tp.test((t) => {
         "color": "#fffd00",
       },
     ],
-    "areSlicesReverted": false,
+    "isPieReversed": false,
     "pointTopHeads": [
       235,
       18.10365581521853,
@@ -1449,7 +1449,7 @@ tp.test((t) => {
         "color": "#fffd00",
       },
     ],
-    "areSlicesReverted": false,
+    "isPieReversed": false,
     "pointTopHeads": [
       235,
       18.10365581521853,
@@ -1612,7 +1612,7 @@ tp.test.skip('0010-rotation-over-center-x-axis-greater-180-deg', (t) => {
         "color": "#fffd00",
       },
     ],
-    "areSlicesReverted": false,
+    "isPieReversed": false,
     "pointTopHeads": [
       235,
       18.10365581521853,

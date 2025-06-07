@@ -62,13 +62,13 @@ export function drawDataOnCanvas(arg: Arg) {
         <span>the line is to the right edge</span>
         <div id="container">
           <div>
-            <span>Actual${ arg.actual.areSlicesReverted ?
+            <span>Actual${ arg.actual.isPieReversed ?
                 ' <b class="notice">Reversed</b>' : '' }<span><br>
             <canvas id="actual" width="${ arg.canvasWidthPx }" height="${
               arg.canvasHeightPx }"></canvas>
           </div>
           <div>
-            <span>Expected${ arg.expected.areSlicesReverted ?
+            <span>Expected${ arg.expected.isPieReversed ?
                 ' <b class="notice">Reversed</b>' : '' }<span><br>
             <canvas id="expected" width="${ arg.canvasWidthPx }" height="${
               arg.canvasHeightPx }"></canvas>
