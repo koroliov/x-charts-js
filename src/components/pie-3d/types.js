@@ -25,6 +25,7 @@ type SliceData = {
     +startAngle: number,
     +endAngle: number,
   },
+  +indexInUserProvidedArray: number,
   +value: number,
   +color: string,
 }
@@ -62,6 +63,7 @@ type EdgeData = {
 export type PieData = {
   +totalValue: number,
   +slices: $ReadOnlyArray<SliceData>,
+  +areSlicesReverted: boolean,
   +pointTopHeads: Point,
   +edgeLeft: EdgeData,
   +edgeRight: EdgeData,

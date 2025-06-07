@@ -270,6 +270,7 @@ export function prepareData(arg: AddComponentPie3dArgument): PieData {
     return {
       totalValue,
       slices,
+      areSlicesReverted: false,
       pointTopHeads: [0, 0, 0,],
       edgeLeft: {
         pointHeads: [0, 0, 0,],
@@ -302,7 +303,7 @@ export function prepareData(arg: AddComponentPie3dArgument): PieData {
     let totalValue = 0;
     let prevEndHeads = [0, 0, 0,];
     let prevEndTails = [0, 0, 0,];
-    const slices = arg.data.map((d) => {
+    const slices = arg.data.map((d, i) => {
       totalValue += d.value;
       const rv = {
         startPointHeads: prevEndHeads,
@@ -315,6 +316,7 @@ export function prepareData(arg: AddComponentPie3dArgument): PieData {
           startAngle: 0,
           endAngle: 0,
         },
+        indexInUserProvidedArray: i,
         value: d.value,
         color: d.meta.color,
       };
