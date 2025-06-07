@@ -181,6 +181,9 @@ export function prepareData(arg: AddComponentPie3dArgument): PieData {
             pieData.edgeLeft.sliceIndex = sliceIndex -
               (rotationAroundCenterXAxisDegActual > 90 ? 1 : 0);
           } else if (leftEdgeAngle === endAngleOfSlice) {
+            if (pieData.isHeadsVisibleToUser) {
+              return;
+            }
             pieData.edgeLeft.sliceIndex = sliceIndex -
               (rotationAroundCenterXAxisDegActual > 90 ? 0 : 1);
           } else {

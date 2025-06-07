@@ -394,6 +394,232 @@ tp.test('0001-most-common-case', (t) => {
   t.end();
 });
 
+tp.test('0002-01-start-at-0-deg', (t) => {
+  const addComponentArg = {
+    type: 'pie-3d',
+    zIndex: '1',
+    options: {
+      thicknessPx: 50,
+      radiusPx: 200,
+      centerXPx: 235,
+      centerYPx: 110,
+      startAtDeg: 0,
+      rotationAroundCenterXAxisDeg: 70,
+      rotationAroundCenterZAxisDeg: 0,
+    },
+    data: [
+      { value: 25, meta: { color: '#37ff00' /* green */, }, },
+      { value: 25, meta: { color: '#0b08f7' /* blue */, }, },
+      { value: 25, meta: { color: '#ff0000' /* red */, }, },
+      { value: 25, meta: { color: '#f2b5f6' /* pinkish */, }, },
+    ],
+  };
+
+  const expected = {
+    "totalValue": 100,
+    "slices": [
+      {
+        "startPointHeads": [
+          435,
+          86.5076844803523,
+          -8.55050358314172,
+        ],
+        "startPointTails": [
+          435,
+          133.49231551964772,
+          8.55050358314172,
+        ],
+        "endPointHeads": [
+          235,
+          18.10365581521853,
+          179.38802057403993,
+        ],
+        "endPointTails": [
+          235,
+          65.08828685451394,
+          196.4890277403234,
+        ],
+        "startAngleCounterClockwise": 0,
+        "endAngleCounterClockwise": 1.5707963267948966,
+        "faceEllipseMethodArguments": {
+          "startAngle": 18.84955592153876,
+          "endAngle": 17.27875959474386,
+        },
+        "indexInUserProvidedArray": 0,
+        "value": 25,
+        "color": "#37ff00",
+      },
+      {
+        "startPointHeads": [
+          235,
+          18.10365581521853,
+          179.38802057403993,
+        ],
+        "startPointTails": [
+          235,
+          65.08828685451394,
+          196.4890277403234,
+        ],
+        "endPointHeads": [
+          35,
+          86.50768448035228,
+          -8.550503583141694,
+        ],
+        "endPointTails": [
+          35,
+          133.4923155196477,
+          8.550503583141747,
+        ],
+        "startAngleCounterClockwise": 1.5707963267948966,
+        "endAngleCounterClockwise": 3.141592653589793,
+        "faceEllipseMethodArguments": {
+          "startAngle": 17.27875959474386,
+          "endAngle": 15.707963267948966,
+        },
+        "indexInUserProvidedArray": 1,
+        "value": 25,
+        "color": "#0b08f7",
+      },
+      {
+        "startPointHeads": [
+          35,
+          86.50768448035228,
+          -8.550503583141694,
+        ],
+        "startPointTails": [
+          35,
+          133.4923155196477,
+          8.550503583141747,
+        ],
+        "endPointHeads": [
+          234.99999999999997,
+          154.91171314548606,
+          -196.4890277403234,
+        ],
+        "endPointTails": [
+          234.99999999999997,
+          201.89634418478147,
+          -179.38802057403993,
+        ],
+        "startAngleCounterClockwise": 3.141592653589793,
+        "endAngleCounterClockwise": 4.71238898038469,
+        "faceEllipseMethodArguments": {
+          "startAngle": 15.707963267948966,
+          "endAngle": 14.137166941154069,
+        },
+        "indexInUserProvidedArray": 2,
+        "value": 25,
+        "color": "#ff0000",
+      },
+      {
+        "startPointHeads": [
+          234.99999999999997,
+          154.91171314548606,
+          -196.4890277403234,
+        ],
+        "startPointTails": [
+          234.99999999999997,
+          201.89634418478147,
+          -179.38802057403993,
+        ],
+        "endPointHeads": [
+          435,
+          86.5076844803523,
+          -8.55050358314172,
+        ],
+        "endPointTails": [
+          435,
+          133.49231551964772,
+          8.55050358314172,
+        ],
+        "startAngleCounterClockwise": 4.71238898038469,
+        "endAngleCounterClockwise": 6.283185307179586,
+        "faceEllipseMethodArguments": {
+          "startAngle": 14.137166941154069,
+          "endAngle": 12.566370614359172,
+        },
+        "indexInUserProvidedArray": 3,
+        "value": 25,
+        "color": "#f2b5f6",
+      },
+    ],
+    "isPieReversed": false,
+    "pointTopHeads": [
+      235,
+      18.10365581521853,
+      179.38802057403993,
+    ],
+    "edgeLeft": {
+      "pointHeads": [
+        35,
+        86.5076844803523,
+        -8.55050358314172,
+      ],
+      "pointTails": [
+        35,
+        133.49231551964772,
+        8.55050358314172,
+      ],
+      "sliceIndex": 2,
+      "angleCounterClockwise": 3.141592653589793,
+    },
+    "edgeRight": {
+      "pointHeads": [
+        435,
+        86.5076844803523,
+        -8.55050358314172,
+      ],
+      "pointTails": [
+        435,
+        133.49231551964772,
+        8.55050358314172,
+      ],
+      "sliceIndex": 3,
+      "angleCounterClockwise": 6.283185307179586,
+    },
+    "centerHeads": [
+      235,
+      86.5076844803523,
+      -8.55050358314172,
+    ],
+    "centerTails": [
+      235,
+      133.49231551964772,
+      8.55050358314172,
+    ],
+    "ellipseMethodArgs": {
+      "radiusX": 200,
+      "radiusY": 68.40402866513377,
+      "axesRotationCounterClockwise": -0,
+      "isCounterClockwiseOnVisibleFace": true,
+    },
+    "isHeadsVisibleToUser": true,
+    "isTailsVisibleToUser": false,
+    "isTopRimVisibleToUser": false,
+    "isBottomRimVisibleToUser": true,
+  };
+
+  const actual = prepareData(addComponentArg);
+  //writeToTestDiffDir({ actual, expected, });
+  //drawDataOnCanvas({
+  //  serverAbsFilePath: '/test/served-tmp/prepare-data-test.html',
+  //  actual: actual,
+  //  expected: expected,
+  //  canvasWidthPx: 470,
+  //  canvasHeightPx: 220,
+  //  drawHeads: true,
+  //  drawTails: true,
+  //  drawDotsHeads: true,
+  //  drawDotsTails: true,
+  //  drawLineToRightEdgeHeads: true,
+  //  drawLineToRightEdgeTails: true,
+  //  angleStartSliceIndex: 0,
+  //  angleEndSliceIndex: 1,
+  //});
+  t.deepEqual(actual, expected);
+  t.end();
+});
+
 tp.test((t) => {
   const addComponentArg = {
     type: 'pie-3d',
