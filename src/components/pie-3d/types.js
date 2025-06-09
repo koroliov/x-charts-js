@@ -77,6 +77,5 @@ export type PieData = {
   },
   +isHeadsVisibleToUser: boolean,
   +isTailsVisibleToUser: boolean,
-  +isTopRimVisibleToUser: boolean,
-  +isBottomRimVisibleToUser: boolean,
+  +isRimVisibleToUser: boolean,
 }

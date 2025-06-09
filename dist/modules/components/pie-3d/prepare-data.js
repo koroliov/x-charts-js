@@ -237,26 +237,21 @@ export function prepareData(arg                           )          {
 
     function handleFaceAndRimVisibility() {
       const angle = rotationAroundCenterXAxisDegActual;
+      if (angle === 0 || angle === 180) {
+        pieData.isRimVisibleToUser = false;
+      }
       if (angle <= 90) {
-        if (angle > 0) {
-          pieData.isBottomRimVisibleToUser = true;
-        }
         if (angle < 90) {
           pieData.isHeadsVisibleToUser = true;
         }
       } else if (angle <= 180) {
         pieData.isTailsVisibleToUser = true;
-        if (angle < 180) {
-          pieData.isBottomRimVisibleToUser = true;
-        }
       } else if (angle <= 270) {
-        pieData.isTopRimVisibleToUser = true;
         if (angle < 270) {
           pieData.isTailsVisibleToUser = true;
         }
       } else {
         pieData.isHeadsVisibleToUser = true;
-        pieData.isTopRimVisibleToUser = true;
       }
 
       if (pieData.isTailsVisibleToUser) {
@@ -293,8 +288,7 @@ export function prepareData(arg                           )          {
       },
       isHeadsVisibleToUser: false,
       isTailsVisibleToUser: false,
-      isTopRimVisibleToUser: false,
-      isBottomRimVisibleToUser: false,
+      isRimVisibleToUser: true,
     };
   }
 

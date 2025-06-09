@@ -52,7 +52,7 @@ export function draw(arg: {
     rimSlicesData: ReturnType<typeof prepareRimSlicesData>,
     action: 'stroke' | 'fill',
   }) {
-    if (!pieData.isTopRimVisibleToUser && !pieData.isBottomRimVisibleToUser) {
+    if (!pieData.isRimVisibleToUser) {
       return;
     }
     const isFill = arg.action === 'fill';
