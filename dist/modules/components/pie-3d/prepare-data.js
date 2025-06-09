@@ -299,9 +299,9 @@ export function prepareData(arg                           )          {
     let prevEndHeads = [0, 0, 0,];
     let prevEndTails = [0, 0, 0,];
     const slices                    = [];
-    const ll = getLoopLogic(isPieReversed, arg.data.length);
 
-    for (; ll.shouldContinue;) {
+    const ll = getLoopLogic(isPieReversed, arg.data.length);
+    while (ll.shouldContinue) {
       const d = arg.data[ll.i];
       totalValue += d.value;
       const rv = {
