@@ -175,8 +175,7 @@ tp.test((t) => {
     },
     "isHeadsVisibleToUser": true,
     "isTailsVisibleToUser": false,
-    "isTopRimVisibleToUser": false,
-    "isBottomRimVisibleToUser": true,
+    "isRimVisibleToUser": true,
   };
 
   const actual = prepareData(addComponentArg);
@@ -369,8 +368,7 @@ tp.test('0001-most-common-case', (t) => {
     },
     "isHeadsVisibleToUser": true,
     "isTailsVisibleToUser": false,
-    "isTopRimVisibleToUser": false,
-    "isBottomRimVisibleToUser": true,
+    "isRimVisibleToUser": true,
   };
 
   const actual = prepareData(addComponentArg);
@@ -595,8 +593,7 @@ tp.test('0002-01-start-at-0-deg', (t) => {
     },
     "isHeadsVisibleToUser": true,
     "isTailsVisibleToUser": false,
-    "isTopRimVisibleToUser": false,
-    "isBottomRimVisibleToUser": true,
+    "isRimVisibleToUser": true,
   };
 
   const actual = prepareData(addComponentArg);
@@ -789,8 +786,7 @@ tp.test((t) => {
     },
     "isHeadsVisibleToUser": false,
     "isTailsVisibleToUser": true,
-    "isTopRimVisibleToUser": false,
-    "isBottomRimVisibleToUser": true,
+    "isRimVisibleToUser": true,
   };
 
   const actual = prepareData(addComponentArg);
@@ -1015,8 +1011,7 @@ tp.test((t) => {
     },
     "isHeadsVisibleToUser": true,
     "isTailsVisibleToUser": false,
-    "isTopRimVisibleToUser": false,
-    "isBottomRimVisibleToUser": true,
+    "isRimVisibleToUser": true,
   };
 
   const actual = prepareData(addComponentArg);
@@ -1177,8 +1172,7 @@ tp.test((t) => {
     },
     "isHeadsVisibleToUser": true,
     "isTailsVisibleToUser": false,
-    "isTopRimVisibleToUser": false,
-    "isBottomRimVisibleToUser": true,
+    "isRimVisibleToUser": true,
   };
 
   const actual = prepareData(addComponentArg);
@@ -1403,8 +1397,7 @@ tp.test('0004-left-edge-slice-index-bigger-right-one', (t) => {
     },
     "isHeadsVisibleToUser": true,
     "isTailsVisibleToUser": false,
-    "isTopRimVisibleToUser": false,
-    "isBottomRimVisibleToUser": true,
+    "isRimVisibleToUser": true,
   };
 
   const actual = prepareData(addComponentArg);
@@ -1565,8 +1558,7 @@ tp.test((t) => {
     },
     "isHeadsVisibleToUser": true,
     "isTailsVisibleToUser": false,
-    "isTopRimVisibleToUser": false,
-    "isBottomRimVisibleToUser": true,
+    "isRimVisibleToUser": true,
   };
 
   const actual = prepareData(addComponentArg);
@@ -1727,8 +1719,7 @@ tp.test((t) => {
     },
     "isHeadsVisibleToUser": true,
     "isTailsVisibleToUser": false,
-    "isTopRimVisibleToUser": false,
-    "isBottomRimVisibleToUser": true,
+    "isRimVisibleToUser": true,
   };
 
   const actual = prepareData(addComponentArg);
@@ -1921,8 +1912,7 @@ tp.test('0010-rotation-over-center-x-axis-greater-180-deg', (t) => {
     },
     "isHeadsVisibleToUser": true,
     "isTailsVisibleToUser": false,
-    "isTopRimVisibleToUser": false,
-    "isBottomRimVisibleToUser": true,
+    "isRimVisibleToUser": true,
   };
 
   const actual = prepareData(addComponentArg);
@@ -2147,8 +2137,7 @@ tp.test('0011-rotation-100-deg-start-ang-0', (t) => {
     },
     "isHeadsVisibleToUser": false,
     "isTailsVisibleToUser": true,
-    "isTopRimVisibleToUser": false,
-    "isBottomRimVisibleToUser": true,
+    "isRimVisibleToUser": true,
   };
 
   const actual = prepareData(addComponentArg);

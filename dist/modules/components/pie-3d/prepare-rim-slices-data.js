@@ -9,7 +9,7 @@
 
 export function prepareRimSlicesData(pieData         )                {
   const rimSlicesData                = [];
-  if (!pieData.isTopRimVisibleToUser && !pieData.isBottomRimVisibleToUser) {
+  if (!pieData.isRimVisibleToUser) {
     return rimSlicesData;
   }
   const startSliceIndex = pieData.edgeLeft.sliceIndex;
@@ -105,25 +105,18 @@ export function prepareRimSlicesData(pieData         )                {
     const leftEdgeAngle = pieData.edgeLeft.angleCounterClockwise;
     const rigthEdgeAngle = getRightEdgeAngle();
 
-    if (pieData.isBottomRimVisibleToUser) {
-      processBottomRimVisible();
-    } else {
-      //will cause bugs, amend as they are discovered
-    }
-    return indices;
+    let i         = startSliceIndex;
+    do {
+      if (++i === pieData.slices.length) {
+        i = 0;
+      }
+      const nextSlice = pieData.slices[i];
+      if (isSliceOnVisibleRim(nextSlice)) {
+        indices.push(i);
+      }
+    } while (i !== endSliceIndex);
 
-    function processBottomRimVisible() {
-      let i = startSliceIndex;
-      do {
-        if (++i === pieData.slices.length) {
-          i = 0;
-        }
-        const nextSlice = pieData.slices[i];
-        if (isSliceOnVisibleRim(nextSlice)) {
-          indices.push(i);
-        }
-      } while (i !== endSliceIndex);
-    }
+    return indices;
 
     function isSliceOnVisibleRim(slice                          )          {
       if (slice.startAngleCounterClockwise < rigthEdgeAngle) {
