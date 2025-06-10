@@ -67,7 +67,9 @@ export default class XCharts {
   add(arg                      )            {
     const ComponentClass = componentsRegistry.get(arg.type);
     if (!ComponentClass) {
-      throw new Error(getNoRegisteredComponentErrorMsg());
+      const msg = getNoRegisteredComponentErrorMsg();
+      this._showError(msg);
+      throw new Error(msg);
     }
     const that = this;
     const container = createContainer();
@@ -93,5 +95,10 @@ export default class XCharts {
       that._componentsContainer.appendChild(container);
       return container;
     }
+  }
+
+  _showError(msg        ) {
+    this._componentsContainer.innerHTML =
+      `<div style="color: red; font-size: 2em;">${ msg }</div>`;
   }
 }
