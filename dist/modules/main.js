@@ -12,8 +12,11 @@ export function registerComponent(
   componentClass                  
 )       {
   if (componentsRegistry.has(componentType)) {
-    throw new Error(`Component of componentType ${ componentType
-        } has been already registered`);
+    throw new Error([
+      `ERR_X_CHARTS_COMPONENT_REGISTERED:`,
+      `Component of componentType ${ componentType
+        } has been already registered`,
+    ].join('\n'));
   }
   componentsRegistry.set(componentType, componentClass);
 }
@@ -58,7 +61,10 @@ export default class XCharts {
       const componentsContainer = that._shadowRoot
           .getElementById('x-charts--components-container');
       if (!(componentsContainer instanceof HTMLDivElement)) {
-        throw new Error('Internal Flow required XCharts error');
+        throw new Error([
+          'ERR_X_CHARTS_INTERNAL:',
+          'Internal Flow required XCharts error',
+        ].join('\n'));
       }
       that._componentsContainer = componentsContainer;
     }
@@ -79,6 +85,7 @@ export default class XCharts {
 
     function getNoRegisteredComponentErrorMsg() {
       return [
+        'ERR_X_CHARTS_COMPONENT_NOT_REGISTERED:',
         `Component of type ${ arg.type } has not been registered,`,
         `registered components are:`,
         Array.from(componentsRegistry.keys()).join(),
