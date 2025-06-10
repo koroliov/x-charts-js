@@ -58,7 +58,7 @@ export default class XCharts {
       const componentsContainer = that._shadowRoot
           .getElementById('x-charts--components-container');
       if (!(componentsContainer instanceof HTMLDivElement)) {
-        throw new Error('Internal XCharts error');
+        throw new Error('Internal Flow required XCharts error');
       }
       that._componentsContainer = componentsContainer;
     }
