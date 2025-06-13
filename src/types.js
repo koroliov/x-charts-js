@@ -13,7 +13,13 @@ type ComponentDatum = {
   },
 }
 
-export interface Component {
+export interface ComponentInstance {
+}
+
+export type ComponentClass = {
+  +_type: string,
+  validateAddComponentArgument(arg: AddComponentArgument): string,
+  ...
 }
 
 export type AddComponentArgument = {

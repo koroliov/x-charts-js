@@ -1,17 +1,19 @@
 //      strict
-                                                 
+             
+                       
+                    
+                        
 import XCharts, { registerComponent, } from '../../main.js';
                                                              
 import { draw, } from './draw.js';
 
-class Pie3d                      {
+class Pie3d                              {
   static  _type = 'pie-3d'
   _container                
   _ctx                          
 
   constructor(arg                           , container                ) {
     freezeArgument();
-    validateAddComponentArgument();
     this._container = container;
     const that = this;
     createCanvas();
@@ -35,12 +37,12 @@ class Pie3d                      {
       Object.freeze(arg.data);
       arg.data.forEach((d) => Object.freeze(d.meta));
     }
+  }
 
-    function validateAddComponentArgument() {
-      //validate arg.options
-      //validate arg.data
-    }
+  static validateAddComponentArgument(arg                      )         {
+    return '';
   }
 }
 
+//$FlowFixMe[method-unbinding] See commit message
 registerComponent(Pie3d._type, Pie3d);

@@ -1,17 +1,19 @@
 //@flow strict
-import type { Component, } from '../../types.js';
+import type {
+  AddComponentArgument,
+  ComponentInstance,
+} from '../../types.js';
 import XCharts, { registerComponent, } from '../../main.js';
 import type { AddComponentPie3dArgument, } from './types.js';
 import { draw, } from './draw.js';
 
-class Pie3d implements Component {
+class Pie3d implements ComponentInstance {
   static +_type = 'pie-3d'
   _container: HTMLDivElement
   _ctx: CanvasRenderingContext2D
 
   constructor(arg: AddComponentPie3dArgument, container: HTMLDivElement) {
     freezeArgument();
-    validateAddComponentArgument();
     this._container = container;
     const that = this;
     createCanvas();
@@ -35,12 +37,12 @@ class Pie3d implements Component {
       Object.freeze(arg.data);
       arg.data.forEach((d) => Object.freeze(d.meta));
     }
+  }
 
-    function validateAddComponentArgument() {
-      //validate arg.options
-      //validate arg.data
-    }
+  static validateAddComponentArgument(arg: AddComponentArgument): string {
+    return '';
   }
 }
 
+//$FlowFixMe[method-unbinding] See commit message
 registerComponent(Pie3d._type, Pie3d);

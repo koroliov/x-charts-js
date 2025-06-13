@@ -1,15 +1,16 @@
 //      strict
              
                              
-            
+                 
+                    
                        
                     
 
-const componentsRegistry                                = new Map();
+const componentsRegistry                              = new Map();
 
 export function registerComponent(
   componentType        ,
-  componentClass                  
+  componentClass                ,
 )       {
   if (componentsRegistry.has(componentType)) {
     throw new Error([
@@ -70,7 +71,7 @@ export default class XCharts {
     }
   }
 
-  add(arg                      )            {
+  add(arg                      )                    {
     const ComponentClass = componentsRegistry.get(arg.type);
     if (!ComponentClass) {
       const msg = getNoRegisteredComponentErrorMsg();
@@ -80,7 +81,7 @@ export default class XCharts {
     const that = this;
     const container = createContainer();
 
-    //$FlowExpectedError[prop-missing]
+    //$FlowFixMe[invalid-constructor] See commit message
     return new ComponentClass(arg, container);
 
     function getNoRegisteredComponentErrorMsg() {

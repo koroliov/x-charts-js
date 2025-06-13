@@ -1,15 +1,16 @@
 //@flow strict
 import type {
   XChartsConstructorArgument,
-  Component,
+  ComponentClass,
+  ComponentInstance,
   AddComponentArgument,
 } from './types.js';
 
-const componentsRegistry: Map<string, Class<Component>> = new Map();
+const componentsRegistry: Map<string, ComponentClass> = new Map();
 
 export function registerComponent(
   componentType: string,
-  componentClass: Class<Component>
+  componentClass: ComponentClass,
 ): void {
   if (componentsRegistry.has(componentType)) {
     throw new Error([
@@ -70,7 +71,7 @@ export default class XCharts {
     }
   }
 
-  add(arg: AddComponentArgument): Component {
+  add(arg: AddComponentArgument): ComponentInstance {
     const ComponentClass = componentsRegistry.get(arg.type);
     if (!ComponentClass) {
       const msg = getNoRegisteredComponentErrorMsg();
@@ -80,7 +81,7 @@ export default class XCharts {
     const that = this;
     const container = createContainer();
 
-    //$FlowExpectedError[prop-missing]
+    //$FlowFixMe[invalid-constructor] See commit message
     return new ComponentClass(arg, container);
 
     function getNoRegisteredComponentErrorMsg() {
