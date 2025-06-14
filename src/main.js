@@ -70,6 +70,12 @@ export default class XCharts {
       this._showError(msg);
       throw new Error(msg);
     }
+    const invalidArgumentErrorMsg =
+      ComponentClass.validateAddComponentArgument(arg);
+    if (invalidArgumentErrorMsg) {
+      this._showError(invalidArgumentErrorMsg);
+      throw new Error(invalidArgumentErrorMsg);
+    }
     const container = createContainer();
 
     //$FlowFixMe[invalid-constructor] See commit message
