@@ -131,7 +131,7 @@ test-unit-help:
 test-unit-full:
 	podman container exec -it $(CONTAINER_NAME) bash -c "rm -rf \
 	./test/unit-tmp/* && npm run flow && npm run flow-build-test \
-	./src/ && npm run tape ./test/unit-tmp/**/*.test.js"
+	./src/ && npm run tape ./test/unit-tmp/\{**/,\}*.test.js"
 
 ifneq ($(wildcard ./Makefile.current), '')
   include ./var/Makefile.current
