@@ -62,13 +62,14 @@ export default class XCharts {
   }
 
   add(arg: AddComponentArgument): ComponentInstance {
+    const that = this;
+    checkComponentType();
     const ComponentClass = componentsRegistry.get(arg.type);
     if (!ComponentClass) {
       const msg = getNoRegisteredComponentErrorMsg();
       this._showError(msg);
       throw new Error(msg);
     }
-    const that = this;
     const container = createContainer();
 
     //$FlowFixMe[invalid-constructor] See commit message
@@ -92,6 +93,20 @@ export default class XCharts {
       container.style.height = '100%';
       that._componentsContainer.appendChild(container);
       return container;
+    }
+
+    function checkComponentType() {
+      if (!arg.type || typeof arg.type !== 'string') {
+        const msg = [
+          'ERR_X_CHARTS_INVALID_COMPONENT_TYPE_ON_ADD:',
+          `.type must be a non-empty string`,
+          `Provided ${ typeof arg.type } ${ arg.type } in argument`,
+          'to .add() method (JSON stringified):',
+          JSON.stringify(arg, null, 2),
+        ].join('\n');
+        that._showError(msg);
+        throw new Error(msg);
+      }
     }
   }
 
