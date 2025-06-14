@@ -94,3 +94,8 @@ temporary enable 'the watch mode':
 - Work with the tesst/server/main.js file
 - When everything is ready, kill the container, restore the Containerfile,
   rebuild the image
+
+**How to modify script in package.json?**
+- modify the package.json file first in an interactive container session.
+- once it works, update the main package.json file and rebuild the image
+  (increase the tag number)
