@@ -63,6 +63,7 @@ export default class XCharts {
 
   add(arg: AddComponentArgument): ComponentInstance {
     const that = this;
+    checkArgumentIsObject();
     checkComponentType();
     const ComponentClass = componentsRegistry.get(arg.type);
     if (!ComponentClass) {
@@ -101,13 +102,55 @@ export default class XCharts {
       return container;
     }
 
+    function checkArgumentIsObject() {
+      if (arg === undefined || arg === null) {
+        handleError();
+      }
+      const p = Object.getPrototypeOf(arg);
+      if (p !== null && p !== Object.getPrototypeOf({})) {
+        handleError();
+      }
+
+      function handleError() {
+        const msg = [
+          'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
+          `Must be an instance of Object`,
+          `Provided ${ typeof arg }`,
+        ].join('\n');
+        that._showError(msg);
+        throw new Error(msg);
+      }
+    }
+
     function checkComponentType() {
+      if (arg.hasOwnProperty) {
+        if (!arg.hasOwnProperty('type')) {
+          handleErrorTypeMissing();
+        }
+      } else if (!('type' in arg)) {
+        handleErrorTypeMissing();
+      }
       if (!arg.type || typeof arg.type !== 'string') {
+        handleErrorTypeInvalid();
+      }
+
+      function handleErrorTypeMissing() {
+        const msg = [
+          'ERR_X_CHARTS_MISSING_COMPONENT_TYPE_ON_ADD:',
+          `Property .type is missing on the provided argument`,
+          'to the .add() method (JSON stringified):',
+          JSON.stringify(arg, null, 2),
+        ].join('\n')
+        that._showError(msg);
+        throw new Error(msg);
+      }
+
+      function handleErrorTypeInvalid() {
         const msg = [
           'ERR_X_CHARTS_INVALID_COMPONENT_TYPE_ON_ADD:',
           `.type must be a non-empty string`,
           `Provided ${ typeof arg.type } ${ arg.type } in argument`,
-          'to .add() method (JSON stringified):',
+          'to the .add() method (JSON stringified):',
           JSON.stringify(arg, null, 2),
         ].join('\n');
         that._showError(msg);
