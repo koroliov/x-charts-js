@@ -6,6 +6,9 @@
 import XCharts, { registerComponent, } from '../../main.js';
                                                              
 import { draw, } from './draw.js';
+import {
+  validateAddComponentArgumentExternal,
+} from './validate-add-component-argument-external.js';
 
 class Pie3d                              {
   static  _type = 'pie-3d'
@@ -40,9 +43,9 @@ class Pie3d                              {
   }
 
   static validateAddComponentArgument(arg                      )         {
-    return '';
+    return validateAddComponentArgumentExternal(arg);
   }
 }
 
 //$FlowFixMe[method-unbinding] See commit message
-registerComponent(Pie3d._type, Pie3d);
+registerComponent(Pie3d);

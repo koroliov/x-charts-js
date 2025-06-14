@@ -25,7 +25,9 @@ export type ComponentClass = {
 export type AddComponentArgument = {
   +type: string,
   +zIndex: string,
-  +options: {},
+  +options: {
+    [string]: mixed,
+  },
   +data: $ReadOnlyArray<ComponentDatum>,
 }
 
