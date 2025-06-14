@@ -8,18 +8,8 @@ import type {
 
 const componentsRegistry: Map<string, ComponentClass> = new Map();
 
-export function registerComponent(
-  componentType: string,
-  componentClass: ComponentClass,
-): void {
-  if (componentsRegistry.has(componentType)) {
-    throw new Error([
-      `ERR_X_CHARTS_COMPONENT_REGISTERED:`,
-      `Component of componentType ${ componentType
-        } has been already registered`,
-    ].join('\n'));
-  }
-  componentsRegistry.set(componentType, componentClass);
+export function registerComponent(ComponentClass: ComponentClass): void {
+  componentsRegistry.set(ComponentClass._type, ComponentClass);
 }
 
 export default class XCharts {

@@ -45,4 +45,4 @@ class Pie3d implements ComponentInstance {
 }
 
 //$FlowFixMe[method-unbinding] See commit message
-registerComponent(Pie3d._type, Pie3d);
+registerComponent(Pie3d);
