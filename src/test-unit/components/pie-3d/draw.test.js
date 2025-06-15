@@ -510,3 +510,88 @@ tp.test((t) => {
     t.end();
   });
 });
+
+tp.test.skip((t) => {
+  const testName = '0012-';
+  const arg = {
+    type: 'pie-3d',
+    zIndex: '1',
+    options: {
+      thicknessPx: 15,
+      radiusPx: 200,
+      centerXPx: 400,
+      centerYPx: 250,
+      startAtDeg: 247,
+      rotationAroundCenterXAxisDeg: 153,
+      rotationAroundCenterZAxisDeg: 0,
+    },
+    data: [
+      { value: 225, meta: { color: '#37ff00' /* green */, }, },
+      { value: 5, meta: { color: '#03fff0' /* cayan */, }, },
+      { value: 8, meta: { color: '#ffc04b' /* orange */, }, },
+      { value: 25, meta: { color: '#ff0000' /* red */, }, },
+      { value: 50, meta: { color: '#f2b5f6' /* pinkish */, }, },
+    ],
+  };
+  //const { ctx, canvas, } =
+  //  createCanvasContext2d({ w: 470, h: 220, fillStyle: 'white', });
+  //draw({ ctx, addComponentArg: arg, });
+
+  //canvas.toBuffer(async (err: null | Error, buff: Buffer) => {
+  //  //await writeCanvasToTestDiffDir({
+  //  //  canvas: ctx.canvas,
+  //  //  fileNameRelative: './test/diff/current.png',
+  //  //});
+  //  const equal = await compareWithLooksSame({
+  //    buffer: buff,
+  //    expectedFileNameRelative:
+  //      `./test/unit-permanent/components/pie-3d/draw/${ testName }.png`,
+  //    highlightColor: '#000000',
+  //    //diffFileNameRelativeOnError: `./test/diff/${ testName }.png`,
+  //    diffFileNameRelativeOnError: '',
+  //  });
+  //  t.ok(equal);
+  //  t.end();
+  //});
+});
+
+tp.test.skip((t) => {
+  const testName = '0013-';
+  const arg = {
+    type: 'pie-3d',
+    zIndex: '1',
+    options: {
+      thicknessPx: 15,
+      radiusPx: 200,
+      centerXPx: 400,
+      centerYPx: 250,
+      startAtDeg: 247,
+      rotationAroundCenterXAxisDeg: 153,
+      rotationAroundCenterZAxisDeg: 0,
+    },
+    data: [
+      { value: 225, meta: { color: '#37ff00' /* green */, }, },
+      { value: 50, meta: { color: '#f2b5f6' /* pinkish */, }, },
+    ],
+  };
+  //const { ctx, canvas, } =
+  //  createCanvasContext2d({ w: 470, h: 220, fillStyle: 'white', });
+  //draw({ ctx, addComponentArg: arg, });
+
+  //canvas.toBuffer(async (err: null | Error, buff: Buffer) => {
+  //  //await writeCanvasToTestDiffDir({
+  //  //  canvas: ctx.canvas,
+  //  //  fileNameRelative: './test/diff/current.png',
+  //  //});
+  //  const equal = await compareWithLooksSame({
+  //    buffer: buff,
+  //    expectedFileNameRelative:
+  //      `./test/unit-permanent/components/pie-3d/draw/${ testName }.png`,
+  //    highlightColor: '#000000',
+  //    //diffFileNameRelativeOnError: `./test/diff/${ testName }.png`,
+  //    diffFileNameRelativeOnError: '',
+  //  });
+  //  t.ok(equal);
+  //  t.end();
+  //});
+});
