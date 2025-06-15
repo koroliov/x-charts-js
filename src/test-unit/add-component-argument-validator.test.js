@@ -25,7 +25,7 @@ tp.test('valid argument case', (t) => {
   const expected = '';
 
   const actual = validate(addComponentArg);
-  t.ok(actual === expected);
+  t.equal(actual, expected);
   t.end();
 });
 
@@ -158,6 +158,31 @@ tp.test('invalid type property, null', (t) => {
 });
 
 //================ zIndex property checks ===============
+tp.test('zIndex property negative integers allowed', (t) => {
+  const addComponentArg = {
+    type: 'pie-3d',
+    zIndex: '-1',
+    options: {
+      thicknessPx: 50,
+      radiusPx: 150,
+      centerXPx: 300,
+      centerYPx: 250,
+      startAtDeg: 20,
+      rotationAroundCenterXAxisDeg: 60,
+      rotationAroundCenterZAxisDeg: 45,
+    },
+    data: [
+      { value: 40, meta: { color: '#ff0000' /* red */, }, },
+      { value: 25, meta: { color: '#37ff00' /* green */, }, },
+    ],
+  };
+  const expected = '';
+
+  const actual = validate(addComponentArg);
+  t.equal(actual, expected);
+  t.end();
+});
+
 tp.test('invalid zIndex property', (t) => {
   const addComponentArg = {
     type: 'pie-3d',
