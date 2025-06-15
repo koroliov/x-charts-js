@@ -17,7 +17,23 @@ const validationMapper: {
     return '';
   },
   zIndex(arg: AddComponentArgument) {
-    return '';
+    if (typeof arg.zIndex !== 'string') {
+      return generateMessage();
+    }
+    if (/^-*\d+$/.test(arg.zIndex)) {
+      return '';
+    }
+    return generateMessage();
+
+    function generateMessage() {
+      return [
+        'ERR_X_CHARTS_INVALID_ZINDEX_ON_ADD:',
+        "Property 'zIndex' must be a numeric integer string",
+        'no white space is allowed',
+        `Provided ${ typeof arg.zIndex } '${ arg.zIndex }' in argument`,
+        'to the .add() method (JSON stringified):',
+      ].join('\n');
+    }
   },
 };
 

@@ -125,3 +125,66 @@ tp.test('invalid type property, empty string ""', (t) => {
   t.ok(actual.startsWith(expected));
   t.end();
 });
+
+tp.test('invalid type property, null', (t) => {
+  const addComponentArg = {
+    type: null,
+    zIndex: '1',
+    options: {
+      thicknessPx: 50,
+      radiusPx: 150,
+      centerXPx: 300,
+      centerYPx: 250,
+      startAtDeg: 20,
+      rotationAroundCenterXAxisDeg: 60,
+      rotationAroundCenterZAxisDeg: 45,
+    },
+    data: [
+      { value: 40, meta: { color: '#ff0000' /* red */, }, },
+      { value: 25, meta: { color: '#37ff00' /* green */, }, },
+    ],
+  };
+  const expected = [
+    'ERR_X_CHARTS_INVALID_COMPONENT_TYPE_ON_ADD:',
+    "Property 'type' must be a non-empty string",
+    "Provided object 'null' in argument",
+    'to the .add() method (JSON stringified):',
+  ].join('\n');
+
+  //$FlowFixMe[incompatible-call]
+  const actual = validate(addComponentArg);
+  t.ok(actual.startsWith(expected));
+  t.end();
+});
+
+//================ zIndex property checks ===============
+tp.test('invalid zIndex property', (t) => {
+  const addComponentArg = {
+    type: 'pie-3d',
+    zIndex: '1 ',
+    options: {
+      thicknessPx: 50,
+      radiusPx: 150,
+      centerXPx: 300,
+      centerYPx: 250,
+      startAtDeg: 20,
+      rotationAroundCenterXAxisDeg: 60,
+      rotationAroundCenterZAxisDeg: 45,
+    },
+    data: [
+      { value: 40, meta: { color: '#ff0000' /* red */, }, },
+      { value: 25, meta: { color: '#37ff00' /* green */, }, },
+    ],
+  };
+  const expected = [
+    'ERR_X_CHARTS_INVALID_ZINDEX_ON_ADD:',
+    "Property 'zIndex' must be a numeric integer string",
+    'no white space is allowed',
+    "Provided string '1 ' in argument",
+    'to the .add() method (JSON stringified):',
+  ].join('\n');
+
+  const actual = validate(addComponentArg);
+  t.ok(actual.startsWith(expected));
+  t.end();
+});
