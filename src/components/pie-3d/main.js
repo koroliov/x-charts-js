@@ -6,9 +6,8 @@ import type {
 import XCharts, { registerComponent, } from '../../main.js';
 import type { AddComponentPie3dArgument, } from './types.js';
 import { draw, } from './draw.js';
-import {
-  validateAddComponentArgumentExternal,
-} from './add-component-argument-validator.js';
+import * as AddComponentArgumentValidator from
+  './add-component-argument-validator.js';
 
 class Pie3d implements ComponentInstance {
   static +_type = 'pie-3d'
@@ -43,7 +42,7 @@ class Pie3d implements ComponentInstance {
   }
 
   static validateAddComponentArgument(arg: AddComponentArgument): string {
-    return validateAddComponentArgumentExternal(arg);
+    return AddComponentArgumentValidator.validate(arg);
   }
 }
 

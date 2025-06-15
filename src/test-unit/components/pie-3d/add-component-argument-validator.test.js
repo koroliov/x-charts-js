@@ -1,9 +1,8 @@
 //@flow strict
 //$FlowFixMe[cannot-resolve-module]
 import tp from 'tape';
-import {
-  validateAddComponentArgumentExternal as validate,
-} from '../../../components/pie-3d/add-component-argument-validator.js';
+import { validate, }
+  from '../../../components/pie-3d/add-component-argument-validator.js';
 
 tp.test('valid argument case', (t) => {
   const addComponentArg = {
