@@ -8,8 +8,8 @@ const validationMapper: {
     if (typeof arg.type !== 'string' || !arg.type) {
       return [
         'ERR_X_CHARTS_INVALID_COMPONENT_TYPE_ON_ADD:',
-        `.type must be a non-empty string`,
-        `Provided ${ typeof arg.type } ${ arg.type } in argument`,
+        "Property 'type' must be a non-empty string",
+        `Provided ${ typeof arg.type  } '${ arg.type }' in argument`,
         'to the .add() method (JSON stringified):',
         JSON.stringify(arg, null, 2),
       ].join('\n');
