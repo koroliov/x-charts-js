@@ -29,27 +29,41 @@ export function validate(arg: AddComponentArgument): string {
   if (msg) {
     return msg;
   }
+  const argumentProto = Object.getPrototypeOf(arg);
+  const checkPropertyIsPresentOnArgument =
+    getCheckPropertyIsPresentOnArgument();
   for (const p of handledPropsSet) {
-    if (arg.hasOwnProperty()) {
+    let msg = checkPropertyIsPresentOnArgument(p);
+    if (msg) {
+      return msg;
     }
-    const msg = validationMapper[p](arg);
-    if (arg.hasOwnProperty) {
-      if (!arg.hasOwnProperty(p)) {
-        return handleErrorPropMissing(p);
-      }
-    } else if (!(p in arg)) {
-      return handleErrorPropMissing(p);
+    msg = validationMapper[p](arg);
+    if (msg) {
+      return msg;
     }
   }
   return '';
 
-  function handleErrorPropMissing(p: string) {
-    return [
-      'ERR_X_CHARTS_MISSING_PROP_IN_ADD_METHOD_ARG:',
-      `Property '${ p }' is missing on the provided argument`,
-      'to the .add() method (JSON stringified):',
-      JSON.stringify(arg, null, 2),
-    ].join('\n')
+  function getCheckPropertyIsPresentOnArgument() {
+    return argumentProto !== null ? checkWithHasOwnProp : checkWithIn;
+
+    function checkWithHasOwnProp(propName: string): string {
+      return arg.hasOwnProperty(propName) ?
+        '' : handleErrorPropMissing(propName);
+    }
+
+    function checkWithIn(propName: string): string {
+      return (propName in arg) ? '' : handleErrorPropMissing(propName);
+    }
+
+    function handleErrorPropMissing(propName: string) {
+      return [
+        'ERR_X_CHARTS_MISSING_PROP_IN_ADD_METHOD_ARG:',
+        `Property '${ propName }' is missing on the provided argument`,
+        'to the .add() method (JSON stringified):',
+        JSON.stringify(arg, null, 2),
+      ].join('\n')
+    }
   }
 };
 
