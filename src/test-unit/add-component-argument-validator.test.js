@@ -52,8 +52,8 @@ tp.test('arg is not litteral or Object.create(null)', (t) => {
   });
   const expected = [
     'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
-    'Argument to the .add() method must be an object litteral {}, or',
-    'created with Object.create(null)',
+    'Argument to the .add() method must be an object with prototype',
+    'either Object.prototype, e.g. {  }, or null, i.e. Object.create(null)',
   ].join('\n');
 
   //$FlowFixMe[prop-missing] we have to test invalid arguments
