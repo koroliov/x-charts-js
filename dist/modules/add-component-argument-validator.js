@@ -8,8 +8,8 @@ const validationMapper
     if (typeof arg.type !== 'string' || !arg.type) {
       return [
         'ERR_X_CHARTS_INVALID_COMPONENT_TYPE_ON_ADD:',
-        `.type must be a non-empty string`,
-        `Provided ${ typeof arg.type } ${ arg.type } in argument`,
+        "Property 'type' must be a non-empty string",
+        `Provided ${ typeof arg.type  } '${ arg.type }' in argument`,
         'to the .add() method (JSON stringified):',
         JSON.stringify(arg, null, 2),
       ].join('\n');
@@ -17,7 +17,23 @@ const validationMapper
     return '';
   },
   zIndex(arg                      ) {
-    return '';
+    if (typeof arg.zIndex !== 'string') {
+      return generateMessage();
+    }
+    if (/^-*\d+$/.test(arg.zIndex)) {
+      return '';
+    }
+    return generateMessage();
+
+    function generateMessage() {
+      return [
+        'ERR_X_CHARTS_INVALID_ZINDEX_ON_ADD:',
+        "Property 'zIndex' must be a numeric integer string",
+        'no white space is allowed',
+        `Provided ${ typeof arg.zIndex } '${ arg.zIndex }' in argument`,
+        'to the .add() method (JSON stringified):',
+      ].join('\n');
+    }
   },
 };
 
@@ -29,27 +45,41 @@ export function validate(arg                      )         {
   if (msg) {
     return msg;
   }
+  const argumentProto = Object.getPrototypeOf(arg);
+  const checkPropertyIsPresentOnArgument =
+    getCheckPropertyIsPresentOnArgument();
   for (const p of handledPropsSet) {
-    if (arg.hasOwnProperty()) {
+    let msg = checkPropertyIsPresentOnArgument(p);
+    if (msg) {
+      return msg;
     }
-    const msg = validationMapper[p](arg);
-    if (arg.hasOwnProperty) {
-      if (!arg.hasOwnProperty(p)) {
-        return handleErrorPropMissing(p);
-      }
-    } else if (!(p in arg)) {
-      return handleErrorPropMissing(p);
+    msg = validationMapper[p](arg);
+    if (msg) {
+      return msg;
     }
   }
   return '';
 
-  function handleErrorPropMissing(p        ) {
-    return [
-      'ERR_X_CHARTS_MISSING_PROP_IN_ADD_METHOD_ARG:',
-      `Property '${ p }' is missing on the provided argument`,
-      'to the .add() method (JSON stringified):',
-      JSON.stringify(arg, null, 2),
-    ].join('\n')
+  function getCheckPropertyIsPresentOnArgument() {
+    return argumentProto !== null ? checkWithHasOwnProp : checkWithIn;
+
+    function checkWithHasOwnProp(propName        )         {
+      return arg.hasOwnProperty(propName) ?
+        '' : handleErrorPropMissing(propName);
+    }
+
+    function checkWithIn(propName        )         {
+      return (propName in arg) ? '' : handleErrorPropMissing(propName);
+    }
+
+    function handleErrorPropMissing(propName        ) {
+      return [
+        'ERR_X_CHARTS_MISSING_PROP_IN_ADD_METHOD_ARG:',
+        `Property '${ propName }' is missing on the provided argument`,
+        'to the .add() method (JSON stringified):',
+        JSON.stringify(arg, null, 2),
+      ].join('\n')
+    }
   }
 };
 
