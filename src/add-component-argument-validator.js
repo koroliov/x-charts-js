@@ -10,8 +10,7 @@ const validationMapper: {
         'ERR_X_CHARTS_INVALID_COMPONENT_TYPE_ON_ADD:',
         "Property 'type' must be a non-empty string",
         `Provided ${ typeof arg.type  } '${ arg.type }' in argument`,
-        'to the .add() method (JSON stringified):',
-        JSON.stringify(arg, null, 2),
+        'to the .add() method',
       ].join('\n');
     }
     return '';
@@ -31,7 +30,7 @@ const validationMapper: {
         "Property 'zIndex' must be a numeric integer string",
         'no white space is allowed',
         `Provided ${ typeof arg.zIndex } '${ arg.zIndex }' in argument`,
-        'to the .add() method (JSON stringified):',
+        'to the .add() method',
       ].join('\n');
     }
   },
@@ -76,8 +75,7 @@ export function validate(arg: AddComponentArgument): string {
       return [
         'ERR_X_CHARTS_MISSING_PROP_IN_ADD_METHOD_ARG:',
         `Property '${ propName }' is missing on the provided argument`,
-        'to the .add() method (JSON stringified):',
-        JSON.stringify(arg, null, 2),
+        'to the .add() method',
       ].join('\n')
     }
   }

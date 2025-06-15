@@ -87,7 +87,7 @@ export default class XCharts {
     function getNoRegisteredComponentErrorMsg() {
       return [
         'ERR_X_CHARTS_COMPONENT_NOT_REGISTERED:',
-        `Component of type ${ arg.type } has not been registered,`,
+        `Component of type '${ arg.type }' has not been registered,`,
         `registered components are:`,
         Array.from(componentsRegistry.keys()).join(),
       ].join('\n');

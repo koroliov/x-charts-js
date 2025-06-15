@@ -84,7 +84,7 @@ tp.test('missing type property and present on Object.protype', (t) => {
   const expected = [
     'ERR_X_CHARTS_MISSING_PROP_IN_ADD_METHOD_ARG:',
     "Property 'type' is missing on the provided argument",
-    'to the .add() method (JSON stringified):',
+    'to the .add() method',
   ].join('\n');
 
   //$FlowFixMe[prop-missing] we have to test invalid arguments
@@ -119,7 +119,7 @@ tp.test('missing type property with proto null', (t) => {
   const expected = [
     'ERR_X_CHARTS_MISSING_PROP_IN_ADD_METHOD_ARG:',
     "Property 'type' is missing on the provided argument",
-    'to the .add() method (JSON stringified):',
+    'to the .add() method',
   ].join('\n');
 
   const actual = validate(addComponentArg);
@@ -150,7 +150,7 @@ tp.test('invalid type property, empty string ""', (t) => {
     'ERR_X_CHARTS_INVALID_COMPONENT_TYPE_ON_ADD:',
     "Property 'type' must be a non-empty string",
     "Provided string '' in argument",
-    'to the .add() method (JSON stringified):',
+    'to the .add() method',
   ].join('\n');
 
   const actual = validate(addComponentArg);
@@ -180,7 +180,7 @@ tp.test('invalid type property, null', (t) => {
     'ERR_X_CHARTS_INVALID_COMPONENT_TYPE_ON_ADD:',
     "Property 'type' must be a non-empty string",
     "Provided object 'null' in argument",
-    'to the .add() method (JSON stringified):',
+    'to the .add() method',
   ].join('\n');
 
   //$FlowFixMe[incompatible-call]
@@ -238,7 +238,7 @@ tp.test('invalid zIndex property', (t) => {
     "Property 'zIndex' must be a numeric integer string",
     'no white space is allowed',
     "Provided string '1 ' in argument",
-    'to the .add() method (JSON stringified):',
+    'to the .add() method',
   ].join('\n');
 
   const actual = validate(addComponentArg);
