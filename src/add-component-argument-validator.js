@@ -99,8 +99,8 @@ function validateArgumentIsObject(arg: AddComponentArgument) {
   function generateMessage(isNull: boolean) {
     return [
       'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
-      `Must be an instance of Object`,
-      `Provided ${ isNull ? 'null' : typeof arg }`,
+      'Argument to the .add() method must be an object litteral {}, or',
+      'created with Object.create(null)',
     ].join('\n');
   }
 }

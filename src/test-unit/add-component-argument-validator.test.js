@@ -29,7 +29,39 @@ tp.test('valid argument case', (t) => {
   t.end();
 });
 
-//================= missing prop checks ========================
+//================= general checks ========================
+tp.test('arg is not litteral or Object.create(null)', (t) => {
+  let addComponentArg = Object.create({});
+  //$FlowFixMe[prop-missing]
+  addComponentArg = Object.assign(addComponentArg, {
+    type: 'pie-3d',
+    zIndex: '1',
+    options: {
+      thicknessPx: 50,
+      radiusPx: 150,
+      centerXPx: 300,
+      centerYPx: 250,
+      startAtDeg: 20,
+      rotationAroundCenterXAxisDeg: 60,
+      rotationAroundCenterZAxisDeg: 45,
+    },
+    data: [
+      { value: 40, meta: { color: '#ff0000' /* red */, }, },
+      { value: 25, meta: { color: '#37ff00' /* green */, }, },
+    ],
+  });
+  const expected = [
+    'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
+    'Argument to the .add() method must be an object litteral {}, or',
+    'created with Object.create(null)',
+  ].join('\n');
+
+  //$FlowFixMe[prop-missing] we have to test invalid arguments
+  const actual = validate(addComponentArg);
+  t.equal(actual, expected);
+  t.end();
+});
+
 tp.test('missing type property and present on Object.protype', (t) => {
   //$FlowFixMe[prop-missing]
   Object.prototype.type = 'pie-3d';
