@@ -69,3 +69,13 @@
 #'"
 #current-validate-arg-general-test: TEST_FILES_RUN=$(subst ./src/,./test/unit-tmp/src/,$(TEST_FILES))
 #current-validate-arg-general-test: test-unit
+#
+#.PHONY: current-validate-arg-test
+#current-validate-arg-test: BUILD_FILES="'\
+#  ./src/components/pie-3d/add-component-argument-validator.js \
+#'"
+#current-validate-arg-test: TEST_FILES="' \
+#  ./src/test-unit/components/pie-3d/add-component-argument-validator.test.js \
+#'"
+#current-validate-arg-test: TEST_FILES_RUN=$(subst ./src/,./test/unit-tmp/src/,$(TEST_FILES))
+#current-validate-arg-test: test-unit
