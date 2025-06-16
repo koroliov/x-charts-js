@@ -41,8 +41,10 @@ class Pie3d implements ComponentInstance {
     }
   }
 
-  static validateAddComponentArgument(arg: AddComponentArgument): string {
-    return AddComponentArgumentValidator.validate(arg);
+  static validateAddComponentArgument(
+    propsToCheck: Set<string>,
+    arg: AddComponentArgument): string {
+    return AddComponentArgumentValidator.validate(propsToCheck, arg);
   }
 }
 

@@ -18,7 +18,10 @@ export interface ComponentInstance {
 
 export type ComponentClass = {
   +_type: string,
-  validateAddComponentArgument(arg: AddComponentArgument): string,
+  validateAddComponentArgument(
+    propsToCheck: Set<string>,
+    arg: AddComponentArgument,
+  ): string,
   ...
 }
 

@@ -66,7 +66,7 @@ export default class XCharts {
 
   add(arg: AddComponentArgument): ComponentInstance {
     const that = this;
-    doGeneralArgumentValidation();
+    const componentPropsToCheck = doGeneralArgumentValidation();
     const ComponentClass = componentsRegistry.get(arg.type);
     if (!ComponentClass) {
       const msg = getNoRegisteredComponentErrorMsg();
@@ -74,7 +74,7 @@ export default class XCharts {
       throw new Error(msg);
     }
     const invalidArgumentErrorMsg =
-      ComponentClass.validateAddComponentArgument(arg);
+      ComponentClass.validateAddComponentArgument(componentPropsToCheck, arg);
     if (invalidArgumentErrorMsg) {
       this._showError(invalidArgumentErrorMsg);
       throw new Error(invalidArgumentErrorMsg);
@@ -111,6 +111,7 @@ export default class XCharts {
         that._showError(errorMsg);
         throw new Error(errorMsg);
       }
+      return propsToCheck;
     }
   }
 
