@@ -62,6 +62,7 @@
 #
 #.PHONY: current-test-add-component-argument-validator
 #current-test-add-component-argument-validator: BUILD_FILES="'\
+#  ./src/utils/validation.js \
 #  ./src/add-component-argument-validator.js \
 #'"
 #current-test-add-component-argument-validator: TEST_FILES="' \
@@ -72,6 +73,7 @@
 #
 #.PHONY: current-test-pie-3d-add-component-argument-validator
 #current-test-pie-3d-add-component-argument-validator: BUILD_FILES="'\
+#  ./src/utils/validation.js \
 #  ./src/add-component-argument-validator.js \
 #  ./src/components/pie-3d/add-component-argument-validator.js \
 #'"
