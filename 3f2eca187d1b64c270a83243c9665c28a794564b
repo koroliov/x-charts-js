@@ -1,0 +1,14 @@
+Don't follow the mentione decision
+
+It's been decided to abandon the plans to accept JSON as the single
+argument to the XCharts and its methods.
+
+The reasons are that:
+
+  - seemingly no one does it, I can't remember a JS library or an npm
+    module, which would do it.
+  - it potentially would create some performace problems (unlikely, but
+    still worth mentioning).
+  - another approach to checking properties and their value (based on
+    Object.keys(), i.e. checking all present own enumerable properties)
+    seems more promising.
