@@ -1,5 +1,6 @@
 //      strict
                                                         
+import { isObject, } from './utils/validation.js';
 
 const validationMapper   
                                                   
@@ -7,15 +8,15 @@ const validationMapper
   type(arg                      ) {
     if (typeof arg.type !== 'string' || !arg.type) {
       return [
-        'ERR_X_CHARTS_INVALID_COMPONENT_TYPE_ON_ADD:',
+        'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG_TYPE_VAL:',
         "Property 'type' must be a non-empty string",
         `Provided ${ typeof arg.type  } '${ arg.type }' in argument`,
-        'to the .add() method (JSON stringified):',
-        JSON.stringify(arg, null, 2),
+        'to the .add() method',
       ].join('\n');
     }
     return '';
   },
+
   zIndex(arg                      ) {
     if (typeof arg.zIndex !== 'string') {
       return generateMessage();
@@ -27,80 +28,59 @@ const validationMapper
 
     function generateMessage() {
       return [
-        'ERR_X_CHARTS_INVALID_ZINDEX_ON_ADD:',
+        'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG_ZINDEX_VAL:',
         "Property 'zIndex' must be a numeric integer string",
         'no white space is allowed',
         `Provided ${ typeof arg.zIndex } '${ arg.zIndex }' in argument`,
-        'to the .add() method (JSON stringified):',
+        'to the .add() method',
       ].join('\n');
     }
   },
 };
 
-export const handledPropsSet                                      =
-  new Set(Object.keys(validationMapper));
-
-export function validate(arg                      )         {
-  const msg = validateArgumentIsObject(arg);
-  if (msg) {
-    return msg;
+export function validate(arg                      )   
+                   
+                            
+  {
+  if (!isObject(arg)) {
+    return generateNotObjectArgumentErrorReturnValue();
   }
-  const argumentProto = Object.getPrototypeOf(arg);
-  const checkPropertyIsPresentOnArgument =
-    getCheckPropertyIsPresentOnArgument();
-  for (const p of handledPropsSet) {
-    let msg = checkPropertyIsPresentOnArgument(p);
-    if (msg) {
-      return msg;
-    }
-    msg = validationMapper[p](arg);
-    if (msg) {
-      return msg;
+  const argumentPropsSet              = new Set(Object.keys(arg));
+  const handledPropsSet = new Set(Object.keys(validationMapper));
+  for (const p of argumentPropsSet) {
+    if (handledPropsSet.has(p)) {
+      const msg = validationMapper[p](arg);
+      if (msg) {
+        return { errorMsg: msg, propsToCheck: new Set(), };
+      }
+      argumentPropsSet.delete(p);
+      handledPropsSet.delete(p);
     }
   }
-  return '';
-
-  function getCheckPropertyIsPresentOnArgument() {
-    return argumentProto !== null ? checkWithHasOwnProp : checkWithIn;
-
-    function checkWithHasOwnProp(propName        )         {
-      return arg.hasOwnProperty(propName) ?
-        '' : handleErrorPropMissing(propName);
-    }
-
-    function checkWithIn(propName        )         {
-      return (propName in arg) ? '' : handleErrorPropMissing(propName);
-    }
-
-    function handleErrorPropMissing(propName        ) {
-      return [
-        'ERR_X_CHARTS_MISSING_PROP_IN_ADD_METHOD_ARG:',
-        `Property '${ propName }' is missing on the provided argument`,
-        'to the .add() method (JSON stringified):',
-        JSON.stringify(arg, null, 2),
-      ].join('\n')
-    }
+  if (handledPropsSet.size) {
+    return generateMissingPropsErrorReturnValue(handledPropsSet);
   }
+  return { errorMsg: '', propsToCheck: argumentPropsSet, };
 };
 
-function validateArgumentIsObject(arg                      ) {
-  if (arg === undefined) {
-    return generateMessage(false);
-  }
-  if (arg === null) {
-    return generateMessage(true);
-  }
-  const p = Object.getPrototypeOf(arg);
-  if (p !== null && p !== Object.getPrototypeOf({})) {
-    return generateMessage(false);
-  }
-  return '';
-
-  function generateMessage(isNull         ) {
-    return [
+function generateNotObjectArgumentErrorReturnValue() {
+  return {
+    errorMsg: [
       'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
-      `Must be an instance of Object`,
-      `Provided ${ isNull ? 'null' : typeof arg }`,
-    ].join('\n');
-  }
+      'Argument to the .add() method must be an object',
+      'e.g. {  }, Object.create(null)',
+    ].join('\n'),
+    propsToCheck: new Set()               ,
+  };
+}
+
+function generateMissingPropsErrorReturnValue(propNames             ) {
+  return {
+    errorMsg: [
+      'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG_PROPS_MISSING:',
+      `Properties: ${ Array.from(propNames).join(',') }`,
+      'are missing on the provided argument to the add method()',
+    ].join('\n'),
+    propsToCheck: new Set()               ,
+  };
 }

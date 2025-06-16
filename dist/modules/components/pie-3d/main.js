@@ -6,9 +6,8 @@
 import XCharts, { registerComponent, } from '../../main.js';
                                                              
 import { draw, } from './draw.js';
-import {
-  validateAddComponentArgumentExternal,
-} from './validate-add-component-argument-external.js';
+import * as AddComponentArgumentValidator from
+  './add-component-argument-validator.js';
 
 class Pie3d                              {
   static  _type = 'pie-3d'
@@ -43,7 +42,7 @@ class Pie3d                              {
   }
 
   static validateAddComponentArgument(arg                      )         {
-    return validateAddComponentArgumentExternal(arg);
+    return AddComponentArgumentValidator.validate(arg);
   }
 }
 

@@ -105,10 +105,11 @@ export default class XCharts {
     }
 
     function doGeneralArgumentValidation() {
-      const invalidMessage = validateAddComponentArgumentGenerally(arg);
-      if (invalidMessage) {
-        that._showError(invalidMessage);
-        throw new Error(invalidMessage);
+      const { errorMsg, propsToCheck, } =
+        validateAddComponentArgumentGenerally(arg);
+      if (errorMsg) {
+        that._showError(errorMsg);
+        throw new Error(errorMsg);
       }
     }
   }
