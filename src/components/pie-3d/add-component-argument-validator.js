@@ -1,9 +1,6 @@
 //@flow strict
 import type { AddComponentArgument, } from '../../types.js';
 import type { AddComponentPie3dArgument, } from './types.js';
-import {
-  handledPropsSet as topLevelHandledPropsSet,
-} from '../../add-component-argument-validator.js';
 
 export function validate(arg: AddComponentArgument):
   string {

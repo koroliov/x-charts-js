@@ -36,8 +36,7 @@ const validationMapper: {
   },
 };
 
-export const handledPropsSet: Set<$Keys<typeof validationMapper>> =
-  new Set(Object.keys(validationMapper));
+const handledPropsSet = new Set(Object.keys(validationMapper));
 
 export function validate(arg: AddComponentArgument): string {
   const msg = validateArgumentIsObject(arg);
