@@ -39,3 +39,10 @@ export type Point = [number, number, number,]
 export type ValidationMapperPure = {
   [string]: (arg: mixed) => string,
 }
+
+export type ValidationMapper = {
+  [string]:
+    ((arg: mixed) => string) |
+    ValidationMapperPure |
+    [ ValidationMapper, ],
+}
