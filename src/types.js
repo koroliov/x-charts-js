@@ -35,3 +35,7 @@ export type AddComponentArgument = {
 }
 
 export type Point = [number, number, number,]
+
+export type ValidationMapperPure = {
+  [string]: (arg: AddComponentArgument) => string,
+}

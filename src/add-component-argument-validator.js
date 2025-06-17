@@ -1,10 +1,8 @@
 //@flow strict
-import type { AddComponentArgument, } from './types.js';
+import type { AddComponentArgument, ValidationMapperPure, } from './types.js';
 import { isObject, } from './utils/validation.js';
 
-const validationMapper: {
-  [string]: (arg: AddComponentArgument) => string,
-} = {
+const validationMapper: ValidationMapperPure = {
   type(arg: AddComponentArgument) {
     if (typeof arg.type !== 'string' || !arg.type) {
       return [
