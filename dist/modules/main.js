@@ -63,10 +63,10 @@ export default class XCharts {
     const that = this;
     const componentPropsToCheck =
       doXChartsLevelArgumentValidation([...arguments]);
-    //At this point we should be sure that it has necessary properties, so no
-    //need to have many suppressions below, just have 1 suppressed cast.
-    //$FlowFixMe[incompatible-type]
-    const argTypeVerified                       = argProvided;
+    const argTypeVerified                                                     =
+      //At this point the type and zIndex properties are supposed to be valid
+      //$FlowFixMe[incompatible-type]
+      argProvided;
     const componentClass = getComponentClass();
     doComponentLevelArgumentValidation();
     const container = createContainer();

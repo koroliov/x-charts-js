@@ -35,7 +35,8 @@ class Pie3d implements ComponentInstance {
 
   static validateAddComponentArgument(
     propsToCheck: Set<string>,
-    arg: AddComponentArgument): string {
+    arg: { type: string, zIndex: string, [string]: mixed, }
+  ): string {
     return AddComponentArgumentValidator.validate(propsToCheck, arg);
   }
 }

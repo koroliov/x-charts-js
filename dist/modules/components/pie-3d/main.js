@@ -35,7 +35,8 @@ class Pie3d                              {
 
   static validateAddComponentArgument(
     propsToCheck             ,
-    arg                      )         {
+    arg                                                    
+  )         {
     return AddComponentArgumentValidator.validate(propsToCheck, arg);
   }
 }

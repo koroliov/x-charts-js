@@ -45,8 +45,10 @@ const validationMapper                   = {
 
 //const validationMapperProps = new Set(Object.keys(validationMapper));
 
-export function validate(propsToCheck             , arg                      ) 
-         {
+export function validate(
+  propsToCheck             ,
+  arg                                                    
+)         {
     //for (const p of propsToCheck) {
     //  if (!validationMapperProps.has(p)) {
     //    return [

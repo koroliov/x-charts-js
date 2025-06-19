@@ -20,7 +20,11 @@ export type ComponentClass = {
   +_type: string,
   validateAddComponentArgument(
     propsToCheck: Set<string>,
-    arg: AddComponentArgument,
+    arg: {
+      type: string,
+      zIndex: string,
+      [string]: mixed,
+    },
   ): string,
   ...
 }
