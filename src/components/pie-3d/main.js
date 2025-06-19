@@ -15,7 +15,6 @@ class Pie3d implements ComponentInstance {
   _ctx: CanvasRenderingContext2D
 
   constructor(arg: AddComponentPie3dArgument, container: HTMLDivElement) {
-    freezeArgument();
     this._container = container;
     const that = this;
     createCanvas();
@@ -31,13 +30,6 @@ class Pie3d implements ComponentInstance {
       canvas.height = that._container.offsetHeight;
       that._container.appendChild(canvas);
       that._ctx = canvas.getContext('2d');
-    }
-
-    function freezeArgument() {
-      Object.freeze(arg);
-      Object.freeze(arg.options);
-      Object.freeze(arg.data);
-      arg.data.forEach((d) => Object.freeze(d.meta));
     }
   }
 
