@@ -36,18 +36,23 @@ const validationMapper                       = {
   },
 };
 
-export function validate(arg                      )   
+export function validate(allAddComponentArgs              )   
                    
                             
   {
-  if (!isObject(arg)) {
+  if (allAddComponentArgs.length !== 1) {
+    return generateWrongNumberOfArgumentsErrorReturnValue();
+  }
+  if (!isObject(allAddComponentArgs[0])) {
     return generateNotObjectArgumentErrorReturnValue();
   }
-  const argumentPropsSet              = new Set(Object.keys(arg));
+  //the above call of isObject() is supposed to guarantee, that it's an object.
+  //$FlowFixMe[incompatible-type]
+  const arg          = allAddComponentArgs[0];
+  const argumentPropsSet                         = new Set(Object.keys(arg));
   const handledPropsSet = new Set(Object.keys(validationMapper));
   for (const p of argumentPropsSet) {
     if (handledPropsSet.has(p)) {
-      //$FlowFixMe[invalid-computed-prop] see commit message
       const msg = validationMapper[p](arg[p]);
       if (msg) {
         return { errorMsg: msg, propsToCheck: new Set(), };
@@ -59,8 +64,26 @@ export function validate(arg                      )
   if (handledPropsSet.size) {
     return generateMissingPropsErrorReturnValue(handledPropsSet);
   }
-  return { errorMsg: '', propsToCheck: argumentPropsSet, };
+  return {
+    errorMsg: '',
+    //This value was taken from the above Object.keys() call, so it definitely
+    //should qualify for the Set<string> type. And we use it, instead of
+    //Set<Keys<typeof arg>>, b/c the latter would force us to do some insane
+    //type checks/casts later.
+    //$FlowFixMe[prop-missing]
+    propsToCheck: argumentPropsSet               ,
+  };
 };
+
+function generateWrongNumberOfArgumentsErrorReturnValue() {
+  return {
+    errorMsg: [
+      'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG_WRONG_NUMBER_OF_ARGS:',
+      'The .add() method expects a single argument',
+    ].join('\n'),
+    propsToCheck: new Set()               ,
+  };
+}
 
 function generateNotObjectArgumentErrorReturnValue() {
   return {

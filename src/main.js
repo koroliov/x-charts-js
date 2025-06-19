@@ -64,18 +64,23 @@ export default class XCharts {
     }
   }
 
-  add(arg: AddComponentArgument): ComponentInstance {
+  add(argProvided: mixed): ComponentInstance {
     const that = this;
-    const componentPropsToCheck = doXChartsLevelArgumentValidation();
+    const componentPropsToCheck =
+      doXChartsLevelArgumentValidation([...arguments]);
+    //At this point we should be sure that it has necessary properties, so no
+    //need to have many suppressions below, just have 1 suppressed cast.
+    //$FlowFixMe[incompatible-type]
+    const argTypeVerified: AddComponentArgument = argProvided;
     const componentClass = getComponentClass();
     doComponentLevelArgumentValidation();
     const container = createContainer();
-
-    //$FlowFixMe[invalid-constructor] See commit message
-    return new componentClass(arg, container);
+    //At this point is should be of type expected by the component's class
+    //$FlowFixMe[invalid-constructor]
+    return new componentClass(argTypeVerified, container);
 
     function getComponentClass(): ComponentClass {
-      const componentClass = componentsRegistry.get(arg.type);
+      const componentClass = componentsRegistry.get(argTypeVerified.type);
       if (!componentClass) {
         const msg = getNoRegisteredComponentErrorMsg();
         that._showError(msg);
@@ -87,7 +92,8 @@ export default class XCharts {
     function getNoRegisteredComponentErrorMsg() {
       return [
         'ERR_X_CHARTS_COMPONENT_NOT_REGISTERED:',
-        `Component of type '${ arg.type }' has not been registered,`,
+        `Component of type '${ argTypeVerified.type
+          }' has not been registered,`,
         `registered components are:`,
         Array.from(componentsRegistry.keys()).join(),
       ].join('\n');
@@ -95,8 +101,8 @@ export default class XCharts {
 
     function createContainer() {
       const container = document.createElement('div');
-      container.setAttribute('class', `${ arg.type }--container`);
-      container.style.zIndex = arg.zIndex;
+      container.setAttribute('class', `${ argTypeVerified.type }--container`);
+      container.style.zIndex = argTypeVerified.zIndex;
       container.style.position = 'absolute';
       container.style.width = '100%';
       container.style.height = '100%';
@@ -105,17 +111,17 @@ export default class XCharts {
     }
 
     function doComponentLevelArgumentValidation() {
-      const invalidArgumentErrorMsg =
-        componentClass.validateAddComponentArgument(componentPropsToCheck, arg);
+      const invalidArgumentErrorMsg = componentClass
+        .validateAddComponentArgument(componentPropsToCheck, argTypeVerified);
       if (invalidArgumentErrorMsg) {
         that._showError(invalidArgumentErrorMsg);
         throw new Error(invalidArgumentErrorMsg);
       }
     }
 
-    function doXChartsLevelArgumentValidation() {
+    function doXChartsLevelArgumentValidation(addComponentArgs: Array<mixed>) {
       const { errorMsg, propsToCheck, } =
-        validateAddComponentArgumentOnXChartsLevel(arg);
+        validateAddComponentArgumentOnXChartsLevel(addComponentArgs);
       if (errorMsg) {
         that._showError(errorMsg);
         throw new Error(errorMsg);
