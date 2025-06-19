@@ -33,11 +33,8 @@ tp.test('valid argument case', (t) => {
 });
 
 //================= general checks ========================
-
 tp.test('arg is not object', (t) => {
-  let addComponentArg = Object.create({});
-  //$FlowFixMe[incompatible-type]
-  addComponentArg = 'abc';
+  const addComponentArg = 'abc';
   const expected = {
     errorMsg: [
       'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
