@@ -40,5 +40,10 @@ class Pie3d implements ComponentInstance {
   }
 }
 
-//$FlowFixMe[method-unbinding] See commit message
+//This error is due to some 'unbindig' of the static
+//validateAddComponentArgument() method. The method is placed correctly (I don't
+//want to declare it outside of the class declaration) and it's used correctly:
+//RefToPie3dClass.validateAddComponentArgument()
+//So the logical decision was just to suppress here.
+//$FlowFixMe[method-unbinding]
 registerComponent(Pie3d);
