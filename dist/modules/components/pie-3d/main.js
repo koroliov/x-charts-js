@@ -15,7 +15,6 @@ class Pie3d                              {
   _ctx                          
 
   constructor(arg                           , container                ) {
-    freezeArgument();
     this._container = container;
     const that = this;
     createCanvas();
@@ -32,19 +31,20 @@ class Pie3d                              {
       that._container.appendChild(canvas);
       that._ctx = canvas.getContext('2d');
     }
-
-    function freezeArgument() {
-      Object.freeze(arg);
-      Object.freeze(arg.options);
-      Object.freeze(arg.data);
-      arg.data.forEach((d) => Object.freeze(d.meta));
-    }
   }
 
-  static validateAddComponentArgument(arg                      )         {
-    return AddComponentArgumentValidator.validate(arg);
+  static validateAddComponentArgument(
+    propsToCheck             ,
+    arg                                                    
+  )         {
+    return AddComponentArgumentValidator.validate(propsToCheck, arg);
   }
 }
 
-//$FlowFixMe[method-unbinding] See commit message
+//This error is due to some 'unbindig' of the static
+//validateAddComponentArgument() method. The method is placed correctly (I don't
+//want to declare it outside of the class declaration) and it's used correctly:
+//RefToPie3dClass.validateAddComponentArgument()
+//So the logical decision was just to suppress here.
+//$FlowFixMe[method-unbinding]
 registerComponent(Pie3d);

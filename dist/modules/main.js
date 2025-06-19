@@ -6,13 +6,13 @@
                        
                     
 import {
-  validate as validateAddComponentArgumentGenerally,
+  validate as validateAddComponentArgumentOnXChartsLevel,
 } from './add-component-argument-validator.js';
 
 const componentsRegistry                              = new Map();
 
-export function registerComponent(ComponentClass                )       {
-  componentsRegistry.set(ComponentClass._type, ComponentClass);
+export function registerComponent(componentClass                )       {
+  componentsRegistry.set(componentClass._type, componentClass);
 }
 
 export default class XCharts {
@@ -21,19 +21,14 @@ export default class XCharts {
   _constructorArgument                            
 
   constructor(arg                            ) {
-    Object.freeze(arg.options);
-    Object.freeze(arg);
-    this._constructorArgument = arg;
     const that = this;
     initDom();
 
     function initDom()       {
-      that._shadowRoot = that._constructorArgument.containerDiv
-          .attachShadow({ mode: 'open', });
+      that._shadowRoot = arg.containerDiv.attachShadow({ mode: 'open', });
       that._shadowRoot.innerHTML = `
         <div style="
-          background-color: ${
-            that._constructorArgument.options.backgroundColor };
+          background-color: ${ arg.options.backgroundColor };
           width: 100%;
           height: 100%;
           position: relative;
@@ -64,30 +59,36 @@ export default class XCharts {
     }
   }
 
-  add(arg                      )                    {
+  add(argProvided       )                    {
     const that = this;
-    doGeneralArgumentValidation();
-    const ComponentClass = componentsRegistry.get(arg.type);
-    if (!ComponentClass) {
-      const msg = getNoRegisteredComponentErrorMsg();
-      this._showError(msg);
-      throw new Error(msg);
-    }
-    const invalidArgumentErrorMsg =
-      ComponentClass.validateAddComponentArgument(arg);
-    if (invalidArgumentErrorMsg) {
-      this._showError(invalidArgumentErrorMsg);
-      throw new Error(invalidArgumentErrorMsg);
-    }
+    const componentPropsToCheck =
+      doXChartsLevelArgumentValidation([...arguments]);
+    const argTypeVerified                                                     =
+      //At this point the type and zIndex properties are supposed to be valid
+      //$FlowFixMe[incompatible-type]
+      argProvided;
+    const componentClass = getComponentClass();
+    doComponentLevelArgumentValidation();
     const container = createContainer();
+    //At this point is should be of type expected by the component's class
+    //$FlowFixMe[invalid-constructor]
+    return new componentClass(argTypeVerified, container);
 
-    //$FlowFixMe[invalid-constructor] See commit message
-    return new ComponentClass(arg, container);
+    function getComponentClass()                 {
+      const componentClass = componentsRegistry.get(argTypeVerified.type);
+      if (!componentClass) {
+        const msg = getNoRegisteredComponentErrorMsg();
+        that._showError(msg);
+        throw new Error(msg);
+      }
+      return componentClass;
+    }
 
     function getNoRegisteredComponentErrorMsg() {
       return [
         'ERR_X_CHARTS_COMPONENT_NOT_REGISTERED:',
-        `Component of type '${ arg.type }' has not been registered,`,
+        `Component of type '${ argTypeVerified.type
+          }' has not been registered,`,
         `registered components are:`,
         Array.from(componentsRegistry.keys()).join(),
       ].join('\n');
@@ -95,8 +96,8 @@ export default class XCharts {
 
     function createContainer() {
       const container = document.createElement('div');
-      container.setAttribute('class', `${ arg.type }--container`);
-      container.style.zIndex = arg.zIndex;
+      container.setAttribute('class', `${ argTypeVerified.type }--container`);
+      container.style.zIndex = argTypeVerified.zIndex;
       container.style.position = 'absolute';
       container.style.width = '100%';
       container.style.height = '100%';
@@ -104,13 +105,23 @@ export default class XCharts {
       return container;
     }
 
-    function doGeneralArgumentValidation() {
+    function doComponentLevelArgumentValidation() {
+      const invalidArgumentErrorMsg = componentClass
+        .validateAddComponentArgument(componentPropsToCheck, argTypeVerified);
+      if (invalidArgumentErrorMsg) {
+        that._showError(invalidArgumentErrorMsg);
+        throw new Error(invalidArgumentErrorMsg);
+      }
+    }
+
+    function doXChartsLevelArgumentValidation(addComponentArgs              ) {
       const { errorMsg, propsToCheck, } =
-        validateAddComponentArgumentGenerally(arg);
+        validateAddComponentArgumentOnXChartsLevel(addComponentArgs);
       if (errorMsg) {
         that._showError(errorMsg);
         throw new Error(errorMsg);
       }
+      return propsToCheck;
     }
   }
 
