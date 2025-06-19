@@ -1,27 +1,25 @@
 //      strict
-                                                        
+                                                                              
 import { isObject, } from './utils/validation.js';
 
-const validationMapper   
-                                                  
-  = {
-  type(arg                      ) {
-    if (typeof arg.type !== 'string' || !arg.type) {
+const validationMapper                       = {
+  type(val) {
+    if (typeof val !== 'string' || !val) {
       return [
         'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG_TYPE_VAL:',
         "Property 'type' must be a non-empty string",
-        `Provided ${ typeof arg.type  } '${ arg.type }' in argument`,
+        `Provided ${ typeof val  } '${ String(val) }' in argument`,
         'to the .add() method',
       ].join('\n');
     }
     return '';
   },
 
-  zIndex(arg                      ) {
-    if (typeof arg.zIndex !== 'string') {
+  zIndex(val) {
+    if (typeof val !== 'string') {
       return generateMessage();
     }
-    if (/^-*\d+$/.test(arg.zIndex)) {
+    if (/^-*\d+$/.test(val)) {
       return '';
     }
     return generateMessage();
@@ -31,7 +29,7 @@ const validationMapper
         'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG_ZINDEX_VAL:',
         "Property 'zIndex' must be a numeric integer string",
         'no white space is allowed',
-        `Provided ${ typeof arg.zIndex } '${ arg.zIndex }' in argument`,
+        `Provided ${ typeof val } '${ String(val) }' in argument`,
         'to the .add() method',
       ].join('\n');
     }
@@ -49,7 +47,8 @@ export function validate(arg                      )
   const handledPropsSet = new Set(Object.keys(validationMapper));
   for (const p of argumentPropsSet) {
     if (handledPropsSet.has(p)) {
-      const msg = validationMapper[p](arg);
+      //$FlowFixMe[invalid-computed-prop] see commit message
+      const msg = validationMapper[p](arg[p]);
       if (msg) {
         return { errorMsg: msg, propsToCheck: new Set(), };
       }

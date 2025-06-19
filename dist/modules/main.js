@@ -6,13 +6,13 @@
                        
                     
 import {
-  validate as validateAddComponentArgumentGenerally,
+  validate as validateAddComponentArgumentOnXChartsLevel,
 } from './add-component-argument-validator.js';
 
 const componentsRegistry                              = new Map();
 
-export function registerComponent(ComponentClass                )       {
-  componentsRegistry.set(ComponentClass._type, ComponentClass);
+export function registerComponent(componentClass                )       {
+  componentsRegistry.set(componentClass._type, componentClass);
 }
 
 export default class XCharts {
@@ -66,23 +66,23 @@ export default class XCharts {
 
   add(arg                      )                    {
     const that = this;
-    doGeneralArgumentValidation();
-    const ComponentClass = componentsRegistry.get(arg.type);
-    if (!ComponentClass) {
-      const msg = getNoRegisteredComponentErrorMsg();
-      this._showError(msg);
-      throw new Error(msg);
-    }
-    const invalidArgumentErrorMsg =
-      ComponentClass.validateAddComponentArgument(arg);
-    if (invalidArgumentErrorMsg) {
-      this._showError(invalidArgumentErrorMsg);
-      throw new Error(invalidArgumentErrorMsg);
-    }
+    const componentPropsToCheck = doXChartsLevelArgumentValidation();
+    const componentClass = getComponentClass();
+    doComponentLevelArgumentValidation();
     const container = createContainer();
 
     //$FlowFixMe[invalid-constructor] See commit message
-    return new ComponentClass(arg, container);
+    return new componentClass(arg, container);
+
+    function getComponentClass()                 {
+      const componentClass = componentsRegistry.get(arg.type);
+      if (!componentClass) {
+        const msg = getNoRegisteredComponentErrorMsg();
+        that._showError(msg);
+        throw new Error(msg);
+      }
+      return componentClass;
+    }
 
     function getNoRegisteredComponentErrorMsg() {
       return [
@@ -104,13 +104,23 @@ export default class XCharts {
       return container;
     }
 
-    function doGeneralArgumentValidation() {
+    function doComponentLevelArgumentValidation() {
+      const invalidArgumentErrorMsg =
+        componentClass.validateAddComponentArgument(componentPropsToCheck, arg);
+      if (invalidArgumentErrorMsg) {
+        that._showError(invalidArgumentErrorMsg);
+        throw new Error(invalidArgumentErrorMsg);
+      }
+    }
+
+    function doXChartsLevelArgumentValidation() {
       const { errorMsg, propsToCheck, } =
-        validateAddComponentArgumentGenerally(arg);
+        validateAddComponentArgumentOnXChartsLevel(arg);
       if (errorMsg) {
         that._showError(errorMsg);
         throw new Error(errorMsg);
       }
+      return propsToCheck;
     }
   }
 

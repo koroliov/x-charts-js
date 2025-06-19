@@ -41,8 +41,10 @@ class Pie3d                              {
     }
   }
 
-  static validateAddComponentArgument(arg                      )         {
-    return AddComponentArgumentValidator.validate(arg);
+  static validateAddComponentArgument(
+    propsToCheck             ,
+    arg                      )         {
+    return AddComponentArgumentValidator.validate(propsToCheck, arg);
   }
 }
 
