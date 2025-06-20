@@ -131,8 +131,8 @@ export function validate(
         return [
           'ERR_X_CHARTS_PIE_3D_INVALID_ADD_METHOD_ARG_MISSING_PROP:',
           `Component ${ nestedPropPath }:`,
-          `  missing properties: '${
-            Array.from(mapperPropsToCheckSet).join(', ') }'`,
+          `  missing properties: ${
+            Array.from(mapperPropsToCheckSet).join(', ') }`,
         ].join('\n');
       }
       if (stack.length) {
@@ -153,11 +153,20 @@ export function validate(
         return [
           'ERR_X_CHARTS_PIE_3D_INVALID_ADD_METHOD_ARG_MISSING_PROP:',
           `Component ${ nestedPropPath }:`,
-          `  missing properties: '${
-            Array.from(mapperPropsToCheckSet).join(', ') }'`,
+          `  missing properties: ${
+            Array.from(mapperPropsToCheckSet).join(', ') }`,
         ].join('\n');
       }
     }
+  }
+  if (mapperPropsToCheckSet.size > 0) {
+    const nestedPropPath = getPropNestedPath();
+    return [
+      'ERR_X_CHARTS_PIE_3D_INVALID_ADD_METHOD_ARG_MISSING_PROP:',
+      `Component ${ nestedPropPath }:`,
+      `  missing properties: ${
+        Array.from(mapperPropsToCheckSet).join(', ') }`,
+    ].join('\n');
   }
   //have props to check array
   //mapper
