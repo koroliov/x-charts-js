@@ -21,8 +21,6 @@ export type ComponentClass = {
   validateAddComponentArgument(
     propsToCheck: Set<string>,
     arg: {
-      type: string,
-      zIndex: string,
       [string]: mixed,
     },
   ): string,

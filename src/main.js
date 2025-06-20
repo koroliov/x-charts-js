@@ -107,7 +107,12 @@ export default class XCharts {
 
     function doComponentLevelArgumentValidation() {
       const invalidArgumentErrorMsg = componentClass
-        .validateAddComponentArgument(componentPropsToCheck, argTypeVerified);
+        .validateAddComponentArgument(componentPropsToCheck,
+          //Despite the argTypeVerified is guaranteed at that point to have
+          //props like: type, zIndex, I WANT to ignore them and treat the value
+          //as the cast to value.
+          //$FlowFixMe[incompatible-cast]
+          argTypeVerified as { [string]: mixed, });
       if (invalidArgumentErrorMsg) {
         that._showError(invalidArgumentErrorMsg);
         throw new Error(invalidArgumentErrorMsg);
