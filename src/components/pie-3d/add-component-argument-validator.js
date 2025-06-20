@@ -96,8 +96,11 @@ export function validate(
       });
       topPropName = p;
       if (!isObject(argDataToCheck[p])) {
+        const nestedPropPath = getPropNestedPath();
         return [
-          'FOO:',
+          'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
+          `Component ${ nestedPropPath }:`,
+          '  must be an object',
         ].join('\n');
       }
       //After the above isObject() call it is guaranteed to be an object

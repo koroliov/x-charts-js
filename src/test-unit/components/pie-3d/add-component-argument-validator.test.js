@@ -122,7 +122,34 @@ tp.test('missing properties', (t) => {
   t.end();
 });
 
-//============ options props ========================
+//============ options ========================
+
+tp.test('options is not object', (t) => {
+  const addComponentArg = {
+    type: 'pie-3d',
+    zIndex: '1',
+    options: true,
+    data: [
+      { value: 40, meta: { color: '#ff0000' /* red */, }, },
+      { value: 25, meta: { color: '#37ff00' /* green */, }, },
+      { value: 35, meta: { color: '#000aff' /* blue */, }, },
+    ],
+  };
+  const propsToCheck = new Set([
+    'options',
+    'data',
+  ]);
+
+  const expected = [
+    'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
+    'Component pie-3d -> options:',
+    '  must be an object',
+  ].join('\n');
+
+  const actual = validate(propsToCheck, addComponentArg);
+  t.equal(actual, expected);
+  t.end();
+});
 
 tp.test('extra property', (t) => {
   const addComponentArg = {
@@ -264,3 +291,5 @@ tp.test('startAtDeg invalid', (t) => {
   t.equal(actual, expected);
   t.end();
 });
+
+//============ data values ========================
