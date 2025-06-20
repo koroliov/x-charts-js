@@ -126,6 +126,15 @@ export function validate(
       mapperPropsToCheckSet.delete(p);
     }
     if (i === propsToCheckArray.length - 1) {
+      if (mapperPropsToCheckSet.size > 0) {
+        const nestedPropPath = getPropNestedPath();
+        return [
+          'ERR_X_CHARTS_PIE_3D_INVALID_ADD_METHOD_ARG_MISSING_PROP:',
+          `Component ${ nestedPropPath }:`,
+          `  missing properties: '${
+            Array.from(mapperPropsToCheckSet).join(', ') }'`,
+        ].join('\n');
+      }
       if (stack.length) {
         //With the above .length check it's guaranteed not to be undefined
         //$FlowFixMe[incompatible-type]
@@ -168,9 +177,9 @@ export function validate(
   return '';
 
   function getPropNestedPath() {
-    let prevPath = stack.map(i => i.topPropName).join('->');
+    let prevPath = stack.map(i => i.topPropName).join(' -> ');
     if (prevPath.length) {
-      prevPath += ' ';
+      prevPath += ' -> ';
     }
     return `${ prevPath }${ topPropName }`;
   }
