@@ -293,3 +293,34 @@ tp.test('startAtDeg invalid', (t) => {
 });
 
 //============ data values ========================
+
+tp.test('data is not array', (t) => {
+  const addComponentArg = {
+    type: 'pie-3d',
+    zIndex: '1',
+    options: {
+      thicknessPx: 50,
+      radiusPx: 150,
+      centerXPx: 300,
+      centerYPx: 250,
+      startAtDeg: 20,
+      rotationAroundCenterXAxisDeg: 60,
+      rotationAroundCenterZAxisDeg: 45,
+    },
+    data: true,
+  };
+  const propsToCheck = new Set([
+    'options',
+    'data',
+  ]);
+
+  const expected = [
+    'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
+    'Component pie-3d -> data:',
+    '  must be an array',
+  ].join('\n');
+
+  const actual = validate(propsToCheck, addComponentArg);
+  t.equal(actual, expected);
+  t.end();
+});

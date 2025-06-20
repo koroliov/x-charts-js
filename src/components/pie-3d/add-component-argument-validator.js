@@ -124,7 +124,43 @@ export function validate(
       i = -1;
       continue;
     } else if (Array.isArray(mapper[p])) {
-      mapperPropsToCheckSet.delete(p);
+      stack.push({
+        topPropName,
+        argDataToCheck,
+        propsToCheckArray,
+        mapperPropsToCheckSet,
+        mapper,
+        i,
+      });
+      topPropName = p;
+      if (!Array.isArray(argDataToCheck[p])) {
+        const nestedPropPath = getPropNestedPath();
+        return [
+          'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
+          `Component ${ nestedPropPath }:`,
+          '  must be an array',
+        ].join('\n');
+      }
+      //After the above isObject() call it is guaranteed to be an object
+      //$FlowFixMe[incompatible-type]
+      argDataToCheck = argDataToCheck[p];
+      //propsToCheckArray = Object.keys(propsToCheckArray[p]);
+      //It's okay to treat ValidationMapperPure as ValidationMapper here,
+      //because ValidationMapperPure is a subtype of ValidationMapper and it's
+      //supposed to fit whereever a ValidationMapper fits.
+      //$FlowFixMe[incompatible-type]
+      //$FlowFixMe[incompatible-function-indexer]
+      mapper = mapper[p];
+      //After the above isObject() call it is guaranteed to be an object
+      //$FlowFixMe[not-an-object]
+      //$FlowFixMe[incompatible-type]
+      propsToCheckArray = Object.keys(argDataToCheck);
+      //The above call of isObject(mapper[p]) guaranteed that it's an object,
+      //not a tuple [ ValidationMapper ]
+      //$FlowFixMe[not-an-object]
+      mapperPropsToCheckSet = new Set(Object.keys(mapper));
+      i = -1;
+      continue;
     } else {
       //The type ValidationMapper says that if it's prop is not an Array and not
       //and Object, then it's a function with a particular signature. Flow is
