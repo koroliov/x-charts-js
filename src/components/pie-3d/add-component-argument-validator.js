@@ -43,17 +43,19 @@ const validationMapper: ValidationMapper = {
   ],
 };
 
+const validationMapperPropsArray = Object.keys(validationMapper);
 
 export function validate(
   propsToCheck: Set<string>,
   arg: { [string]: mixed, }
 ): string {
-  const validationMapperProps = new Set(Object.keys(validationMapper));
+  const validationMapperProps = new Set(validationMapperPropsArray);
   for (const p of propsToCheck) {
     if (!validationMapperProps.has(p)) {
       return [
         'ERR_X_CHARTS_PIE_3D_INVALID_ADD_METHOD_ARG_UNKNOWN_PROP:',
-        `Component pie-3d doesn't support property '${ p }'`,
+        'Component pie-3d:',
+        `  unknown property '${ p }'`,
       ].join('\n');
     }
     if (isObject(validationMapper[p])) {
@@ -72,7 +74,8 @@ export function validate(
   if (validationMapperProps.size > 0) {
     return [
       'ERR_X_CHARTS_PIE_3D_INVALID_ADD_METHOD_ARG_MISSING_PROP:',
-      `Component pie-3d requires properties: '${
+      'Component pie-3d:',
+      `  missing properties: '${
         Array.from(validationMapperProps).join(',') }'`,
     ].join('\n');
   }

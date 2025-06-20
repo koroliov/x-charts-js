@@ -63,7 +63,8 @@ tp.test('extra property present', (t) => {
 
   const expected = [
     'ERR_X_CHARTS_PIE_3D_INVALID_ADD_METHOD_ARG_UNKNOWN_PROP:',
-    "Component pie-3d doesn't support property 'someUnknownProp'",
+    'Component pie-3d:',
+    "  unknown property 'someUnknownProp'",
   ].join('\n');
 
   const actual = validate(propsToCheck, addComponentArg);
@@ -91,7 +92,8 @@ tp.test('property missing', (t) => {
 
   const expected = [
     'ERR_X_CHARTS_PIE_3D_INVALID_ADD_METHOD_ARG_MISSING_PROP:',
-    "Component pie-3d requires properties: 'data'",
+    'Component pie-3d:',
+    "  missing properties: 'data'",
   ].join('\n');
 
   const actual = validate(propsToCheck, addComponentArg);
