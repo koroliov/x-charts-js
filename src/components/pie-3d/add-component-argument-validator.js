@@ -98,7 +98,7 @@ export function validate(
     if (!mapperPropsToCheckSet.has(p)) {
       const nestedPropPath = getPropNestedPath();
       return [
-        'ERR_X_CHARTS_PIE_3D_INVALID_ADD_METHOD_ARG_UNKNOWN_PROP:',
+        'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
         `Component ${ nestedPropPath }:`,
         `  unknown property '${ p }'`,
       ].join('\n');
@@ -153,7 +153,7 @@ export function validate(
           nestedPropPath += ' -> ';
         }
         return [
-          'ERR_X_CHARTS_PIE_3D_INVALID_ADD_METHOD_ARG_WRONG_VAL:',
+          'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
           `Component ${ nestedPropPath }${ p }:`,
           `  ${ msg }`,
         ].join('\n');
@@ -164,7 +164,7 @@ export function validate(
       if (mapperPropsToCheckSet.size > 0) {
         const nestedPropPath = getPropNestedPath();
         return [
-          'ERR_X_CHARTS_PIE_3D_INVALID_ADD_METHOD_ARG_MISSING_PROP:',
+          'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
           `Component ${ nestedPropPath }:`,
           `  missing properties: ${
             Array.from(mapperPropsToCheckSet).join(', ') }`,
@@ -186,7 +186,7 @@ export function validate(
         mapperPropsToCheckSet.size > 0) {
         const nestedPropPath = getPropNestedPath();
         return [
-          'ERR_X_CHARTS_PIE_3D_INVALID_ADD_METHOD_ARG_MISSING_PROP:',
+          'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
           `Component ${ nestedPropPath }:`,
           `  missing properties: ${
             Array.from(mapperPropsToCheckSet).join(', ') }`,
@@ -197,7 +197,7 @@ export function validate(
   if (mapperPropsToCheckSet.size > 0) {
     const nestedPropPath = getPropNestedPath();
     return [
-      'ERR_X_CHARTS_PIE_3D_INVALID_ADD_METHOD_ARG_MISSING_PROP:',
+      'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
       `Component ${ nestedPropPath }:`,
       `  missing properties: ${
         Array.from(mapperPropsToCheckSet).join(', ') }`,

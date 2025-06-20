@@ -62,7 +62,7 @@ tp.test('extra property present', (t) => {
   ]);
 
   const expected = [
-    'ERR_X_CHARTS_PIE_3D_INVALID_ADD_METHOD_ARG_UNKNOWN_PROP:',
+    'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
     'Component pie-3d:',
     "  unknown property 'someUnknownProp'",
   ].join('\n');
@@ -92,7 +92,7 @@ tp.test('missing property', (t) => {
   ]);
 
   const expected = [
-    'ERR_X_CHARTS_PIE_3D_INVALID_ADD_METHOD_ARG_MISSING_PROP:',
+    'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
     'Component pie-3d:',
     "  missing properties: data",
   ].join('\n');
@@ -112,7 +112,7 @@ tp.test('missing properties', (t) => {
   const propsToCheck: Set<string> = new Set();
 
   const expected = [
-    'ERR_X_CHARTS_PIE_3D_INVALID_ADD_METHOD_ARG_MISSING_PROP:',
+    'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
     'Component pie-3d:',
     "  missing properties: options, data",
   ].join('\n');
@@ -150,7 +150,7 @@ tp.test('extra property', (t) => {
   ]);
 
   const expected = [
-    'ERR_X_CHARTS_PIE_3D_INVALID_ADD_METHOD_ARG_UNKNOWN_PROP:',
+    'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
     'Component pie-3d -> options:',
     "  unknown property 'someUnknownProp'",
   ].join('\n');
@@ -185,7 +185,7 @@ tp.test('missing property', (t) => {
   ]);
 
   const expected = [
-    'ERR_X_CHARTS_PIE_3D_INVALID_ADD_METHOD_ARG_MISSING_PROP:',
+    'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
     'Component pie-3d -> options:',
     "  missing properties: radiusPx",
   ].join('\n');
@@ -220,7 +220,7 @@ tp.test('missing properties', (t) => {
   ]);
 
   const expected = [
-    'ERR_X_CHARTS_PIE_3D_INVALID_ADD_METHOD_ARG_MISSING_PROP:',
+    'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
     'Component pie-3d -> options:',
     "  missing properties: radiusPx, startAtDeg",
   ].join('\n');
@@ -255,7 +255,7 @@ tp.test('startAtDeg invalid', (t) => {
   ]);
 
   const expected = [
-    'ERR_X_CHARTS_PIE_3D_INVALID_ADD_METHOD_ARG_WRONG_VAL:',
+    'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
     'Component pie-3d -> options -> startAtDeg:',
     "  value must be a number in [+0, 360) range",
   ].join('\n');
