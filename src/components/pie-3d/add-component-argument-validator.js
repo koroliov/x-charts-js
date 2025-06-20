@@ -61,8 +61,11 @@ export function validate(
     } else if (Array.isArray(validationMapper[p])) {
       validationMapperProps.delete(p);
     } else {
-      //$FlowFixMe[prop-missing] see commit message
-      //$FlowFixMe[not-a-function] see commit message
+      //The type ValidationMapper says that if it's prop is not an Array and not
+      //and Object, then it's a function with a particular signature. Flow is
+      //not able to detect it yet.
+      //$FlowFixMe[prop-missing]
+      //$FlowFixMe[not-a-function]
       const msg = validationMapper[p](arg[p]);
     }
   }
