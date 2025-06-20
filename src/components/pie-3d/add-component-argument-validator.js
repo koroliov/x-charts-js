@@ -8,16 +8,28 @@ import { isObject, } from '../../utils/validation.js';
 const validationMapper: ValidationMapper = {
   options: {
     thicknessPx(val) {
-      return '';
+      if (Number.isFinite(val)) {
+        return '';
+      }
+      return 'value must be a number';
     },
     radiusPx(val) {
-      return '';
+      if (Number.isFinite(val)) {
+        return '';
+      }
+      return 'value must be a number';
     },
     centerXPx(val) {
-      return '';
+      if (Number.isFinite(val)) {
+        return '';
+      }
+      return 'value must be a number';
     },
     centerYPx(val) {
-      return '';
+      if (Number.isFinite(val)) {
+        return '';
+      }
+      return 'value must be a number';
     },
     startAtDeg(val) {
       //The .isFinite() call is supposed to guarantee that it's a number
@@ -28,10 +40,20 @@ const validationMapper: ValidationMapper = {
       return 'value must be a number in [+0, 360) range';
     },
     rotationAroundCenterXAxisDeg(val) {
-      return '';
+      //The .isFinite() call is supposed to guarantee that it's a number
+      //$FlowFixMe[invalid-compare]
+      if (Number.isFinite(val) && val >= 0 && val < 360) {
+        return '';
+      }
+      return 'value must be a number in [+0, 360) range';
     },
     rotationAroundCenterZAxisDeg(val) {
-      return '';
+      //The .isFinite() call is supposed to guarantee that it's a number
+      //$FlowFixMe[invalid-compare]
+      if (Number.isFinite(val) && val >= 0 && val < 360) {
+        return '';
+      }
+      return 'value must be a number in [+0, 360) range';
     },
   },
   data: [
