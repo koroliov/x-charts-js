@@ -20,7 +20,12 @@ const validationMapper: ValidationMapper = {
       return '';
     },
     startAtDeg(val) {
-      return '';
+      //The .isFinite() call is supposed to guarantee that it's a number
+      //$FlowFixMe[invalid-compare]
+      if (Number.isFinite(val) && val >= 0 && val < 360) {
+        return '';
+      }
+      return 'value must be a number in [+0, 360) range';
     },
     rotationAroundCenterXAxisDeg(val) {
       return '';
@@ -119,9 +124,17 @@ export function validate(
       //not able to detect it yet.
       //$FlowFixMe[prop-missing]
       //$FlowFixMe[not-a-function]
-      const msg = mapper[p](arg[p]);
+      const msg = mapper[p](argDataToCheck[p]);
       if (msg) {
-        return msg;
+        let nestedPropPath = getPropNestedPath();
+        if (nestedPropPath.length) {
+          nestedPropPath += ' -> ';
+        }
+        return [
+          'ERR_X_CHARTS_PIE_3D_INVALID_ADD_METHOD_ARG_WRONG_VAL:',
+          `Component ${ nestedPropPath }${ p }:`,
+          `  ${ msg }`,
+        ].join('\n');
       }
       mapperPropsToCheckSet.delete(p);
     }
@@ -168,21 +181,6 @@ export function validate(
         Array.from(mapperPropsToCheckSet).join(', ') }`,
     ].join('\n');
   }
-  //have props to check array
-  //mapper
-  //index
-  //stack
-  //
-  //=================
-  //have mapper
-  //have set of mapper props
-  //for each prop in propsToCheck
-  //  if prop not present in mapper props
-  //    error extra prop
-  //  validate
-  //  remove from propsToCheck
-  //if propsToCheck remain
-  //  error missing prop
   return '';
 
   function getPropNestedPath() {
