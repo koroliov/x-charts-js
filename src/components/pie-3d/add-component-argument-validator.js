@@ -45,7 +45,7 @@ const validationMapper: ValidationMapper = {
         //The .isFinite() call is supposed to guarantee that it's a number
         //$FlowFixMe[invalid-compare]
         return Number.isFinite(val) && val >= 0 ?
-          '' : 'value must be a positive, finite number';
+          '' : 'value must be a finite number >= 0';
       },
       meta: {
         color(val) {

@@ -485,7 +485,7 @@ tp.test('value is not valid', (t) => {
   const expected = [
     'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
     'Component pie-3d -> data -> 1 -> value:',
-    '  value must be a positive, finite number',
+    '  value must be a finite number >= 0',
   ].join('\n');
 
   const actual = validate(propsToCheck, addComponentArg);
