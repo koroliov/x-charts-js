@@ -164,12 +164,12 @@ export function validate(
         isArrayInProcess,
       });
       topPropName = propOnArg;
-      if (!Array.isArray(argDataToCheck[propOnArg])) {
+      if (!(Array.isArray(argDataToCheck[propOnArg]) && argDataToCheck[propOnArg].length)) {
         const nestedPropPath = getPropNestedPath();
         return [
           'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
           `Component ${ nestedPropPath }:`,
-          '  must be an array',
+          '  must be an non empty array',
         ].join('\n');
       }
       isArrayInProcess = true;
