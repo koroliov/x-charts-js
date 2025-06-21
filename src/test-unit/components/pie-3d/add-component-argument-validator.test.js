@@ -495,3 +495,37 @@ tp.test('prop is missing on level 1', (t) => {
   t.equal(actual, expected);
   t.end();
 });
+
+tp.test('prop is invalid on level 1', (t) => {
+  const addComponentArg = {
+    type: 'pie-3d',
+    zIndex: '1',
+    options: {
+      thicknessPx: 50,
+      radiusPx: 150,
+      centerXPx: 300,
+      centerYPx: 250,
+      startAtDeg: 20,
+      rotationAroundCenterXAxisDeg: 60,
+      rotationAroundCenterZAxisDeg: 45,
+    },
+    data: [
+      { value: 40, meta: { color: '#FF0000' /* red */, }, },
+      { value: 35, meta: { color: '#000afg' /* blue */, }, },
+    ],
+  };
+  const propsToCheck = new Set([
+    'options',
+    'data',
+  ]);
+
+  const expected = [
+    'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
+    'Component pie-3d -> data -> 1 -> meta -> color:',
+    '  value must be a full (6 char long) hex string, e.g. #ffffff, not #fff',
+  ].join('\n');
+
+  const actual = validate(propsToCheck, addComponentArg);
+  t.equal(actual, expected);
+  t.end();
+});

@@ -49,7 +49,14 @@ const validationMapper: ValidationMapper = {
       },
       meta: {
         color(val) {
-          return '';
+          const msg = [
+            'value must be a full (6 char long) hex string,',
+            'e.g. #ffffff, not #fff',
+          ].join(' ');
+          if (typeof val !== 'string') {
+            return msg;
+          }
+          return /^#[0-9A-F]{6}$/i.test(val) ? '' : msg;
         },
       },
     },
