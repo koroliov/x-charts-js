@@ -41,7 +41,11 @@ const validationMapper: ValidationMapper = {
   data: [
     {
       value(val) {
-        return '';
+        //console.log('VAL is:', val);
+        //The .isFinite() call is supposed to guarantee that it's a number
+        //$FlowFixMe[invalid-compare]
+        return Number.isFinite(val) && val >= 0 ?
+          '' : 'value must be a positive, finite number';
       },
       meta: {
         color(val) {
@@ -80,6 +84,7 @@ export function validate(
   for (; i < propsToCheckArray.length; i++) {
     const propOnMapper = isArrayInProcess ? '0' : propsToCheckArray[i];
     const propOnArg = isArrayInProcess ? String(i) : propsToCheckArray[i];
+    //console.log('AAA', i, propOnArg, propOnMapper);
     //console.log('AAA', propOnMapper, propsToCheckArray, mapperPropsToCheckSet);
     if (!isArrayInProcess && !mapperPropsToCheckSet.has(propOnMapper)) {
       const nestedPropPath = getPropNestedPath();
@@ -111,7 +116,7 @@ export function validate(
         i,
         isArrayInProcess,
       });
-      topPropName = propOnMapper;
+      topPropName = propOnArg;
       if (!isObject(argDataToCheck[propOnMapper])) {
         const nestedPropPath = getPropNestedPath();
         return [
@@ -123,7 +128,7 @@ export function validate(
       isArrayInProcess = false;
       //After the above isObject() call it is guaranteed to be an object
       //$FlowFixMe[incompatible-type]
-      argDataToCheck = argDataToCheck[propOnMapper];
+      argDataToCheck = argDataToCheck[propOnArg];
       //It's okay to treat ValidationMapperPure as ValidationMapper here,
       //because ValidationMapperPure is a subtype of ValidationMapper and it's
       //supposed to fit whereever a ValidationMapper fits.
@@ -151,8 +156,8 @@ export function validate(
         i,
         isArrayInProcess,
       });
-      topPropName = propOnMapper;
-      if (!Array.isArray(argDataToCheck[propOnMapper])) {
+      topPropName = propOnArg;
+      if (!Array.isArray(argDataToCheck[propOnArg])) {
         const nestedPropPath = getPropNestedPath();
         return [
           'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
@@ -166,7 +171,7 @@ export function validate(
       //and in here it's easier to treat an array as an object with integer
       //properties
       //$FlowFixMe[incompatible-type]
-      argDataToCheck = argDataToCheck[propOnMapper];
+      argDataToCheck = argDataToCheck[propOnArg];
       //It's okay to treat ValidationMapperPure as ValidationMapper here,
       //because ValidationMapperPure is a subtype of ValidationMapper and it's
       //supposed to fit whereever a ValidationMapper fits.
@@ -184,13 +189,14 @@ export function validate(
       i = -1;
       continue;
     } else {
+      //console.log('BBB', isArrayInProcess, propOnArg, argDataToCheck);
       //console.log('AAA', propOnMapper, mapper, isArrayInProcess);
       //The type ValidationMapper says that if it's prop is not an Array and not
       //and Object, then it's a function with a particular signature. Flow is
       //not able to detect it yet.
       //$FlowFixMe[prop-missing]
       //$FlowFixMe[not-a-function]
-      const msg = mapper[isArrayInProcess ? 0 : propOnMapper](argDataToCheck[propOnMapper]);
+      const msg = mapper[isArrayInProcess ? 0 : propOnMapper](argDataToCheck[propOnArg]);
       if (msg) {
         let nestedPropPath = getPropNestedPath();
         if (nestedPropPath.length) {

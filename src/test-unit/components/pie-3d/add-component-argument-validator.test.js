@@ -359,3 +359,37 @@ tp.test('data element is not object', (t) => {
   t.equal(actual, expected);
   t.end();
 });
+
+tp.test('value is not valid', (t) => {
+  const addComponentArg = {
+    type: 'pie-3d',
+    zIndex: '1',
+    options: {
+      thicknessPx: 50,
+      radiusPx: 150,
+      centerXPx: 300,
+      centerYPx: 250,
+      startAtDeg: 20,
+      rotationAroundCenterXAxisDeg: 60,
+      rotationAroundCenterZAxisDeg: 45,
+    },
+    data: [
+      { value: 40, meta: { color: '#ff0000' /* red */, }, },
+      { value: -1, meta: { color: '#000aff' /* blue */, }, },
+    ],
+  };
+  const propsToCheck = new Set([
+    'options',
+    'data',
+  ]);
+
+  const expected = [
+    'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
+    'Component pie-3d -> data -> 1 -> value:',
+    '  value must be a positive, finite number',
+  ].join('\n');
+
+  const actual = validate(propsToCheck, addComponentArg);
+  t.equal(actual, expected);
+  t.end();
+});
