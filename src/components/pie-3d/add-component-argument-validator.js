@@ -136,14 +136,20 @@ export function validate(
       //$FlowFixMe[incompatible-type]
       //$FlowFixMe[incompatible-function-indexer]
       mapper = mapper[propOnMapper];
-      //it's been decided in this validation logic to treat an array as an
-      //object with string, integer properties
-      //$FlowFixMe[not-an-object]
-      //$FlowFixMe[incompatible-type]
-      propsToCheckArray = Object.keys(userProvidedDataToCheck);
+      propsToCheckArray = getPropsToCheckArray();
       mapperPropsSet = new Set(propsToCheckArray);
       i = -1;
       return '';
+
+      function getPropsToCheckArray() {
+        const props = [];
+        //It's checked above that it's an array
+        //$FlowFixMe[invalid-compare]
+        for (let i = 0; i < userProvidedDataToCheck.length; i++) {
+          props.push(String(i));
+        }
+        return props;
+      }
     }
 
     function handleFunctionInMapper() {

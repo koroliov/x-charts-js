@@ -356,6 +356,74 @@ tp.test('data is empty array', (t) => {
   t.end();
 });
 
+tp.test('data array has non index property, allowed, ignored', (t) => {
+  const data = [
+    { value: 40, meta: { color: '#ff0000' /* red */, }, },
+  ];
+  //This is needed to check an error case
+  //$FlowFixMe[prop-missing]
+  data.fooProp = { value: -1, meta: { color: '#000aff' /* blue */, }, };
+  const addComponentArg = {
+    type: 'pie-3d',
+    zIndex: '1',
+    options: {
+      thicknessPx: 50,
+      radiusPx: 150,
+      centerXPx: 300,
+      centerYPx: 250,
+      startAtDeg: 20,
+      rotationAroundCenterXAxisDeg: 60,
+      rotationAroundCenterZAxisDeg: 45,
+    },
+    data,
+  };
+  const propsToCheck = new Set([
+    'options',
+    'data',
+  ]);
+
+  const expected = '';
+
+  const actual = validate(propsToCheck, addComponentArg);
+  t.equal(actual, expected);
+  t.end();
+});
+
+tp.test('data array has sparse elements', (t) => {
+  const data = [
+    { value: 40, meta: { color: '#ff0000' /* red */, }, },
+  ];
+  data[4] = { value: 10, meta: { color: '#000aff' /* blue */, }, };
+  const addComponentArg = {
+    type: 'pie-3d',
+    zIndex: '1',
+    options: {
+      thicknessPx: 50,
+      radiusPx: 150,
+      centerXPx: 300,
+      centerYPx: 250,
+      startAtDeg: 20,
+      rotationAroundCenterXAxisDeg: 60,
+      rotationAroundCenterZAxisDeg: 45,
+    },
+    data,
+  };
+  const propsToCheck = new Set([
+    'options',
+    'data',
+  ]);
+
+  const expected = [
+    'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
+    'Component pie-3d -> data -> 1:',
+    '  must be an object',
+  ].join('\n');
+
+  const actual = validate(propsToCheck, addComponentArg);
+  t.equal(actual, expected);
+  t.end();
+});
+
 tp.test('data element is not object', (t) => {
   const addComponentArg = {
     type: 'pie-3d',
