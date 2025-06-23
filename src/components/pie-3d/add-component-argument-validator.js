@@ -1,88 +1,26 @@
 //@flow strict
-import type {
-  AddComponentArgument, ValidationMapperPure, ValidationMapper,
-} from '../../types.js';
-import type { AddComponentPie3dArgument, } from './types.js';
+import type { ValidationMapper, } from '../../types.js';
 import { isObject, } from '../../utils/validation.js';
 
-const validationMapper: ValidationMapper = {
-  options: {
-    thicknessPx(val) {
-      return Number.isFinite(val) ? '' : 'value must be a number';
-    },
-    radiusPx(val) {
-      return Number.isFinite(val) ? '' : 'value must be a number';
-    },
-    centerXPx(val) {
-      return Number.isFinite(val) ? '' : 'value must be a number';
-    },
-    centerYPx(val) {
-      return Number.isFinite(val) ? '' : 'value must be a number';
-    },
-    startAtDeg(val) {
-      //The .isFinite() call is supposed to guarantee that it's a number
-      //$FlowFixMe[invalid-compare]
-      return Number.isFinite(val) && val >= 0 && val < 360 ?
-        '' : 'value must be a number in [+0, 360) range';
-    },
-    rotationAroundCenterXAxisDeg(val) {
-      //The .isFinite() call is supposed to guarantee that it's a number
-      //$FlowFixMe[invalid-compare]
-      return Number.isFinite(val) && val >= 0 && val < 360 ?
-        '' : 'value must be a number in [+0, 360) range';
-    },
-    rotationAroundCenterZAxisDeg(val) {
-      //The .isFinite() call is supposed to guarantee that it's a number
-      //$FlowFixMe[invalid-compare]
-      return Number.isFinite(val) && val >= 0 && val < 360 ?
-        '' : 'value must be a number in [+0, 360) range';
-    },
-  },
-  data: [
-    {
-      value(val) {
-        //console.log('VAL is:', val);
-        //The .isFinite() call is supposed to guarantee that it's a number
-        //$FlowFixMe[invalid-compare]
-        return Number.isFinite(val) && val >= 0 ?
-          '' : 'value must be a finite number >= 0';
-      },
-      meta: {
-        color(val) {
-          const msg = [
-            'value must be a full (6 char long) hex string,',
-            'e.g. #ffffff, not #fff',
-          ].join(' ');
-          if (typeof val !== 'string') {
-            return msg;
-          }
-          return /^#[0-9A-F]{6}$/i.test(val) ? '' : msg;
-        },
-      },
-    },
-  ],
-};
-
-const validationMapperPropsArray = Object.keys(validationMapper);
+const validationMapper = getValidationMapper();
+const mapperPropsArray = Object.keys(validationMapper);
 
 export function validate(
   propsToCheck: Set<string>,
-  arg: { [string]: mixed, }
+  userProvidedArg: { [string]: mixed, }
 ): string {
-  const validationMapperProps = new Set(validationMapperPropsArray);
-
-  let topPropName = 'pie-3d';
+  let propNameForErrMsg = 'pie-3d';
+  let userProvidedDataToCheck = userProvidedArg;
   let propsToCheckArray = Array.from(propsToCheck);
-  let argDataToCheck: { [string]: mixed } = arg;
   let mapper = validationMapper;
-  let mapperPropsToCheckSet = new Set(validationMapperPropsArray);
+  let mapperPropsSet = new Set(mapperPropsArray);
   let i = 0;
   let isArrayInProcess = false;
   const stack: Array<{
-    topPropName: string,
-    argDataToCheck: { [string]: mixed, },
+    propNameForErrMsg: string,
+    userProvidedDataToCheck: { [string]: mixed, },
     propsToCheckArray: Array<string>,
-    mapperPropsToCheckSet: Set<string>,
+    mapperPropsSet: Set<string>,
     mapper: ValidationMapper,
     i: number,
     isArrayInProcess: boolean,
@@ -91,51 +29,66 @@ export function validate(
   for (; i < propsToCheckArray.length; i++) {
     const propOnMapper = isArrayInProcess ? '0' : propsToCheckArray[i];
     const propOnArg = isArrayInProcess ? String(i) : propsToCheckArray[i];
-    //console.log('AAA', i, propOnArg, propOnMapper);
-    //console.log('AAA', propOnMapper, propsToCheckArray, mapperPropsToCheckSet);
-    if (!isArrayInProcess && !mapperPropsToCheckSet.has(propOnMapper)) {
-      const nestedPropPath = getPropNestedPath();
-      //console.log('BBB', propOnMapper, propsToCheckArray, mapperPropsToCheckSet);
-      return [
-        'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
-        `Component ${ nestedPropPath }:`,
-        `  unknown property '${ propOnMapper }'`,
-      ].join('\n');
+    let errMsg = '';
+    if (errMsg = checkUnknownOrUnexpectedProperty(propOnMapper, propOnArg)) {
+      return errMsg;
+    } else if (errMsg = handleExpectedProperty(propOnMapper, propOnArg)) {
+      return errMsg;
+    } else if (errMsg = moveUpIfFinishedOnThisLevel()) {
+      return errMsg;
     }
-    //if (isObject(isArrayInProcess ? argDataToCheck[propOnMapper] : mapper[propOnMapper])) {
+  }
+  if (mapperPropsSet.size > 0) {
+    return getMissingPropErrorMsg();
+  }
+  return '';
 
-    if (isArrayInProcess && !isObject(argDataToCheck[propOnArg])) {
-      const nestedPropPath = getPropNestedPath();
-      return [
-        'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
-        `Component ${ nestedPropPath } -> ${ propOnArg }:`,
-        '  must be an object',
-      ].join('\n');
+  function moveUpIfFinishedOnThisLevel() {
+    if (i === propsToCheckArray.length - 1) {
+      do {
+        if (mapperPropsSet.size > 0) {
+          return getMissingPropErrorMsg();
+        }
+        if (stack.length) {
+          popStack();
+        }
+        if (i === propsToCheckArray.length - 1 && mapperPropsSet.size > 0) {
+          return getMissingPropErrorMsg();
+        }
+      } while (stack.length && i === propsToCheckArray.length - 1);
     }
+    return '';
+  }
 
+  function handleExpectedProperty(propOnMapper: string, propOnArg: string) {
+    let msg = '';
     if (isObject(mapper[propOnMapper])) {
+      msg = enterObjectInMapper();
+    } else if (Array.isArray(mapper[propOnMapper])) {
+      msg = enterArrayInMapper();
+    } else {
+      msg = handleFunctionInMapper();
+    }
+    return msg;
+
+    function enterObjectInMapper() {
       stack.push({
-        topPropName,
-        argDataToCheck,
+        propNameForErrMsg,
+        userProvidedDataToCheck,
         propsToCheckArray,
-        mapperPropsToCheckSet,
+        mapperPropsSet,
         mapper,
         i,
         isArrayInProcess,
       });
-      topPropName = propOnArg;
-      if (!isObject(argDataToCheck[propOnMapper])) {
-        const nestedPropPath = getPropNestedPath();
-        return [
-          'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
-          `Component ${ nestedPropPath }:`,
-          '  must be an object',
-        ].join('\n');
+      propNameForErrMsg = propOnArg;
+      if (!isObject(userProvidedDataToCheck[propOnMapper])) {
+        return getNonObjectErrorMsg();
       }
       isArrayInProcess = false;
       //After the above isObject() call it is guaranteed to be an object
       //$FlowFixMe[incompatible-type]
-      argDataToCheck = argDataToCheck[propOnArg];
+      userProvidedDataToCheck = userProvidedDataToCheck[propOnArg];
       //It's okay to treat ValidationMapperPure as ValidationMapper here,
       //because ValidationMapperPure is a subtype of ValidationMapper and it's
       //supposed to fit whereever a ValidationMapper fits.
@@ -145,26 +98,25 @@ export function validate(
       //After the above isObject() call it is guaranteed to be an object
       //$FlowFixMe[not-an-object]
       //$FlowFixMe[incompatible-type]
-      propsToCheckArray = Object.keys(argDataToCheck);
-      //The above call of isObject(mapper[propOnMapper]) guaranteed that it's an object,
-      //not a tuple [ ValidationMapper ]
-      //$FlowFixMe[not-an-object]
-      mapperPropsToCheckSet = new Set(Object.keys(mapper));
+      propsToCheckArray = Object.keys(userProvidedDataToCheck);
+      mapperPropsSet = new Set(Object.keys(mapper));
       i = -1;
-      continue;
-    //} else if (Array.isArray(isArrayInProcess ? argDataToCheck[propOnMapper] : mapper[propOnMapper])) {
-    } else if (Array.isArray(mapper[propOnMapper])) {
+      return '';
+    }
+
+    function enterArrayInMapper() {
       stack.push({
-        topPropName,
-        argDataToCheck,
+        propNameForErrMsg,
+        userProvidedDataToCheck,
         propsToCheckArray,
-        mapperPropsToCheckSet,
+        mapperPropsSet,
         mapper,
         i,
         isArrayInProcess,
       });
-      topPropName = propOnArg;
-      if (!(Array.isArray(argDataToCheck[propOnArg]) && argDataToCheck[propOnArg].length)) {
+      propNameForErrMsg = propOnArg;
+      if (!(Array.isArray(userProvidedDataToCheck[propOnArg]) &&
+        userProvidedDataToCheck[propOnArg].length)) {
         const nestedPropPath = getPropNestedPath();
         return [
           'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
@@ -173,104 +125,176 @@ export function validate(
         ].join('\n');
       }
       isArrayInProcess = true;
-
-      //After the above isObject() call it is guaranteed to be an array
-      //and in here it's easier to treat an array as an object with integer
-      //properties
+      //After the above Array.isArray() call it is guaranteed to be a non empty
+      //array, also it's been decided in this validation logic to treat an array
+      //as an object with string, integer properties: '0' etc.
       //$FlowFixMe[incompatible-type]
-      argDataToCheck = argDataToCheck[propOnArg];
+      userProvidedDataToCheck = userProvidedDataToCheck[propOnArg];
       //It's okay to treat ValidationMapperPure as ValidationMapper here,
       //because ValidationMapperPure is a subtype of ValidationMapper and it's
       //supposed to fit whereever a ValidationMapper fits.
       //$FlowFixMe[incompatible-type]
       //$FlowFixMe[incompatible-function-indexer]
       mapper = mapper[propOnMapper];
-      //After the above isObject() call it is guaranteed to be an object
+      //it's been decided in this validation logic to treat an array as an
+      //object with string, integer properties
       //$FlowFixMe[not-an-object]
       //$FlowFixMe[incompatible-type]
-      propsToCheckArray = Object.keys(argDataToCheck);
-      //The above call of isObject(mapper[propOnMapper]) guaranteed that it's an
-      //object, not a tuple [ ValidationMapper ]
-      //$FlowFixMe[not-an-object]
-      mapperPropsToCheckSet = new Set(Object.keys(propsToCheckArray));
+      propsToCheckArray = Object.keys(userProvidedDataToCheck);
+      mapperPropsSet = new Set(propsToCheckArray);
       i = -1;
-      continue;
-    } else {
-      //console.log('BBB', isArrayInProcess, propOnArg, argDataToCheck);
-      //console.log('AAA', propOnMapper, mapper, isArrayInProcess);
+      return '';
+    }
+
+    function handleFunctionInMapper() {
       //The type ValidationMapper says that if it's prop is not an Array and not
-      //and Object, then it's a function with a particular signature. Flow is
-      //not able to detect it yet.
+      //an Object, then it's a function with a particular signature. Flow is not
+      //able to detect it yet.
       //$FlowFixMe[prop-missing]
       //$FlowFixMe[not-a-function]
-      const msg = mapper[isArrayInProcess ? 0 : propOnMapper](argDataToCheck[propOnArg]);
+      const msg = mapper[isArrayInProcess ?
+        '0' : propOnMapper](userProvidedDataToCheck[propOnArg]);
       if (msg) {
-        let nestedPropPath = getPropNestedPath();
-        if (nestedPropPath.length) {
-          nestedPropPath += ' -> ';
-        }
+        const nestedPropPath = getPropNestedPath();
+        const pathEnding = nestedPropPath.length ? ` -> ${ propOnMapper }` : '';
         return [
           'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
-          `Component ${ nestedPropPath }${ propOnMapper }:`,
+          `Component ${ nestedPropPath }${ pathEnding }:`,
           `  ${ msg }`,
         ].join('\n');
       }
-      mapperPropsToCheckSet.delete(propOnMapper);
-    }
-    if (i === propsToCheckArray.length - 1) {
-      do {
-        if (mapperPropsToCheckSet.size > 0) {
-          const nestedPropPath = getPropNestedPath();
-          return [
-            'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
-            `Component ${ nestedPropPath }:`,
-            `  missing properties: ${
-              Array.from(mapperPropsToCheckSet).join(', ') }`,
-          ].join('\n');
-        }
-        if (stack.length) {
-          //With the above .length check it's guaranteed not to be undefined
-          //$FlowFixMe[incompatible-type]
-          const popped: (typeof stack)[0] = stack.pop();
-          topPropName = popped.topPropName;
-          argDataToCheck = popped.argDataToCheck;
-          propsToCheckArray = popped.propsToCheckArray;
-          mapperPropsToCheckSet = popped.mapperPropsToCheckSet;
-          mapper = popped.mapper;
-          i = popped.i;
-          isArrayInProcess = popped.isArrayInProcess;
-          mapperPropsToCheckSet.delete(propsToCheckArray[i]);
-        }
-        if (i === propsToCheckArray.length - 1 &&
-          mapperPropsToCheckSet.size > 0) {
-          const nestedPropPath = getPropNestedPath();
-          return [
-            'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
-            `Component ${ nestedPropPath }:`,
-            `  missing properties: ${
-              Array.from(mapperPropsToCheckSet).join(', ') }`,
-          ].join('\n');
-        }
-        //console.log('out of loop', i);
-      } while (stack.length && i === propsToCheckArray.length - 1);
+      mapperPropsSet.delete(propOnMapper);
+      return '';
     }
   }
-  if (mapperPropsToCheckSet.size > 0) {
+
+  function checkUnknownOrUnexpectedProperty(
+    propOnMapper: string,
+    propOnArg: string) {
+    if (isArrayInProcess) {
+      if (isNonObjectInArrayError(propOnMapper, propOnArg)) {
+        return getNonObjectErrorMsg(propOnArg);
+      }
+    } else {
+      if (!mapperPropsSet.has(propOnArg)) {
+        return getUnknownPropertyError(propOnArg);
+      }
+    }
+    return '';
+  }
+
+  function popStack() {
+    //With the .length check it's guaranteed not to be undefined
+    //$FlowFixMe[incompatible-type]
+    const popped: (typeof stack)[0] = stack.pop();
+    propNameForErrMsg = popped.propNameForErrMsg;
+    userProvidedDataToCheck = popped.userProvidedDataToCheck;
+    propsToCheckArray = popped.propsToCheckArray;
+    mapperPropsSet = popped.mapperPropsSet;
+    mapper = popped.mapper;
+    i = popped.i;
+    isArrayInProcess = popped.isArrayInProcess;
+    mapperPropsSet.delete(propsToCheckArray[i]);
+  }
+
+  function getMissingPropErrorMsg() {
     const nestedPropPath = getPropNestedPath();
     return [
       'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
       `Component ${ nestedPropPath }:`,
       `  missing properties: ${
-        Array.from(mapperPropsToCheckSet).join(', ') }`,
+        Array.from(mapperPropsSet).join(', ') }`,
     ].join('\n');
   }
-  return '';
+
+  function getUnknownPropertyError(propOnArg: string) {
+    const nestedPropPath = getPropNestedPath();
+    return [
+      'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
+      `Component ${ nestedPropPath }:`,
+      `  unknown property '${ propOnArg }'`,
+    ].join('\n');
+  }
+
+  function isNonObjectInArrayError(propOnMapper: string, propOnArg: string) {
+    return isObject(mapper[propOnMapper]) &&
+      !isObject(userProvidedDataToCheck[propOnArg]);
+  }
+
+  function getNonObjectErrorMsg(propOnArg?: string) {
+    const nestedPropPath = getPropNestedPath();
+    const pathEnding = propOnArg?.length ? ` -> ${ propOnArg }` : '';
+    return [
+      'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
+      `Component ${ nestedPropPath }${ pathEnding}:`,
+      '  must be an object',
+    ].join('\n');
+  }
 
   function getPropNestedPath() {
-    let prevPath = stack.map(i => i.topPropName).join(' -> ');
+    let prevPath = stack.map(i => i.propNameForErrMsg).join(' -> ');
     if (prevPath.length) {
       prevPath += ' -> ';
     }
-    return `${ prevPath }${ topPropName }`;
+    return `${ prevPath }${ propNameForErrMsg }`;
   }
+}
+
+function getValidationMapper(): ValidationMapper {
+  return {
+    options: {
+      thicknessPx(val) {
+        return Number.isFinite(val) ? '' : 'value must be a number';
+      },
+      radiusPx(val) {
+        return Number.isFinite(val) ? '' : 'value must be a number';
+      },
+      centerXPx(val) {
+        return Number.isFinite(val) ? '' : 'value must be a number';
+      },
+      centerYPx(val) {
+        return Number.isFinite(val) ? '' : 'value must be a number';
+      },
+      startAtDeg(val) {
+        //The .isFinite() call is supposed to guarantee that it's a number
+        //$FlowFixMe[invalid-compare]
+        return Number.isFinite(val) && val >= 0 && val < 360 ?
+          '' : 'value must be a number in [+0, 360) range';
+      },
+      rotationAroundCenterXAxisDeg(val) {
+        //The .isFinite() call is supposed to guarantee that it's a number
+        //$FlowFixMe[invalid-compare]
+        return Number.isFinite(val) && val >= 0 && val < 360 ?
+          '' : 'value must be a number in [+0, 360) range';
+      },
+      rotationAroundCenterZAxisDeg(val) {
+        //The .isFinite() call is supposed to guarantee that it's a number
+        //$FlowFixMe[invalid-compare]
+        return Number.isFinite(val) && val >= 0 && val < 360 ?
+          '' : 'value must be a number in [+0, 360) range';
+      },
+    },
+    data: [
+      {
+        value(val) {
+          //The .isFinite() call is supposed to guarantee that it's a number
+          //$FlowFixMe[invalid-compare]
+          return Number.isFinite(val) && val >= 0 ?
+            '' : 'value must be a finite number >= 0';
+        },
+        meta: {
+          color(val) {
+            const msg = [
+              'value must be a full (6 char long) hex string,',
+              'e.g. #ffffff, not #fff',
+            ].join(' ');
+            if (typeof val !== 'string') {
+              return msg;
+            }
+            return /^#[0-9A-F]{6}$/i.test(val) ? '' : msg;
+          },
+        },
+      },
+    ],
+  };
 }
