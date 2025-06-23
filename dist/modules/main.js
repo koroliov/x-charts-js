@@ -132,6 +132,9 @@ export default class XCharts {
 
   _showError(msg        ) {
     this._componentsContainer.innerHTML =
-      `<div style="color: red; font-size: 2em;">${ msg }</div>`;
+      `<div style="color: red; font-size: 2em;"></div>`;
+    //It must exist, b/c we set it on the previous line
+    //$FlowFixMe[incompatible-use]
+    this._componentsContainer.querySelector('div').innerText = msg;
   }
 }
