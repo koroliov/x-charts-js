@@ -21,14 +21,17 @@ export default class XCharts {
   _constructorArgument                            
 
   constructor(arg                            ) {
+    this._constructorArgument = arg;
     const that = this;
     initDom();
 
     function initDom()       {
-      that._shadowRoot = arg.containerDiv.attachShadow({ mode: 'open', });
+      that._shadowRoot = that._constructorArgument.containerDiv
+        .attachShadow({ mode: 'open', });
       that._shadowRoot.innerHTML = `
         <div style="
-          background-color: ${ arg.options.backgroundColor };
+          background-color: ${
+            that._constructorArgument.options.backgroundColor };
           width: 100%;
           height: 100%;
           position: relative;
