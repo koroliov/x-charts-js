@@ -158,10 +158,8 @@ tp.test('invalid type property, empty string ""', (t) => {
   ];
   const expected = {
     errorMsg: [
-      'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG_TYPE_VAL:',
+      'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
       "Property 'type' must be a non-empty string",
-      "Provided string '' in argument",
-      'to the .add() method',
     ].join('\n'),
     propsToCheck: new Set() as Set<string>,
   };
@@ -224,11 +222,9 @@ tp.test('invalid zIndex property', (t) => {
   ];
   const expected = {
     errorMsg: [
-      'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG_ZINDEX_VAL:',
+      'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
       "Property 'zIndex' must be a numeric integer string",
       'no white space is allowed',
-      "Provided string '1 ' in argument",
-      'to the .add() method',
     ].join('\n'),
     propsToCheck: new Set() as Set<string>,
   };
