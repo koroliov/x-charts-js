@@ -6,7 +6,7 @@ export type XChartsConstructorArgument = {
   },
 }
 
-type ComponentDatum = {
+export type ComponentDatum = {
   +value: number,
   +meta: {
     +color: string,

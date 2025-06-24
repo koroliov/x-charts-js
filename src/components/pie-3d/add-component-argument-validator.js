@@ -1,5 +1,5 @@
 //@flow strict
-import type { ValidationMapper, } from '../../types.js';
+import type { ValidationMapper, ComponentDatum, } from '../../types.js';
 import { isObject, } from '../../utils/validation.js';
 
 const validationMapper = getValidationMapper();
@@ -12,8 +12,23 @@ export function validate(
   let errMsg = '';
   if (errMsg = handleStructureAndPrimitiveValues()) {
     return errMsg;
+  } else if (errMsg = validateTotalValue()) {
+    return errMsg;
   }
   return errMsg;
+
+  function validateTotalValue(): string {
+    const total = userProvidedArg.data
+      //After the handleStructureAndPrimitiveValues() call this is guaranteed to
+      //be an array of ComponentDatum
+      //$FlowFixMe[incompatible-use]
+      .reduce((t: number, d: ComponentDatum) => t + d.value, 0);
+    return total > 0 ? '' : [
+      'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
+      'Component pie-3d -> data:',
+      '  total value must be >= 0',
+    ].join('\n');
+  }
 
   function handleStructureAndPrimitiveValues(): string {
     let propNameForErrMsg = 'pie-3d';
