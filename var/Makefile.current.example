@@ -61,24 +61,26 @@
 #current-draw-test: test-unit
 #
 #.PHONY: current-test-add-component-argument-validator
-#current-test-add-component-argument-validator: BUILD_FILES="'\
+#current-test-validation-add-method-arg: BUILD_FILES="'\
 #  ./src/utils/validation.js \
-#  ./src/add-component-argument-validator.js \
+#  ./src/validation/by-dictionary.js \
+#  ./src/validation/add-method-arg.js \
 #'"
-#current-test-add-component-argument-validator: TEST_FILES="' \
-#  ./src/test-unit/add-component-argument-validator.test.js \
+#current-test-validation-add-method-arg: TEST_FILES="' \
+#  ./src/test-unit/validation/add-method-arg.test.js \
 #'"
-#current-test-add-component-argument-validator: TEST_FILES_RUN=$(subst ./src/,./test/unit-tmp/src/,$(TEST_FILES))
-#current-test-add-component-argument-validator: test-unit
+#current-test-validation-add-method-arg: TEST_FILES_RUN=$(subst ./src/,./test/unit-tmp/src/,$(TEST_FILES))
+#current-test-validation-add-method-arg: test-unit
 #
-#.PHONY: current-test-pie-3d-add-component-argument-validator
-#current-test-pie-3d-add-component-argument-validator: BUILD_FILES="'\
+#.PHONY: current-test-pie-3d-validation-add-method-arg
+#current-test-pie-3d-validation-add-method-arg: BUILD_FILES="'\
 #  ./src/utils/validation.js \
-#  ./src/add-component-argument-validator.js \
-#  ./src/components/pie-3d/add-component-argument-validator.js \
+#  ./src/validation/add-method-arg.js \
+#  ./src/validation/by-dictionary.js \
+#  ./src/components/pie-3d/validation/add-method-arg.js \
 #'"
-#current-test-pie-3d-add-component-argument-validator: TEST_FILES="' \
-#  ./src/test-unit/components/pie-3d/add-component-argument-validator.test.js \
+#current-test-pie-3d-validation-add-method-arg: TEST_FILES="' \
+#  ./src/test-unit/components/pie-3d/validation/add-method-arg.test.js \
 #'"
-#current-test-pie-3d-add-component-argument-validator: TEST_FILES_RUN=$(subst ./src/,./test/unit-tmp/src/,$(TEST_FILES))
-#current-test-pie-3d-add-component-argument-validator: test-unit
+#current-test-pie-3d-validation-add-method-arg: TEST_FILES_RUN=$(subst ./src/,./test/unit-tmp/src/,$(TEST_FILES))
+#current-test-pie-3d-validation-add-method-arg: test-unit

@@ -6,8 +6,7 @@
 import XCharts, { registerComponent, } from '../../main.js';
                                                              
 import { draw, } from './draw.js';
-import * as AddComponentArgumentValidator from
-  './add-component-argument-validator.js';
+import * as AddComponentArgumentValidator from './validation/add-method-arg.js';
 
 class Pie3d                              {
   static  _type = 'pie-3d'
@@ -34,10 +33,10 @@ class Pie3d                              {
   }
 
   static validateAddComponentArgument(
-    propsToCheck             ,
     arg                      
   )         {
-    return AddComponentArgumentValidator.validate(propsToCheck, arg);
+    const dict = AddComponentArgumentValidator.getDictionary();
+    return AddComponentArgumentValidator.validate(dict, arg);
   }
 }
 

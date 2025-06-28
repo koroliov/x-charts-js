@@ -1,8 +1,8 @@
 //@flow strict
 //$FlowFixMe[cannot-resolve-module]
 import tp from 'tape';
-import { validate, }
-  from '../../../components/pie-3d/add-component-argument-validator.js';
+import { validate, getDictionary, }
+  from '../../../../components/pie-3d/validation/add-method-arg.js';
 
 tp.test('valid argument case', (t) => {
   const addComponentArg = {
@@ -23,13 +23,10 @@ tp.test('valid argument case', (t) => {
       { value: 35, meta: { color: '#000aff' /* blue */, }, },
     ],
   };
-  const propsToCheck = new Set([
-    'options',
-    'data',
-  ]);
+  const dict = getDictionary();
   const expected = '';
 
-  const actual = validate(propsToCheck, addComponentArg);
+  const actual = validate(dict, addComponentArg);
   t.equal(actual, expected);
   t.end();
 });
@@ -55,19 +52,15 @@ tp.test('extra property present', (t) => {
       { value: 35, meta: { color: '#000aff' /* blue */, }, },
     ],
   };
-  const propsToCheck = new Set([
-    'someUnknownProp',
-    'options',
-    'data',
-  ]);
+  const dict = getDictionary();
 
   const expected = [
     'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
-    'Component pie-3d:',
+    '.add() method argument, component pie-3d:',
     "  unknown property 'someUnknownProp'",
   ].join('\n');
 
-  const actual = validate(propsToCheck, addComponentArg);
+  const actual = validate(dict, addComponentArg);
   t.equal(actual, expected);
   t.end();
 });
@@ -87,17 +80,15 @@ tp.test('missing property', (t) => {
     },
     //data: [],
   };
-  const propsToCheck = new Set([
-    'options',
-  ]);
+  const dict = getDictionary();
 
   const expected = [
     'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
-    'Component pie-3d:',
+    '.add() method argument, component pie-3d:',
     "  missing properties: data",
   ].join('\n');
 
-  const actual = validate(propsToCheck, addComponentArg);
+  const actual = validate(dict, addComponentArg);
   t.equal(actual, expected);
   t.end();
 });
@@ -109,15 +100,15 @@ tp.test('missing properties', (t) => {
     //options: { },
     //data: [],
   };
-  const propsToCheck: Set<string> = new Set();
+  const dict = getDictionary();
 
   const expected = [
     'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
-    'Component pie-3d:',
+    '.add() method argument, component pie-3d:',
     "  missing properties: options, data",
   ].join('\n');
 
-  const actual = validate(propsToCheck, addComponentArg);
+  const actual = validate(dict, addComponentArg);
   t.equal(actual, expected);
   t.end();
 });
@@ -135,18 +126,15 @@ tp.test('options is not object', (t) => {
       { value: 35, meta: { color: '#000aff' /* blue */, }, },
     ],
   };
-  const propsToCheck = new Set([
-    'options',
-    'data',
-  ]);
+  const dict = getDictionary();
 
   const expected = [
     'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
-    'Component pie-3d -> options:',
+    '.add() method argument, component pie-3d -> options:',
     '  must be an object',
   ].join('\n');
 
-  const actual = validate(propsToCheck, addComponentArg);
+  const actual = validate(dict, addComponentArg);
   t.equal(actual, expected);
   t.end();
 });
@@ -171,18 +159,15 @@ tp.test('extra property', (t) => {
       { value: 35, meta: { color: '#000aff' /* blue */, }, },
     ],
   };
-  const propsToCheck = new Set([
-    'options',
-    'data',
-  ]);
+  const dict = getDictionary();
 
   const expected = [
     'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
-    'Component pie-3d -> options:',
+    '.add() method argument, component pie-3d -> options:',
     "  unknown property 'someUnknownProp'",
   ].join('\n');
 
-  const actual = validate(propsToCheck, addComponentArg);
+  const actual = validate(dict, addComponentArg);
   t.equal(actual, expected);
   t.end();
 });
@@ -206,18 +191,15 @@ tp.test('missing property', (t) => {
       { value: 35, meta: { color: '#000aff' /* blue */, }, },
     ],
   };
-  const propsToCheck = new Set([
-    'options',
-    'data',
-  ]);
+  const dict = getDictionary();
 
   const expected = [
     'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
-    'Component pie-3d -> options:',
+    '.add() method argument, component pie-3d -> options:',
     "  missing properties: radiusPx",
   ].join('\n');
 
-  const actual = validate(propsToCheck, addComponentArg);
+  const actual = validate(dict, addComponentArg);
   t.equal(actual, expected);
   t.end();
 });
@@ -241,18 +223,15 @@ tp.test('missing properties', (t) => {
       { value: 35, meta: { color: '#000aff' /* blue */, }, },
     ],
   };
-  const propsToCheck = new Set([
-    'options',
-    'data',
-  ]);
+  const dict = getDictionary();
 
   const expected = [
     'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
-    'Component pie-3d -> options:',
+    '.add() method argument, component pie-3d -> options:',
     "  missing properties: radiusPx, startAtDeg",
   ].join('\n');
 
-  const actual = validate(propsToCheck, addComponentArg);
+  const actual = validate(dict, addComponentArg);
   t.equal(actual, expected);
   t.end();
 });
@@ -276,18 +255,15 @@ tp.test('startAtDeg invalid', (t) => {
       { value: 35, meta: { color: '#000aff' /* blue */, }, },
     ],
   };
-  const propsToCheck = new Set([
-    'options',
-    'data',
-  ]);
+  const dict = getDictionary();
 
   const expected = [
     'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
-    'Component pie-3d -> options -> startAtDeg:',
+    '.add() method argument, component pie-3d -> options -> startAtDeg:',
     "  value must be a number in [+0, 360) range",
   ].join('\n');
 
-  const actual = validate(propsToCheck, addComponentArg);
+  const actual = validate(dict, addComponentArg);
   t.equal(actual, expected);
   t.end();
 });
@@ -309,18 +285,15 @@ tp.test('data is not array', (t) => {
     },
     data: true,
   };
-  const propsToCheck = new Set([
-    'options',
-    'data',
-  ]);
+  const dict = getDictionary();
 
   const expected = [
     'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
-    'Component pie-3d -> data:',
+    '.add() method argument, component pie-3d -> data:',
     '  must be an non empty array',
   ].join('\n');
 
-  const actual = validate(propsToCheck, addComponentArg);
+  const actual = validate(dict, addComponentArg);
   t.equal(actual, expected);
   t.end();
 });
@@ -340,18 +313,15 @@ tp.test('data is empty array', (t) => {
     },
     data: [],
   };
-  const propsToCheck = new Set([
-    'options',
-    'data',
-  ]);
+  const dict = getDictionary();
 
   const expected = [
     'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
-    'Component pie-3d -> data:',
+    '.add() method argument, component pie-3d -> data:',
     '  must be an non empty array',
   ].join('\n');
 
-  const actual = validate(propsToCheck, addComponentArg);
+  const actual = validate(dict, addComponentArg);
   t.equal(actual, expected);
   t.end();
 });
@@ -377,14 +347,11 @@ tp.test('data array has non index property, allowed, ignored', (t) => {
     },
     data,
   };
-  const propsToCheck = new Set([
-    'options',
-    'data',
-  ]);
+  const dict = getDictionary();
 
   const expected = '';
 
-  const actual = validate(propsToCheck, addComponentArg);
+  const actual = validate(dict, addComponentArg);
   t.equal(actual, expected);
   t.end();
 });
@@ -408,18 +375,15 @@ tp.test('data array has sparse elements', (t) => {
     },
     data,
   };
-  const propsToCheck = new Set([
-    'options',
-    'data',
-  ]);
+  const dict = getDictionary();
 
   const expected = [
     'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
-    'Component pie-3d -> data -> 1:',
+    '.add() method argument, component pie-3d -> data -> 1:',
     '  must be an object',
   ].join('\n');
 
-  const actual = validate(propsToCheck, addComponentArg);
+  const actual = validate(dict, addComponentArg);
   t.equal(actual, expected);
   t.end();
 });
@@ -442,18 +406,15 @@ tp.test('data array has total value 0', (t) => {
       { value: 0, meta: { color: '#000aff' /* blue */, }, },
     ],
   };
-  const propsToCheck = new Set([
-    'options',
-    'data',
-  ]);
+  const dict = getDictionary();
 
   const expected = [
     'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
-    'Component pie-3d -> data:',
+    '.add() method argument, component pie-3d -> data:',
     '  total value must be >= 0',
   ].join('\n');
 
-  const actual = validate(propsToCheck, addComponentArg);
+  const actual = validate(dict, addComponentArg);
   t.equal(actual, expected);
   t.end();
 });
@@ -477,18 +438,15 @@ tp.test('data element is not object', (t) => {
       { value: 35, meta: { color: '#000aff' /* blue */, }, },
     ],
   };
-  const propsToCheck = new Set([
-    'options',
-    'data',
-  ]);
+  const dict = getDictionary();
 
   const expected = [
     'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
-    'Component pie-3d -> data -> 1:',
+    '.add() method argument, component pie-3d -> data -> 1:',
     '  must be an object',
   ].join('\n');
 
-  const actual = validate(propsToCheck, addComponentArg);
+  const actual = validate(dict, addComponentArg);
   t.equal(actual, expected);
   t.end();
 });
@@ -511,18 +469,15 @@ tp.test('prop is missing', (t) => {
       { /*value: 35,*/ meta: { color: '#000aff' /* blue */, }, },
     ],
   };
-  const propsToCheck = new Set([
-    'options',
-    'data',
-  ]);
+  const dict = getDictionary();
 
   const expected = [
     'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
-    'Component pie-3d -> data -> 1:',
+    '.add() method argument, component pie-3d -> data -> 1:',
     "  missing properties: value",
   ].join('\n');
 
-  const actual = validate(propsToCheck, addComponentArg);
+  const actual = validate(dict, addComponentArg);
   t.equal(actual, expected);
   t.end();
 });
@@ -545,18 +500,15 @@ tp.test('prop is not object', (t) => {
       { value: 35, meta: true, },
     ],
   };
-  const propsToCheck = new Set([
-    'options',
-    'data',
-  ]);
+  const dict = getDictionary();
 
   const expected = [
     'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
-    'Component pie-3d -> data -> 1 -> meta:',
+    '.add() method argument, component pie-3d -> data -> 1 -> meta:',
     "  must be an object",
   ].join('\n');
 
-  const actual = validate(propsToCheck, addComponentArg);
+  const actual = validate(dict, addComponentArg);
   t.equal(actual, expected);
   t.end();
 });
@@ -579,18 +531,15 @@ tp.test('value is not valid', (t) => {
       { value: -1, meta: { color: '#000aff' /* blue */, }, },
     ],
   };
-  const propsToCheck = new Set([
-    'options',
-    'data',
-  ]);
+  const dict = getDictionary();
 
   const expected = [
     'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
-    'Component pie-3d -> data -> 1 -> value:',
+    '.add() method argument, component pie-3d -> data -> 1 -> value:',
     '  value must be a finite number >= 0',
   ].join('\n');
 
-  const actual = validate(propsToCheck, addComponentArg);
+  const actual = validate(dict, addComponentArg);
   t.equal(actual, expected);
   t.end();
 });
@@ -613,18 +562,15 @@ tp.test('prop is missing on level 1', (t) => {
       { value: 35, meta: { /*color: '#000aff' * blue ,*/ }, },
     ],
   };
-  const propsToCheck = new Set([
-    'options',
-    'data',
-  ]);
+  const dict = getDictionary();
 
   const expected = [
     'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
-    'Component pie-3d -> data -> 1 -> meta:',
+    '.add() method argument, component pie-3d -> data -> 1 -> meta:',
     "  missing properties: color",
   ].join('\n');
 
-  const actual = validate(propsToCheck, addComponentArg);
+  const actual = validate(dict, addComponentArg);
   t.equal(actual, expected);
   t.end();
 });
@@ -647,18 +593,15 @@ tp.test('prop is invalid on level 1', (t) => {
       { value: 35, meta: { color: '#000afg' /* blue */, }, },
     ],
   };
-  const propsToCheck = new Set([
-    'options',
-    'data',
-  ]);
+  const dict = getDictionary();
 
   const expected = [
     'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
-    'Component pie-3d -> data -> 1 -> meta -> color:',
+    '.add() method argument, component pie-3d -> data -> 1 -> meta -> color:',
     '  value must be a full (6 char long) hex string, e.g. #ffffff, not #fff',
   ].join('\n');
 
-  const actual = validate(propsToCheck, addComponentArg);
+  const actual = validate(dict, addComponentArg);
   t.equal(actual, expected);
   t.end();
 });

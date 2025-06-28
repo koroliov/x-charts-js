@@ -1,8 +1,8 @@
 //@flow strict
 //$FlowFixMe[cannot-resolve-module]
 import tp from 'tape';
-import type { AddComponentArgument, } from '../types.js';
-import { validate, } from '../add-component-argument-validator.js';
+import type { AddComponentArgument, } from '../../types.js';
+import { validate, getDictionary, } from '../../validation/add-method-arg.js';
 
 tp.test('valid argument case', (t) => {
   const addComponentArguments = [
@@ -24,13 +24,10 @@ tp.test('valid argument case', (t) => {
       ],
     },
   ];
+  const dict = getDictionary();
+  const expected = '';
 
-  const expected = {
-    errorMsg: '',
-    propsToCheck: new Set([ 'options', 'data', ]),
-  };
-
-  const actual = validate(addComponentArguments);
+  const actual = validate(dict, addComponentArguments);
   t.deepEqual(actual, expected);
   t.end();
 });
@@ -39,15 +36,13 @@ tp.test('valid argument case', (t) => {
 
 tp.test('no arguments', (t) => {
   const addComponentArguments: Array<mixed> = [];
-  const expected = {
-    errorMsg: [
-      'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG_WRONG_NUMBER_OF_ARGS:',
-      'The .add() method expects a single argument',
-    ].join('\n'),
-    propsToCheck: new Set() as Set<string>,
-  };
+  const dict = getDictionary();
+  const expected = [
+    'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
+    'The .add() method expects a single argument',
+  ].join('\n');
 
-  const actual = validate(addComponentArguments);
+  const actual = validate(dict, addComponentArguments);
   t.deepEqual(actual, expected);
   t.end();
 });
@@ -73,31 +68,27 @@ tp.test('extra arguments', (t) => {
     },
     'foo',
   ];
-  const expected = {
-    errorMsg: [
-      'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG_WRONG_NUMBER_OF_ARGS:',
-      'The .add() method expects a single argument',
-    ].join('\n'),
-    propsToCheck: new Set() as Set<string>,
-  };
+  const dict = getDictionary();
+  const expected = [
+    'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
+    'The .add() method expects a single argument',
+  ].join('\n');
 
-  const actual = validate(addComponentArguments);
+  const actual = validate(dict, addComponentArguments);
   t.deepEqual(actual, expected);
   t.end();
 });
 
 tp.test('arg is not object', (t) => {
   const addComponentArguments = ['abc',];
-  const expected = {
-    errorMsg: [
-      'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
-      'Argument to the .add() method must be an object',
-      'e.g. {  }, Object.create(null)',
-    ].join('\n'),
-    propsToCheck: new Set() as Set<string>,
-  };
+  const dict = getDictionary();
+  const expected = [
+    'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
+    'Argument to the .add() method must be an object',
+    'e.g. {  }, Object.create(null)',
+  ].join('\n');
 
-  const actual = validate(addComponentArguments);
+  const actual = validate(dict, addComponentArguments);
   t.deepEqual(actual, expected);
   t.end();
 });
@@ -121,16 +112,14 @@ tp.test('missing property', (t) => {
       ],
     },
   ];
-  const expected = {
-    errorMsg: [
-      'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG_PROPS_MISSING:',
-      `Properties: type`,
-      'are missing on the provided argument to the add method()',
-    ].join('\n'),
-    propsToCheck: new Set() as Set<string>,
-  };
+  const dict = getDictionary();
+  const expected = [
+    'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
+    '.add() method argument:',
+    '  missing properties: type',
+  ].join('\n');
 
-  const actual = validate(addComponentArguments);
+  const actual = validate(dict, addComponentArguments);
   t.deepEqual(actual, expected);
   t.end();
 });
@@ -156,15 +145,14 @@ tp.test('invalid type property, empty string ""', (t) => {
       ],
     },
   ];
-  const expected = {
-    errorMsg: [
-      'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
-      "Property 'type' must be a non-empty string",
-    ].join('\n'),
-    propsToCheck: new Set() as Set<string>,
-  };
+  const dict = getDictionary();
+  const expected = [
+    'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
+    '.add() method argument -> type:',
+    '  value must be a non-empty string',
+  ].join('\n');
 
-  const actual = validate(addComponentArguments);
+  const actual = validate(dict, addComponentArguments);
   t.deepEqual(actual, expected);
   t.end();
 });
@@ -190,12 +178,10 @@ tp.test('zIndex property negative integers allowed', (t) => {
       ],
     },
   ];
-  const expected = {
-    errorMsg: '',
-    propsToCheck: new Set([ 'options', 'data', ]),
-  };
+  const dict = getDictionary();
+  const expected = '';
 
-  const actual = validate(addComponentArguments);
+  const actual = validate(dict, addComponentArguments);
   t.deepEqual(actual, expected);
   t.end();
 });
@@ -220,16 +206,14 @@ tp.test('invalid zIndex property', (t) => {
       ],
     },
   ];
-  const expected = {
-    errorMsg: [
-      'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
-      "Property 'zIndex' must be a numeric integer string",
-      'no white space is allowed',
-    ].join('\n'),
-    propsToCheck: new Set() as Set<string>,
-  };
+  const dict = getDictionary();
+  const expected = [
+    'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
+    '.add() method argument -> zIndex:',
+    '  value must be a numeric integer string with no white spaces',
+  ].join('\n');
 
-  const actual = validate(addComponentArguments);
+  const actual = validate(dict, addComponentArguments);
   t.deepEqual(actual, expected);
   t.end();
 });
