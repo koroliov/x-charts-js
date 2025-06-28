@@ -60,7 +60,7 @@
 #current-draw-test: TEST_FILES_RUN = $(subst ./src/,./test/unit-tmp/src/,$(TEST_FILES))
 #current-draw-test: test-unit
 #
-#.PHONY: current-test-add-component-argument-validator
+#.PHONY: current-test-validation-add-method-arg
 #current-test-validation-add-method-arg: BUILD_FILES="'\
 #  ./src/utils/validation.js \
 #  ./src/validation/by-dictionary.js \
