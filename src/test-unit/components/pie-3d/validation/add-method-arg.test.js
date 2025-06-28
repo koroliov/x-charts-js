@@ -4,7 +4,7 @@ import tp from 'tape';
 import { validate, }
   from '../../../../components/pie-3d/validation/add-method-arg.js';
 
-tp.test.skip('valid argument case', (t) => {
+tp.test('valid argument case', (t) => {
   const addComponentArg = {
     type: 'pie-3d',
     zIndex: '1',

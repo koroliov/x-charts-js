@@ -1,8 +1,8 @@
 //@flow strict
-import type { ValidationMapper, ComponentDatum, } from '../../../types.js';
+import type { ValidationDictionary, ComponentDatum, } from '../../../types.js';
 import { isObject, } from '../../../utils/validation.js';
 
-const validationMapper = getValidationMapper();
+const validationMapper = getValidationDictionary();
 const mapperPropsArray = Object.keys(validationMapper);
 
 export function validate(
@@ -43,7 +43,7 @@ export function validate(
       userProvidedDataToCheck: { [string]: mixed, },
       propsToCheckArray: Array<string>,
       mapperPropsSet: Set<string>,
-      mapper: ValidationMapper,
+      mapper: ValidationDictionary,
       i: number,
       isArrayInProcess: boolean,
     }> = [];
@@ -111,9 +111,9 @@ export function validate(
         //After the above isObject() call it is guaranteed to be an object
         //$FlowFixMe[incompatible-type]
         userProvidedDataToCheck = userProvidedDataToCheck[propOnArg];
-        //It's okay to treat ValidationMapperPure as ValidationMapper here,
-        //because ValidationMapperPure is a subtype of ValidationMapper and it's
-        //supposed to fit whereever a ValidationMapper fits.
+        //It's okay to treat ValidationDictionaryPure as ValidationDictionary here,
+        //because ValidationDictionaryPure is a subtype of ValidationDictionary and it's
+        //supposed to fit whereever a ValidationDictionary fits.
         //$FlowFixMe[incompatible-type]
         //$FlowFixMe[incompatible-function-indexer]
         mapper = mapper[propOnMapper];
@@ -152,9 +152,9 @@ export function validate(
         //an array as an object with string, integer properties: '0' etc.
         //$FlowFixMe[incompatible-type]
         userProvidedDataToCheck = userProvidedDataToCheck[propOnArg];
-        //It's okay to treat ValidationMapperPure as ValidationMapper here,
-        //because ValidationMapperPure is a subtype of ValidationMapper and it's
-        //supposed to fit whereever a ValidationMapper fits.
+        //It's okay to treat ValidationDictionaryPure as ValidationDictionary here,
+        //because ValidationDictionaryPure is a subtype of ValidationDictionary and it's
+        //supposed to fit whereever a ValidationDictionary fits.
         //$FlowFixMe[incompatible-type]
         //$FlowFixMe[incompatible-function-indexer]
         mapper = mapper[propOnMapper];
@@ -175,7 +175,7 @@ export function validate(
       }
 
       function handleFunctionInMapper() {
-        //The type ValidationMapper says that if it's prop is not an Array and
+        //The type ValidationDictionary says that if it's prop is not an Array and
         //not an Object, then it's a function with a particular signature. Flow
         //is not able to detect it yet.
         //$FlowFixMe[prop-missing]
@@ -271,7 +271,7 @@ export function validate(
 
 }
 
-function getValidationMapper(): ValidationMapper {
+function getValidationDictionary(): ValidationDictionary {
   return {
     options: {
       thicknessPx(val) {

@@ -38,13 +38,13 @@ export type AddComponentArgument = {
 
 export type Point = [number, number, number,]
 
-export type ValidationMapperPure = {
+export type ValidationDictionaryPure = {
   [string]: (arg: mixed) => string,
 }
 
-export type ValidationMapper = {
+export type ValidationDictionary = {
   [string]:
     ((arg: mixed) => string) |
-    ValidationMapperPure |
-    [ ValidationMapper, ],
+    ValidationDictionaryPure |
+    [ ValidationDictionary, ],
 }
