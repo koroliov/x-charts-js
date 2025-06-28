@@ -6,7 +6,7 @@ export type XChartsConstructorArgument = {
   },
 }
 
-type ComponentDatum = {
+export type ComponentDatum = {
   +value: number,
   +meta: {
     +color: string,
@@ -18,7 +18,11 @@ export interface ComponentInstance {
 
 export type ComponentClass = {
   +_type: string,
-  validateAddComponentArgument(arg: AddComponentArgument): string,
+  validateAddComponentArgument(
+    arg: {
+      [string]: mixed,
+    },
+  ): string,
   ...
 }
 
@@ -32,3 +36,14 @@ export type AddComponentArgument = {
 }
 
 export type Point = [number, number, number,]
+
+export type ValidationDictionaryPure = {
+  [string]: (arg: mixed) => string,
+}
+
+export type ValidationDictionary = {
+  [string]:
+    ((arg: mixed) => string) |
+    ValidationDictionaryPure |
+    [ ValidationDictionary, ],
+}

@@ -6,8 +6,7 @@ import type {
 import XCharts, { registerComponent, } from '../../main.js';
 import type { AddComponentPie3dArgument, } from './types.js';
 import { draw, } from './draw.js';
-import * as AddComponentArgumentValidator from
-  './add-component-argument-validator.js';
+import * as AddComponentArgumentValidator from './validation/add-method-arg.js';
 
 class Pie3d implements ComponentInstance {
   static +_type = 'pie-3d'
@@ -15,7 +14,6 @@ class Pie3d implements ComponentInstance {
   _ctx: CanvasRenderingContext2D
 
   constructor(arg: AddComponentPie3dArgument, container: HTMLDivElement) {
-    freezeArgument();
     this._container = container;
     const that = this;
     createCanvas();
@@ -32,19 +30,20 @@ class Pie3d implements ComponentInstance {
       that._container.appendChild(canvas);
       that._ctx = canvas.getContext('2d');
     }
-
-    function freezeArgument() {
-      Object.freeze(arg);
-      Object.freeze(arg.options);
-      Object.freeze(arg.data);
-      arg.data.forEach((d) => Object.freeze(d.meta));
-    }
   }
 
-  static validateAddComponentArgument(arg: AddComponentArgument): string {
-    return AddComponentArgumentValidator.validate(arg);
+  static validateAddComponentArgument(
+    arg: { [string]: mixed, }
+  ): string {
+    const dict = AddComponentArgumentValidator.getDictionary();
+    return AddComponentArgumentValidator.validate(dict, arg);
   }
 }
 
-//$FlowFixMe[method-unbinding] See commit message
+//This error is due to some 'unbindig' of the static
+//validateAddComponentArgument() method. The method is placed correctly (I don't
+//want to declare it outside of the class declaration) and it's used correctly:
+//RefToPie3dClass.validateAddComponentArgument()
+//So the logical decision was just to suppress here.
+//$FlowFixMe[method-unbinding]
 registerComponent(Pie3d);
