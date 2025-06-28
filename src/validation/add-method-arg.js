@@ -1,6 +1,10 @@
 //@flow strict
-import type { AddComponentArgument, ValidationDictionaryPure, } from './types.js';
-import { isObject, } from './utils/validation.js';
+import type {
+  AddComponentArgument,
+  ValidationDictionary,
+  ValidationDictionaryPure,
+} from '../types.js';
+import { isObject, } from '../utils/validation.js';
 
 const validationMapper: ValidationDictionaryPure = {
   type(val) {
@@ -100,5 +104,37 @@ function generateMissingPropsErrorReturnValue(propNames: Set<string>) {
       'are missing on the provided argument to the add method()',
     ].join('\n'),
     propsToCheck: new Set() as Set<string>,
+  };
+}
+
+export function getDictionary(): ValidationDictionary {
+  return {
+    type(val) {
+      if (typeof val !== 'string' || !val) {
+        return [
+          'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
+          "Property 'type' must be a non-empty string",
+        ].join('\n');
+      }
+      return '';
+    },
+
+    zIndex(val) {
+      if (typeof val !== 'string') {
+        return generateMessage();
+      }
+      if (/^-*\d+$/.test(val)) {
+        return '';
+      }
+      return generateMessage();
+
+      function generateMessage() {
+        return [
+          'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
+          "Property 'zIndex' must be a numeric integer string",
+          'no white space is allowed',
+        ].join('\n');
+      }
+    },
   };
 }

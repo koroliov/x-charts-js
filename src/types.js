@@ -19,7 +19,6 @@ export interface ComponentInstance {
 export type ComponentClass = {
   +_type: string,
   validateAddComponentArgument(
-    propsToCheck: Set<string>,
     arg: {
       [string]: mixed,
     },

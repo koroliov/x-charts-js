@@ -1,14 +1,16 @@
 //@flow strict
 import type { ValidationDictionary, ComponentDatum, } from '../../../types.js';
 import { isObject, } from '../../../utils/validation.js';
+import { getDictionary as getDictionaryCommon, }
+  from '../../../validation/add-method-arg.js';
 
-const validationMapper = getValidationDictionary();
-const mapperPropsArray = Object.keys(validationMapper);
 
 export function validate(
-  propsToCheck: Set<string>,
+  dict: ValidationDictionary,
   userProvidedArg: { [string]: mixed, }
 ): string {
+  const propsToCheckSet = getPropsToCheckSet();
+  const mapperPropsArray = Object.keys(dict);
   let errMsg = '';
   if (errMsg = handleStructureAndPrimitiveValues()) {
     return errMsg;
@@ -33,8 +35,8 @@ export function validate(
   function handleStructureAndPrimitiveValues(): string {
     let propNameForErrMsg = 'pie-3d';
     let userProvidedDataToCheck = userProvidedArg;
-    let propsToCheckArray = Array.from(propsToCheck);
-    let mapper = validationMapper;
+    let propsToCheckArray = Array.from(propsToCheckSet);
+    let mapper = dict;
     let mapperPropsSet = new Set(mapperPropsArray);
     let i = 0;
     let isArrayInProcess = false;
@@ -269,9 +271,16 @@ export function validate(
     }
   }
 
+  function getPropsToCheckSet() {
+    const propsInArg = new Set(Object.keys(userProvidedArg));
+    const propsCheckedInCommonValidation = new
+      Set(Object.keys(getDictionaryCommon()));
+    propsCheckedInCommonValidation.forEach((p) => propsInArg.delete(p));
+    return propsInArg;
+  }
 }
 
-function getValidationDictionary(): ValidationDictionary {
+export function getDictionary(): ValidationDictionary {
   return {
     options: {
       thicknessPx(val) {

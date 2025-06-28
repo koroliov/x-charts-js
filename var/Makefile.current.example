@@ -74,6 +74,7 @@
 #.PHONY: current-test-pie-3d-validation-add-method-arg
 #current-test-pie-3d-validation-add-method-arg: BUILD_FILES="'\
 #  ./src/utils/validation.js \
+#  ./src/validation/add-method-arg.js \
 #  ./src/components/pie-3d/validation/add-method-arg.js \
 #'"
 #current-test-pie-3d-validation-add-method-arg: TEST_FILES="' \

@@ -7,7 +7,7 @@ import type {
 } from './types.js';
 import {
   validate as validateAddComponentArgumentOnXChartsLevel,
-} from './add-component-argument-validator.js';
+} from './validation/add-method-arg.js';
 
 const componentsRegistry: Map<string, ComponentClass> = new Map();
 
@@ -110,7 +110,7 @@ export default class XCharts {
 
     function doComponentLevelArgumentValidation() {
       const invalidArgumentErrorMsg = componentClass
-        .validateAddComponentArgument(componentPropsToCheck,
+        .validateAddComponentArgument(
           //Despite the argTypeVerified is guaranteed at that point to have
           //props like: type, zIndex, I WANT to ignore them and treat the value
           //as the cast to value.

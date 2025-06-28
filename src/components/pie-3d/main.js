@@ -33,10 +33,10 @@ class Pie3d implements ComponentInstance {
   }
 
   static validateAddComponentArgument(
-    propsToCheck: Set<string>,
     arg: { [string]: mixed, }
   ): string {
-    return AddComponentArgumentValidator.validate(propsToCheck, arg);
+    const dict = AddComponentArgumentValidator.getDictionary();
+    return AddComponentArgumentValidator.validate(dict, arg);
   }
 }
 
