@@ -7,7 +7,7 @@ export function validate(arg: {
   topLevelPropName: string,
   ignorePropsSet: Set<string>,
   dictionary: ValidationDictionary,
-    value: { [string]: mixed, },
+  value: { [string]: mixed, },
 }): string {
   let propNameForErrMsg = arg.topLevelPropName;
   let userProvidedDataToCheck = arg.value;
