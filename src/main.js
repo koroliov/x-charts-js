@@ -9,6 +9,10 @@ import {
   validate as validateAddComponentArgumentOnXChartsLevel,
   getDictionary as getValidationDictionaryOnXChartsLevel,
 } from './validation/add-method-arg.js';
+import {
+  validate as validateConstructorArgument,
+  getDictionary as getValidationDictionaryForContructorArgument,
+} from './validation/constructor-arg.js';
 
 const componentsRegistry: Map<string, ComponentClass> = new Map();
 
@@ -21,9 +25,15 @@ export default class XCharts {
   _containerDiv: HTMLDivElement
   _componentsContainer: HTMLDivElement
 
-  constructor(arg: XChartsConstructorArgument) {
-    this._containerDiv = arg.containerDiv;
+  constructor(arg: mixed) {
     const that = this;
+    //The idea is to store it now, although we are not sure if it's an
+    //HTMLDivElement or not. Then we do validation, if it's not an error will be
+    //thrown and shown (attempted) to the user. In the _attemptToShowError() we
+    //check if it's a div or not. Looks acceptable.
+    //$FlowFixMe[incompatible-use]
+    this._containerDiv = arg.containerDiv;
+    const constructorArgValidated = doValidation([...arguments]);
     initDom();
 
     function initDom(): void {
@@ -31,7 +41,8 @@ export default class XCharts {
         .attachShadow({ mode: 'open', });
       that._shadowRoot.innerHTML = `
         <div style="
-          background-color: ${ arg.options.backgroundColor };
+          background-color: ${
+            constructorArgValidated.options.backgroundColor };
           width: 100%;
           height: 100%;
           position: relative;
@@ -60,6 +71,20 @@ export default class XCharts {
       }
       that._componentsContainer = componentsContainer;
     }
+
+    function doValidation(constructorArguments: Array<mixed>):
+      XChartsConstructorArgument {
+      const dict = getValidationDictionaryForContructorArgument();
+      const errorMsg = validateConstructorArgument(dict, constructorArguments);
+      if (errorMsg) {
+        that._attemptToShowError(errorMsg);
+        throw new Error(errorMsg);
+      }
+      //After the validation we should be sure it's guaranteed to be
+      //XChartsConstructorArgument
+      //$FlowFixMe[incompatible-cast]
+      return arg as XChartsConstructorArgument;
+    }
   }
 
   add(argProvided: mixed): ComponentInstance {
@@ -80,7 +105,7 @@ export default class XCharts {
       const componentClass = componentsRegistry.get(argTypeVerified.type);
       if (!componentClass) {
         const msg = getNoRegisteredComponentErrorMsg();
-        that._showError(msg);
+        that._attemptToShowError(msg);
         throw new Error(msg);
       }
       return componentClass;
@@ -116,7 +141,7 @@ export default class XCharts {
           //$FlowFixMe[incompatible-cast]
           argTypeVerified as { [string]: mixed, });
       if (invalidArgumentErrorMsg) {
-        that._showError(invalidArgumentErrorMsg);
+        that._attemptToShowError(invalidArgumentErrorMsg);
         throw new Error(invalidArgumentErrorMsg);
       }
     }
@@ -126,17 +151,19 @@ export default class XCharts {
       const errorMsg =
         validateAddComponentArgumentOnXChartsLevel(dict, addComponentArgs);
       if (errorMsg) {
-        that._showError(errorMsg);
+        that._attemptToShowError(errorMsg);
         throw new Error(errorMsg);
       }
     }
   }
 
-  _showError(msg: string) {
-    this._componentsContainer.innerHTML =
-      `<div style="color: red; font-size: 2em;"></div>`;
-    //It must exist, b/c we set it on the previous line
-    //$FlowFixMe[incompatible-use]
-    this._componentsContainer.querySelector('div').innerText = msg;
+  _attemptToShowError(msg: string) {
+    const el = this._componentsContainer || this._containerDiv;
+    if (el instanceof HTMLDivElement) {
+      el.style.color = 'red';
+      el.style.backgroundColor = 'white';
+      el.style.fontSize = '2em';
+      el.innerText = msg;
+    }
   }
 }
