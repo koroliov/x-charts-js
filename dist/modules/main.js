@@ -74,7 +74,7 @@ export default class XCharts {
 
     function doValidation(constructorArguments              ) 
                                  {
-      const dict = getValidationDictionaryForContructorArgument();
+      const dict = getValidationDictionaryForContructorArgument(HTMLDivElement);
       const errorMsg = validateConstructorArgument(dict, constructorArguments);
       if (errorMsg) {
         that._attemptToShowError(errorMsg);
