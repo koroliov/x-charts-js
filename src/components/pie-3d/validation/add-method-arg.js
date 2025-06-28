@@ -14,9 +14,8 @@ export function validate(
   let errMsg = '';
   if (errMsg = validateByDictionary({
     errorCode: 'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG',
-    topLevelPropName: 'pie-3d',
-    ignorePropsSet:
-      new Set(Object.keys(getDictionaryCommon())),
+    topLevelPropName: '.add() method argument',
+    ignorePropsSet: new Set(Object.keys(getDictionaryCommon())),
     dictionary: dict,
     value: userProvidedArg,
   })) {
@@ -34,7 +33,7 @@ export function validate(
       .reduce((t: number, d: ComponentDatum) => t + d.value, 0);
     return total > 0 ? '' : [
       'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
-      'Component pie-3d -> data:',
+      '.add() method argument -> data:',
       '  total value must be >= 0',
     ].join('\n');
   }

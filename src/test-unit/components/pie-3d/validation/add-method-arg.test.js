@@ -56,7 +56,7 @@ tp.test('extra property present', (t) => {
 
   const expected = [
     'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
-    'Component pie-3d:',
+    '.add() method argument:',
     "  unknown property 'someUnknownProp'",
   ].join('\n');
 
@@ -84,7 +84,7 @@ tp.test('missing property', (t) => {
 
   const expected = [
     'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
-    'Component pie-3d:',
+    '.add() method argument:',
     "  missing properties: data",
   ].join('\n');
 
@@ -104,7 +104,7 @@ tp.test('missing properties', (t) => {
 
   const expected = [
     'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
-    'Component pie-3d:',
+    '.add() method argument:',
     "  missing properties: options, data",
   ].join('\n');
 
@@ -130,7 +130,7 @@ tp.test('options is not object', (t) => {
 
   const expected = [
     'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
-    'Component pie-3d -> options:',
+    '.add() method argument -> options:',
     '  must be an object',
   ].join('\n');
 
@@ -163,7 +163,7 @@ tp.test('extra property', (t) => {
 
   const expected = [
     'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
-    'Component pie-3d -> options:',
+    '.add() method argument -> options:',
     "  unknown property 'someUnknownProp'",
   ].join('\n');
 
@@ -195,7 +195,7 @@ tp.test('missing property', (t) => {
 
   const expected = [
     'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
-    'Component pie-3d -> options:',
+    '.add() method argument -> options:',
     "  missing properties: radiusPx",
   ].join('\n');
 
@@ -227,7 +227,7 @@ tp.test('missing properties', (t) => {
 
   const expected = [
     'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
-    'Component pie-3d -> options:',
+    '.add() method argument -> options:',
     "  missing properties: radiusPx, startAtDeg",
   ].join('\n');
 
@@ -259,7 +259,7 @@ tp.test('startAtDeg invalid', (t) => {
 
   const expected = [
     'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
-    'Component pie-3d -> options -> startAtDeg:',
+    '.add() method argument -> options -> startAtDeg:',
     "  value must be a number in [+0, 360) range",
   ].join('\n');
 
@@ -289,7 +289,7 @@ tp.test('data is not array', (t) => {
 
   const expected = [
     'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
-    'Component pie-3d -> data:',
+    '.add() method argument -> data:',
     '  must be an non empty array',
   ].join('\n');
 
@@ -317,7 +317,7 @@ tp.test('data is empty array', (t) => {
 
   const expected = [
     'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
-    'Component pie-3d -> data:',
+    '.add() method argument -> data:',
     '  must be an non empty array',
   ].join('\n');
 
@@ -379,7 +379,7 @@ tp.test('data array has sparse elements', (t) => {
 
   const expected = [
     'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
-    'Component pie-3d -> data -> 1:',
+    '.add() method argument -> data -> 1:',
     '  must be an object',
   ].join('\n');
 
@@ -410,7 +410,7 @@ tp.test('data array has total value 0', (t) => {
 
   const expected = [
     'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
-    'Component pie-3d -> data:',
+    '.add() method argument -> data:',
     '  total value must be >= 0',
   ].join('\n');
 
@@ -442,7 +442,7 @@ tp.test('data element is not object', (t) => {
 
   const expected = [
     'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
-    'Component pie-3d -> data -> 1:',
+    '.add() method argument -> data -> 1:',
     '  must be an object',
   ].join('\n');
 
@@ -473,7 +473,7 @@ tp.test('prop is missing', (t) => {
 
   const expected = [
     'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
-    'Component pie-3d -> data -> 1:',
+    '.add() method argument -> data -> 1:',
     "  missing properties: value",
   ].join('\n');
 
@@ -504,7 +504,7 @@ tp.test('prop is not object', (t) => {
 
   const expected = [
     'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
-    'Component pie-3d -> data -> 1 -> meta:',
+    '.add() method argument -> data -> 1 -> meta:',
     "  must be an object",
   ].join('\n');
 
@@ -535,7 +535,7 @@ tp.test('value is not valid', (t) => {
 
   const expected = [
     'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
-    'Component pie-3d -> data -> 1 -> value:',
+    '.add() method argument -> data -> 1 -> value:',
     '  value must be a finite number >= 0',
   ].join('\n');
 
@@ -566,7 +566,7 @@ tp.test('prop is missing on level 1', (t) => {
 
   const expected = [
     'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
-    'Component pie-3d -> data -> 1 -> meta:',
+    '.add() method argument -> data -> 1 -> meta:',
     "  missing properties: color",
   ].join('\n');
 
@@ -597,7 +597,7 @@ tp.test('prop is invalid on level 1', (t) => {
 
   const expected = [
     'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
-    'Component pie-3d -> data -> 1 -> meta -> color:',
+    '.add() method argument -> data -> 1 -> meta -> color:',
     '  value must be a full (6 char long) hex string, e.g. #ffffff, not #fff',
   ].join('\n');
 
