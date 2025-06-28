@@ -84,3 +84,15 @@
 #'"
 #current-test-pie-3d-validation-add-method-arg: TEST_FILES_RUN=$(subst ./src/,./test/unit-tmp/src/,$(TEST_FILES))
 #current-test-pie-3d-validation-add-method-arg: test-unit
+#
+#.PHONY: current-test-validation-constructor-arg
+#current-test-validation-constructor-arg: BUILD_FILES="'\
+#  ./src/utils/validation.js \
+#  ./src/validation/constructor-arg.js \
+#  ./src/validation/by-dictionary.js \
+#'"
+#current-test-validation-constructor-arg: TEST_FILES="' \
+#  ./src/test-unit/validation/constructor-arg.test.js \
+#'"
+#current-test-validation-constructor-arg: TEST_FILES_RUN=$(subst ./src/,./test/unit-tmp/src/,$(TEST_FILES))
+#current-test-validation-constructor-arg: test-unit
