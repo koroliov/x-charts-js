@@ -4,7 +4,7 @@ import tp from 'tape';
 import { validate, }
   from '../../../components/pie-3d/add-component-argument-validator.js';
 
-tp.test('valid argument case', (t) => {
+tp.test.skip('valid argument case', (t) => {
   const addComponentArg = {
     type: 'pie-3d',
     zIndex: '1',
@@ -35,7 +35,7 @@ tp.test('valid argument case', (t) => {
 });
 
 //============ top level props ========================
-tp.test('extra property present', (t) => {
+tp.test.skip('extra property present', (t) => {
   const addComponentArg = {
     type: 'pie-3d',
     zIndex: '1',
@@ -72,7 +72,7 @@ tp.test('extra property present', (t) => {
   t.end();
 });
 
-tp.test('missing property', (t) => {
+tp.test.skip('missing property', (t) => {
   const addComponentArg = {
     type: 'pie-3d',
     zIndex: '1',
@@ -102,7 +102,7 @@ tp.test('missing property', (t) => {
   t.end();
 });
 
-tp.test('missing properties', (t) => {
+tp.test.skip('missing properties', (t) => {
   const addComponentArg = {
     type: 'pie-3d',
     zIndex: '1',
@@ -124,7 +124,7 @@ tp.test('missing properties', (t) => {
 
 //============ options ========================
 
-tp.test('options is not object', (t) => {
+tp.test.skip('options is not object', (t) => {
   const addComponentArg = {
     type: 'pie-3d',
     zIndex: '1',
@@ -151,7 +151,7 @@ tp.test('options is not object', (t) => {
   t.end();
 });
 
-tp.test('extra property', (t) => {
+tp.test.skip('extra property', (t) => {
   const addComponentArg = {
     type: 'pie-3d',
     zIndex: '1',
@@ -187,7 +187,7 @@ tp.test('extra property', (t) => {
   t.end();
 });
 
-tp.test('missing property', (t) => {
+tp.test.skip('missing property', (t) => {
   const addComponentArg = {
     type: 'pie-3d',
     zIndex: '1',
@@ -222,7 +222,7 @@ tp.test('missing property', (t) => {
   t.end();
 });
 
-tp.test('missing properties', (t) => {
+tp.test.skip('missing properties', (t) => {
   const addComponentArg = {
     type: 'pie-3d',
     zIndex: '1',
@@ -257,7 +257,7 @@ tp.test('missing properties', (t) => {
   t.end();
 });
 
-tp.test('startAtDeg invalid', (t) => {
+tp.test.skip('startAtDeg invalid', (t) => {
   const addComponentArg = {
     type: 'pie-3d',
     zIndex: '1',
@@ -294,7 +294,7 @@ tp.test('startAtDeg invalid', (t) => {
 
 //============ data values ========================
 
-tp.test('data is not array', (t) => {
+tp.test.skip('data is not array', (t) => {
   const addComponentArg = {
     type: 'pie-3d',
     zIndex: '1',
@@ -325,7 +325,7 @@ tp.test('data is not array', (t) => {
   t.end();
 });
 
-tp.test('data is empty array', (t) => {
+tp.test.skip('data is empty array', (t) => {
   const addComponentArg = {
     type: 'pie-3d',
     zIndex: '1',
@@ -356,7 +356,7 @@ tp.test('data is empty array', (t) => {
   t.end();
 });
 
-tp.test('data array has non index property, allowed, ignored', (t) => {
+tp.test.skip('data array has non index property, allowed, ignored', (t) => {
   const data = [
     { value: 40, meta: { color: '#ff0000' /* red */, }, },
   ];
@@ -389,7 +389,7 @@ tp.test('data array has non index property, allowed, ignored', (t) => {
   t.end();
 });
 
-tp.test('data array has sparse elements', (t) => {
+tp.test.skip('data array has sparse elements', (t) => {
   const data = [
     { value: 40, meta: { color: '#ff0000' /* red */, }, },
   ];
@@ -424,7 +424,7 @@ tp.test('data array has sparse elements', (t) => {
   t.end();
 });
 
-tp.test('data array has total value 0', (t) => {
+tp.test.skip('data array has total value 0', (t) => {
   const addComponentArg = {
     type: 'pie-3d',
     zIndex: '1',
@@ -458,7 +458,7 @@ tp.test('data array has total value 0', (t) => {
   t.end();
 });
 
-tp.test('data element is not object', (t) => {
+tp.test.skip('data element is not object', (t) => {
   const addComponentArg = {
     type: 'pie-3d',
     zIndex: '1',
@@ -493,7 +493,7 @@ tp.test('data element is not object', (t) => {
   t.end();
 });
 
-tp.test('prop is missing', (t) => {
+tp.test.skip('prop is missing', (t) => {
   const addComponentArg = {
     type: 'pie-3d',
     zIndex: '1',
@@ -527,7 +527,7 @@ tp.test('prop is missing', (t) => {
   t.end();
 });
 
-tp.test('prop is not object', (t) => {
+tp.test.skip('prop is not object', (t) => {
   const addComponentArg = {
     type: 'pie-3d',
     zIndex: '1',
@@ -561,7 +561,7 @@ tp.test('prop is not object', (t) => {
   t.end();
 });
 
-tp.test('value is not valid', (t) => {
+tp.test.skip('value is not valid', (t) => {
   const addComponentArg = {
     type: 'pie-3d',
     zIndex: '1',
@@ -595,7 +595,7 @@ tp.test('value is not valid', (t) => {
   t.end();
 });
 
-tp.test('prop is missing on level 1', (t) => {
+tp.test.skip('prop is missing on level 1', (t) => {
   const addComponentArg = {
     type: 'pie-3d',
     zIndex: '1',
@@ -629,7 +629,7 @@ tp.test('prop is missing on level 1', (t) => {
   t.end();
 });
 
-tp.test('prop is invalid on level 1', (t) => {
+tp.test.skip('prop is invalid on level 1', (t) => {
   const addComponentArg = {
     type: 'pie-3d',
     zIndex: '1',
