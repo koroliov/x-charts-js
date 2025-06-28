@@ -1,6 +1,5 @@
 //@flow strict
-import type { AddComponentArgument, ValidationDictionary, }
-  from '../types.js';
+import type { AddComponentArgument, ValidationDictionary, } from '../types.js';
 import { isObject, } from '../utils/validation.js';
 
 export function validate(arg: {
@@ -8,13 +7,10 @@ export function validate(arg: {
   topLevelPropName: string,
   ignorePropsSet: Set<string>,
   dictionary: ValidationDictionary,
-  value: mixed,
+    value: { [string]: mixed, },
 }): string {
-  let propNameForErrMsg = 'pie-3d';
-  //Temporary cast to finish pie-3d/validation/add-method-arg.js validation,
-  //later will be amended as more tests are enabled/added
-  //$FlowFixMe[incompatible-type]
-  let userProvidedDataToCheck: { [string]: mixed, } = arg.value;
+  let propNameForErrMsg = arg.topLevelPropName;
+  let userProvidedDataToCheck = arg.value;
   const propsToCheckSet = getPropsToCheckSet();
   let propsToCheckArray = Array.from(propsToCheckSet);
   let mapper = arg.dictionary;
@@ -50,12 +46,6 @@ export function validate(arg: {
   return '';
 
   function getPropsToCheckSet() {
-    if (!isObject(userProvidedDataToCheck)) {
-      return new Set() as Set<string>;
-    }
-    //After the above isObject() call the arg.value is guaranteed to be an
-    //object
-    //$FlowFixMe[not-an-object]
     const propsInArg: Set<string> = new Set(Object.keys(arg.value));
     const propsCheckedInCommonValidation = arg.ignorePropsSet;
     propsCheckedInCommonValidation.forEach((p) => propsInArg.delete(p));
@@ -108,9 +98,10 @@ export function validate(arg: {
       //After the above isObject() call it is guaranteed to be an object
       //$FlowFixMe[incompatible-type]
       userProvidedDataToCheck = userProvidedDataToCheck[propOnArg];
-      //It's okay to treat ValidationDictionaryPure as ValidationDictionary here,
-      //because ValidationDictionaryPure is a subtype of ValidationDictionary and it's
-      //supposed to fit whereever a ValidationDictionary fits.
+      //It's okay to treat ValidationDictionaryPure as ValidationDictionary
+      //here, because ValidationDictionaryPure is a subtype of
+      //ValidationDictionary and it's supposed to fit whereever a
+      //ValidationDictionary fits.
       //$FlowFixMe[incompatible-type]
       //$FlowFixMe[incompatible-function-indexer]
       mapper = mapper[propOnMapper];
@@ -138,7 +129,7 @@ export function validate(arg: {
         userProvidedDataToCheck[propOnArg].length)) {
         const nestedPropPath = getPropNestedPath();
         return [
-          'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
+          `${ arg.errorCode }:`,
           `Component ${ nestedPropPath }:`,
           '  must be an non empty array',
         ].join('\n');
@@ -149,9 +140,10 @@ export function validate(arg: {
       //an array as an object with string, integer properties: '0' etc.
       //$FlowFixMe[incompatible-type]
       userProvidedDataToCheck = userProvidedDataToCheck[propOnArg];
-      //It's okay to treat ValidationDictionaryPure as ValidationDictionary here,
-      //because ValidationDictionaryPure is a subtype of ValidationDictionary and it's
-      //supposed to fit whereever a ValidationDictionary fits.
+      //It's okay to treat ValidationDictionaryPure as ValidationDictionary
+      //here, because ValidationDictionaryPure is a subtype of
+      //ValidationDictionary and it's supposed to fit whereever a
+      //ValidationDictionary fits.
       //$FlowFixMe[incompatible-type]
       //$FlowFixMe[incompatible-function-indexer]
       mapper = mapper[propOnMapper];
@@ -184,7 +176,7 @@ export function validate(arg: {
         const pathEnding = nestedPropPath.length ?
           ` -> ${ propOnMapper }` : '';
         return [
-          'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
+          `${ arg.errorCode }:`,
           `Component ${ nestedPropPath }${ pathEnding }:`,
           `  ${ msg }`,
         ].join('\n');
@@ -226,7 +218,7 @@ export function validate(arg: {
   function getMissingPropErrorMsg() {
     const nestedPropPath = getPropNestedPath();
     return [
-      'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
+      `${ arg.errorCode }:`,
       `Component ${ nestedPropPath }:`,
       `  missing properties: ${
         Array.from(mapperPropsSet).join(', ') }`,
@@ -236,7 +228,7 @@ export function validate(arg: {
   function getUnknownPropertyError(propOnArg: string) {
     const nestedPropPath = getPropNestedPath();
     return [
-      'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
+      `${ arg.errorCode }:`,
       `Component ${ nestedPropPath }:`,
       `  unknown property '${ propOnArg }'`,
     ].join('\n');
@@ -251,7 +243,7 @@ export function validate(arg: {
     const nestedPropPath = getPropNestedPath();
     const pathEnding = propOnArg?.length ? ` -> ${ propOnArg }` : '';
     return [
-      'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
+      `${ arg.errorCode }:`,
       `Component ${ nestedPropPath }${ pathEnding}:`,
       '  must be an object',
     ].join('\n');
