@@ -1,6 +1,6 @@
 //@flow strict
-import type { ValidationMapper, ComponentDatum, } from '../../types.js';
-import { isObject, } from '../../utils/validation.js';
+import type { ValidationMapper, ComponentDatum, } from '../../../types.js';
+import { isObject, } from '../../../utils/validation.js';
 
 const validationMapper = getValidationMapper();
 const mapperPropsArray = Object.keys(validationMapper);

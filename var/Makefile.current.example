@@ -71,14 +71,13 @@
 #current-test-add-component-argument-validator: TEST_FILES_RUN=$(subst ./src/,./test/unit-tmp/src/,$(TEST_FILES))
 #current-test-add-component-argument-validator: test-unit
 #
-#.PHONY: current-test-pie-3d-add-component-argument-validator
-#current-test-pie-3d-add-component-argument-validator: BUILD_FILES="'\
+#.PHONY: current-test-pie-3d-validation-add-method-arg
+#current-test-pie-3d-validation-add-method-arg: BUILD_FILES="'\
 #  ./src/utils/validation.js \
-#  ./src/add-component-argument-validator.js \
-#  ./src/components/pie-3d/add-component-argument-validator.js \
+#  ./src/components/pie-3d/validation/add-method-arg.js \
 #'"
-#current-test-pie-3d-add-component-argument-validator: TEST_FILES="' \
-#  ./src/test-unit/components/pie-3d/add-component-argument-validator.test.js \
+#current-test-pie-3d-validation-add-method-arg: TEST_FILES="' \
+#  ./src/test-unit/components/pie-3d/validation/add-method-arg.test.js \
 #'"
-#current-test-pie-3d-add-component-argument-validator: TEST_FILES_RUN=$(subst ./src/,./test/unit-tmp/src/,$(TEST_FILES))
-#current-test-pie-3d-add-component-argument-validator: test-unit
+#current-test-pie-3d-validation-add-method-arg: TEST_FILES_RUN=$(subst ./src/,./test/unit-tmp/src/,$(TEST_FILES))
+#current-test-pie-3d-validation-add-method-arg: test-unit
