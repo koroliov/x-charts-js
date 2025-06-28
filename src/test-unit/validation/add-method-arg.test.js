@@ -38,7 +38,7 @@ tp.test('no arguments', (t) => {
   const addComponentArguments: Array<mixed> = [];
   const dict = getDictionary();
   const expected = [
-    'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG_WRONG_NUMBER_OF_ARGS:',
+    'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
     'The .add() method expects a single argument',
   ].join('\n');
 
@@ -70,7 +70,7 @@ tp.test('extra arguments', (t) => {
   ];
   const dict = getDictionary();
   const expected = [
-    'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG_WRONG_NUMBER_OF_ARGS:',
+    'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
     'The .add() method expects a single argument',
   ].join('\n');
 
@@ -114,9 +114,9 @@ tp.test('missing property', (t) => {
   ];
   const dict = getDictionary();
   const expected = [
-    'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG_PROPS_MISSING:',
-    `Properties: type`,
-    'are missing on the provided argument to the add method()',
+    'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
+    '.add() method argument:',
+    '  missing properties: type',
   ].join('\n');
 
   const actual = validate(dict, addComponentArguments);
@@ -148,7 +148,8 @@ tp.test('invalid type property, empty string ""', (t) => {
   const dict = getDictionary();
   const expected = [
     'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
-    "Property 'type' must be a non-empty string",
+    '.add() method argument -> type:',
+    '  value must be a non-empty string',
   ].join('\n');
 
   const actual = validate(dict, addComponentArguments);
@@ -208,8 +209,8 @@ tp.test('invalid zIndex property', (t) => {
   const dict = getDictionary();
   const expected = [
     'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
-    "Property 'zIndex' must be a numeric integer string",
-    'no white space is allowed',
+    '.add() method argument -> zIndex:',
+    '  value must be a numeric integer string with no white spaces',
   ].join('\n');
 
   const actual = validate(dict, addComponentArguments);

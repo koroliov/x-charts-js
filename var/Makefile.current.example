@@ -63,6 +63,7 @@
 #.PHONY: current-test-add-component-argument-validator
 #current-test-validation-add-method-arg: BUILD_FILES="'\
 #  ./src/utils/validation.js \
+#  ./src/validation/by-dictionary.js \
 #  ./src/validation/add-method-arg.js \
 #'"
 #current-test-validation-add-method-arg: TEST_FILES="' \

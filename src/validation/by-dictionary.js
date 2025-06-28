@@ -130,7 +130,7 @@ export function validate(arg: {
         const nestedPropPath = getPropNestedPath();
         return [
           `${ arg.errorCode }:`,
-          `Component ${ nestedPropPath }:`,
+          `${ nestedPropPath }:`,
           '  must be an non empty array',
         ].join('\n');
       }
@@ -177,7 +177,7 @@ export function validate(arg: {
           ` -> ${ propOnMapper }` : '';
         return [
           `${ arg.errorCode }:`,
-          `Component ${ nestedPropPath }${ pathEnding }:`,
+          `${ nestedPropPath }${ pathEnding }:`,
           `  ${ msg }`,
         ].join('\n');
       }
@@ -219,7 +219,7 @@ export function validate(arg: {
     const nestedPropPath = getPropNestedPath();
     return [
       `${ arg.errorCode }:`,
-      `Component ${ nestedPropPath }:`,
+      `${ nestedPropPath }:`,
       `  missing properties: ${
         Array.from(mapperPropsSet).join(', ') }`,
     ].join('\n');
@@ -229,7 +229,7 @@ export function validate(arg: {
     const nestedPropPath = getPropNestedPath();
     return [
       `${ arg.errorCode }:`,
-      `Component ${ nestedPropPath }:`,
+      `${ nestedPropPath }:`,
       `  unknown property '${ propOnArg }'`,
     ].join('\n');
   }
@@ -244,7 +244,7 @@ export function validate(arg: {
     const pathEnding = propOnArg?.length ? ` -> ${ propOnArg }` : '';
     return [
       `${ arg.errorCode }:`,
-      `Component ${ nestedPropPath }${ pathEnding}:`,
+      `${ nestedPropPath }${ pathEnding}:`,
       '  must be an object',
     ].join('\n');
   }

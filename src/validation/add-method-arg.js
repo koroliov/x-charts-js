@@ -1,6 +1,7 @@
 //@flow strict
 import type { AddComponentArgument, ValidationDictionary, } from '../types.js';
 import { isObject, } from '../utils/validation.js';
+import { validate as validateByDictionary, } from './by-dictionary.js';
 
 export function validate(dict: ValidationDictionary,
   allAddComponentArgs: Array<mixed>): string {
@@ -13,27 +14,25 @@ export function validate(dict: ValidationDictionary,
   //the above call of isObject() is supposed to guarantee, that it's an object.
   //$FlowFixMe[incompatible-type]
   const arg: { ... } = allAddComponentArgs[0];
-  const argumentPropsSet: Set<$Keys<typeof arg>> = new Set(Object.keys(arg));
-  const handledPropsSet = new Set(Object.keys(dict));
-  for (const p of argumentPropsSet) {
-    if (handledPropsSet.has(p)) {
-      const msg = dict[p](arg[p]);
-      if (msg) {
-        return msg;
-      }
-      argumentPropsSet.delete(p);
-      handledPropsSet.delete(p);
-    }
+  return validateByDictionary({
+    errorCode: 'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG',
+    topLevelPropName: '.add() method argument',
+    ignorePropsSet: getIgnorePropsSet(),
+    dictionary: dict,
+    value: arg,
+  });
+
+  function getIgnorePropsSet() {
+    const setOnArg: Set<string> = new Set(Object.keys(arg));
+    const setOnDict = new Set(Object.keys(dict));
+    setOnDict.forEach((p) => setOnArg.delete(p));
+    return setOnArg;
   }
-  if (handledPropsSet.size) {
-    return generateMissingPropsErrorReturnValue(handledPropsSet);
-  }
-  return '';
 };
 
 function generateWrongNumberOfArgumentsErrorReturnValue() {
   return [
-    'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG_WRONG_NUMBER_OF_ARGS:',
+    'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
     'The .add() method expects a single argument',
   ].join('\n');
 }
@@ -46,42 +45,20 @@ function generateNotObjectArgumentErrorReturnValue() {
   ].join('\n');
 }
 
-function generateMissingPropsErrorReturnValue(propNames: Set<string>) {
-  return [
-    'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG_PROPS_MISSING:',
-    `Properties: ${ Array.from(propNames).join(',') }`,
-    'are missing on the provided argument to the add method()',
-  ].join('\n');
-}
-
 export function getDictionary(): ValidationDictionary {
   return {
     type(val) {
-      if (typeof val !== 'string' || !val) {
-        return [
-          'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
-          "Property 'type' must be a non-empty string",
-        ].join('\n');
-      }
-      return '';
+      return (typeof val !== 'string' || !val) ?
+        'value must be a non-empty string' : '';
     },
 
     zIndex(val) {
+      const errMsg =
+        'value must be a numeric integer string with no white spaces';
       if (typeof val !== 'string') {
-        return generateMessage();
+        return errMsg;
       }
-      if (/^-*\d+$/.test(val)) {
-        return '';
-      }
-      return generateMessage();
-
-      function generateMessage() {
-        return [
-          'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
-          "Property 'zIndex' must be a numeric integer string",
-          'no white space is allowed',
-        ].join('\n');
-      }
+      return /^-*\d+$/.test(val) ? '' : errMsg;
     },
   };
 }
