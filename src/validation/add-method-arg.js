@@ -1,0 +1,64 @@
+//@flow strict
+import type { AddComponentArgument, ValidationDictionary, } from '../types.js';
+import { isObject, } from '../utils/validation.js';
+import { validate as validateByDictionary, } from './by-dictionary.js';
+
+export function validate(dict: ValidationDictionary,
+  allAddComponentArgs: Array<mixed>): string {
+  if (allAddComponentArgs.length !== 1) {
+    return generateWrongNumberOfArgumentsErrorReturnValue();
+  }
+  if (!isObject(allAddComponentArgs[0])) {
+    return generateNotObjectArgumentErrorReturnValue();
+  }
+  //the above call of isObject() is supposed to guarantee, that it's an object.
+  //$FlowFixMe[incompatible-type]
+  const arg: { ... } = allAddComponentArgs[0];
+  return validateByDictionary({
+    errorCode: 'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG',
+    topLevelPropName: '.add() method argument',
+    ignorePropsSet: getIgnorePropsSet(),
+    dictionary: dict,
+    value: arg,
+  });
+
+  function getIgnorePropsSet() {
+    const setOnArg: Set<string> = new Set(Object.keys(arg));
+    const setOnDict = new Set(Object.keys(dict));
+    setOnDict.forEach((p) => setOnArg.delete(p));
+    return setOnArg;
+  }
+};
+
+function generateWrongNumberOfArgumentsErrorReturnValue() {
+  return [
+    'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
+    'The .add() method expects a single argument',
+  ].join('\n');
+}
+
+function generateNotObjectArgumentErrorReturnValue() {
+  return [
+    'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
+    'Argument to the .add() method must be an object',
+    'e.g. {  }, Object.create(null)',
+  ].join('\n');
+}
+
+export function getDictionary(): ValidationDictionary {
+  return {
+    type(val) {
+      return (typeof val !== 'string' || !val) ?
+        'value must be a non-empty string' : '';
+    },
+
+    zIndex(val) {
+      const errMsg =
+        'value must be a numeric integer string with no white spaces';
+      if (typeof val !== 'string') {
+        return errMsg;
+      }
+      return /^-*\d+$/.test(val) ? '' : errMsg;
+    },
+  };
+}

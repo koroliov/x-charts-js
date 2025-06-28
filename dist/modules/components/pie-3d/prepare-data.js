@@ -65,10 +65,10 @@ export function prepareData(arg                           )          {
       p[1] -= centerY;
       let pRotated = Array.from(p);
       pRotated = rotationMatrixX.map((row) => {
-        return row.reduce((sum, value, i) => sum + value * pRotated[i], 0)
+        return row.reduce((sum, value, i) => sum + value * pRotated[i], 0);
       });
       pRotated = rotationMatrixZ.map((row) => {
-        return row.reduce((sum, value, i) => sum + value * pRotated[i], 0)
+        return row.reduce((sum, value, i) => sum + value * pRotated[i], 0);
       });
       p[0] = pRotated[0];
       p[1] = pRotated[1];

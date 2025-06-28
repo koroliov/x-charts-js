@@ -1,21 +1,19 @@
 //@flow strict
 import type {
   XChartsConstructorArgument,
-  Component,
+  ComponentClass,
+  ComponentInstance,
   AddComponentArgument,
 } from './types.js';
+import {
+  validate as validateAddComponentArgumentOnXChartsLevel,
+  getDictionary as getValidationDictionaryOnXChartsLevel,
+} from './validation/add-method-arg.js';
 
-const componentsRegistry: Map<string, Class<Component>> = new Map();
+const componentsRegistry: Map<string, ComponentClass> = new Map();
 
-export function registerComponent(
-  componentType: string,
-  componentClass: Class<Component>
-): void {
-  if (componentsRegistry.has(componentType)) {
-    throw new Error(`Component of componentType ${ componentType
-        } has been already registered`);
-  }
-  componentsRegistry.set(componentType, componentClass);
+export function registerComponent(componentClass: ComponentClass): void {
+  componentsRegistry.set(componentClass._type, componentClass);
 }
 
 export default class XCharts {
@@ -24,15 +22,13 @@ export default class XCharts {
   _constructorArgument: XChartsConstructorArgument
 
   constructor(arg: XChartsConstructorArgument) {
-    Object.freeze(arg.options);
-    Object.freeze(arg);
     this._constructorArgument = arg;
     const that = this;
     initDom();
 
     function initDom(): void {
       that._shadowRoot = that._constructorArgument.containerDiv
-          .attachShadow({ mode: 'open', });
+        .attachShadow({ mode: 'open', });
       that._shadowRoot.innerHTML = `
         <div style="
           background-color: ${
@@ -58,26 +54,44 @@ export default class XCharts {
       const componentsContainer = that._shadowRoot
           .getElementById('x-charts--components-container');
       if (!(componentsContainer instanceof HTMLDivElement)) {
-        throw new Error('Internal XCharts error');
+        throw new Error([
+          'ERR_X_CHARTS_INTERNAL:',
+          'Internal Flow required XCharts error',
+        ].join('\n'));
       }
       that._componentsContainer = componentsContainer;
     }
   }
 
-  add(arg: AddComponentArgument): Component {
-    const ComponentClass = componentsRegistry.get(arg.type);
-    if (!ComponentClass) {
-      throw new Error(getNoRegisteredComponentErrorMsg());
-    }
+  add(argProvided: mixed): ComponentInstance {
     const that = this;
+    doXChartsLevelArgumentValidation([...arguments]);
+    const argTypeVerified: { type: string, zIndex: string, [string]: mixed, } =
+      //At this point the type and zIndex properties are supposed to be valid
+      //$FlowFixMe[incompatible-type]
+      argProvided;
+    const componentClass = getComponentClass();
+    doComponentLevelArgumentValidation();
     const container = createContainer();
+    //At this point is should be of type expected by the component's class
+    //$FlowFixMe[invalid-constructor]
+    return new componentClass(argTypeVerified, container);
 
-    //$FlowExpectedError[prop-missing]
-    return new ComponentClass(arg, container);
+    function getComponentClass(): ComponentClass {
+      const componentClass = componentsRegistry.get(argTypeVerified.type);
+      if (!componentClass) {
+        const msg = getNoRegisteredComponentErrorMsg();
+        that._showError(msg);
+        throw new Error(msg);
+      }
+      return componentClass;
+    }
 
     function getNoRegisteredComponentErrorMsg() {
       return [
-        `Component of type ${ arg.type } has not been registered,`,
+        'ERR_X_CHARTS_COMPONENT_NOT_REGISTERED:',
+        `Component of type '${ argTypeVerified.type
+          }' has not been registered,`,
         `registered components are:`,
         Array.from(componentsRegistry.keys()).join(),
       ].join('\n');
@@ -85,13 +99,45 @@ export default class XCharts {
 
     function createContainer() {
       const container = document.createElement('div');
-      container.setAttribute('class', `${ arg.type }--container`);
-      container.style.zIndex = arg.zIndex;
+      container.setAttribute('class', `${ argTypeVerified.type }--container`);
+      container.style.zIndex = argTypeVerified.zIndex;
       container.style.position = 'absolute';
       container.style.width = '100%';
       container.style.height = '100%';
       that._componentsContainer.appendChild(container);
       return container;
     }
+
+    function doComponentLevelArgumentValidation() {
+      const invalidArgumentErrorMsg = componentClass
+        .validateAddComponentArgument(
+          //Despite the argTypeVerified is guaranteed at that point to have
+          //props like: type, zIndex, I WANT to ignore them and treat the value
+          //as the cast to value.
+          //$FlowFixMe[incompatible-cast]
+          argTypeVerified as { [string]: mixed, });
+      if (invalidArgumentErrorMsg) {
+        that._showError(invalidArgumentErrorMsg);
+        throw new Error(invalidArgumentErrorMsg);
+      }
+    }
+
+    function doXChartsLevelArgumentValidation(addComponentArgs: Array<mixed>) {
+      const dict = getValidationDictionaryOnXChartsLevel();
+      const errorMsg =
+        validateAddComponentArgumentOnXChartsLevel(dict, addComponentArgs);
+      if (errorMsg) {
+        that._showError(errorMsg);
+        throw new Error(errorMsg);
+      }
+    }
+  }
+
+  _showError(msg: string) {
+    this._componentsContainer.innerHTML =
+      `<div style="color: red; font-size: 2em;"></div>`;
+    //It must exist, b/c we set it on the previous line
+    //$FlowFixMe[incompatible-use]
+    this._componentsContainer.querySelector('div').innerText = msg;
   }
 }

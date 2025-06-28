@@ -53,12 +53,18 @@ the Podman image tag must be incremented by 1:
     +propB: string,
   }
   ```
+- Every error suppression must have a clear, logical explanation right above it.
+  Except for:
+  //$FlowFixMe[cannot-resolve-module]
+  when importing an external module, where it seems to be obvious.
 
-  - hex colors (and other colors, but currently only hex colors are supposed to
-    be allowed) must always have their human name right next to them, e.g.:
-  ```
-  { value: 50, meta: { color: '#f2b5f6' /* pinkish */, }, },
-  ```
+**Other**
+
+- hex colors (and other colors, but currently only hex colors are supposed to
+  be allowed) must always have their human name right next to them, e.g.:
+```
+{ value: 50, meta: { color: '#f2b5f6' /* pinkish */, }, },
+```
 
 ============================= **Various how-tos** ==============================
 
@@ -94,3 +100,8 @@ temporary enable 'the watch mode':
 - Work with the tesst/server/main.js file
 - When everything is ready, kill the container, restore the Containerfile,
   rebuild the image
+
+**How to modify script in package.json?**
+- modify the package.json file first in an interactive container session.
+- once it works, update the main package.json file and rebuild the image
+  (increase the tag number)

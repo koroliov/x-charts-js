@@ -59,3 +59,28 @@
 #current-draw-test: TEST_FILES="./src/test-unit/components/pie-3d/draw.test.js"
 #current-draw-test: TEST_FILES_RUN = $(subst ./src/,./test/unit-tmp/src/,$(TEST_FILES))
 #current-draw-test: test-unit
+#
+#.PHONY: current-test-add-component-argument-validator
+#current-test-validation-add-method-arg: BUILD_FILES="'\
+#  ./src/utils/validation.js \
+#  ./src/validation/by-dictionary.js \
+#  ./src/validation/add-method-arg.js \
+#'"
+#current-test-validation-add-method-arg: TEST_FILES="' \
+#  ./src/test-unit/validation/add-method-arg.test.js \
+#'"
+#current-test-validation-add-method-arg: TEST_FILES_RUN=$(subst ./src/,./test/unit-tmp/src/,$(TEST_FILES))
+#current-test-validation-add-method-arg: test-unit
+#
+#.PHONY: current-test-pie-3d-validation-add-method-arg
+#current-test-pie-3d-validation-add-method-arg: BUILD_FILES="'\
+#  ./src/utils/validation.js \
+#  ./src/validation/add-method-arg.js \
+#  ./src/validation/by-dictionary.js \
+#  ./src/components/pie-3d/validation/add-method-arg.js \
+#'"
+#current-test-pie-3d-validation-add-method-arg: TEST_FILES="' \
+#  ./src/test-unit/components/pie-3d/validation/add-method-arg.test.js \
+#'"
+#current-test-pie-3d-validation-add-method-arg: TEST_FILES_RUN=$(subst ./src/,./test/unit-tmp/src/,$(TEST_FILES))
+#current-test-pie-3d-validation-add-method-arg: test-unit
