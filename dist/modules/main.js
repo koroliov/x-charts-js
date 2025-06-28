@@ -7,7 +7,8 @@
                     
 import {
   validate as validateAddComponentArgumentOnXChartsLevel,
-} from './add-component-argument-validator.js';
+  getDictionary as getValidationDictionaryOnXChartsLevel,
+} from './validation/add-method-arg.js';
 
 const componentsRegistry                              = new Map();
 
@@ -64,8 +65,7 @@ export default class XCharts {
 
   add(argProvided       )                    {
     const that = this;
-    const componentPropsToCheck =
-      doXChartsLevelArgumentValidation([...arguments]);
+    doXChartsLevelArgumentValidation([...arguments]);
     const argTypeVerified                                                     =
       //At this point the type and zIndex properties are supposed to be valid
       //$FlowFixMe[incompatible-type]
@@ -110,7 +110,7 @@ export default class XCharts {
 
     function doComponentLevelArgumentValidation() {
       const invalidArgumentErrorMsg = componentClass
-        .validateAddComponentArgument(componentPropsToCheck,
+        .validateAddComponentArgument(
           //Despite the argTypeVerified is guaranteed at that point to have
           //props like: type, zIndex, I WANT to ignore them and treat the value
           //as the cast to value.
@@ -123,13 +123,13 @@ export default class XCharts {
     }
 
     function doXChartsLevelArgumentValidation(addComponentArgs              ) {
-      const { errorMsg, propsToCheck, } =
-        validateAddComponentArgumentOnXChartsLevel(addComponentArgs);
+      const dict = getValidationDictionaryOnXChartsLevel();
+      const errorMsg =
+        validateAddComponentArgumentOnXChartsLevel(dict, addComponentArgs);
       if (errorMsg) {
         that._showError(errorMsg);
         throw new Error(errorMsg);
       }
-      return propsToCheck;
     }
   }
 
