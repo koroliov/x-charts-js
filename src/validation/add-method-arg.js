@@ -1,12 +1,8 @@
 //@flow strict
-import type {
-  AddComponentArgument,
-  ValidationDictionary,
-  ValidationDictionaryPure,
-} from '../types.js';
+import type { AddComponentArgument, ValidationDictionary, } from '../types.js';
 import { isObject, } from '../utils/validation.js';
 
-const validationMapper: ValidationDictionaryPure = {
+const validationMapper: ValidationDictionary = {
   type(val) {
     if (typeof val !== 'string' || !val) {
       return [
@@ -36,10 +32,7 @@ const validationMapper: ValidationDictionaryPure = {
   },
 };
 
-export function validate(allAddComponentArgs: Array<mixed>): {
-  errorMsg: string,
-  propsToCheck: Set<string>,
-} {
+export function validate(allAddComponentArgs: Array<mixed>): string {
   if (allAddComponentArgs.length !== 1) {
     return generateWrongNumberOfArgumentsErrorReturnValue();
   }
@@ -55,7 +48,7 @@ export function validate(allAddComponentArgs: Array<mixed>): {
     if (handledPropsSet.has(p)) {
       const msg = validationMapper[p](arg[p]);
       if (msg) {
-        return { errorMsg: msg, propsToCheck: new Set(), };
+        return msg;
       }
       argumentPropsSet.delete(p);
       handledPropsSet.delete(p);
@@ -64,47 +57,30 @@ export function validate(allAddComponentArgs: Array<mixed>): {
   if (handledPropsSet.size) {
     return generateMissingPropsErrorReturnValue(handledPropsSet);
   }
-  return {
-    errorMsg: '',
-    //This value was taken from the above Object.keys() call, so it definitely
-    //should qualify for the Set<string> type. And we use it, instead of
-    //Set<Keys<typeof arg>>, b/c the latter would force us to do some insane
-    //type checks/casts later.
-    //$FlowFixMe[prop-missing]
-    propsToCheck: argumentPropsSet as Set<string>,
-  };
+  return '';
 };
 
 function generateWrongNumberOfArgumentsErrorReturnValue() {
-  return {
-    errorMsg: [
-      'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG_WRONG_NUMBER_OF_ARGS:',
-      'The .add() method expects a single argument',
-    ].join('\n'),
-    propsToCheck: new Set() as Set<string>,
-  };
+  return [
+    'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG_WRONG_NUMBER_OF_ARGS:',
+    'The .add() method expects a single argument',
+  ].join('\n');
 }
 
 function generateNotObjectArgumentErrorReturnValue() {
-  return {
-    errorMsg: [
-      'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
-      'Argument to the .add() method must be an object',
-      'e.g. {  }, Object.create(null)',
-    ].join('\n'),
-    propsToCheck: new Set() as Set<string>,
-  };
+  return [
+    'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
+    'Argument to the .add() method must be an object',
+    'e.g. {  }, Object.create(null)',
+  ].join('\n');
 }
 
 function generateMissingPropsErrorReturnValue(propNames: Set<string>) {
-  return {
-    errorMsg: [
-      'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG_PROPS_MISSING:',
-      `Properties: ${ Array.from(propNames).join(',') }`,
-      'are missing on the provided argument to the add method()',
-    ].join('\n'),
-    propsToCheck: new Set() as Set<string>,
-  };
+  return [
+    'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG_PROPS_MISSING:',
+    `Properties: ${ Array.from(propNames).join(',') }`,
+    'are missing on the provided argument to the add method()',
+  ].join('\n');
 }
 
 export function getDictionary(): ValidationDictionary {

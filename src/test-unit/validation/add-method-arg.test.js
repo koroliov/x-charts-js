@@ -24,11 +24,7 @@ tp.test('valid argument case', (t) => {
       ],
     },
   ];
-
-  const expected = {
-    errorMsg: '',
-    propsToCheck: new Set([ 'options', 'data', ]),
-  };
+  const expected = '';
 
   const actual = validate(addComponentArguments);
   t.deepEqual(actual, expected);
@@ -39,13 +35,10 @@ tp.test('valid argument case', (t) => {
 
 tp.test('no arguments', (t) => {
   const addComponentArguments: Array<mixed> = [];
-  const expected = {
-    errorMsg: [
-      'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG_WRONG_NUMBER_OF_ARGS:',
-      'The .add() method expects a single argument',
-    ].join('\n'),
-    propsToCheck: new Set() as Set<string>,
-  };
+  const expected = [
+    'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG_WRONG_NUMBER_OF_ARGS:',
+    'The .add() method expects a single argument',
+  ].join('\n');
 
   const actual = validate(addComponentArguments);
   t.deepEqual(actual, expected);
@@ -73,13 +66,10 @@ tp.test('extra arguments', (t) => {
     },
     'foo',
   ];
-  const expected = {
-    errorMsg: [
-      'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG_WRONG_NUMBER_OF_ARGS:',
-      'The .add() method expects a single argument',
-    ].join('\n'),
-    propsToCheck: new Set() as Set<string>,
-  };
+  const expected = [
+    'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG_WRONG_NUMBER_OF_ARGS:',
+    'The .add() method expects a single argument',
+  ].join('\n');
 
   const actual = validate(addComponentArguments);
   t.deepEqual(actual, expected);
@@ -88,14 +78,11 @@ tp.test('extra arguments', (t) => {
 
 tp.test('arg is not object', (t) => {
   const addComponentArguments = ['abc',];
-  const expected = {
-    errorMsg: [
-      'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
-      'Argument to the .add() method must be an object',
-      'e.g. {  }, Object.create(null)',
-    ].join('\n'),
-    propsToCheck: new Set() as Set<string>,
-  };
+  const expected = [
+    'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
+    'Argument to the .add() method must be an object',
+    'e.g. {  }, Object.create(null)',
+  ].join('\n');
 
   const actual = validate(addComponentArguments);
   t.deepEqual(actual, expected);
@@ -121,14 +108,11 @@ tp.test('missing property', (t) => {
       ],
     },
   ];
-  const expected = {
-    errorMsg: [
-      'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG_PROPS_MISSING:',
-      `Properties: type`,
-      'are missing on the provided argument to the add method()',
-    ].join('\n'),
-    propsToCheck: new Set() as Set<string>,
-  };
+  const expected = [
+    'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG_PROPS_MISSING:',
+    `Properties: type`,
+    'are missing on the provided argument to the add method()',
+  ].join('\n');
 
   const actual = validate(addComponentArguments);
   t.deepEqual(actual, expected);
@@ -156,13 +140,10 @@ tp.test('invalid type property, empty string ""', (t) => {
       ],
     },
   ];
-  const expected = {
-    errorMsg: [
-      'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
-      "Property 'type' must be a non-empty string",
-    ].join('\n'),
-    propsToCheck: new Set() as Set<string>,
-  };
+  const expected = [
+    'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
+    "Property 'type' must be a non-empty string",
+  ].join('\n');
 
   const actual = validate(addComponentArguments);
   t.deepEqual(actual, expected);
@@ -190,10 +171,7 @@ tp.test('zIndex property negative integers allowed', (t) => {
       ],
     },
   ];
-  const expected = {
-    errorMsg: '',
-    propsToCheck: new Set([ 'options', 'data', ]),
-  };
+  const expected = '';
 
   const actual = validate(addComponentArguments);
   t.deepEqual(actual, expected);
@@ -220,14 +198,11 @@ tp.test('invalid zIndex property', (t) => {
       ],
     },
   ];
-  const expected = {
-    errorMsg: [
-      'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
-      "Property 'zIndex' must be a numeric integer string",
-      'no white space is allowed',
-    ].join('\n'),
-    propsToCheck: new Set() as Set<string>,
-  };
+  const expected = [
+    'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
+    "Property 'zIndex' must be a numeric integer string",
+    'no white space is allowed',
+  ].join('\n');
 
   const actual = validate(addComponentArguments);
   t.deepEqual(actual, expected);
