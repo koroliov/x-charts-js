@@ -18,21 +18,20 @@ export function registerComponent(componentClass                )       {
 
 export default class XCharts {
   _shadowRoot            
+  _containerDiv                
   _componentsContainer                
-  _constructorArgument                            
 
   constructor(arg                            ) {
-    this._constructorArgument = arg;
+    this._containerDiv = arg.containerDiv;
     const that = this;
     initDom();
 
     function initDom()       {
-      that._shadowRoot = that._constructorArgument.containerDiv
+      that._shadowRoot = that._containerDiv
         .attachShadow({ mode: 'open', });
       that._shadowRoot.innerHTML = `
         <div style="
-          background-color: ${
-            that._constructorArgument.options.backgroundColor };
+          background-color: ${ arg.options.backgroundColor };
           width: 100%;
           height: 100%;
           position: relative;
