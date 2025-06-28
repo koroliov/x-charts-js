@@ -8,7 +8,8 @@ export function validate(dict: ValidationDictionary,
   return '';
 };
 
-export function getDictionary(): ValidationDictionary {
+export function getDictionary(containerClass: Class<HTMLDivElement>):
+  ValidationDictionary {
   return {
   };
 }
