@@ -18,14 +18,14 @@
 #current-target-help:
 #	echo "watch-run 'make current-target' ./src"
 
-#.PHONY: current-prepare-data-test
-#current-prepare-data-test: BUILD_FILES="'./src/components/pie-3d/prepare-data.js \
+#.PHONY: current-test-pie-3d-prepare-data
+#current-test-pie-3d-prepare-data: BUILD_FILES="'./src/components/pie-3d/prepare-data.js \
 #  ./src/test-unit/components/pie-3d/draw-data-on-canvas.util.js \
 #  ./src/utils/math.js \
 #  ./src/test-unit/test-utils/write-to-test-diff-dir.util.js'"
-#current-prepare-data-test: TEST_FILES="./src/test-unit/components/pie-3d/prepare-data.test.js"
-#current-prepare-data-test: TEST_FILES_RUN = $(subst ./src/,./test/unit-tmp/src/,$(TEST_FILES))
-#current-prepare-data-test: test-unit
+#current-test-pie-3d-prepare-data: TEST_FILES="./src/test-unit/components/pie-3d/prepare-data.test.js"
+#current-test-pie-3d-prepare-data: TEST_FILES_RUN = $(subst ./src/,./test/unit-tmp/src/,$(TEST_FILES))
+#current-test-pie-3d-prepare-data: test-unit
 #
 #.PHONY: current-prepare-rim-slices-data-test
 #current-prepare-rim-slices-data-test: BUILD_FILES="'\
@@ -47,8 +47,8 @@
 #current-utils-math-test: TEST_FILES_RUN = $(subst ./src/,./test/unit-tmp/src/,$(TEST_FILES))
 #current-utils-math-test: test-unit
 #
-#.PHONY: current-draw-test
-#current-draw-test: BUILD_FILES="'\
+#.PHONY: current-test-pie-3d-draw
+#current-test-pie-3d-draw: BUILD_FILES="'\
 #  ./src/test-unit/test-utils/compare-with-looks-same.util.js \
 #  ./src/test-unit/test-utils/write-canvas-to-test-diff-dir.util.js \
 #  ./src/components/pie-3d/draw.js \
@@ -56,9 +56,9 @@
 #  ./src/components/pie-3d/prepare-rim-slices-data.js \
 #  ./src/utils/math.js \
 #  ./src/test-unit/test-utils/create-node-canvas-context-2d.util.js'"
-#current-draw-test: TEST_FILES="./src/test-unit/components/pie-3d/draw.test.js"
-#current-draw-test: TEST_FILES_RUN = $(subst ./src/,./test/unit-tmp/src/,$(TEST_FILES))
-#current-draw-test: test-unit
+#current-test-pie-3d-draw: TEST_FILES="./src/test-unit/components/pie-3d/draw.test.js"
+#current-test-pie-3d-draw: TEST_FILES_RUN = $(subst ./src/,./test/unit-tmp/src/,$(TEST_FILES))
+#current-test-pie-3d-draw: test-unit
 #
 #.PHONY: current-test-validation-add-method-arg
 #current-test-validation-add-method-arg: BUILD_FILES="'\
