@@ -5,8 +5,10 @@ import type {
   ComponentInstance,
   AddComponentArgument,
 } from './types.js';
-import { validate as validateAddComponentArgumentOnXChartsLevel, }
-  from './validation/add-method-arg.js';
+import {
+  validate as validateAddComponentArgumentOnXChartsLevel,
+  getDictionary as getValidationDictionaryOnXChartsLevel,
+} from './validation/add-method-arg.js';
 
 const componentsRegistry: Map<string, ComponentClass> = new Map();
 
@@ -121,8 +123,9 @@ export default class XCharts {
     }
 
     function doXChartsLevelArgumentValidation(addComponentArgs: Array<mixed>) {
+      const dict = getValidationDictionaryOnXChartsLevel();
       const errorMsg =
-        validateAddComponentArgumentOnXChartsLevel(addComponentArgs);
+        validateAddComponentArgumentOnXChartsLevel(dict, addComponentArgs);
       if (errorMsg) {
         that._showError(errorMsg);
         throw new Error(errorMsg);

@@ -2,37 +2,8 @@
 import type { AddComponentArgument, ValidationDictionary, } from '../types.js';
 import { isObject, } from '../utils/validation.js';
 
-const validationMapper: ValidationDictionary = {
-  type(val) {
-    if (typeof val !== 'string' || !val) {
-      return [
-        'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
-        "Property 'type' must be a non-empty string",
-      ].join('\n');
-    }
-    return '';
-  },
-
-  zIndex(val) {
-    if (typeof val !== 'string') {
-      return generateMessage();
-    }
-    if (/^-*\d+$/.test(val)) {
-      return '';
-    }
-    return generateMessage();
-
-    function generateMessage() {
-      return [
-        'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
-        "Property 'zIndex' must be a numeric integer string",
-        'no white space is allowed',
-      ].join('\n');
-    }
-  },
-};
-
-export function validate(allAddComponentArgs: Array<mixed>): string {
+export function validate(dict: ValidationDictionary,
+  allAddComponentArgs: Array<mixed>): string {
   if (allAddComponentArgs.length !== 1) {
     return generateWrongNumberOfArgumentsErrorReturnValue();
   }
@@ -43,10 +14,10 @@ export function validate(allAddComponentArgs: Array<mixed>): string {
   //$FlowFixMe[incompatible-type]
   const arg: { ... } = allAddComponentArgs[0];
   const argumentPropsSet: Set<$Keys<typeof arg>> = new Set(Object.keys(arg));
-  const handledPropsSet = new Set(Object.keys(validationMapper));
+  const handledPropsSet = new Set(Object.keys(dict));
   for (const p of argumentPropsSet) {
     if (handledPropsSet.has(p)) {
-      const msg = validationMapper[p](arg[p]);
+      const msg = dict[p](arg[p]);
       if (msg) {
         return msg;
       }
