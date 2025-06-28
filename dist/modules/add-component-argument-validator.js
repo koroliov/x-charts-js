@@ -6,10 +6,8 @@ const validationMapper                       = {
   type(val) {
     if (typeof val !== 'string' || !val) {
       return [
-        'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG_TYPE_VAL:',
+        'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
         "Property 'type' must be a non-empty string",
-        `Provided ${ typeof val  } '${ String(val) }' in argument`,
-        'to the .add() method',
       ].join('\n');
     }
     return '';
@@ -26,11 +24,9 @@ const validationMapper                       = {
 
     function generateMessage() {
       return [
-        'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG_ZINDEX_VAL:',
+        'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
         "Property 'zIndex' must be a numeric integer string",
         'no white space is allowed',
-        `Provided ${ typeof val } '${ String(val) }' in argument`,
-        'to the .add() method',
       ].join('\n');
     }
   },
