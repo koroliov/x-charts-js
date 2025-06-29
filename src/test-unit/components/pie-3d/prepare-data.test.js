@@ -2160,3 +2160,231 @@ tp.test('0011-rotation-100-deg-start-ang-0', (t) => {
   t.deepEqual(actual, expected);
   t.end();
 });
+
+tp.test.skip('001-', (t) => {
+  const addComponentArg = {
+    type: 'pie-3d',
+    zIndex: '1',
+    options: {
+      thicknessPx: 30,
+      radiusPx: 200,
+      centerXPx: 235,
+      centerYPx: 120,
+      startAtDeg: 247,
+      rotationAroundCenterXAxisDeg: 113,
+      rotationAroundCenterZAxisDeg: 0,
+    },
+    data: [
+      { value: 225, meta: { color: '#37ff00' /* green */, }, },
+      { value: 5, meta: { color: '#03fff0' /* cayan */, }, },
+      { value: 8, meta: { color: '#ffc04b' /* orange */, }, },
+      { value: 25, meta: { color: '#ff0000' /* red */, }, },
+      { value: 50, meta: { color: '#f2b5f6' /* pinkish */, }, },
+    ],
+  };
+
+  const expected = {
+    "totalValue": 100,
+    "slices": [
+      {
+        "startPointHeads": [
+          435,
+          85.3798061746948,
+          4.341204441673257,
+        ],
+        "startPointTails": [
+          435,
+          134.6201938253052,
+          -4.341204441673257,
+        ],
+        "endPointHeads": [
+          235,
+          120.10944170808085,
+          201.30275504411486,
+        ],
+        "endPointTails": [
+          235,
+          169.34982935869127,
+          192.62034616076835,
+        ],
+        "startAngleCounterClockwise": 0,
+        "endAngleCounterClockwise": 1.5707963267948966,
+        "faceEllipseMethodArguments": {
+          "startAngle": -18.84955592153876,
+          "endAngle": -17.27875959474386,
+        },
+        "indexInUserProvidedArray": 0,
+        "value": 25,
+        "color": "#37ff00",
+      },
+      {
+        "startPointHeads": [
+          235,
+          120.10944170808085,
+          201.30275504411486,
+        ],
+        "startPointTails": [
+          235,
+          169.34982935869127,
+          192.62034616076835,
+        ],
+        "endPointHeads": [
+          35,
+          85.3798061746948,
+          4.341204441673286,
+        ],
+        "endPointTails": [
+          35,
+          134.6201938253052,
+          -4.341204441673229,
+        ],
+        "startAngleCounterClockwise": 1.5707963267948966,
+        "endAngleCounterClockwise": 3.141592653589793,
+        "faceEllipseMethodArguments": {
+          "startAngle": -17.27875959474386,
+          "endAngle": -15.707963267948966,
+        },
+        "indexInUserProvidedArray": 1,
+        "value": 25,
+        "color": "#0b08f7",
+      },
+      {
+        "startPointHeads": [
+          35,
+          85.3798061746948,
+          4.341204441673286,
+        ],
+        "startPointTails": [
+          35,
+          134.6201938253052,
+          -4.341204441673229,
+        ],
+        "endPointHeads": [
+          234.99999999999997,
+          50.65017064130874,
+          -192.62034616076835,
+        ],
+        "endPointTails": [
+          234.99999999999997,
+          99.89055829191915,
+          -201.30275504411486,
+        ],
+        "startAngleCounterClockwise": 3.141592653589793,
+        "endAngleCounterClockwise": 4.71238898038469,
+        "faceEllipseMethodArguments": {
+          "startAngle": -15.707963267948966,
+          "endAngle": -14.137166941154069,
+        },
+        "indexInUserProvidedArray": 2,
+        "value": 25,
+        "color": "#ff0000",
+      },
+      {
+        "startPointHeads": [
+          234.99999999999997,
+          50.65017064130874,
+          -192.62034616076835,
+        ],
+        "startPointTails": [
+          234.99999999999997,
+          99.89055829191915,
+          -201.30275504411486,
+        ],
+        "endPointHeads": [
+          435,
+          85.3798061746948,
+          4.341204441673257,
+        ],
+        "endPointTails": [
+          435,
+          134.6201938253052,
+          -4.341204441673257,
+        ],
+        "startAngleCounterClockwise": 4.71238898038469,
+        "endAngleCounterClockwise": 6.283185307179586,
+        "faceEllipseMethodArguments": {
+          "startAngle": -14.137166941154069,
+          "endAngle": -12.566370614359172,
+        },
+        "indexInUserProvidedArray": 3,
+        "value": 25,
+        "color": "#f2b5f6",
+      },
+    ],
+    "isPieReversed": false,
+    "pointTopHeads": [
+      235,
+      120.10944170808085,
+      201.30275504411486,
+    ],
+    "edgeLeft": {
+      "pointHeads": [
+        35,
+        85.3798061746948,
+        4.341204441673257,
+      ],
+      "pointTails": [
+        35,
+        134.6201938253052,
+        -4.341204441673257,
+      ],
+      "sliceIndex": 2,
+      "angleCounterClockwise": 3.141592653589793,
+    },
+    "edgeRight": {
+      "pointHeads": [
+        435,
+        85.3798061746948,
+        4.341204441673257,
+      ],
+      "pointTails": [
+        435,
+        134.6201938253052,
+        -4.341204441673257,
+      ],
+      "sliceIndex": 3,
+      "angleCounterClockwise": 6.283185307179586,
+    },
+    "centerHeads": [
+      235,
+      85.3798061746948,
+      4.341204441673257,
+    ],
+    "centerTails": [
+      235,
+      134.6201938253052,
+      -4.341204441673257,
+    ],
+    "ellipseMethodArgs": {
+      "radiusX": 200,
+      "radiusY": 34.729635533386045,
+      "axesRotationCounterClockwise": -0,
+      "isCounterClockwiseOnVisibleFace": false,
+    },
+    "isHeadsVisibleToUser": false,
+    "isTailsVisibleToUser": true,
+    "isRimVisibleToUser": true,
+  };
+
+  const actual = prepareData(addComponentArg);
+  console.log('AAA', actual.isTailsVisibleToUser, actual.isHeadsVisibleToUser,
+    actual.isPieReversed);
+  //writeToTestDiffDir({ actual, expected, });
+  drawDataOnCanvas({
+    serverAbsFilePath: '/test/served-tmp/prepare-data-test.html',
+    actual: actual,
+    expected: expected,
+    canvasWidthPx: 470,
+    canvasHeightPx: 220,
+    drawHeads: true,
+    drawTails: true,
+    drawDotsHeads: true,
+    drawDotsTails: true,
+    drawLineToRightEdgeHeads: true,
+    drawLineToRightEdgeTails: true,
+    angleStartSliceIndex: 0,
+    angleEndSliceIndex: 0,
+  });
+  //t.deepEqual(actual, expected);
+  t.end();
+});

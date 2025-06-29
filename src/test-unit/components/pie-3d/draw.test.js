@@ -517,12 +517,12 @@ tp.test.skip((t) => {
     type: 'pie-3d',
     zIndex: '1',
     options: {
-      thicknessPx: 15,
+      thicknessPx: 30,
       radiusPx: 200,
-      centerXPx: 400,
-      centerYPx: 250,
+      centerXPx: 235,
+      centerYPx: 120,
       startAtDeg: 247,
-      rotationAroundCenterXAxisDeg: 153,
+      rotationAroundCenterXAxisDeg: 113,
       rotationAroundCenterZAxisDeg: 0,
     },
     data: [
@@ -533,26 +533,26 @@ tp.test.skip((t) => {
       { value: 50, meta: { color: '#f2b5f6' /* pinkish */, }, },
     ],
   };
-  //const { ctx, canvas, } =
-  //  createCanvasContext2d({ w: 470, h: 220, fillStyle: 'white', });
-  //draw({ ctx, addComponentArg: arg, });
+  const { ctx, canvas, } =
+    createCanvasContext2d({ w: 470, h: 235, fillStyle: 'white', });
+  draw({ ctx, addComponentArg: arg, });
 
-  //canvas.toBuffer(async (err: null | Error, buff: Buffer) => {
-  //  //await writeCanvasToTestDiffDir({
-  //  //  canvas: ctx.canvas,
-  //  //  fileNameRelative: './test/diff/current.png',
-  //  //});
-  //  const equal = await compareWithLooksSame({
-  //    buffer: buff,
-  //    expectedFileNameRelative:
-  //      `./test/unit-permanent/components/pie-3d/draw/${ testName }.png`,
-  //    highlightColor: '#000000',
-  //    //diffFileNameRelativeOnError: `./test/diff/${ testName }.png`,
-  //    diffFileNameRelativeOnError: '',
-  //  });
-  //  t.ok(equal);
-  //  t.end();
-  //});
+  canvas.toBuffer(async (err: null | Error, buff: Buffer) => {
+    await writeCanvasToTestDiffDir({
+      canvas: ctx.canvas,
+      fileNameRelative: './test/diff/current.png',
+    });
+    //const equal = await compareWithLooksSame({
+    //  buffer: buff,
+    //  expectedFileNameRelative:
+    //    `./test/unit-permanent/components/pie-3d/draw/${ testName }.png`,
+    //  highlightColor: '#000000',
+    //  //diffFileNameRelativeOnError: `./test/diff/${ testName }.png`,
+    //  diffFileNameRelativeOnError: '',
+    //});
+    //t.ok(equal);
+    t.end();
+  });
 });
 
 tp.test.skip((t) => {

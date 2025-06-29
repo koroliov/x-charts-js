@@ -786,3 +786,99 @@ tp.test('0010-rotation-over-center-x-axis-greater-180-deg', (t) => {
   t.deepEqual(actual, expected);
   t.end();
 });
+
+tp.test.skip('001-', (t) => {
+  const addComponentArg = {
+    type: 'pie-3d',
+    zIndex: '1',
+    options: {
+      thicknessPx: 30,
+      radiusPx: 200,
+      centerXPx: 235,
+      centerYPx: 120,
+      startAtDeg: 247,
+      rotationAroundCenterXAxisDeg: 113,
+      rotationAroundCenterZAxisDeg: 0,
+    },
+    data: [
+      { value: 225, meta: { color: '#37ff00' /* green */, }, },
+      { value: 5, meta: { color: '#03fff0' /* cayan */, }, },
+      { value: 8, meta: { color: '#ffc04b' /* orange */, }, },
+      { value: 25, meta: { color: '#ff0000' /* red */, }, },
+      { value: 50, meta: { color: '#f2b5f6' /* pinkish */, }, },
+    ],
+  };
+  const pieData = prepareData(addComponentArg);
+  const expected: ReturnType<typeof prepareRimSlicesData> = [
+    {
+      "color": "#37ff00",
+      "pointStartOnHeads": [
+        35,
+        183.9303097578365,
+        -19.151111077974452,
+      ],
+      "pointStartOnTails": [
+        35,
+        216.0696902421635,
+        19.151111077974452,
+      ],
+      "pointEndOnTails": [
+        435,
+        216.0696902421635,
+        19.151111077974452,
+      ],
+      "pointEndOnHeads": [
+        435,
+        183.9303097578365,
+        -19.151111077974452,
+      ],
+      "ellipseArgumentsOnHeads": {
+        "centerX": 235,
+        "centerY": 183.9303097578365,
+        "radiusX": 200,
+        "radiusY": 153.20888862379562,
+        "axesRotationCounterClockwise": -0,
+        "angleStart": -6.283185307179586,
+        "angleEnd": -3.141592653589793,
+        "isCounterClockwise": false,
+      },
+      "ellipseArgumentsOnTails": {
+        "centerX": 235,
+        "centerY": 216.0696902421635,
+        "radiusX": 200,
+        "radiusY": 153.20888862379562,
+        "axesRotationCounterClockwise": -0,
+        "angleStart": -3.141592653589793,
+        "angleEnd": -6.283185307179586,
+        "isCounterClockwise": true,
+      },
+    },
+  ];
+
+  const actual = prepareRimSlicesData(pieData);
+  writeToTestDiffDir({ actual, expected, });
+  //drawDataOnCanvas({
+  //  serverAbsFilePath: '/test/served-tmp/rim-slices.html',
+  //  actual: pieData,
+  //  expected: pieData,
+  //  canvasWidthPx: 470,
+  //  canvasHeightPx: 235,
+  //  drawHeads: true,
+  //  drawTails: true,
+  //  drawDotsHeads: true,
+  //  drawDotsTails: true,
+  //  drawLineToRightEdgeHeads: true,
+  //  drawLineToRightEdgeTails: true,
+  //  angleStartSliceIndex: 0,
+  //  angleEndSliceIndex: 1,
+  //});
+  drawRimSlicesDataOnCanvas({
+    serverAbsFilePath: '/test/served-tmp/rim-slices.html',
+    actual: actual,
+    expected: expected,
+    canvasWidthPx: 470,
+    canvasHeightPx: 235,
+  });
+  //t.deepEqual(actual, expected);
+  t.end();
+});
