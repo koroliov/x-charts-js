@@ -78,49 +78,57 @@ export function drawRimSlicesDataOnCanvas(arg: Arg) {
 
         function drawSlices(canvas, rimSlicesData, isHeads) {
           const ctx = canvas.getContext('2d');
-          if (!rimSlicesData?.[0]?.ellipseArgumentsOnHeads) {
-            rimSlicesData.forEach((rsd) => {
-              ctx.beginPath();
-              ctx.moveTo(rsd.pointStartOnHeads[0], rsd.pointStartOnHeads[1]);
-              ctx.lineTo(rsd.pointStartOnTails[0], rsd.pointStartOnTails[1]);
-              ctx.lineTo(rsd.pointEndOnTails[0], rsd.pointEndOnTails[1]);
-              ctx.lineTo(rsd.pointEndOnHeads[0], rsd.pointEndOnHeads[1]);
-              ctx.lineTo(rsd.pointStartOnHeads[0], rsd.pointStartOnHeads[1]);
-              ctx.fillStyle = rsd.color;
-              ctx.fill();
-            });
+          if (isOnlyRimVisible()) {
+            rimSlicesData.forEach(drawSliceWhenOnlyRimVisible);
           } else {
-            rimSlicesData.forEach((rsd) => {
-              ctx.beginPath();
-              ctx.moveTo(rsd.pointStartOnHeads[0], rsd.pointStartOnHeads[1]);
-              ctx.lineTo(rsd.pointStartOnTails[0], rsd.pointStartOnTails[1]);
-              ctx.ellipse(
-                rsd.ellipseArgumentsOnTails.centerX,
-                rsd.ellipseArgumentsOnTails.centerY,
-                rsd.ellipseArgumentsOnTails.radiusX,
-                rsd.ellipseArgumentsOnTails.radiusY,
-                rsd.ellipseArgumentsOnTails
-                  .axesRotationCounterClockwise,
-                rsd.ellipseArgumentsOnTails.angleStart,
-                rsd.ellipseArgumentsOnTails.angleEnd,
-                rsd.ellipseArgumentsOnTails.isCounterClockwise,
-              );
-              ctx.lineTo(rsd.pointEndOnHeads[0], rsd.pointEndOnHeads[1]);
-              ctx.ellipse(
-                rsd.ellipseArgumentsOnHeads.centerX,
-                rsd.ellipseArgumentsOnHeads.centerY,
-                rsd.ellipseArgumentsOnHeads.radiusX,
-                rsd.ellipseArgumentsOnHeads.radiusY,
-                rsd.ellipseArgumentsOnHeads.axesRotationCounterClockwise,
-                rsd.ellipseArgumentsOnHeads.angleStart,
-                rsd.ellipseArgumentsOnHeads.angleEnd,
-                rsd.ellipseArgumentsOnHeads.isCounterClockwise,
-              );
-              ctx.fillStyle = rsd.color;
-              ctx.fill();
-            });
+            rimSlicesData.forEach(drawSliceWhenEllipticChart);
             drawEllipse(true);
             drawEllipse(false);
+          }
+
+          function drawSliceWhenOnlyRimVisible(rsd) {
+            ctx.beginPath();
+            ctx.moveTo(rsd.pointStartOnHeads[0], rsd.pointStartOnHeads[1]);
+            ctx.lineTo(rsd.pointStartOnTails[0], rsd.pointStartOnTails[1]);
+            ctx.lineTo(rsd.pointEndOnTails[0], rsd.pointEndOnTails[1]);
+            ctx.lineTo(rsd.pointEndOnHeads[0], rsd.pointEndOnHeads[1]);
+            ctx.lineTo(rsd.pointStartOnHeads[0], rsd.pointStartOnHeads[1]);
+            ctx.fillStyle = rsd.color;
+            ctx.fill();
+          }
+
+          function drawSliceWhenEllipticChart(rsd) {
+            ctx.beginPath();
+            ctx.moveTo(rsd.pointStartOnHeads[0], rsd.pointStartOnHeads[1]);
+            ctx.lineTo(rsd.pointStartOnTails[0], rsd.pointStartOnTails[1]);
+            ctx.ellipse(
+              rsd.ellipseArgumentsOnTails.centerX,
+              rsd.ellipseArgumentsOnTails.centerY,
+              rsd.ellipseArgumentsOnTails.radiusX,
+              rsd.ellipseArgumentsOnTails.radiusY,
+              rsd.ellipseArgumentsOnTails
+                .axesRotationCounterClockwise,
+              rsd.ellipseArgumentsOnTails.angleStart,
+              rsd.ellipseArgumentsOnTails.angleEnd,
+              rsd.ellipseArgumentsOnTails.isCounterClockwise,
+            );
+            ctx.lineTo(rsd.pointEndOnHeads[0], rsd.pointEndOnHeads[1]);
+            ctx.ellipse(
+              rsd.ellipseArgumentsOnHeads.centerX,
+              rsd.ellipseArgumentsOnHeads.centerY,
+              rsd.ellipseArgumentsOnHeads.radiusX,
+              rsd.ellipseArgumentsOnHeads.radiusY,
+              rsd.ellipseArgumentsOnHeads.axesRotationCounterClockwise,
+              rsd.ellipseArgumentsOnHeads.angleStart,
+              rsd.ellipseArgumentsOnHeads.angleEnd,
+              rsd.ellipseArgumentsOnHeads.isCounterClockwise,
+            );
+            ctx.fillStyle = rsd.color;
+            ctx.fill();
+          }
+
+          function isOnlyRimVisible() {
+            return !rimSlicesData?.[0]?.ellipseArgumentsOnHeads;
           }
 
           function drawEllipse(isVisible) {
