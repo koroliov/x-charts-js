@@ -334,10 +334,10 @@ export function prepareData(arg: AddComponentPie3dArgument): PieData {
       slices,
       rotationAroundCenterXAxisDegActual:
         ops.rotationAroundCenterXAxisDeg - (isPieReversed ? 180 : 0),
-      startAtDegActual: getStartAtDEgActualValue(),
+      startAtDegActual: getStartAtDegActualValue(),
     };
 
-    function getStartAtDEgActualValue() {
+    function getStartAtDegActualValue() {
       const v = Math.abs(ops.startAtDeg - (isPieReversed ? 360 : 0));
       return v === 360 ? 0 : v;
     }
@@ -356,11 +356,7 @@ export function prepareData(arg: AddComponentPie3dArgument): PieData {
         }
 
         onLoopEnd() {
-          if (this.isPieReversed) {
-            this.i--;
-          } else {
-            this.i++;
-          }
+          this.isPieReversed ? this.i-- : this.i++;
           this.shouldContinue = this.isPieReversed ?
             this.i >= 0 : this.i < this.slicesLength
         }
