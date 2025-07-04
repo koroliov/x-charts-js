@@ -792,7 +792,7 @@ tp.test.skip('001-', (t) => {
     type: 'pie-3d',
     zIndex: '1',
     options: {
-      thicknessPx: 30,
+      thicknessPx: 50,
       radiusPx: 200,
       centerXPx: 235,
       centerYPx: 120,
