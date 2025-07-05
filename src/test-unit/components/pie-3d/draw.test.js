@@ -555,7 +555,7 @@ tp.test((t) => {
   });
 });
 
-tp.test.skip((t) => {
+tp.test((t) => {
   const testName =
     '0013-rotation-cx-gt-90-start-angle-gt-pi-start-end-slice-is-same';
   const arg = {
@@ -575,24 +575,24 @@ tp.test.skip((t) => {
       { value: 50, meta: { color: '#f2b5f6' /* pinkish */, }, },
     ],
   };
-  //const { ctx, canvas, } =
-  //  createCanvasContext2d({ w: 470, h: 220, fillStyle: 'white', });
-  //draw({ ctx, addComponentArg: arg, });
+  const { ctx, canvas, } =
+    createCanvasContext2d({ w: 470, h: 220, fillStyle: 'white', });
+  draw({ ctx, addComponentArg: arg, });
 
-  //canvas.toBuffer(async (err: null | Error, buff: Buffer) => {
-  //  //await writeCanvasToTestDiffDir({
-  //  //  canvas: ctx.canvas,
-  //  //  fileNameRelative: './test/diff/current.png',
-  //  //});
-  //  const equal = await compareWithLooksSame({
-  //    buffer: buff,
-  //    expectedFileNameRelative:
-  //      `./test/unit-permanent/components/pie-3d/draw/${ testName }.png`,
-  //    highlightColor: '#000000',
-  //    //diffFileNameRelativeOnError: `./test/diff/${ testName }.png`,
-  //    diffFileNameRelativeOnError: '',
-  //  });
-  //  t.ok(equal);
-  //  t.end();
-  //});
+  canvas.toBuffer(async (err: null | Error, buff: Buffer) => {
+    //await writeCanvasToTestDiffDir({
+    //  canvas: ctx.canvas,
+    //  fileNameRelative: './test/diff/current.png',
+    //});
+    const equal = await compareWithLooksSame({
+      buffer: buff,
+      expectedFileNameRelative:
+        `./test/unit-permanent/components/pie-3d/draw/${ testName }.png`,
+      highlightColor: '#000000',
+      //diffFileNameRelativeOnError: `./test/diff/${ testName }.png`,
+      diffFileNameRelativeOnError: '',
+    });
+    t.ok(equal);
+    t.end();
+  });
 });

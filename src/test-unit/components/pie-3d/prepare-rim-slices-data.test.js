@@ -983,7 +983,7 @@ tp.test('0012-rotation-cx-gt-90-start-angle-gt-pi', (t) => {
   t.end();
 });
 
-tp.test.skip('0013-rotation-cx-gt-90-start-angle-gt-pi-start-end-slice-is-same',
+tp.test('0013-rotation-cx-gt-90-start-angle-gt-pi-start-end-slice-is-same',
   (t) => {
   const addComponentArg = {
     type: 'pie-3d',

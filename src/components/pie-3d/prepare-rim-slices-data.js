@@ -89,14 +89,14 @@ export function prepareRimSlicesData(pieData: PieData): RimSlicesData {
           (pieData.slices[0].startAngleCounterClockwise > Math.PI ? 3 : 1) *
             Math.PI;
         if (isHeadsEllipse) {
-          retVal.angleStart = sliceIndex === startSliceIndex ?
+          retVal.angleStart = loopIndex === 0 ?
             leftEdgeAngle : slice.startAngleCounterClockwise;
-          retVal.angleEnd = sliceIndex === endSliceIndex ?
+          retVal.angleEnd = loopIndex === indicesToPassThru.length - 1 ?
             0 : slice.endAngleCounterClockwise;
         } else {
-          retVal.angleStart = sliceIndex === endSliceIndex ?
+          retVal.angleStart = loopIndex === indicesToPassThru.length - 1 ?
             0 : slice.endAngleCounterClockwise;
-          retVal.angleEnd = sliceIndex === startSliceIndex ?
+          retVal.angleEnd = loopIndex === 0 ?
             leftEdgeAngle : slice.startAngleCounterClockwise;
         }
       }
