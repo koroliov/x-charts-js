@@ -140,6 +140,8 @@ tp.test((t) => {
   //  serverAbsFilePath: '/test/served-tmp/rim-slices.html',
   //  actual: actual,
   //  expected: expected,
+  //  actualIsHeadsVisibleToUser: pieData.isHeadsVisibleToUser ? 'true' : 'false',
+  //  expectedIsHeadsVisibleToUser: 'true',
   //  canvasWidthPx: 800,
   //  canvasHeightPx: 500,
   //});
@@ -321,6 +323,8 @@ tp.test((t) => {
   //  serverAbsFilePath: '/test/served-tmp/rim-slices.html',
   //  actual: actual,
   //  expected: expected,
+  //  actualIsHeadsVisibleToUser: pieData.isHeadsVisibleToUser ? 'true' : 'false',
+  //  expectedIsHeadsVisibleToUser: 'true',
   //  canvasWidthPx: 470,
   //  canvasHeightPx: 220,
   //});
@@ -414,6 +418,8 @@ tp.test((t) => {
   //  serverAbsFilePath: '/test/served-tmp/rim-slices.html',
   //  actual: actual,
   //  expected: expected,
+  //  actualIsHeadsVisibleToUser: pieData.isHeadsVisibleToUser ? 'true' : 'false',
+  //  expectedIsHeadsVisibleToUser: 'true',
   //  canvasWidthPx: 470,
   //  canvasHeightPx: 220,
   //});
@@ -507,6 +513,8 @@ tp.test((t) => {
   //  serverAbsFilePath: '/test/served-tmp/rim-slices.html',
   //  actual: actual,
   //  expected: expected,
+  //  actualIsHeadsVisibleToUser: pieData.isHeadsVisibleToUser ? 'true' : 'false',
+  //  expectedIsHeadsVisibleToUser: 'true',
   //  canvasWidthPx: 470,
   //  canvasHeightPx: 220,
   //});
@@ -686,6 +694,8 @@ tp.test((t) => {
   //  serverAbsFilePath: '/test/served-tmp/rim-slices.html',
   //  actual: actual,
   //  expected: expected,
+  //  actualIsHeadsVisibleToUser: pieData.isHeadsVisibleToUser ? 'true' : 'false',
+  //  expectedIsHeadsVisibleToUser: 'true',
   //  canvasWidthPx: 470,
   //  canvasHeightPx: 220,
   //});
@@ -780,6 +790,8 @@ tp.test('0010-rotation-over-center-x-axis-greater-180-deg', (t) => {
   //  serverAbsFilePath: '/test/served-tmp/rim-slices.html',
   //  actual: actual,
   //  expected: expected,
+  //  actualIsHeadsVisibleToUser: pieData.isHeadsVisibleToUser ? 'true' : 'false',
+  //  expectedIsHeadsVisibleToUser: 'true',
   //  canvasWidthPx: 470,
   //  canvasHeightPx: 400,
   //});
@@ -856,7 +868,7 @@ tp.test.skip('001-', (t) => {
   ];
 
   const actual = prepareRimSlicesData(pieData);
-  writeToTestDiffDir({ actual, expected, });
+  //writeToTestDiffDir({ actual, expected, });
   //drawDataOnCanvas({
   //  serverAbsFilePath: '/test/served-tmp/rim-slices.html',
   //  actual: pieData,
@@ -876,6 +888,8 @@ tp.test.skip('001-', (t) => {
     serverAbsFilePath: '/test/served-tmp/rim-slices.html',
     actual: actual,
     expected: expected,
+    actualIsHeadsVisibleToUser: pieData.isHeadsVisibleToUser ? 'true' : 'false',
+    expectedIsHeadsVisibleToUser: 'true',
     canvasWidthPx: 470,
     canvasHeightPx: 235,
   });
