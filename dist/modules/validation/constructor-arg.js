@@ -1,5 +1,5 @@
 //      strict
-                                                                               
+                                                         
 import { isObject, } from '../utils/validation.js';
 import { validate as validateByDictionary, } from './by-dictionary.js';
 

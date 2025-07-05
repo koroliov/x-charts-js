@@ -110,7 +110,6 @@ export function draw(arg
             ellipseArgumentsOnVisibleFace: 'ellipseArgumentsOnTails',
           };
         }
-
       }
     }
 
