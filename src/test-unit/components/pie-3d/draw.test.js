@@ -556,17 +556,18 @@ tp.test((t) => {
 });
 
 tp.test.skip((t) => {
-  const testName = '0013-';
+  const testName =
+    '0013-rotation-cx-gt-90-start-angle-gt-pi-start-end-slice-is-same';
   const arg = {
     type: 'pie-3d',
     zIndex: '1',
     options: {
       thicknessPx: 50,
       radiusPx: 200,
-      centerXPx: 400,
-      centerYPx: 250,
+      centerXPx: 235,
+      centerYPx: 120,
       startAtDeg: 247,
-      rotationAroundCenterXAxisDeg: 70,
+      rotationAroundCenterXAxisDeg: 110,
       rotationAroundCenterZAxisDeg: 0,
     },
     data: [

@@ -982,3 +982,185 @@ tp.test('0012-rotation-cx-gt-90-start-angle-gt-pi', (t) => {
   t.deepEqual(actual, expected);
   t.end();
 });
+
+tp.test.skip('0013-rotation-cx-gt-90-start-angle-gt-pi-start-end-slice-is-same',
+  (t) => {
+  const addComponentArg = {
+    type: 'pie-3d',
+    zIndex: '1',
+    options: {
+      thicknessPx: 50,
+      radiusPx: 200,
+      centerXPx: 235,
+      centerYPx: 120,
+      startAtDeg: 247,
+      rotationAroundCenterXAxisDeg: 110,
+      rotationAroundCenterZAxisDeg: 0,
+    },
+    data: [
+      { value: 225, meta: { color: '#37ff00' /* green */, }, },
+      { value: 50, meta: { color: '#f2b5f6' /* pinkish */, }, },
+    ],
+  };
+  const pieData = prepareData(addComponentArg);
+  const expected: ReturnType<typeof prepareRimSlicesData> = [
+    {
+      "color": "#37ff00",
+      "pointStartOnHeads": [
+        35,
+        96.50768448035228,
+        8.550503583141717,
+      ],
+      "pointStartOnTails": [
+        35,
+        143.49231551964772,
+        -8.550503583141717,
+      ],
+      "pointEndOnTails": [
+        35.07275131978494,
+        141.64745889319758,
+        -13.61920550644469,
+      ],
+      "pointEndOnHeads": [
+        35.07275131978494,
+        94.66282785390216,
+        3.4818016598387436,
+      ],
+      "ellipseArgumentsOnHeads": {
+        "centerX": 235,
+        "centerY": 96.50768448035228,
+        "radiusX": 200,
+        "radiusY": 68.40402866513375,
+        "axesRotationCounterClockwise": -0,
+        "angleStart": 9.42477796076938,
+        "angleEnd": 9.451751231027474,
+        "isCounterClockwise": false,
+      },
+      "ellipseArgumentsOnTails": {
+        "centerX": 235,
+        "centerY": 143.49231551964772,
+        "radiusX": 200,
+        "radiusY": 68.40402866513375,
+        "axesRotationCounterClockwise": -0,
+        "angleStart": 9.451751231027474,
+        "angleEnd": 9.42477796076938,
+        "isCounterClockwise": true,
+      },
+    },
+    {
+      "color": "#f2b5f6",
+      "pointStartOnHeads": [
+        35.07275131978494,
+        94.66282785390216,
+        3.4818016598387436,
+      ],
+      "pointStartOnTails": [
+        35.07275131978494,
+        141.64745889319758,
+        -13.61920550644469,
+      ],
+      "pointEndOnTails": [
+        156.85377430214524,
+        80.52607513769226,
+        -181.54882722051613,
+      ],
+      "pointEndOnHeads": [
+        156.85377430214524,
+        33.54144409839682,
+        -164.44782005423272,
+      ],
+      "ellipseArgumentsOnHeads": {
+        "centerX": 235,
+        "centerY": 96.50768448035228,
+        "radiusX": 200,
+        "radiusY": 68.40402866513375,
+        "axesRotationCounterClockwise": -0,
+        "angleStart": 9.451751231027474,
+        "angleEnd": 10.59414855960558,
+        "isCounterClockwise": false,
+      },
+      "ellipseArgumentsOnTails": {
+        "centerX": 235,
+        "centerY": 143.49231551964772,
+        "radiusX": 200,
+        "radiusY": 68.40402866513375,
+        "axesRotationCounterClockwise": -0,
+        "angleStart": 10.59414855960558,
+        "angleEnd": 9.451751231027474,
+        "isCounterClockwise": true,
+      },
+    },
+    {
+      "color": "#37ff00",
+      "pointStartOnHeads": [
+        156.85377430214524,
+        33.54144409839682,
+        -164.44782005423272,
+      ],
+      "pointStartOnTails": [
+        156.85377430214524,
+        80.52607513769226,
+        -181.54882722051613,
+      ],
+      "pointEndOnTails": [
+        435,
+        143.49231551964772,
+        -8.550503583141717,
+      ],
+      "pointEndOnHeads": [
+        435,
+        96.50768448035228,
+        8.550503583141717,
+      ],
+      "ellipseArgumentsOnHeads": {
+        "centerX": 235,
+        "centerY": 96.50768448035228,
+        "radiusX": 200,
+        "radiusY": 68.40402866513375,
+        "axesRotationCounterClockwise": -0,
+        "angleStart": 4.310963252425994,
+        "angleEnd": 0,
+        "isCounterClockwise": false,
+      },
+      "ellipseArgumentsOnTails": {
+        "centerX": 235,
+        "centerY": 143.49231551964772,
+        "radiusX": 200,
+        "radiusY": 68.40402866513375,
+        "axesRotationCounterClockwise": -0,
+        "angleStart": 0,
+        "angleEnd": 4.310963252425994,
+        "isCounterClockwise": true,
+      },
+    },
+  ];
+
+  const actual = prepareRimSlicesData(pieData);
+  //writeToTestDiffDir({ actual, expected, });
+  //drawDataOnCanvas({
+  //  serverAbsFilePath: '/test/served-tmp/rim-slices.html',
+  //  actual: pieData,
+  //  expected: pieData,
+  //  canvasWidthPx: 470,
+  //  canvasHeightPx: 235,
+  //  drawHeads: true,
+  //  drawTails: true,
+  //  drawDotsHeads: true,
+  //  drawDotsTails: true,
+  //  drawLineToRightEdgeHeads: true,
+  //  drawLineToRightEdgeTails: true,
+  //  angleStartSliceIndex: 0,
+  //  angleEndSliceIndex: 1,
+  //});
+  //drawRimSlicesDataOnCanvas({
+  //  serverAbsFilePath: '/test/served-tmp/rim-slices.html',
+  //  actual: actual,
+  //  expected: expected,
+  //  actualIsHeadsVisibleToUser: pieData.isHeadsVisibleToUser ? 'true' : 'false',
+  //  expectedIsHeadsVisibleToUser: 'false',
+  //  canvasWidthPx: 470,
+  //  canvasHeightPx: 235,
+  //});
+  t.deepEqual(actual, expected);
+  t.end();
+});
