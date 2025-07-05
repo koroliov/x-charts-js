@@ -1,11 +1,14 @@
 //@flow strict
-import type { RimSlicesData, } from '../../../components/pie-3d/types.js';
+import type { RimSlicesData, PieData, }
+  from '../../../components/pie-3d/types.js';
 import fs from 'fs';
 
 type Arg = {
   +serverAbsFilePath: StringPrefix<'/test/served-tmp/'>,
   +actual: RimSlicesData,
   +expected: RimSlicesData,
+  +actualIsHeadsVisibleToUser: 'true' | 'false',
+  +expectedIsHeadsVisibleToUser: 'true' | 'false',
   +canvasWidthPx: number,
   +canvasHeightPx: number,
 }
@@ -70,57 +73,102 @@ export function drawRimSlicesDataOnCanvas(arg: Arg) {
         'use strict';
         const actual = ${ JSON.stringify(arg.actual) };
         const expected = ${ JSON.stringify(arg.expected) };
+        const actualIsHeadsVisibleToUser = ${ arg.actualIsHeadsVisibleToUser };
+        const expectedIsHeadsVisibleToUser = ${
+          arg.expectedIsHeadsVisibleToUser };
         const canvasActual = document.getElementById('actual');
         const canvasExpected = document.getElementById('expected');
 
-        drawSlices(canvasActual, actual);
-        drawSlices(canvasExpected, expected);
+        drawSlices(canvasActual, actual, actualIsHeadsVisibleToUser);
+        drawSlices(canvasExpected, expected, expectedIsHeadsVisibleToUser);
 
-        function drawSlices(canvas, rimSlicesData, isHeads) {
+        function drawSlices(canvas, rimSlicesData, isHeadsVisibleToUser) {
           const ctx = canvas.getContext('2d');
-          if (!rimSlicesData?.[0]?.ellipseArgumentsOnHeads) {
-            rimSlicesData.forEach((rsd) => {
-              ctx.beginPath();
-              ctx.moveTo(rsd.pointStartOnHeads[0], rsd.pointStartOnHeads[1]);
-              ctx.lineTo(rsd.pointStartOnTails[0], rsd.pointStartOnTails[1]);
-              ctx.lineTo(rsd.pointEndOnTails[0], rsd.pointEndOnTails[1]);
-              ctx.lineTo(rsd.pointEndOnHeads[0], rsd.pointEndOnHeads[1]);
-              ctx.lineTo(rsd.pointStartOnHeads[0], rsd.pointStartOnHeads[1]);
-              ctx.fillStyle = rsd.color;
-              ctx.fill();
-            });
+          const {
+            pointStartOnVisibleFace,
+            pointStartOnInvisibleFace,
+            pointEndOnVisibleFace,
+            pointEndOnInvisibleFace,
+            ellipseArgumentsOnInvisibleFace,
+            ellipseArgumentsOnVisibleFace,
+          } = getPropNames();
+
+          if (isOnlyRimVisible()) {
+            rimSlicesData.forEach(drawSliceWhenOnlyRimVisible);
           } else {
-            rimSlicesData.forEach((rsd) => {
-              ctx.beginPath();
-              ctx.moveTo(rsd.pointStartOnHeads[0], rsd.pointStartOnHeads[1]);
-              ctx.lineTo(rsd.pointStartOnTails[0], rsd.pointStartOnTails[1]);
-              ctx.ellipse(
-                rsd.ellipseArgumentsOnTails.centerX,
-                rsd.ellipseArgumentsOnTails.centerY,
-                rsd.ellipseArgumentsOnTails.radiusX,
-                rsd.ellipseArgumentsOnTails.radiusY,
-                rsd.ellipseArgumentsOnTails
-                  .axesRotationCounterClockwise,
-                rsd.ellipseArgumentsOnTails.angleStart,
-                rsd.ellipseArgumentsOnTails.angleEnd,
-                rsd.ellipseArgumentsOnTails.isCounterClockwise,
-              );
-              ctx.lineTo(rsd.pointEndOnHeads[0], rsd.pointEndOnHeads[1]);
-              ctx.ellipse(
-                rsd.ellipseArgumentsOnHeads.centerX,
-                rsd.ellipseArgumentsOnHeads.centerY,
-                rsd.ellipseArgumentsOnHeads.radiusX,
-                rsd.ellipseArgumentsOnHeads.radiusY,
-                rsd.ellipseArgumentsOnHeads.axesRotationCounterClockwise,
-                rsd.ellipseArgumentsOnHeads.angleStart,
-                rsd.ellipseArgumentsOnHeads.angleEnd,
-                rsd.ellipseArgumentsOnHeads.isCounterClockwise,
-              );
-              ctx.fillStyle = rsd.color;
-              ctx.fill();
-            });
+            rimSlicesData.forEach(drawSliceWhenEllipticChart);
             drawEllipse(true);
             drawEllipse(false);
+          }
+
+          function getPropNames() {
+            if (isHeadsVisibleToUser) {
+              return {
+                pointStartOnVisibleFace: 'pointStartOnHeads',
+                pointStartOnInvisibleFace: 'pointStartOnTails',
+                pointEndOnVisibleFace: 'pointEndOnHeads',
+                pointEndOnInvisibleFace: 'pointEndOnTails',
+                ellipseArgumentsOnInvisibleFace: 'ellipseArgumentsOnTails',
+                ellipseArgumentsOnVisibleFace: 'ellipseArgumentsOnHeads',
+              };
+            } else {
+              return {
+                pointStartOnVisibleFace: 'pointStartOnTails',
+                pointStartOnInvisibleFace: 'pointStartOnHeads',
+                pointEndOnVisibleFace: 'pointEndOnTails',
+                pointEndOnInvisibleFace: 'pointEndOnHeads',
+                ellipseArgumentsOnInvisibleFace: 'ellipseArgumentsOnHeads',
+                ellipseArgumentsOnVisibleFace: 'ellipseArgumentsOnTails',
+              };
+            }
+          }
+
+          function drawSliceWhenOnlyRimVisible(rsd) {
+            ctx.beginPath();
+            ctx.moveTo(rsd.pointStartOnHeads[0], rsd.pointStartOnHeads[1]);
+            ctx.lineTo(rsd.pointStartOnTails[0], rsd.pointStartOnTails[1]);
+            ctx.lineTo(rsd.pointEndOnTails[0], rsd.pointEndOnTails[1]);
+            ctx.lineTo(rsd.pointEndOnHeads[0], rsd.pointEndOnHeads[1]);
+            ctx.lineTo(rsd.pointStartOnHeads[0], rsd.pointStartOnHeads[1]);
+            ctx.fillStyle = rsd.color;
+            ctx.fill();
+          }
+
+          function drawSliceWhenEllipticChart(rsd) {
+            ctx.beginPath();
+            ctx.moveTo(rsd[pointStartOnVisibleFace][0],
+              rsd[pointStartOnVisibleFace][1]);
+            ctx.lineTo(rsd[pointStartOnInvisibleFace][0],
+              rsd[pointStartOnInvisibleFace][1]);
+            ctx.ellipse(
+              rsd[ellipseArgumentsOnInvisibleFace].centerX,
+              rsd[ellipseArgumentsOnInvisibleFace].centerY,
+              rsd[ellipseArgumentsOnInvisibleFace].radiusX,
+              rsd[ellipseArgumentsOnInvisibleFace].radiusY,
+              rsd[ellipseArgumentsOnInvisibleFace]
+                .axesRotationCounterClockwise,
+              rsd[ellipseArgumentsOnInvisibleFace].angleStart,
+              rsd[ellipseArgumentsOnInvisibleFace].angleEnd,
+              rsd[ellipseArgumentsOnInvisibleFace].isCounterClockwise,
+            );
+            ctx.lineTo(rsd[pointEndOnVisibleFace][0],
+              rsd[pointEndOnVisibleFace][1]);
+            ctx.ellipse(
+              rsd[ellipseArgumentsOnVisibleFace].centerX,
+              rsd[ellipseArgumentsOnVisibleFace].centerY,
+              rsd[ellipseArgumentsOnVisibleFace].radiusX,
+              rsd[ellipseArgumentsOnVisibleFace].radiusY,
+              rsd[ellipseArgumentsOnVisibleFace].axesRotationCounterClockwise,
+              rsd[ellipseArgumentsOnVisibleFace].angleStart,
+              rsd[ellipseArgumentsOnVisibleFace].angleEnd,
+              rsd[ellipseArgumentsOnVisibleFace].isCounterClockwise,
+            );
+            ctx.fillStyle = rsd.color;
+            ctx.fill();
+          }
+
+          function isOnlyRimVisible() {
+            return !rimSlicesData?.[0]?.ellipseArgumentsOnHeads;
           }
 
           function drawEllipse(isVisible) {
