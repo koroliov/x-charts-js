@@ -85,16 +85,19 @@ export function prepareRimSlicesData(pieData: PieData): RimSlicesData {
       }
 
       function processTailsVisible() {
+        const leftEdgeAngle =
+          (pieData.slices[0].startAngleCounterClockwise > Math.PI ? 3 : 1) *
+            Math.PI;
         if (isHeadsEllipse) {
           retVal.angleStart = sliceIndex === startSliceIndex ?
-            Math.PI : slice.startAngleCounterClockwise;
+            leftEdgeAngle : slice.startAngleCounterClockwise;
           retVal.angleEnd = sliceIndex === endSliceIndex ?
             0 : slice.endAngleCounterClockwise;
         } else {
           retVal.angleStart = sliceIndex === endSliceIndex ?
             0 : slice.endAngleCounterClockwise;
           retVal.angleEnd = sliceIndex === startSliceIndex ?
-            Math.PI : slice.startAngleCounterClockwise;
+            leftEdgeAngle : slice.startAngleCounterClockwise;
         }
       }
     }

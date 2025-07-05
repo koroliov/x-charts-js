@@ -511,8 +511,8 @@ tp.test((t) => {
   });
 });
 
-tp.test.skip((t) => {
-  const testName = '0012-';
+tp.test((t) => {
+  const testName = '0012-rotation-cx-gt-90-start-angle-gt-pi';
   const arg = {
     type: 'pie-3d',
     zIndex: '1',
@@ -538,19 +538,19 @@ tp.test.skip((t) => {
   draw({ ctx, addComponentArg: arg, });
 
   canvas.toBuffer(async (err: null | Error, buff: Buffer) => {
-    await writeCanvasToTestDiffDir({
-      canvas: ctx.canvas,
-      fileNameRelative: './test/diff/current.png',
-    });
-    //const equal = await compareWithLooksSame({
-    //  buffer: buff,
-    //  expectedFileNameRelative:
-    //    `./test/unit-permanent/components/pie-3d/draw/${ testName }.png`,
-    //  highlightColor: '#000000',
-    //  //diffFileNameRelativeOnError: `./test/diff/${ testName }.png`,
-    //  diffFileNameRelativeOnError: '',
+    //await writeCanvasToTestDiffDir({
+    //  canvas: ctx.canvas,
+    //  fileNameRelative: './test/diff/current.png',
     //});
-    //t.ok(equal);
+    const equal = await compareWithLooksSame({
+      buffer: buff,
+      expectedFileNameRelative:
+        `./test/unit-permanent/components/pie-3d/draw/${ testName }.png`,
+      highlightColor: '#000000',
+      //diffFileNameRelativeOnError: `./test/diff/${ testName }.png`,
+      diffFileNameRelativeOnError: '',
+    });
+    t.ok(equal);
     t.end();
   });
 });
