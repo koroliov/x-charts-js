@@ -561,12 +561,12 @@ tp.test.skip((t) => {
     type: 'pie-3d',
     zIndex: '1',
     options: {
-      thicknessPx: 15,
+      thicknessPx: 50,
       radiusPx: 200,
       centerXPx: 400,
       centerYPx: 250,
       startAtDeg: 247,
-      rotationAroundCenterXAxisDeg: 153,
+      rotationAroundCenterXAxisDeg: 70,
       rotationAroundCenterZAxisDeg: 0,
     },
     data: [
