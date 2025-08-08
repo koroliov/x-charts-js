@@ -1,6 +1,6 @@
 FILE := ''
 PROJECT_NAME := x-charts
-PROJECT_IMAGE_TAG := 25
+PROJECT_IMAGE_TAG := 27
 CONTAINER_NAME := $(PROJECT_NAME)-$(PROJECT_IMAGE_TAG)
 NODE_VERSION_NUM := 24.5.0
 NPM_VERSION_NUM := 11.5.2
@@ -16,15 +16,6 @@ include ./var/Makefile.config
 help:
 	@echo "Provide a target, type in the command prompt: \
 	make <space> <tab> <tab> to see all targets"
-
-.PHONY: help-list-cmd-options
-help-list-cmd-options:
-	@echo "FILE: file path + name in the project on the host and on the container"
-	@echo "  no preceding slash, like ./"
-	@echo "  Used with:"
-	@echo "    podman-container-copy-from"
-	@echo "    podman-container-copy-to"
-	@echo "  example: make FILE=foo/bar.js podman-container-copy-to"
 
 #podman section
 .PHONY: podman-image-build
@@ -52,7 +43,7 @@ podman-container-run-attached podman-container-run-detached:
 	--env LIVERELOAD_PORT=$(LIVERELOAD_PORT) \
 	-v $(CURDIR)/var/:/home/$(PROJECT_NAME)/var/ \
 	-v $(CURDIR)/dist/:/home/$(PROJECT_NAME)/dist/ \
-	-v $(CURDIR)/src/:/home/$(PROJECT_NAME)/src/ \
+	-v $(CURDIR)/flow/:/home/$(PROJECT_NAME)/flow/ \
 	-v $(CURDIR)/test/:/home/$(PROJECT_NAME)/test/ \
 	$(DETACHED_FLAG) --name $(CONTAINER_NAME) \
 	$(PROJECT_NAME):$(PROJECT_IMAGE_TAG)
@@ -83,16 +74,6 @@ podman-container-kill:
 podman-container-bash:
 	podman container exec -it $(CONTAINER_NAME) bash
 
-.PHONY: podman-container-copy-from
-podman-container-copy-from:
-	podman container cp $(CONTAINER_NAME):/home/$(PROJECT_NAME)/$(FILE) \
-	$(FILE)
-
-.PHONY: podman-container-copy-to
-podman-container-copy-to:
-	podman container cp $(FILE) \
-	$(CONTAINER_NAME):/home/$(PROJECT_NAME)/$(FILE)
-
 #npm section
 .PHONY: npm-outdated
 npm-outdated:
@@ -115,7 +96,7 @@ flow-build-full:
 
 #test section
 .PHONY: test-unit
-test-unit: TEST_FILES_RUN = $(subst ./src/,./test/unit-tmp/src/,$(TEST_FILES))
+test-unit: TEST_FILES_RUN = $(subst ./flow/,./test/unit-tmp/flow/,$(TEST_FILES))
 test-unit:
 	podman container exec -it $(CONTAINER_NAME) bash -c "rm -rf \
 	./test/unit-tmp/* && npm run flow && npm run flow-build-test $(BUILD_FILES) \
@@ -123,15 +104,15 @@ test-unit:
 
 .PHONY: test-unit-help
 test-unit-help:
-	@echo 'make test-unit BUILD_FILES="./src/foo.js ./src/bar/**" \<CR>'
-	@echo '  TEST_FILES="./src/test-unit/foo-1.test.js '
-	@echo '    ./src/test-unit/foo-2.test.js"'
+	@echo 'make test-unit BUILD_FILES="./flow/src/foo.js ./flow/src/bar/**" \<CR>'
+	@echo '  TEST_FILES="./flow/test-unit/foo-1.test.js '
+	@echo '    ./flow/test-unit/foo-2.test.js"'
 
 .PHONY: test-unit-full
 test-unit-full:
 	podman container exec -it $(CONTAINER_NAME) bash -c "rm -rf \
 	./test/unit-tmp/* && npm run flow && npm run flow-build-test \
-	./src/ && npm run tape ./test/unit-tmp/\{**/,\}*.test.js"
+	./flow/ && npm run tape ./test/unit-tmp/\{**/,\}*.test.js"
 
 ifneq ($(wildcard ./Makefile.current), '')
   include ./var/Makefile.current

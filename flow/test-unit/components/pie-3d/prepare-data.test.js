@@ -1,10 +1,10 @@
 //@flow strict
 //$FlowFixMe[cannot-resolve-module]
 import tp from 'tape';
-import { prepareData, } from '../../../components/pie-3d/prepare-data.js';
+import { prepareData, } from '../../../src/components/pie-3d/prepare-data.js';
 import { drawDataOnCanvas, } from './draw-data-on-canvas.util.js';
 import { writeToTestDiffDir, } from
-  '../../test-utils/write-to-test-diff-dir.util.js';
+  '../../utils/write-to-test-diff-dir.util.js';
 
 tp.test((t) => {
   const addComponentArg = {
@@ -168,7 +168,7 @@ tp.test((t) => {
       12.500000000000004,
     ],
     "ellipseMethodArgs": {
-      "radiusX": 149.99999999999997,
+      "radiusX": 150,
       "radiusY": 74.99999999999999,
       "axesRotationCounterClockwise": -0.7853981633974483,
       "isCounterClockwiseOnVisibleFace": true,

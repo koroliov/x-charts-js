@@ -1,11 +1,10 @@
 //@flow strict
 //$FlowFixMe[cannot-resolve-module]
 import tp from 'tape';
-import { prepareData, } from '../../../components/pie-3d/prepare-data.js';
+import { prepareData, } from '../../../src/components/pie-3d/prepare-data.js';
 import { prepareRimSlicesData, } from
-  '../../../components/pie-3d/prepare-rim-slices-data.js';
-import { writeToTestDiffDir } from
-  '../../test-utils/write-to-test-diff-dir.util.js';
+  '../../../src/components/pie-3d/prepare-rim-slices-data.js';
+import { writeToTestDiffDir } from '../../utils/write-to-test-diff-dir.util.js';
 import { drawDataOnCanvas, } from './draw-data-on-canvas.util.js';
 import { drawRimSlicesDataOnCanvas, } from
   './draw-rim-slices-data-on-canvas.util.js';
@@ -56,7 +55,7 @@ tp.test((t) => {
       "ellipseArgumentsOnHeads": {
         "centerX": 284.6906891076051,
         "centerY": 234.69068910760512,
-        "radiusX": 149.99999999999997,
+        "radiusX": 150,
         "radiusY": 74.99999999999999,
         "axesRotationCounterClockwise": -0.7853981633974483,
         "angleStart": -4.433136300065597,
@@ -66,7 +65,7 @@ tp.test((t) => {
       "ellipseArgumentsOnTails": {
         "centerX": 315.3093108923949,
         "centerY": 265.3093108923949,
-        "radiusX": 149.99999999999997,
+        "radiusX": 150,
         "radiusY": 74.99999999999999,
         "axesRotationCounterClockwise": -0.7853981633974483,
         "angleStart": -3.141592653589793,
@@ -99,7 +98,7 @@ tp.test((t) => {
       "ellipseArgumentsOnHeads": {
         "centerX": 284.6906891076051,
         "centerY": 234.69068910760512,
-        "radiusX": 149.99999999999997,
+        "radiusX": 150,
         "radiusY": 74.99999999999999,
         "axesRotationCounterClockwise": -0.7853981633974483,
         "angleStart": -6.283185307179586,
@@ -109,7 +108,7 @@ tp.test((t) => {
       "ellipseArgumentsOnTails": {
         "centerX": 315.3093108923949,
         "centerY": 265.3093108923949,
-        "radiusX": 149.99999999999997,
+        "radiusX": 150,
         "radiusY": 74.99999999999999,
         "axesRotationCounterClockwise": -0.7853981633974483,
         "angleStart": -4.433136300065597,

@@ -1,13 +1,13 @@
 //@flow strict
 //$FlowFixMe[cannot-resolve-module]
 import tp from 'tape';
-import { draw, } from '../../../components/pie-3d/draw.js';
+import { draw, } from '../../../src/components/pie-3d/draw.js';
 import { createCanvasContext2d, } from
-  '../../test-utils/create-node-canvas-context-2d.util.js';
+  '../../utils/create-node-canvas-context-2d.util.js';
 import { compareWithLooksSame, } from
-  '../../test-utils/compare-with-looks-same.util.js';
+  '../../utils/compare-with-looks-same.util.js';
 import { writeCanvasToTestDiffDir, } from
-  '../../test-utils/write-canvas-to-test-diff-dir.util.js';
+  '../../utils/write-canvas-to-test-diff-dir.util.js';
 
 tp.test((t) => {
   const testName = '0001-most-common-case';

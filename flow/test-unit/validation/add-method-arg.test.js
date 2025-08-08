@@ -1,7 +1,8 @@
 //@flow strict
 //$FlowFixMe[cannot-resolve-module]
 import tp from 'tape';
-import { validate, getDictionary, } from '../../validation/add-method-arg.js';
+import { validate, getDictionary, } from
+  '../../src/validation/add-method-arg.js';
 
 tp.test('valid argument case', (t) => {
   const addComponentArguments = [
