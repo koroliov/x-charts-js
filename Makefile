@@ -96,7 +96,7 @@ flow-build-full:
 
 #test section
 .PHONY: test-unit
-test-unit: TEST_FILES_RUN = $(subst ./flow/,./test/unit-tmp/,$(TEST_FILES))
+test-unit: TEST_FILES_RUN = $(subst ./flow/,./test/unit-tmp/flow/,$(TEST_FILES))
 test-unit:
 	podman container exec -it $(CONTAINER_NAME) bash -c "rm -rf \
 	./test/unit-tmp/* && npm run flow && npm run flow-build-test $(BUILD_FILES) \
