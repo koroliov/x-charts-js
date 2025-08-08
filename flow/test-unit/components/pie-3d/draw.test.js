@@ -1,7 +1,7 @@
 //@flow strict
 //$FlowFixMe[cannot-resolve-module]
 import tp from 'tape';
-import { draw, } from '../../../components/pie-3d/draw.js';
+import { draw, } from '../../../src/components/pie-3d/draw.js';
 import { createCanvasContext2d, } from
   '../../test-utils/create-node-canvas-context-2d.util.js';
 import { compareWithLooksSame, } from

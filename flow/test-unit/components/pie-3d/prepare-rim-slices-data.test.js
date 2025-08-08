@@ -1,9 +1,9 @@
 //@flow strict
 //$FlowFixMe[cannot-resolve-module]
 import tp from 'tape';
-import { prepareData, } from '../../../components/pie-3d/prepare-data.js';
+import { prepareData, } from '../../../src/components/pie-3d/prepare-data.js';
 import { prepareRimSlicesData, } from
-  '../../../components/pie-3d/prepare-rim-slices-data.js';
+  '../../../src/components/pie-3d/prepare-rim-slices-data.js';
 import { writeToTestDiffDir } from
   '../../test-utils/write-to-test-diff-dir.util.js';
 import { drawDataOnCanvas, } from './draw-data-on-canvas.util.js';

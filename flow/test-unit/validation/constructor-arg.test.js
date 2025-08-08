@@ -1,7 +1,8 @@
 //@flow strict
 //$FlowFixMe[cannot-resolve-module]
 import tp from 'tape';
-import { validate, getDictionary, } from '../../validation/constructor-arg.js';
+import { validate, getDictionary, } from
+  '../../src/validation/constructor-arg.js';
 
 tp.test('valid argument case', (t) => {
   const ContainerDiv = class ContainerDiv {  }

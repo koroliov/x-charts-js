@@ -1,6 +1,6 @@
 //@flow strict
 import type { RimSlicesData, PieData, }
-  from '../../../components/pie-3d/types.js';
+  from '../../../src/components/pie-3d/types.js';
 import fs from 'fs';
 
 type Arg = {

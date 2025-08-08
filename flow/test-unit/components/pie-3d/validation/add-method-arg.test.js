@@ -2,7 +2,7 @@
 //$FlowFixMe[cannot-resolve-module]
 import tp from 'tape';
 import { validate, getDictionary, }
-  from '../../../../components/pie-3d/validation/add-method-arg.js';
+  from '../../../../src/components/pie-3d/validation/add-method-arg.js';
 
 tp.test('valid argument case', (t) => {
   const addComponentArg = {

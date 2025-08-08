@@ -1,5 +1,5 @@
 //@flow strict
-import type { PieData, } from '../../../components/pie-3d/types.js';
+import type { PieData, } from '../../../src/components/pie-3d/types.js';
 import fs from 'fs';
 
 type Arg = {

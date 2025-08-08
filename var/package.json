@@ -8,8 +8,8 @@
     "test": "test"
   },
   "scripts": {
-    "flow": "flow ./src/",
-    "flow-build-full": "rm -rf ./dist/modules/* && flow ./src/ && flow-remove-types -d ./dist/modules/ -i '(^src\\/test-unit\\/|([^./]+\\.|/)types\\.js)' ./src/",
+    "flow": "flow ./flow/src/",
+    "flow-build-full": "rm -rf ./dist/modules/* && flow ./flow/ && flow-remove-types -d ./dist/modules/ -i '(^flow\\/test-unit\\/|([^./]+\\.|/)types\\.js)' ./flow/src/",
     "flow-build": "flow-remove-types",
     "flow-build-test": "flow-remove-types -d ./test/unit-tmp/",
     "tape": "tape",
