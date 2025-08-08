@@ -17,15 +17,6 @@ help:
 	@echo "Provide a target, type in the command prompt: \
 	make <space> <tab> <tab> to see all targets"
 
-.PHONY: help-list-cmd-options
-help-list-cmd-options:
-	@echo "FILE: file path + name in the project on the host and on the container"
-	@echo "  no preceding slash, like ./"
-	@echo "  Used with:"
-	@echo "    podman-container-copy-from"
-	@echo "    podman-container-copy-to"
-	@echo "  example: make FILE=foo/bar.js podman-container-copy-to"
-
 #podman section
 .PHONY: podman-image-build
 podman-image-build:
@@ -82,16 +73,6 @@ podman-container-kill:
 .PHONY: podman-container-bash
 podman-container-bash:
 	podman container exec -it $(CONTAINER_NAME) bash
-
-.PHONY: podman-container-copy-from
-podman-container-copy-from:
-	podman container cp $(CONTAINER_NAME):/home/$(PROJECT_NAME)/$(FILE) \
-	$(FILE)
-
-.PHONY: podman-container-copy-to
-podman-container-copy-to:
-	podman container cp $(FILE) \
-	$(CONTAINER_NAME):/home/$(PROJECT_NAME)/$(FILE)
 
 #npm section
 .PHONY: npm-outdated
