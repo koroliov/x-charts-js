@@ -5,7 +5,7 @@ import { validate, getDictionary, } from
   '../../src/validation/constructor-arg.js';
 
 tp.test('valid argument case', (t) => {
-  const ContainerDiv = class ContainerDiv {  }
+  const ContainerDiv = class ContainerDiv {  };
   const constructorArg = [
     {
       containerDiv: new ContainerDiv(),
@@ -25,7 +25,7 @@ tp.test('valid argument case', (t) => {
 });
 
 tp.test('no arguments', (t) => {
-  const ContainerDiv = class ContainerDiv {  }
+  const ContainerDiv = class ContainerDiv {  };
   const constructorArg: Array<mixed> = [
   ];
   //In tests it's acceptable
@@ -42,7 +42,7 @@ tp.test('no arguments', (t) => {
 });
 
 tp.test('extra arguments', (t) => {
-  const ContainerDiv = class ContainerDiv {  }
+  const ContainerDiv = class ContainerDiv {  };
   const constructorArg = [
     {
       containerDiv: new ContainerDiv(),
@@ -66,7 +66,7 @@ tp.test('extra arguments', (t) => {
 });
 
 tp.test('argument is not object', (t) => {
-  const ContainerDiv = class ContainerDiv {  }
+  const ContainerDiv = class ContainerDiv {  };
   const constructorArg = [
     'foo',
   ];
@@ -85,8 +85,8 @@ tp.test('argument is not object', (t) => {
 });
 
 tp.test('containerDiv is not valid', (t) => {
-  const ContainerDiv = class ContainerDiv {  }
-  const ContainerSpan = class ContainerSpan {  }
+  const ContainerDiv = class ContainerDiv {  };
+  const ContainerSpan = class ContainerSpan {  };
   const constructorArg = [
     {
       containerDiv: new ContainerSpan(),
@@ -111,7 +111,7 @@ tp.test('containerDiv is not valid', (t) => {
 
 //options validation
 tp.test('extra argument in options', (t) => {
-  const ContainerDiv = class ContainerDiv {  }
+  const ContainerDiv = class ContainerDiv {  };
   const constructorArg = [
     {
       containerDiv: new ContainerDiv(),
