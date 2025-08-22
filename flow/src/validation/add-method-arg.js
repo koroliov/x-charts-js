@@ -4,16 +4,16 @@ import { isObject, } from '../utils/validation.js';
 import { validate as validateByDictionary, } from './by-dictionary.js';
 
 export function validate(dict: ValidationDictionary,
-  allAddComponentArgs: Array<mixed>): string {
-  if (allAddComponentArgs.length !== 1) {
+  allAddMethodArgs: Array<mixed>): string {
+  if (allAddMethodArgs.length !== 1) {
     return generateWrongNumberOfArgumentsErrorReturnValue();
   }
-  if (!isObject(allAddComponentArgs[0])) {
+  if (!isObject(allAddMethodArgs[0])) {
     return generateNotObjectArgumentErrorReturnValue();
   }
   //the above call of isObject() is supposed to guarantee, that it's an object.
   //$FlowFixMe[incompatible-type]
-  const arg: { ... } = allAddComponentArgs[0];
+  const arg: { ... } = allAddMethodArgs[0];
   return validateByDictionary({
     errorCode: 'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG',
     topLevelPropName: '.add() method argument',
