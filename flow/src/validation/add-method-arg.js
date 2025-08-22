@@ -1,5 +1,5 @@
 //@flow strict
-import type { AddComponentArgument, ValidationDictionary, } from '../types.js';
+import type { ValidationDictionary, } from '../types.js';
 import { isObject, } from '../utils/validation.js';
 import { validate as validateByDictionary, } from './by-dictionary.js';
 

@@ -1,12 +1,11 @@
 //@flow strict
 import type {
-  AddComponentArgument,
   ComponentInstance,
 } from '../../types.js';
 import XCharts, { registerComponent, } from '../../main.js';
 import type { AddComponentPie3dArgument, } from './types.js';
 import { draw, } from './draw.js';
-import * as AddComponentArgumentValidator from './validation/add-method-arg.js';
+import * as AddMethodArgumentValidator from './validation/add-method-arg.js';
 
 class Pie3d implements ComponentInstance {
   static +_type = 'pie-3d'
@@ -32,18 +31,18 @@ class Pie3d implements ComponentInstance {
     }
   }
 
-  static validateAddComponentArgument(
+  static validateXChartsAddMethodArgument(
     arg: { [string]: mixed, }
   ): string {
-    const dict = AddComponentArgumentValidator.getDictionary();
-    return AddComponentArgumentValidator.validate(dict, arg);
+    const dict = AddMethodArgumentValidator.getDictionary();
+    return AddMethodArgumentValidator.validate(dict, arg);
   }
 }
 
 //This error is due to some 'unbindig' of the static
-//validateAddComponentArgument() method. The method is placed correctly (I don't
-//want to declare it outside of the class declaration) and it's used correctly:
-//RefToPie3dClass.validateAddComponentArgument()
-//So the logical decision was just to suppress here.
+//validateXChartsAddMethodArgument() method. The method is placed correctly (I
+//don't want to declare it outside of the class declaration) and it's used
+//correctly: RefToPie3dClass.validateXChartsAddMethodArgument() So the logical
+//decision was just to suppress here.
 //$FlowFixMe[method-unbinding]
 registerComponent(Pie3d);
