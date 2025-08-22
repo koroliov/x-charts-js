@@ -38,6 +38,7 @@ export default class XCharts {
     function initDom(): void {
       that._shadowRoot = that._containerDiv
         .attachShadow({ mode: 'open', });
+      const coverCanvasHtml = getCoverCanvasHtml();
       that._shadowRoot.innerHTML = `
         <div style="
           background-color: ${
@@ -46,12 +47,7 @@ export default class XCharts {
           height: 100%;
           position: relative;
         ">
-          <canvas style="
-            position: absolute;
-            z-index: 1;
-            width: 100%;
-            height: 100%;
-          "></canvas>
+          ${ coverCanvasHtml }
           <div style="
             width: 100%;
             height: 100%;
@@ -69,6 +65,20 @@ export default class XCharts {
         ].join('\n'));
       }
       that._componentsContainer = componentsContainer;
+
+      function getCoverCanvasHtml() {
+        if (constructorArgValidated.options.isComponentInspectMode) {
+          return '';
+        }
+        return `
+          <canvas style="
+            position: absolute;
+            z-index: 1;
+            width: 100%;
+            height: 100%;
+          "></canvas>
+        `;
+      }
     }
 
     function doValidation(constructorArguments: Array<mixed>):
