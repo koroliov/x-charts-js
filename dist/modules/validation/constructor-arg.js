@@ -41,6 +41,12 @@ export function getDictionary(containerClass                       )
         }
         return /^#[0-9A-F]{6}$/i.test(val) ? '' : msg;
       },
+      isComponentInspectMode(val) {
+        if (typeof val !== 'boolean') {
+          return 'value must be boolean';
+        }
+        return '';
+      },
     },
   };
 }

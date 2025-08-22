@@ -6,6 +6,7 @@ const xChartsConstructorArg = {
   options: {
     //backgroundColor: '#3300ff' /* blue */,
     backgroundColor: '#ffffff' /* white */,
+    isComponentInspectMode: false,
   },
 };
 const ins = new XCharts(xChartsConstructorArg);

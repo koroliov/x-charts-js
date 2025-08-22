@@ -3,6 +3,7 @@ export type XChartsConstructorArgument = {
   +containerDiv: HTMLDivElement,
   +options: {
     +backgroundColor: string,
+    +isComponentInspectMode: boolean,
   },
 }
 
