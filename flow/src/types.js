@@ -7,13 +7,6 @@ export type XChartsConstructorArgument = {
   },
 }
 
-export type ComponentDatum = {
-  +value: number,
-  +meta: {
-    +color: string,
-  },
-}
-
 export interface ComponentInstance {
 }
 
@@ -30,10 +23,7 @@ export type ComponentClass = {
 export type XChartsAddMethodArgument = {
   +type: string,
   +zIndex: string,
-  +options: {
-    [string]: mixed,
-  },
-  +data: $ReadOnlyArray<ComponentDatum>,
+  [string]: mixed,
 }
 
 export type Point = [number, number, number,]
