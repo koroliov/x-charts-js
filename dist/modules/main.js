@@ -3,10 +3,9 @@
                              
                  
                     
-                       
                     
 import {
-  validate as validateAddComponentArgumentOnXChartsLevel,
+  validate as validateXChartsAddMethodArgumentOnXChartsLevel,
   getDictionary as getValidationDictionaryOnXChartsLevel,
 } from './validation/add-method-arg.js';
 import {
@@ -134,7 +133,7 @@ export default class XCharts {
 
     function doComponentLevelArgumentValidation() {
       const invalidArgumentErrorMsg = componentClass
-        .validateAddComponentArgument(
+        .validateXChartsAddMethodArgument(
           //Despite the argTypeVerified is guaranteed at that point to have
           //props like: type, zIndex, I WANT to ignore them and treat the value
           //as the cast to value.
@@ -149,7 +148,7 @@ export default class XCharts {
     function doXChartsLevelArgumentValidation(addComponentArgs              ) {
       const dict = getValidationDictionaryOnXChartsLevel();
       const errorMsg =
-        validateAddComponentArgumentOnXChartsLevel(dict, addComponentArgs);
+        validateXChartsAddMethodArgumentOnXChartsLevel(dict, addComponentArgs);
       if (errorMsg) {
         that._attemptToShowError(errorMsg);
         throw new Error(errorMsg);

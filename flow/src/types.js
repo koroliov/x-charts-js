@@ -19,7 +19,7 @@ export interface ComponentInstance {
 
 export type ComponentClass = {
   +_type: string,
-  validateAddComponentArgument(
+  validateXChartsAddMethodArgument(
     arg: {
       [string]: mixed,
     },
@@ -27,7 +27,7 @@ export type ComponentClass = {
   ...
 }
 
-export type AddComponentArgument = {
+export type XChartsAddMethodArgument = {
   +type: string,
   +zIndex: string,
   +options: {
