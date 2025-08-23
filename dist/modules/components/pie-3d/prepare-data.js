@@ -1,9 +1,9 @@
 //      strict
-                                                                      
+                                                                   
                                              
 import { calculateDistance, } from '../../utils/math.js';
 
-export function prepareData(arg                           )          {
+export function prepareData(arg                        )          {
   const ops = arg.options;
   const { slices, totalValue, startAtDegActual, isPieReversed,
     rotationAroundCenterXAxisDegActual, } = getSomePreliminaryData();

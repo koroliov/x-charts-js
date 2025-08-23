@@ -8,7 +8,7 @@ export type DataEntry = {
   },
 }
 
-export type AddComponentPie3dArgument = {
+export type AddMethodArgumentPie3d = {
   +type: XChartsAddMethodArgument['type'],
   +zIndex: XChartsAddMethodArgument['zIndex'],
   +data: $ReadOnlyArray<DataEntry>,

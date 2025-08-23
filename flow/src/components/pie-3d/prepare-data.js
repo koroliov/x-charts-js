@@ -1,9 +1,9 @@
 //@flow strict
-import type { AddComponentPie3dArgument, PieData, } from './types.js';
+import type { AddMethodArgumentPie3d, PieData, } from './types.js';
 import type { Point, } from '../../types.js';
 import { calculateDistance, } from '../../utils/math.js';
 
-export function prepareData(arg: AddComponentPie3dArgument): PieData {
+export function prepareData(arg: AddMethodArgumentPie3d): PieData {
   const ops = arg.options;
   const { slices, totalValue, startAtDegActual, isPieReversed,
     rotationAroundCenterXAxisDegActual, } = getSomePreliminaryData();

@@ -3,7 +3,7 @@ import type {
   ComponentInstance,
 } from '../../types.js';
 import XCharts, { registerComponent, } from '../../main.js';
-import type { AddComponentPie3dArgument, } from './types.js';
+import type { AddMethodArgumentPie3d, } from './types.js';
 import { draw, } from './draw.js';
 import * as AddMethodArgumentValidator from './validation/add-method-arg.js';
 
@@ -12,7 +12,7 @@ class Pie3d implements ComponentInstance {
   _container: HTMLDivElement
   _ctx: CanvasRenderingContext2D
 
-  constructor(arg: AddComponentPie3dArgument, container: HTMLDivElement) {
+  constructor(arg: AddMethodArgumentPie3d, container: HTMLDivElement) {
     this._container = container;
     const that = this;
     createCanvas();

@@ -3,7 +3,7 @@
                     
                         
 import XCharts, { registerComponent, } from '../../main.js';
-                                                             
+                                                          
 import { draw, } from './draw.js';
 import * as AddMethodArgumentValidator from './validation/add-method-arg.js';
 
@@ -12,7 +12,7 @@ class Pie3d                              {
   _container                
   _ctx                          
 
-  constructor(arg                           , container                ) {
+  constructor(arg                        , container                ) {
     this._container = container;
     const that = this;
     createCanvas();

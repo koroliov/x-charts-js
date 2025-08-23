@@ -1,11 +1,11 @@
 //@flow strict
 import { prepareData, } from './prepare-data.js';
 import { prepareRimSlicesData, } from './prepare-rim-slices-data.js';
-import type { AddComponentPie3dArgument, } from './types.js';
+import type { AddMethodArgumentPie3d, } from './types.js';
 
 export function draw(arg: {
   ctx: CanvasRenderingContext2D,
-  addComponentArg: AddComponentPie3dArgument,
+  addComponentArg: AddMethodArgumentPie3d,
 }) {
   const { addComponentArg, ctx, } = arg;
   const pieData = prepareData(addComponentArg);
