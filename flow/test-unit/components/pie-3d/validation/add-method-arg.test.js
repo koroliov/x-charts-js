@@ -590,7 +590,7 @@ tp.test('prop is invalid on level 1', (t) => {
     },
     data: [
       { value: 40, meta: { color: '#FF0000' /* red */, }, },
-      { value: 35, meta: { color: '#000afg' /* blue */, }, },
+      { value: 35, meta: { color: '#000afg' /* invalid */, }, },
     ],
   };
   const dict = getDictionary();
