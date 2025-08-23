@@ -68,3 +68,14 @@ current-test-validation-constructor-arg: BUILD_FILES="'\
 current-test-validation-constructor-arg: TEST_FILES="'./flow/test-unit/validation/constructor-arg.test.js'"
 current-test-validation-constructor-arg: TEST_FILES_RUN=$(subst ./flow/src/,./test/unit-tmp/flow/src/,$(TEST_FILES))
 current-test-validation-constructor-arg: test-unit
+
+.PHONY: current-test-legend-validation
+current-test-legend-validation: BUILD_FILES="'\
+  ./flow/src/utils/validation.js \
+  ./flow/src/validation/by-dictionary.js \
+  ./flow/src/validation/add-method-arg.js \
+  ./flow/src/components/legend/validation/add-method-arg.js \
+'"
+current-test-legend-validation: TEST_FILES="'./flow/test-unit/components/legend/validation/add-method-arg.test.js'"
+current-test-legend-validation: TEST_FILES_RUN=$(subst ./flow/src/,./test/unit-tmp/flow/src/,$(TEST_FILES))
+current-test-legend-validation: test-unit
