@@ -5,10 +5,10 @@ import type { AddMethodArgumentPie3d, } from './types.js';
 
 export function draw(arg: {
   ctx: CanvasRenderingContext2D,
-  addComponentArg: AddMethodArgumentPie3d,
+  addMethodArg: AddMethodArgumentPie3d,
 }) {
-  const { addComponentArg, ctx, } = arg;
-  const pieData = prepareData(addComponentArg);
+  const { addMethodArg, ctx, } = arg;
+  const pieData = prepareData(addMethodArg);
   ctx.lineWidth = 0.5;
   const rimSlicesData = prepareRimSlicesData(pieData);
   if (!pieData.isHeadsVisibleToUser && !pieData.isTailsVisibleToUser) {

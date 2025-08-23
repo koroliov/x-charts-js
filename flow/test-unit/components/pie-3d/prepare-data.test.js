@@ -7,7 +7,7 @@ import { writeToTestDiffDir, } from
   '../../utils/write-to-test-diff-dir.util.js';
 
 tp.test((t) => {
-  const addComponentArg = {
+  const addMethodArg = {
     type: 'pie-3d',
     zIndex: '1',
     options: {
@@ -178,7 +178,7 @@ tp.test((t) => {
     "isRimVisibleToUser": true,
   };
 
-  const actual = prepareData(addComponentArg);
+  const actual = prepareData(addMethodArg);
   //writeToTestDiffDir({ actual, expected, });
   //drawDataOnCanvas({
   //  serverAbsFilePath: '/test/served-tmp/prepare-data-test.html',
@@ -200,7 +200,7 @@ tp.test((t) => {
 });
 
 tp.test('0001-most-common-case', (t) => {
-  const addComponentArg = {
+  const addMethodArg = {
     type: 'pie-3d',
     zIndex: '1',
     options: {
@@ -371,7 +371,7 @@ tp.test('0001-most-common-case', (t) => {
     "isRimVisibleToUser": true,
   };
 
-  const actual = prepareData(addComponentArg);
+  const actual = prepareData(addMethodArg);
   //writeToTestDiffDir({ actual, expected, });
   //drawDataOnCanvas({
   //  serverAbsFilePath: '/test/served-tmp/prepare-data-test.html',
@@ -393,7 +393,7 @@ tp.test('0001-most-common-case', (t) => {
 });
 
 tp.test('0002-01-start-at-0-deg', (t) => {
-  const addComponentArg = {
+  const addMethodArg = {
     type: 'pie-3d',
     zIndex: '1',
     options: {
@@ -596,7 +596,7 @@ tp.test('0002-01-start-at-0-deg', (t) => {
     "isRimVisibleToUser": true,
   };
 
-  const actual = prepareData(addComponentArg);
+  const actual = prepareData(addMethodArg);
   //writeToTestDiffDir({ actual, expected, });
   //drawDataOnCanvas({
   //  serverAbsFilePath: '/test/served-tmp/prepare-data-test.html',
@@ -618,7 +618,7 @@ tp.test('0002-01-start-at-0-deg', (t) => {
 });
 
 tp.test((t) => {
-  const addComponentArg = {
+  const addMethodArg = {
     type: 'pie-3d',
     zIndex: '1',
     options: {
@@ -789,7 +789,7 @@ tp.test((t) => {
     "isRimVisibleToUser": true,
   };
 
-  const actual = prepareData(addComponentArg);
+  const actual = prepareData(addMethodArg);
   //writeToTestDiffDir({ actual, expected, });
   //drawDataOnCanvas({
   //  serverAbsFilePath: '/test/served-tmp/prepare-data-test.html',
@@ -811,7 +811,7 @@ tp.test((t) => {
 });
 
 tp.test((t) => {
-  const addComponentArg = {
+  const addMethodArg = {
     type: 'pie-3d',
     zIndex: '1',
     options: {
@@ -1014,7 +1014,7 @@ tp.test((t) => {
     "isRimVisibleToUser": true,
   };
 
-  const actual = prepareData(addComponentArg);
+  const actual = prepareData(addMethodArg);
   //writeToTestDiffDir({ actual, expected, });
   //drawDataOnCanvas({
   //  serverAbsFilePath: '/test/served-tmp/prepare-data-test.html',
@@ -1036,7 +1036,7 @@ tp.test((t) => {
 });
 
 tp.test((t) => {
-  const addComponentArg = {
+  const addMethodArg = {
     type: 'pie-3d',
     zIndex: '1',
     options: {
@@ -1175,7 +1175,7 @@ tp.test((t) => {
     "isRimVisibleToUser": true,
   };
 
-  const actual = prepareData(addComponentArg);
+  const actual = prepareData(addMethodArg);
   //writeToTestDiffDir({ actual, expected, });
   //drawDataOnCanvas({
   //  serverAbsFilePath: '/test/served-tmp/prepare-data-test.html',
@@ -1197,7 +1197,7 @@ tp.test((t) => {
 });
 
 tp.test('0004-left-edge-slice-index-bigger-right-one', (t) => {
-  const addComponentArg = {
+  const addMethodArg = {
     type: 'pie-3d',
     zIndex: '1',
     options: {
@@ -1400,7 +1400,7 @@ tp.test('0004-left-edge-slice-index-bigger-right-one', (t) => {
     "isRimVisibleToUser": true,
   };
 
-  const actual = prepareData(addComponentArg);
+  const actual = prepareData(addMethodArg);
   //writeToTestDiffDir({ actual, expected, });
   //drawDataOnCanvas({
   //  serverAbsFilePath: '/test/served-tmp/prepare-data-test.html',
@@ -1422,7 +1422,7 @@ tp.test('0004-left-edge-slice-index-bigger-right-one', (t) => {
 });
 
 tp.test((t) => {
-  const addComponentArg = {
+  const addMethodArg = {
     type: 'pie-3d',
     zIndex: '1',
     options: {
@@ -1561,7 +1561,7 @@ tp.test((t) => {
     "isRimVisibleToUser": true,
   };
 
-  const actual = prepareData(addComponentArg);
+  const actual = prepareData(addMethodArg);
   //writeToTestDiffDir({ actual, expected, });
   //drawDataOnCanvas({
   //  serverAbsFilePath: '/test/served-tmp/prepare-data-test.html',
@@ -1583,7 +1583,7 @@ tp.test((t) => {
 });
 
 tp.test((t) => {
-  const addComponentArg = {
+  const addMethodArg = {
     type: 'pie-3d',
     zIndex: '1',
     options: {
@@ -1722,7 +1722,7 @@ tp.test((t) => {
     "isRimVisibleToUser": true,
   };
 
-  const actual = prepareData(addComponentArg);
+  const actual = prepareData(addMethodArg);
   //writeToTestDiffDir({ actual, expected, });
   //drawDataOnCanvas({
   //  serverAbsFilePath: '/test/served-tmp/prepare-data-test.html',
@@ -1744,7 +1744,7 @@ tp.test((t) => {
 });
 
 tp.test('0010-rotation-over-center-x-axis-greater-180-deg', (t) => {
-  const addComponentArg = {
+  const addMethodArg = {
     type: 'pie-3d',
     zIndex: '1',
     options: {
@@ -1915,7 +1915,7 @@ tp.test('0010-rotation-over-center-x-axis-greater-180-deg', (t) => {
     "isRimVisibleToUser": true,
   };
 
-  const actual = prepareData(addComponentArg);
+  const actual = prepareData(addMethodArg);
   //writeToTestDiffDir({ actual, expected, });
   //drawDataOnCanvas({
   //  serverAbsFilePath: '/test/served-tmp/prepare-data-test.html',
@@ -1937,7 +1937,7 @@ tp.test('0010-rotation-over-center-x-axis-greater-180-deg', (t) => {
 });
 
 tp.test('0011-rotation-100-deg-start-ang-0', (t) => {
-  const addComponentArg = {
+  const addMethodArg = {
     type: 'pie-3d',
     zIndex: '1',
     options: {
@@ -2140,7 +2140,7 @@ tp.test('0011-rotation-100-deg-start-ang-0', (t) => {
     "isRimVisibleToUser": true,
   };
 
-  const actual = prepareData(addComponentArg);
+  const actual = prepareData(addMethodArg);
   //writeToTestDiffDir({ actual, expected, });
   //drawDataOnCanvas({
   //  serverAbsFilePath: '/test/served-tmp/prepare-data-test.html',

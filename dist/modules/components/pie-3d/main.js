@@ -16,7 +16,7 @@ class Pie3d                              {
     this._container = container;
     const that = this;
     createCanvas();
-    draw({ ctx: this._ctx, addComponentArg: arg, });
+    draw({ ctx: this._ctx, addMethodArg: arg, });
 
     function createCanvas() {
       const canvas = document.createElement('canvas');

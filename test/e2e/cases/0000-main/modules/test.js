@@ -11,7 +11,7 @@ const xChartsConstructorArg = {
 };
 const ins = new XCharts(xChartsConstructorArg);
 
-const addComponentArg = {
+const addMethodArg = {
   type: 'pie-3d',
   zIndex: '1',
   options: {
@@ -29,4 +29,4 @@ const addComponentArg = {
     { value: 50, meta: { color: '#f2b5f6' /* pinkish */, }, },
   ],
 };
-ins.add(addComponentArg);
+ins.add(addMethodArg);

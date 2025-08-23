@@ -155,10 +155,10 @@ export default class XCharts {
       }
     }
 
-    function doXChartsLevelArgumentValidation(addComponentArgs: Array<mixed>) {
+    function doXChartsLevelArgumentValidation(addMethodArgs: Array<mixed>) {
       const dict = getValidationDictionaryOnXChartsLevel();
       const errorMsg =
-        validateXChartsAddMethodArgumentOnXChartsLevel(dict, addComponentArgs);
+        validateXChartsAddMethodArgumentOnXChartsLevel(dict, addMethodArgs);
       if (errorMsg) {
         that._attemptToShowError(errorMsg);
         throw new Error(errorMsg);

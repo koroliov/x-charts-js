@@ -5,10 +5,10 @@ import { prepareRimSlicesData, } from './prepare-rim-slices-data.js';
 
 export function draw(arg   
                                 
-                                          
+                                       
  ) {
-  const { addComponentArg, ctx, } = arg;
-  const pieData = prepareData(addComponentArg);
+  const { addMethodArg, ctx, } = arg;
+  const pieData = prepareData(addMethodArg);
   ctx.lineWidth = 0.5;
   const rimSlicesData = prepareRimSlicesData(pieData);
   if (!pieData.isHeadsVisibleToUser && !pieData.isTailsVisibleToUser) {
