@@ -11,6 +11,7 @@ tp.test('valid argument case', (t) => {
       containerDiv: new ContainerDiv(),
       options: {
         backgroundColor: '#ffffff' /* white */,
+        isComponentInspectMode: false,
       },
     },
   ];
@@ -128,6 +129,31 @@ tp.test('extra argument in options', (t) => {
     'ERR_X_CHARTS_INVALID_CONSTRUCTOR_ARG:',
     'new XCharts() argument -> options:',
     "  unknown property 'foo'",
+  ].join('\n');
+
+  const actual = validate(dict, constructorArg);
+  t.deepEqual(actual, expected);
+  t.end();
+});
+
+tp.test('isComponentInspectMode invalid', (t) => {
+  const ContainerDiv = class ContainerDiv {  };
+  const constructorArg = [
+    {
+      containerDiv: new ContainerDiv(),
+      options: {
+        backgroundColor: '#ffffff' /* white */,
+        isComponentInspectMode: 0,
+      },
+    },
+  ];
+  //In tests it's acceptable
+  //$FlowFixMe[incompatible-call]
+  const dict = getDictionary(ContainerDiv);
+  const expected = [
+    'ERR_X_CHARTS_INVALID_CONSTRUCTOR_ARG:',
+    'new XCharts() argument -> options -> isComponentInspectMode:',
+    "  value must be boolean",
   ].join('\n');
 
   const actual = validate(dict, constructorArg);

@@ -1,9 +1,18 @@
 //@flow strict
-import type { AddComponentArgument, Point } from '../../types.js';
+import type { XChartsAddMethodArgument, Point, } from '../../types.js';
+
+export type DataEntry = {
+  +value: number,
+  +meta: {
+    +color: string,
+  },
+}
 
 export type AddComponentPie3dArgument = {
-  ...Exclude<AddComponentArgument, AddComponentArgument['options']>,
-  options: {
+  +type: XChartsAddMethodArgument['type'],
+  +zIndex: XChartsAddMethodArgument['zIndex'],
+  +data: $ReadOnlyArray<DataEntry>,
+  +options: {
     +thicknessPx: number,
     +radiusPx: number,
     +centerXPx: number,

@@ -58,3 +58,13 @@ current-test-pie-3d-draw: BUILD_FILES="'\
 current-test-pie-3d-draw: TEST_FILES="'./flow/test-unit/components/pie-3d/draw.test.js'"
 current-test-pie-3d-draw: TEST_FILES_RUN=$(subst ./flow/src/,./test/unit-tmp/flow/src/,$(TEST_FILES))
 current-test-pie-3d-draw: test-unit
+
+.PHONY: current-test-validation-constructor-arg
+current-test-validation-constructor-arg: BUILD_FILES="'\
+  ./flow/src/utils/validation.js \
+  ./flow/src/validation/by-dictionary.js \
+  ./flow/src/validation/constructor-arg.js \
+'"
+current-test-validation-constructor-arg: TEST_FILES="'./flow/test-unit/validation/constructor-arg.test.js'"
+current-test-validation-constructor-arg: TEST_FILES_RUN=$(subst ./flow/src/,./test/unit-tmp/flow/src/,$(TEST_FILES))
+current-test-validation-constructor-arg: test-unit

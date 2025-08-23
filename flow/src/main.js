@@ -3,10 +3,9 @@ import type {
   XChartsConstructorArgument,
   ComponentClass,
   ComponentInstance,
-  AddComponentArgument,
 } from './types.js';
 import {
-  validate as validateAddComponentArgumentOnXChartsLevel,
+  validate as validateXChartsAddMethodArgumentOnXChartsLevel,
   getDictionary as getValidationDictionaryOnXChartsLevel,
 } from './validation/add-method-arg.js';
 import {
@@ -39,6 +38,7 @@ export default class XCharts {
     function initDom(): void {
       that._shadowRoot = that._containerDiv
         .attachShadow({ mode: 'open', });
+      const coverCanvasHtml = getCoverCanvasHtml();
       that._shadowRoot.innerHTML = `
         <div style="
           background-color: ${
@@ -47,12 +47,7 @@ export default class XCharts {
           height: 100%;
           position: relative;
         ">
-          <canvas style="
-            position: absolute;
-            z-index: 1;
-            width: 100%;
-            height: 100%;
-          "></canvas>
+          ${ coverCanvasHtml }
           <div style="
             width: 100%;
             height: 100%;
@@ -70,6 +65,20 @@ export default class XCharts {
         ].join('\n'));
       }
       that._componentsContainer = componentsContainer;
+
+      function getCoverCanvasHtml() {
+        if (constructorArgValidated.options.isComponentInspectMode) {
+          return '';
+        }
+        return `
+          <canvas style="
+            position: absolute;
+            z-index: 1;
+            width: 100%;
+            height: 100%;
+          "></canvas>
+        `;
+      }
     }
 
     function doValidation(constructorArguments: Array<mixed>):
@@ -134,7 +143,7 @@ export default class XCharts {
 
     function doComponentLevelArgumentValidation() {
       const invalidArgumentErrorMsg = componentClass
-        .validateAddComponentArgument(
+        .validateXChartsAddMethodArgument(
           //Despite the argTypeVerified is guaranteed at that point to have
           //props like: type, zIndex, I WANT to ignore them and treat the value
           //as the cast to value.
@@ -149,7 +158,7 @@ export default class XCharts {
     function doXChartsLevelArgumentValidation(addComponentArgs: Array<mixed>) {
       const dict = getValidationDictionaryOnXChartsLevel();
       const errorMsg =
-        validateAddComponentArgumentOnXChartsLevel(dict, addComponentArgs);
+        validateXChartsAddMethodArgumentOnXChartsLevel(dict, addComponentArgs);
       if (errorMsg) {
         that._attemptToShowError(errorMsg);
         throw new Error(errorMsg);
