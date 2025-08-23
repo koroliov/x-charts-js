@@ -5,7 +5,7 @@ import { validate, getDictionary, } from
   '../../src/validation/add-method-arg.js';
 
 tp.test('valid argument case', (t) => {
-  const addComponentArguments = [
+  const addMethodArguments = [
     {
       type: 'pie-3d',
       zIndex: '1',
@@ -27,7 +27,7 @@ tp.test('valid argument case', (t) => {
   const dict = getDictionary();
   const expected = '';
 
-  const actual = validate(dict, addComponentArguments);
+  const actual = validate(dict, addMethodArguments);
   t.deepEqual(actual, expected);
   t.end();
 });
@@ -35,20 +35,20 @@ tp.test('valid argument case', (t) => {
 //================= general checks ========================
 
 tp.test('no arguments', (t) => {
-  const addComponentArguments: Array<mixed> = [];
+  const addMethodArguments: Array<mixed> = [];
   const dict = getDictionary();
   const expected = [
     'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
     'The .add() method expects a single argument',
   ].join('\n');
 
-  const actual = validate(dict, addComponentArguments);
+  const actual = validate(dict, addMethodArguments);
   t.deepEqual(actual, expected);
   t.end();
 });
 
 tp.test('extra arguments', (t) => {
-  const addComponentArguments = [
+  const addMethodArguments = [
     {
       type: 'pie-3d',
       zIndex: '1',
@@ -74,13 +74,13 @@ tp.test('extra arguments', (t) => {
     'The .add() method expects a single argument',
   ].join('\n');
 
-  const actual = validate(dict, addComponentArguments);
+  const actual = validate(dict, addMethodArguments);
   t.deepEqual(actual, expected);
   t.end();
 });
 
 tp.test('arg is not object', (t) => {
-  const addComponentArguments = ['abc',];
+  const addMethodArguments = ['abc',];
   const dict = getDictionary();
   const expected = [
     'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
@@ -88,13 +88,13 @@ tp.test('arg is not object', (t) => {
     'e.g. {  }, Object.create(null)',
   ].join('\n');
 
-  const actual = validate(dict, addComponentArguments);
+  const actual = validate(dict, addMethodArguments);
   t.deepEqual(actual, expected);
   t.end();
 });
 
 tp.test('missing property', (t) => {
-  const addComponentArguments = [
+  const addMethodArguments = [
     {
       zIndex: '1',
       options: {
@@ -119,14 +119,14 @@ tp.test('missing property', (t) => {
     '  missing properties: type',
   ].join('\n');
 
-  const actual = validate(dict, addComponentArguments);
+  const actual = validate(dict, addMethodArguments);
   t.deepEqual(actual, expected);
   t.end();
 });
 
 //================ type property checks ===============
 tp.test('invalid type property, empty string ""', (t) => {
-  const addComponentArguments = [
+  const addMethodArguments = [
     {
       type: '',
       zIndex: '1',
@@ -152,14 +152,14 @@ tp.test('invalid type property, empty string ""', (t) => {
     '  value must be a non-empty string',
   ].join('\n');
 
-  const actual = validate(dict, addComponentArguments);
+  const actual = validate(dict, addMethodArguments);
   t.deepEqual(actual, expected);
   t.end();
 });
 
 //================ zIndex property checks ===============
 tp.test('zIndex property negative integers allowed', (t) => {
-  const addComponentArguments = [
+  const addMethodArguments = [
     {
       type: 'pie-3d',
       zIndex: '-1',
@@ -181,13 +181,13 @@ tp.test('zIndex property negative integers allowed', (t) => {
   const dict = getDictionary();
   const expected = '';
 
-  const actual = validate(dict, addComponentArguments);
+  const actual = validate(dict, addMethodArguments);
   t.deepEqual(actual, expected);
   t.end();
 });
 
 tp.test('invalid zIndex property', (t) => {
-  const addComponentArguments = [
+  const addMethodArguments = [
     {
       type: 'pie-3d',
       zIndex: '1 ',
@@ -213,7 +213,7 @@ tp.test('invalid zIndex property', (t) => {
     '  value must be a numeric integer string with no white spaces',
   ].join('\n');
 
-  const actual = validate(dict, addComponentArguments);
+  const actual = validate(dict, addMethodArguments);
   t.deepEqual(actual, expected);
   t.end();
 });

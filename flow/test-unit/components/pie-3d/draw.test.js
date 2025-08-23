@@ -31,7 +31,7 @@ tp.test((t) => {
   };
   const { ctx, canvas, } =
     createCanvasContext2d({ w: 470, h: 220, fillStyle: 'white', });
-  draw({ ctx, addComponentArg: arg, });
+  draw({ ctx, addMethodArg: arg, });
 
   canvas.toBuffer(async (err: null | Error, buff: Buffer) => {
     //await writeCanvasToTestDiffDir({
@@ -74,7 +74,7 @@ tp.test((t) => {
   };
   const { ctx, canvas, } =
     createCanvasContext2d({ w: 470, h: 220, fillStyle: 'white', });
-  draw({ ctx, addComponentArg: arg, });
+  draw({ ctx, addMethodArg: arg, });
 
   canvas.toBuffer(async (err: null | Error, buff: Buffer) => {
     //await writeCanvasToTestDiffDir({
@@ -117,7 +117,7 @@ tp.test((t) => {
   };
   const { ctx, canvas, } =
     createCanvasContext2d({ w: 470, h: 220, fillStyle: 'white', });
-  draw({ ctx, addComponentArg: arg, });
+  draw({ ctx, addMethodArg: arg, });
 
   canvas.toBuffer(async (err: null | Error, buff: Buffer) => {
     //await writeCanvasToTestDiffDir({
@@ -158,7 +158,7 @@ tp.test((t) => {
   };
   const { ctx, canvas, } =
     createCanvasContext2d({ w: 470, h: 220, fillStyle: 'white', });
-  draw({ ctx, addComponentArg: arg, });
+  draw({ ctx, addMethodArg: arg, });
 
   canvas.toBuffer(async (err: null | Error, buff: Buffer) => {
     //await writeCanvasToTestDiffDir({
@@ -201,7 +201,7 @@ tp.test((t) => {
   };
   const { ctx, canvas, } =
     createCanvasContext2d({ w: 470, h: 220, fillStyle: 'white', });
-  draw({ ctx, addComponentArg: arg, });
+  draw({ ctx, addMethodArg: arg, });
 
   canvas.toBuffer(async (err: null | Error, buff: Buffer) => {
     //await writeCanvasToTestDiffDir({
@@ -242,7 +242,7 @@ tp.test((t) => {
   };
   const { ctx, canvas, } =
     createCanvasContext2d({ w: 470, h: 220, fillStyle: 'white', });
-  draw({ ctx, addComponentArg: arg, });
+  draw({ ctx, addMethodArg: arg, });
 
   canvas.toBuffer(async (err: null | Error, buff: Buffer) => {
     //await writeCanvasToTestDiffDir({
@@ -283,7 +283,7 @@ tp.test((t) => {
   };
   const { ctx, canvas, } =
     createCanvasContext2d({ w: 470, h: 220, fillStyle: 'white', });
-  draw({ ctx, addComponentArg: arg, });
+  draw({ ctx, addMethodArg: arg, });
 
   canvas.toBuffer(async (err: null | Error, buff: Buffer) => {
     //await writeCanvasToTestDiffDir({
@@ -324,7 +324,7 @@ tp.test((t) => {
   };
   const { ctx, canvas, } =
     createCanvasContext2d({ w: 470, h: 220, fillStyle: 'white', });
-  draw({ ctx, addComponentArg: arg, });
+  draw({ ctx, addMethodArg: arg, });
 
   canvas.toBuffer(async (err: null | Error, buff: Buffer) => {
     //await writeCanvasToTestDiffDir({
@@ -365,7 +365,7 @@ tp.test((t) => {
   };
   const { ctx, canvas, } =
     createCanvasContext2d({ w: 470, h: 70, fillStyle: 'white', });
-  draw({ ctx, addComponentArg: arg, });
+  draw({ ctx, addMethodArg: arg, });
 
   canvas.toBuffer(async (err: null | Error, buff: Buffer) => {
     //await writeCanvasToTestDiffDir({
@@ -406,7 +406,7 @@ tp.test((t) => {
   };
   const { ctx, canvas, } =
     createCanvasContext2d({ w: 470, h: 220, fillStyle: 'white', });
-  draw({ ctx, addComponentArg: arg, });
+  draw({ ctx, addMethodArg: arg, });
 
   canvas.toBuffer(async (err: null | Error, buff: Buffer) => {
     //await writeCanvasToTestDiffDir({
@@ -448,7 +448,7 @@ tp.test((t) => {
   };
   const { ctx, canvas, } =
     createCanvasContext2d({ w: 470, h: 400, fillStyle: 'white', });
-  draw({ ctx, addComponentArg: arg, });
+  draw({ ctx, addMethodArg: arg, });
 
   canvas.toBuffer(async (err: null | Error, buff: Buffer) => {
     //await writeCanvasToTestDiffDir({
@@ -491,7 +491,7 @@ tp.test((t) => {
   };
   const { ctx, canvas, } =
     createCanvasContext2d({ w: 470, h: 220, fillStyle: 'white', });
-  draw({ ctx, addComponentArg: arg, });
+  draw({ ctx, addMethodArg: arg, });
 
   canvas.toBuffer(async (err: null | Error, buff: Buffer) => {
     //await writeCanvasToTestDiffDir({
@@ -535,7 +535,7 @@ tp.test((t) => {
   };
   const { ctx, canvas, } =
     createCanvasContext2d({ w: 470, h: 235, fillStyle: 'white', });
-  draw({ ctx, addComponentArg: arg, });
+  draw({ ctx, addMethodArg: arg, });
 
   canvas.toBuffer(async (err: null | Error, buff: Buffer) => {
     //await writeCanvasToTestDiffDir({
@@ -577,7 +577,7 @@ tp.test((t) => {
   };
   const { ctx, canvas, } =
     createCanvasContext2d({ w: 470, h: 220, fillStyle: 'white', });
-  draw({ ctx, addComponentArg: arg, });
+  draw({ ctx, addMethodArg: arg, });
 
   canvas.toBuffer(async (err: null | Error, buff: Buffer) => {
     //await writeCanvasToTestDiffDir({

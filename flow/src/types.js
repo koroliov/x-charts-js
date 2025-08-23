@@ -3,13 +3,7 @@ export type XChartsConstructorArgument = {
   +containerDiv: HTMLDivElement,
   +options: {
     +backgroundColor: string,
-  },
-}
-
-export type ComponentDatum = {
-  +value: number,
-  +meta: {
-    +color: string,
+    +isComponentInspectMode: boolean,
   },
 }
 
@@ -18,7 +12,7 @@ export interface ComponentInstance {
 
 export type ComponentClass = {
   +_type: string,
-  validateAddComponentArgument(
+  validateXChartsAddMethodArgument(
     arg: {
       [string]: mixed,
     },
@@ -26,13 +20,10 @@ export type ComponentClass = {
   ...
 }
 
-export type AddComponentArgument = {
+export type XChartsAddMethodArgument = {
   +type: string,
   +zIndex: string,
-  +options: {
-    [string]: mixed,
-  },
-  +data: $ReadOnlyArray<ComponentDatum>,
+  [string]: mixed,
 }
 
 export type Point = [number, number, number,]

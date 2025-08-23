@@ -5,7 +5,7 @@ import { validate, getDictionary, }
   from '../../../../src/components/pie-3d/validation/add-method-arg.js';
 
 tp.test('valid argument case', (t) => {
-  const addComponentArg = {
+  const addMethodArg = {
     type: 'pie-3d',
     zIndex: '1',
     options: {
@@ -26,14 +26,14 @@ tp.test('valid argument case', (t) => {
   const dict = getDictionary();
   const expected = '';
 
-  const actual = validate(dict, addComponentArg);
+  const actual = validate(dict, addMethodArg);
   t.equal(actual, expected);
   t.end();
 });
 
 //============ top level props ========================
 tp.test('extra property present', (t) => {
-  const addComponentArg = {
+  const addMethodArg = {
     type: 'pie-3d',
     zIndex: '1',
     someUnknownProp: 'foo',
@@ -60,13 +60,13 @@ tp.test('extra property present', (t) => {
     "  unknown property 'someUnknownProp'",
   ].join('\n');
 
-  const actual = validate(dict, addComponentArg);
+  const actual = validate(dict, addMethodArg);
   t.equal(actual, expected);
   t.end();
 });
 
 tp.test('missing property', (t) => {
-  const addComponentArg = {
+  const addMethodArg = {
     type: 'pie-3d',
     zIndex: '1',
     options: {
@@ -88,13 +88,13 @@ tp.test('missing property', (t) => {
     "  missing properties: data",
   ].join('\n');
 
-  const actual = validate(dict, addComponentArg);
+  const actual = validate(dict, addMethodArg);
   t.equal(actual, expected);
   t.end();
 });
 
 tp.test('missing properties', (t) => {
-  const addComponentArg = {
+  const addMethodArg = {
     type: 'pie-3d',
     zIndex: '1',
     //options: { },
@@ -108,7 +108,7 @@ tp.test('missing properties', (t) => {
     "  missing properties: options, data",
   ].join('\n');
 
-  const actual = validate(dict, addComponentArg);
+  const actual = validate(dict, addMethodArg);
   t.equal(actual, expected);
   t.end();
 });
@@ -116,7 +116,7 @@ tp.test('missing properties', (t) => {
 //============ options ========================
 
 tp.test('options is not object', (t) => {
-  const addComponentArg = {
+  const addMethodArg = {
     type: 'pie-3d',
     zIndex: '1',
     options: true,
@@ -134,13 +134,13 @@ tp.test('options is not object', (t) => {
     '  must be an object',
   ].join('\n');
 
-  const actual = validate(dict, addComponentArg);
+  const actual = validate(dict, addMethodArg);
   t.equal(actual, expected);
   t.end();
 });
 
 tp.test('extra property', (t) => {
-  const addComponentArg = {
+  const addMethodArg = {
     type: 'pie-3d',
     zIndex: '1',
     options: {
@@ -167,13 +167,13 @@ tp.test('extra property', (t) => {
     "  unknown property 'someUnknownProp'",
   ].join('\n');
 
-  const actual = validate(dict, addComponentArg);
+  const actual = validate(dict, addMethodArg);
   t.equal(actual, expected);
   t.end();
 });
 
 tp.test('missing property', (t) => {
-  const addComponentArg = {
+  const addMethodArg = {
     type: 'pie-3d',
     zIndex: '1',
     options: {
@@ -199,13 +199,13 @@ tp.test('missing property', (t) => {
     "  missing properties: radiusPx",
   ].join('\n');
 
-  const actual = validate(dict, addComponentArg);
+  const actual = validate(dict, addMethodArg);
   t.equal(actual, expected);
   t.end();
 });
 
 tp.test('missing properties', (t) => {
-  const addComponentArg = {
+  const addMethodArg = {
     type: 'pie-3d',
     zIndex: '1',
     options: {
@@ -231,13 +231,13 @@ tp.test('missing properties', (t) => {
     "  missing properties: radiusPx, startAtDeg",
   ].join('\n');
 
-  const actual = validate(dict, addComponentArg);
+  const actual = validate(dict, addMethodArg);
   t.equal(actual, expected);
   t.end();
 });
 
 tp.test('startAtDeg invalid', (t) => {
-  const addComponentArg = {
+  const addMethodArg = {
     type: 'pie-3d',
     zIndex: '1',
     options: {
@@ -263,7 +263,7 @@ tp.test('startAtDeg invalid', (t) => {
     "  value must be a number in [+0, 360) range",
   ].join('\n');
 
-  const actual = validate(dict, addComponentArg);
+  const actual = validate(dict, addMethodArg);
   t.equal(actual, expected);
   t.end();
 });
@@ -271,7 +271,7 @@ tp.test('startAtDeg invalid', (t) => {
 //============ data values ========================
 
 tp.test('data is not array', (t) => {
-  const addComponentArg = {
+  const addMethodArg = {
     type: 'pie-3d',
     zIndex: '1',
     options: {
@@ -293,13 +293,13 @@ tp.test('data is not array', (t) => {
     '  must be an non empty array',
   ].join('\n');
 
-  const actual = validate(dict, addComponentArg);
+  const actual = validate(dict, addMethodArg);
   t.equal(actual, expected);
   t.end();
 });
 
 tp.test('data is empty array', (t) => {
-  const addComponentArg = {
+  const addMethodArg = {
     type: 'pie-3d',
     zIndex: '1',
     options: {
@@ -321,7 +321,7 @@ tp.test('data is empty array', (t) => {
     '  must be an non empty array',
   ].join('\n');
 
-  const actual = validate(dict, addComponentArg);
+  const actual = validate(dict, addMethodArg);
   t.equal(actual, expected);
   t.end();
 });
@@ -333,7 +333,7 @@ tp.test('data array has non index property, allowed, ignored', (t) => {
   //This is needed to check an error case
   //$FlowFixMe[prop-missing]
   data.fooProp = { value: -1, meta: { color: '#000aff' /* blue */, }, };
-  const addComponentArg = {
+  const addMethodArg = {
     type: 'pie-3d',
     zIndex: '1',
     options: {
@@ -351,7 +351,7 @@ tp.test('data array has non index property, allowed, ignored', (t) => {
 
   const expected = '';
 
-  const actual = validate(dict, addComponentArg);
+  const actual = validate(dict, addMethodArg);
   t.equal(actual, expected);
   t.end();
 });
@@ -361,7 +361,7 @@ tp.test('data array has sparse elements', (t) => {
     { value: 40, meta: { color: '#ff0000' /* red */, }, },
   ];
   data[4] = { value: 10, meta: { color: '#000aff' /* blue */, }, };
-  const addComponentArg = {
+  const addMethodArg = {
     type: 'pie-3d',
     zIndex: '1',
     options: {
@@ -383,13 +383,13 @@ tp.test('data array has sparse elements', (t) => {
     '  must be an object',
   ].join('\n');
 
-  const actual = validate(dict, addComponentArg);
+  const actual = validate(dict, addMethodArg);
   t.equal(actual, expected);
   t.end();
 });
 
 tp.test('data array has total value 0', (t) => {
-  const addComponentArg = {
+  const addMethodArg = {
     type: 'pie-3d',
     zIndex: '1',
     options: {
@@ -414,13 +414,13 @@ tp.test('data array has total value 0', (t) => {
     '  total value must be >= 0',
   ].join('\n');
 
-  const actual = validate(dict, addComponentArg);
+  const actual = validate(dict, addMethodArg);
   t.equal(actual, expected);
   t.end();
 });
 
 tp.test('data element is not object', (t) => {
-  const addComponentArg = {
+  const addMethodArg = {
     type: 'pie-3d',
     zIndex: '1',
     options: {
@@ -446,13 +446,13 @@ tp.test('data element is not object', (t) => {
     '  must be an object',
   ].join('\n');
 
-  const actual = validate(dict, addComponentArg);
+  const actual = validate(dict, addMethodArg);
   t.equal(actual, expected);
   t.end();
 });
 
 tp.test('prop is missing', (t) => {
-  const addComponentArg = {
+  const addMethodArg = {
     type: 'pie-3d',
     zIndex: '1',
     options: {
@@ -477,13 +477,13 @@ tp.test('prop is missing', (t) => {
     "  missing properties: value",
   ].join('\n');
 
-  const actual = validate(dict, addComponentArg);
+  const actual = validate(dict, addMethodArg);
   t.equal(actual, expected);
   t.end();
 });
 
 tp.test('prop is not object', (t) => {
-  const addComponentArg = {
+  const addMethodArg = {
     type: 'pie-3d',
     zIndex: '1',
     options: {
@@ -508,13 +508,13 @@ tp.test('prop is not object', (t) => {
     "  must be an object",
   ].join('\n');
 
-  const actual = validate(dict, addComponentArg);
+  const actual = validate(dict, addMethodArg);
   t.equal(actual, expected);
   t.end();
 });
 
 tp.test('value is not valid', (t) => {
-  const addComponentArg = {
+  const addMethodArg = {
     type: 'pie-3d',
     zIndex: '1',
     options: {
@@ -539,13 +539,13 @@ tp.test('value is not valid', (t) => {
     '  value must be a finite number >= 0',
   ].join('\n');
 
-  const actual = validate(dict, addComponentArg);
+  const actual = validate(dict, addMethodArg);
   t.equal(actual, expected);
   t.end();
 });
 
 tp.test('prop is missing on level 1', (t) => {
-  const addComponentArg = {
+  const addMethodArg = {
     type: 'pie-3d',
     zIndex: '1',
     options: {
@@ -570,13 +570,13 @@ tp.test('prop is missing on level 1', (t) => {
     "  missing properties: color",
   ].join('\n');
 
-  const actual = validate(dict, addComponentArg);
+  const actual = validate(dict, addMethodArg);
   t.equal(actual, expected);
   t.end();
 });
 
 tp.test('prop is invalid on level 1', (t) => {
-  const addComponentArg = {
+  const addMethodArg = {
     type: 'pie-3d',
     zIndex: '1',
     options: {
@@ -590,7 +590,7 @@ tp.test('prop is invalid on level 1', (t) => {
     },
     data: [
       { value: 40, meta: { color: '#FF0000' /* red */, }, },
-      { value: 35, meta: { color: '#000afg' /* blue */, }, },
+      { value: 35, meta: { color: '#000afg' /* invalid */, }, },
     ],
   };
   const dict = getDictionary();
@@ -601,7 +601,7 @@ tp.test('prop is invalid on level 1', (t) => {
     '  value must be a full (6 char long) hex string, e.g. #ffffff, not #fff',
   ].join('\n');
 
-  const actual = validate(dict, addComponentArg);
+  const actual = validate(dict, addMethodArg);
   t.equal(actual, expected);
   t.end();
 });

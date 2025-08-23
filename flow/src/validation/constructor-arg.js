@@ -4,16 +4,16 @@ import { isObject, } from '../utils/validation.js';
 import { validate as validateByDictionary, } from './by-dictionary.js';
 
 export function validate(dict: ValidationDictionary,
-  allAddComponentArgs: Array<mixed>): string {
-  if (allAddComponentArgs.length !== 1) {
+  allConstructorArgs: Array<mixed>): string {
+  if (allConstructorArgs.length !== 1) {
     return generateWrongNumberOfArgumentsErrorReturnValue();
   }
-  if (!isObject(allAddComponentArgs[0])) {
+  if (!isObject(allConstructorArgs[0])) {
     return generateNotObjectArgumentErrorReturnValue();
   }
   //the above call of isObject() is supposed to guarantee, that it's an object.
   //$FlowFixMe[incompatible-type]
-  const arg: { ... } = allAddComponentArgs[0];
+  const arg: { ... } = allConstructorArgs[0];
   return validateByDictionary({
     errorCode: 'ERR_X_CHARTS_INVALID_CONSTRUCTOR_ARG',
     topLevelPropName: 'new XCharts() argument',
@@ -40,6 +40,12 @@ export function getDictionary(containerClass: Class<HTMLDivElement>):
           return msg;
         }
         return /^#[0-9A-F]{6}$/i.test(val) ? '' : msg;
+      },
+      isComponentInspectMode(val) {
+        if (typeof val !== 'boolean') {
+          return 'value must be boolean';
+        }
+        return '';
       },
     },
   };

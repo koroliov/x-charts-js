@@ -1,5 +1,5 @@
 //      strict
-                                                                               
+                                                         
 import { isObject, } from '../utils/validation.js';
 
 export function validate(arg   

@@ -1,5 +1,6 @@
 //@flow strict
-import type { ValidationDictionary, ComponentDatum, } from '../../../types.js';
+import type { ValidationDictionary, } from '../../../types.js';
+import type { DataEntry, } from '../types.js';
 import { isObject, } from '../../../utils/validation.js';
 import { validate as validateByDictionary, } from
   '../../../validation/by-dictionary.js';
@@ -28,9 +29,9 @@ export function validate(
   function validateTotalValue(): string {
     const total = userProvidedArg.data
       //After the validateByDictionary() call this is guaranteed to
-      //be an array of ComponentDatum
+      //be an array of DataEntry
       //$FlowFixMe[incompatible-use]
-      .reduce((t: number, d: ComponentDatum) => t + d.value, 0);
+      .reduce((t: number, d: DataEntry) => t + d.value, 0);
     return total > 0 ? '' : [
       'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
       '.add() method argument, component pie-3d -> data:',

@@ -1,5 +1,6 @@
 //      strict
-                                                                               
+                                                               
+                                              
 import { isObject, } from '../../../utils/validation.js';
 import { validate as validateByDictionary, } from
   '../../../validation/by-dictionary.js';
@@ -28,9 +29,9 @@ export function validate(
   function validateTotalValue()         {
     const total = userProvidedArg.data
       //After the validateByDictionary() call this is guaranteed to
-      //be an array of ComponentDatum
+      //be an array of DataEntry
       //$FlowFixMe[incompatible-use]
-      .reduce((t        , d                ) => t + d.value, 0);
+      .reduce((t        , d           ) => t + d.value, 0);
     return total > 0 ? '' : [
       'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
       '.add() method argument, component pie-3d -> data:',

@@ -10,7 +10,7 @@ import { drawRimSlicesDataOnCanvas, } from
   './draw-rim-slices-data-on-canvas.util.js';
 
 tp.test((t) => {
-  const addComponentArg = {
+  const addMethodArg = {
     type: 'pie-3d',
     zIndex: '1',
     options: {
@@ -28,7 +28,7 @@ tp.test((t) => {
       { value: 35, meta: { color: '#000aff' /* blue */, }, },
     ],
   };
-  const pieData = prepareData(addComponentArg);
+  const pieData = prepareData(addMethodArg);
   const expected: ReturnType<typeof prepareRimSlicesData> = [
     {
       "color": "#37ff00",
@@ -150,7 +150,7 @@ tp.test((t) => {
 });
 
 tp.test((t) => {
-  const addComponentArg = {
+  const addMethodArg = {
     type: 'pie-3d',
     zIndex: '1',
     options: {
@@ -169,7 +169,7 @@ tp.test((t) => {
       { value: 50, meta: { color: '#f2b5f6' /* pinkish */, }, },
     ],
   };
-  const pieData = prepareData(addComponentArg);
+  const pieData = prepareData(addMethodArg);
   const expected: ReturnType<typeof prepareRimSlicesData> = [
     {
       "color": "#f2b5f6",
@@ -334,7 +334,7 @@ tp.test((t) => {
 });
 
 tp.test((t) => {
-  const addComponentArg = {
+  const addMethodArg = {
     type: 'pie-3d',
     zIndex: '1',
     options: {
@@ -351,7 +351,7 @@ tp.test((t) => {
       { value: 50, meta: { color: '#f2b5f6' /* pinkish */, }, },
     ],
   };
-  const pieData = prepareData(addComponentArg);
+  const pieData = prepareData(addMethodArg);
   const expected: ReturnType<typeof prepareRimSlicesData> = [
     {
       "color": "#f2b5f6",
@@ -430,7 +430,7 @@ tp.test((t) => {
 });
 
 tp.test((t) => {
-  const addComponentArg = {
+  const addMethodArg = {
     type: 'pie-3d',
     zIndex: '1',
     options: {
@@ -447,7 +447,7 @@ tp.test((t) => {
       { value: 25, meta: { color: '#fffd00' /* yellow */, }, },
     ],
   };
-  const pieData = prepareData(addComponentArg);
+  const pieData = prepareData(addMethodArg);
   const expected: ReturnType<typeof prepareRimSlicesData> = [
     {
       "color": "#37ff00",
@@ -526,7 +526,7 @@ tp.test((t) => {
 });
 
 tp.test((t) => {
-  const addComponentArg = {
+  const addMethodArg = {
     type: 'pie-3d',
     zIndex: '1',
     options: {
@@ -543,7 +543,7 @@ tp.test((t) => {
       { value: 25, meta: { color: '#fffd00' /* yellow */, }, },
     ],
   };
-  const pieData = prepareData(addComponentArg);
+  const pieData = prepareData(addMethodArg);
   const expected: ReturnType<typeof prepareRimSlicesData> = [
     {
       "color": "#37ff00",
@@ -708,7 +708,7 @@ tp.test((t) => {
 });
 
 tp.test('0010-rotation-over-center-x-axis-greater-180-deg', (t) => {
-  const addComponentArg = {
+  const addMethodArg = {
     type: 'pie-3d',
     zIndex: '1',
     options: {
@@ -726,7 +726,7 @@ tp.test('0010-rotation-over-center-x-axis-greater-180-deg', (t) => {
       { value: 25, meta: { color: '#fffd00' /* yellow */, }, },
     ],
   };
-  const pieData = prepareData(addComponentArg);
+  const pieData = prepareData(addMethodArg);
   const expected: ReturnType<typeof prepareRimSlicesData> = [
     {
       "color": "#37ff00",
@@ -805,7 +805,7 @@ tp.test('0010-rotation-over-center-x-axis-greater-180-deg', (t) => {
 });
 
 tp.test('0012-rotation-cx-gt-90-start-angle-gt-pi', (t) => {
-  const addComponentArg = {
+  const addMethodArg = {
     type: 'pie-3d',
     zIndex: '1',
     options: {
@@ -825,7 +825,7 @@ tp.test('0012-rotation-cx-gt-90-start-angle-gt-pi', (t) => {
       { value: 50, meta: { color: '#f2b5f6' /* pinkish */, }, },
     ],
   };
-  const pieData = prepareData(addComponentArg);
+  const pieData = prepareData(addMethodArg);
   const expected: ReturnType<typeof prepareRimSlicesData> = [
     {
       "color": "#ff0000",
@@ -991,7 +991,7 @@ tp.test('0012-rotation-cx-gt-90-start-angle-gt-pi', (t) => {
 
 tp.test('0013-rotation-cx-gt-90-start-angle-gt-pi-start-end-slice-is-same',
   (t) => {
-  const addComponentArg = {
+  const addMethodArg = {
     type: 'pie-3d',
     zIndex: '1',
     options: {
@@ -1008,7 +1008,7 @@ tp.test('0013-rotation-cx-gt-90-start-angle-gt-pi-start-end-slice-is-same',
       { value: 50, meta: { color: '#f2b5f6' /* pinkish */, }, },
     ],
   };
-  const pieData = prepareData(addComponentArg);
+  const pieData = prepareData(addMethodArg);
   const expected: ReturnType<typeof prepareRimSlicesData> = [
     {
       "color": "#37ff00",
