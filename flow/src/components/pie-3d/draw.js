@@ -41,14 +41,13 @@ export function draw(arg: {
         ctx.stroke();
       }
       if (isFill) {
-        ctx.fillStyle = sd.color;
+        ctx.fillStyle = sd.rimColor;
         ctx.fill();
       }
     });
   }
 
-  function processRimElliptic(arg: {
-    isHeadsVisible: boolean,
+  function processRimElliptic(arg: { isHeadsVisible: boolean,
     rimSlicesData: ReturnType<typeof prepareRimSlicesData>,
     action: 'stroke' | 'fill',
   }) {
@@ -86,7 +85,7 @@ export function draw(arg: {
       drawEllipse(sd[ellipseArgumentsOnVisibleFace]);
       ctx.closePath();
       if (isFill) {
-        ctx.fillStyle = sd.color;
+        ctx.fillStyle = sd.rimColor;
         ctx.fill();
       }
 
@@ -155,7 +154,7 @@ export function draw(arg: {
         false,
       );
       if (arg.action === 'fill') {
-        ctx.fillStyle = s.color;
+        ctx.fillStyle = s.faceColor;
         ctx.fill();
       } else {
         ctx.stroke();
@@ -181,7 +180,7 @@ export function draw(arg: {
       ctx.lineTo(pieData[centerPointPropName][0],
         pieData[centerPointPropName][1]);
       if (arg.action === 'fill') {
-        ctx.fillStyle = s.color;
+        ctx.fillStyle = s.faceColor;
         ctx.fill();
       } else {
         ctx.stroke();

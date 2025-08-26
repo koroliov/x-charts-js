@@ -154,7 +154,7 @@ export function drawDataOnCanvas(arg: Arg) {
             ctx.beginPath();
             const x = s[isHeads ? 'startPointHeads' : 'startPointTails'][0];
             const y = s[isHeads ? 'startPointHeads' : 'startPointTails'][1];
-            drawSingleDot(x, y, (isHeads ? 'h' : 't') + i, s.color);
+            drawSingleDot(x, y, (isHeads ? 'h' : 't') + i, s.faceColor);
           });
 
           function drawCenterDot() {

@@ -23,7 +23,7 @@ export function prepareRimSlicesData(pieData         )                {
       const sliceIndex = indicesToPassThru[j];
       const slice = pieData.slices[sliceIndex];
       const sd               = {
-        color: slice.color,
+        rimColor: slice.rimColor,
         pointStartOnHeads: j === 0 ?
           pieData.edgeLeft.pointHeads : slice.startPointHeads,
         pointStartOnTails: j === 0 ?

@@ -4,7 +4,8 @@ import type { XChartsAddMethodArgument, Point, } from '../../types.js';
 export type DataEntry = {
   +value: number,
   +meta: {
-    +color: string,
+    +faceColor: string,
+    +rimColor: string,
   },
 }
 
@@ -36,7 +37,8 @@ type SliceData = {
   },
   +indexInUserProvidedArray: number,
   +value: number,
-  +color: string,
+  +faceColor: string,
+  +rimColor: string,
 }
 
 export type Context2dEllipseMethodArguments = {
@@ -57,7 +59,7 @@ export type RimSliceData = {
   +pointEndOnHeads: Point,
   +ellipseArgumentsOnTails: Context2dEllipseMethodArguments,
   +ellipseArgumentsOnHeads: Context2dEllipseMethodArguments,
-  +color: string,
+  +rimColor: string,
 }
 
 export type RimSlicesData = Array<RimSliceData>

@@ -1,7 +1,7 @@
 //      strict
                                                                
                                               
-import { isObject, } from '../../../utils/validation.js';
+import { isObject, validateHexColor, } from '../../../utils/validation.js';
 import { validate as validateByDictionary, } from
   '../../../validation/by-dictionary.js';
 import { getDictionary as getDictionaryCommon, }
@@ -83,16 +83,8 @@ export function getDictionary()                       {
             '' : 'value must be a finite number >= 0';
         },
         meta: {
-          color(val) {
-            const msg = [
-              'value must be a full (6 char long) hex string,',
-              'e.g. #ffffff, not #fff',
-            ].join(' ');
-            if (typeof val !== 'string') {
-              return msg;
-            }
-            return /^#[0-9A-F]{6}$/i.test(val) ? '' : msg;
-          },
+          faceColor: validateHexColor,
+          rimColor: validateHexColor,
         },
       },
     ],

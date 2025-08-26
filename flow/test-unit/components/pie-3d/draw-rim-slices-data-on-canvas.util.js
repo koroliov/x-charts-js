@@ -130,7 +130,7 @@ export function drawRimSlicesDataOnCanvas(arg: Arg) {
             ctx.lineTo(rsd.pointEndOnTails[0], rsd.pointEndOnTails[1]);
             ctx.lineTo(rsd.pointEndOnHeads[0], rsd.pointEndOnHeads[1]);
             ctx.lineTo(rsd.pointStartOnHeads[0], rsd.pointStartOnHeads[1]);
-            ctx.fillStyle = rsd.color;
+            ctx.fillStyle = rsd.rimColor;
             ctx.fill();
           }
 
@@ -163,7 +163,7 @@ export function drawRimSlicesDataOnCanvas(arg: Arg) {
               rsd[ellipseArgumentsOnVisibleFace].angleEnd,
               rsd[ellipseArgumentsOnVisibleFace].isCounterClockwise,
             );
-            ctx.fillStyle = rsd.color;
+            ctx.fillStyle = rsd.rimColor;
             ctx.fill();
           }
 

@@ -24,7 +24,7 @@ function getAddMethodArgLegend(data) {
   const rows = data.reduce((s, d) => {
     return s + `
       <div class="row">
-        <div class="marker" style="background-color: ${ d.color }"></div>
+        <div class="marker" style="background-color: ${ d.faceColor }"></div>
         ${ d.label }, ${ d.value.toLocaleString() }
       </div>
     `;
@@ -97,13 +97,27 @@ function getAddMethodArgLegend(data) {
 
 function getData() {
   return [
-    { label: 'USA',                  value: 4890, color: '#af9760' /* brown */, },
-    { label: 'Saudi Arabia',         value: 4130, color: '#b7b872' /* golden-brown */, },
-    { label: 'Russia',               value: 3940, color: '#e4c5c5' /* grey-pinkish */, },
-    { label: 'Canada',               value: 1730, color: '#9dd999' /* light-green */, },
-    { label: 'Iraq',                 value: 1510, color: '#b4b605' /* golden */, },
-    { label: 'China',                value: 1090, color: '#eef07a' /* yellow */, },
-    { label: 'United Arab Emirates', value: 1070, color: '#b3a4b5' /* violet-grey */, },
+    { label: 'USA',                  value: 4890,
+      faceColor: '#af9760' /* brown */,
+      rimColor: '#93793d', },
+    { label: 'Saudi Arabia',         value: 4130,
+      faceColor: '#b7b872' /* golden-brown */,
+      rimColor: '#9fa046', },
+    { label: 'Russia',               value: 3940,
+      faceColor: '#e4c5c5' /* grey-pinkish */,
+      rimColor: '#c99e9e', },
+    { label: 'Canada',               value: 1730,
+      faceColor: '#9dd999' /* light-green */,
+      rimColor: '#54a94f', },
+    { label: 'Iraq',                 value: 1510,
+      faceColor: '#b4b605' /* golden */,
+      rimColor: '#929416', },
+    { label: 'China',                value: 1090,
+      faceColor: '#eef07a' /* yellow */,
+      rimColor: '#b7b93d', },
+    { label: 'United Arab Emirates', value: 1070,
+      faceColor: '#b3a4b5' /* violet-grey */,
+      rimColor: '#99759d', },
   ];
 }
 
@@ -117,13 +131,13 @@ function getAddMethodArgPie3d(data) {
       centerXPx: 400,
       centerYPx: 300,
       startAtDeg: 0,
-      rotationAroundCenterXAxisDeg: 70,
+      rotationAroundCenterXAxisDeg: 50,
       rotationAroundCenterZAxisDeg: 0,
     },
     data: data.map((d) => {
       return {
         value: d.value,
-        meta: { color: d.color, },
+        meta: { faceColor: d.faceColor, rimColor: d.rimColor, },
       };
     }),
   };

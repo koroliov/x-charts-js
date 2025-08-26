@@ -23,15 +23,24 @@ tp.test((t) => {
       rotationAroundCenterZAxisDeg: 45,
     },
     data: [
-      { value: 40, meta: { color: '#ff0000' /* red */, }, },
-      { value: 25, meta: { color: '#37ff00' /* green */, }, },
-      { value: 35, meta: { color: '#000aff' /* blue */, }, },
+      { value: 40, meta: {
+        faceColor: '#ff0000' /* red */,
+        rimColor: '#ff0000' /* red */,
+      }, },
+      { value: 25, meta: {
+        faceColor: '#37ff00' /* green */,
+        rimColor: '#37ff00' /* green */,
+      }, },
+      { value: 35, meta: {
+        faceColor: '#000aff' /* blue */,
+        rimColor: '#000aff' /* blue */,
+      }, },
     ],
   };
   const pieData = prepareData(addMethodArg);
   const expected: ReturnType<typeof prepareRimSlicesData> = [
     {
-      "color": "#37ff00",
+      "rimColor": "#37ff00",
       "pointStartOnHeads": [
         178.624671929623,
         340.75670628558726,
@@ -74,7 +83,7 @@ tp.test((t) => {
       },
     },
     {
-      "color": "#000aff",
+      "rimColor": "#000aff",
       "pointStartOnHeads": [
         306.43353236759066,
         314.90504540154956,
@@ -163,16 +172,28 @@ tp.test((t) => {
       rotationAroundCenterZAxisDeg: 0,
     },
     data: [
-      { value: 25, meta: { color: '#37ff00' /* green */, }, },
-      { value: 25, meta: { color: '#ff0000' /* red */, }, },
-      { value: 25, meta: { color: '#37ff00' /* green */, }, },
-      { value: 50, meta: { color: '#f2b5f6' /* pinkish */, }, },
+      { value: 25, meta: {
+        faceColor: '#37ff00' /* green */,
+        rimColor: '#37ff00' /* green */,
+      }, },
+      { value: 25, meta: {
+        faceColor: '#ff0000' /* red */,
+        rimColor: '#ff0000' /* red */,
+      }, },
+      { value: 25, meta: {
+        faceColor: '#37ff00' /* green */,
+        rimColor: '#37ff00' /* green */,
+      }, },
+      { value: 50, meta: {
+        faceColor: '#f2b5f6' /* pinkish */,
+        rimColor: '#f2b5f6' /* pinkish */,
+      }, },
     ],
   };
   const pieData = prepareData(addMethodArg);
   const expected: ReturnType<typeof prepareRimSlicesData> = [
     {
-      "color": "#f2b5f6",
+      "rimColor": "#f2b5f6",
       "pointStartOnHeads": [
         35,
         86.5076844803523,
@@ -215,7 +236,7 @@ tp.test((t) => {
       },
     },
     {
-      "color": "#37ff00",
+      "rimColor": "#37ff00",
       "pointStartOnHeads": [
         106.44247806269212,
         138.90821052622928,
@@ -258,7 +279,7 @@ tp.test((t) => {
       },
     },
     {
-      "color": "#ff0000",
+      "rimColor": "#ff0000",
       "pointStartOnHeads": [
         340.98385284664096,
         144.5175907592486,
@@ -347,14 +368,20 @@ tp.test((t) => {
       rotationAroundCenterZAxisDeg: 0,
     },
     data: [
-      { value: 25, meta: { color: '#37ff00' /* green */, }, },
-      { value: 50, meta: { color: '#f2b5f6' /* pinkish */, }, },
+      { value: 25, meta: {
+        faceColor: '#37ff00' /* green */,
+        rimColor: '#37ff00' /* green */,
+      }, },
+      { value: 50, meta: {
+        faceColor: '#f2b5f6' /* pinkish */,
+        rimColor: '#f2b5f6' /* pinkish */,
+      }, },
     ],
   };
   const pieData = prepareData(addMethodArg);
   const expected: ReturnType<typeof prepareRimSlicesData> = [
     {
-      "color": "#f2b5f6",
+      "rimColor": "#f2b5f6",
       "pointStartOnHeads": [
         35,
         86.5076844803523,
@@ -443,14 +470,20 @@ tp.test((t) => {
       rotationAroundCenterZAxisDeg: 0,
     },
     data: [
-      { value: 75, meta: { color: '#37ff00' /* green */, }, },
-      { value: 25, meta: { color: '#fffd00' /* yellow */, }, },
+      { value: 75, meta: {
+        faceColor: '#37ff00' /* green */,
+        rimColor: '#37ff00' /* green */,
+      }, },
+      { value: 25, meta: {
+        faceColor: '#fffd00' /* yellow */,
+        rimColor: '#fffd00' /* yellow */,
+      }, },
     ],
   };
   const pieData = prepareData(addMethodArg);
   const expected: ReturnType<typeof prepareRimSlicesData> = [
     {
-      "color": "#37ff00",
+      "rimColor": "#37ff00",
       "pointStartOnHeads": [
         35,
         86.5076844803523,
@@ -539,14 +572,20 @@ tp.test((t) => {
       rotationAroundCenterZAxisDeg: 0,
     },
     data: [
-      { value: 75, meta: { color: '#37ff00' /* green */, }, },
-      { value: 25, meta: { color: '#fffd00' /* yellow */, }, },
+      { value: 75, meta: {
+        faceColor: '#37ff00' /* green */,
+        rimColor: '#37ff00' /* green */,
+      }, },
+      { value: 25, meta: {
+        faceColor: '#fffd00' /* yellow */,
+        rimColor: '#fffd00' /* yellow */,
+      }, },
     ],
   };
   const pieData = prepareData(addMethodArg);
   const expected: ReturnType<typeof prepareRimSlicesData> = [
     {
-      "color": "#37ff00",
+      "rimColor": "#37ff00",
       "pointStartOnHeads": [
         35,
         86.5076844803523,
@@ -589,7 +628,7 @@ tp.test((t) => {
       },
     },
     {
-      "color": "#fffd00",
+      "rimColor": "#fffd00",
       "pointStartOnHeads": [
         93.57864376269058,
         134.8766370099474,
@@ -632,7 +671,7 @@ tp.test((t) => {
       },
     },
     {
-      "color": "#37ff00",
+      "rimColor": "#37ff00",
       "pointStartOnHeads": [
         376.4213562373095,
         134.87663700994736,
@@ -721,15 +760,24 @@ tp.test('0010-rotation-over-center-x-axis-greater-180-deg', (t) => {
       rotationAroundCenterZAxisDeg: 0,
     },
     data: [
-      { value: 75, meta: { color: '#37ff00' /* green */, }, },
-      { value: 5, meta: { color: '#21f0f5' /* cyan */, }, },
-      { value: 25, meta: { color: '#fffd00' /* yellow */, }, },
+      { value: 75, meta: {
+        faceColor: '#37ff00' /* green */,
+        rimColor: '#37ff00' /* green */,
+      }, },
+      { value: 5, meta: {
+        faceColor: '#21f0f5' /* cyan */,
+        rimColor: '#21f0f5' /* cyan */,
+      }, },
+      { value: 25, meta: {
+        faceColor: '#fffd00' /* yellow */,
+        rimColor: '#fffd00' /* yellow */,
+      }, },
     ],
   };
   const pieData = prepareData(addMethodArg);
   const expected: ReturnType<typeof prepareRimSlicesData> = [
     {
-      "color": "#37ff00",
+      "rimColor": "#37ff00",
       "pointStartOnHeads": [
         35,
         183.9303097578365,
@@ -818,17 +866,32 @@ tp.test('0012-rotation-cx-gt-90-start-angle-gt-pi', (t) => {
       rotationAroundCenterZAxisDeg: 0,
     },
     data: [
-      { value: 225, meta: { color: '#37ff00' /* green */, }, },
-      { value: 5, meta: { color: '#03fff0' /* cayan */, }, },
-      { value: 8, meta: { color: '#ffc04b' /* orange */, }, },
-      { value: 25, meta: { color: '#ff0000' /* red */, }, },
-      { value: 50, meta: { color: '#f2b5f6' /* pinkish */, }, },
+      { value: 225, meta: {
+        faceColor: '#37ff00' /* green */,
+        rimColor: '#37ff00' /* green */,
+      }, },
+      { value: 5, meta: {
+        faceColor: '#03fff0' /* cayan */,
+        rimColor: '#03fff0' /* cayan */,
+      }, },
+      { value: 8, meta: {
+        faceColor: '#ffc04b' /* orange */,
+        rimColor: '#ffc04b' /* orange */,
+      }, },
+      { value: 25, meta: {
+        faceColor: '#ff0000' /* red */,
+        rimColor: '#ff0000' /* red */,
+      }, },
+      { value: 50, meta: {
+        faceColor: '#f2b5f6' /* pinkish */,
+        rimColor: '#f2b5f6' /* pinkish */,
+      }, },
     ],
   };
   const pieData = prepareData(addMethodArg);
   const expected: ReturnType<typeof prepareRimSlicesData> = [
     {
-      "color": "#ff0000",
+      "rimColor": "#ff0000",
       "pointStartOnHeads": [
         35,
         96.98737866368899,
@@ -871,7 +934,7 @@ tp.test('0012-rotation-cx-gt-90-start-angle-gt-pi', (t) => {
       },
     },
     {
-      "color": "#f2b5f6",
+      "rimColor": "#f2b5f6",
       "pointStartOnHeads": [
         37.738279973230846,
         84.10027576936318,
@@ -914,7 +977,7 @@ tp.test('0012-rotation-cx-gt-90-start-angle-gt-pi', (t) => {
       },
     },
     {
-      "color": "#37ff00",
+      "rimColor": "#37ff00",
       "pointStartOnHeads": [
         156.85377430214524,
         25.053398629823903,
@@ -1004,14 +1067,20 @@ tp.test('0013-rotation-cx-gt-90-start-angle-gt-pi-start-end-slice-is-same',
       rotationAroundCenterZAxisDeg: 0,
     },
     data: [
-      { value: 225, meta: { color: '#37ff00' /* green */, }, },
-      { value: 50, meta: { color: '#f2b5f6' /* pinkish */, }, },
+      { value: 225, meta: {
+        faceColor: '#37ff00' /* green */,
+        rimColor: '#37ff00' /* green */,
+      }, },
+      { value: 50, meta: {
+        faceColor: '#f2b5f6' /* pinkish */,
+        rimColor: '#f2b5f6' /* pinkish */,
+      }, },
     ],
   };
   const pieData = prepareData(addMethodArg);
   const expected: ReturnType<typeof prepareRimSlicesData> = [
     {
-      "color": "#37ff00",
+      "rimColor": "#37ff00",
       "pointStartOnHeads": [
         35,
         96.50768448035228,
@@ -1054,7 +1123,7 @@ tp.test('0013-rotation-cx-gt-90-start-angle-gt-pi-start-end-slice-is-same',
       },
     },
     {
-      "color": "#f2b5f6",
+      "rimColor": "#f2b5f6",
       "pointStartOnHeads": [
         35.07275131978494,
         94.66282785390216,
@@ -1097,7 +1166,7 @@ tp.test('0013-rotation-cx-gt-90-start-angle-gt-pi-start-end-slice-is-same',
       },
     },
     {
-      "color": "#37ff00",
+      "rimColor": "#37ff00",
       "pointStartOnHeads": [
         156.85377430214524,
         33.54144409839682,
