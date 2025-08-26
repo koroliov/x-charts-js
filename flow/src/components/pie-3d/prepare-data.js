@@ -317,7 +317,8 @@ export function prepareData(arg: AddMethodArgumentPie3d): PieData {
         },
         indexInUserProvidedArray: ll.i,
         value: d.value,
-        color: d.meta.color,
+        faceColor: d.meta.faceColor,
+        rimColor: d.meta.rimColor,
       };
       prevEndHeads = rv.endPointHeads;
       prevEndTails = rv.endPointTails;

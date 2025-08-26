@@ -20,9 +20,18 @@ tp.test((t) => {
       rotationAroundCenterZAxisDeg: 45,
     },
     data: [
-      { value: 40, meta: { color: '#ff0000' /* red */, }, },
-      { value: 25, meta: { color: '#37ff00' /* green */, }, },
-      { value: 35, meta: { color: '#000aff' /* blue */, }, },
+      { value: 40, meta: {
+        faceColor: '#ff0000' /* red */,
+        rimColor: '#ff0000' /* red */,
+      }, },
+      { value: 25, meta: {
+        faceColor: '#37ff00' /* green */,
+        rimColor: '#37ff00' /* green */,
+      }, },
+      { value: 35, meta: {
+        faceColor: '#000aff' /* blue */,
+        rimColor: '#000aff' /* blue */,
+      }, },
     ],
   };
 
@@ -58,7 +67,8 @@ tp.test((t) => {
         },
         "indexInUserProvidedArray": 0,
         "value": 40,
-        "color": "#ff0000",
+        "faceColor": "#ff0000",
+        "rimColor": "#ff0000",
       },
       {
         "startPointHeads": [
@@ -89,7 +99,8 @@ tp.test((t) => {
         },
         "indexInUserProvidedArray": 1,
         "value": 25,
-        "color": "#37ff00",
+        "faceColor": "#37ff00",
+        "rimColor": "#37ff00",
       },
       {
         "startPointHeads": [
@@ -120,7 +131,8 @@ tp.test((t) => {
         },
         "indexInUserProvidedArray": 2,
         "value": 35,
-        "color": "#000aff",
+        "faceColor": "#000aff",
+        "rimColor": "#000aff",
       },
     ],
     "isPieReversed": false,
@@ -213,9 +225,18 @@ tp.test('0001-most-common-case', (t) => {
       rotationAroundCenterZAxisDeg: 0,
     },
     data: [
-      { value: 25, meta: { color: '#37ff00' /* green */, }, },
-      { value: 25, meta: { color: '#ff0000' /* red */, }, },
-      { value: 50, meta: { color: '#f2b5f6' /* pinkish */, }, },
+      { value: 25, meta: {
+        faceColor: '#37ff00' /* green */,
+        rimColor: '#37ff00' /* green */,
+      }, },
+      { value: 25, meta: {
+        faceColor: '#ff0000' /* red */,
+        rimColor: '#ff0000' /* red */,
+      }, },
+      { value: 50, meta: {
+        faceColor: '#f2b5f6' /* pinkish */,
+        rimColor: '#f2b5f6' /* pinkish */,
+      }, },
     ],
   };
 
@@ -251,7 +272,8 @@ tp.test('0001-most-common-case', (t) => {
         },
         "indexInUserProvidedArray": 0,
         "value": 25,
-        "color": "#37ff00",
+        "faceColor": "#37ff00",
+        "rimColor": "#37ff00",
       },
       {
         "startPointHeads": [
@@ -282,7 +304,8 @@ tp.test('0001-most-common-case', (t) => {
         },
         "indexInUserProvidedArray": 1,
         "value": 25,
-        "color": "#ff0000",
+        "faceColor": "#ff0000",
+        "rimColor": "#ff0000",
       },
       {
         "startPointHeads": [
@@ -313,7 +336,8 @@ tp.test('0001-most-common-case', (t) => {
         },
         "indexInUserProvidedArray": 2,
         "value": 50,
-        "color": "#f2b5f6",
+        "faceColor": "#f2b5f6",
+        "rimColor": "#f2b5f6",
       },
     ],
     "isPieReversed": false,
@@ -406,10 +430,22 @@ tp.test('0002-01-start-at-0-deg', (t) => {
       rotationAroundCenterZAxisDeg: 0,
     },
     data: [
-      { value: 25, meta: { color: '#37ff00' /* green */, }, },
-      { value: 25, meta: { color: '#0b08f7' /* blue */, }, },
-      { value: 25, meta: { color: '#ff0000' /* red */, }, },
-      { value: 25, meta: { color: '#f2b5f6' /* pinkish */, }, },
+      { value: 25, meta: {
+        faceColor: '#37ff00' /* green */,
+        rimColor: '#37ff00' /* green */,
+      }, },
+      { value: 25, meta: {
+        faceColor: '#0b08f7' /* blue */,
+        rimColor: '#0b08f7' /* blue */,
+      }, },
+      { value: 25, meta: {
+        faceColor: '#ff0000' /* red */,
+        rimColor: '#ff0000' /* red */,
+      }, },
+      { value: 25, meta: {
+        faceColor: '#f2b5f6' /* pinkish */,
+        rimColor: '#f2b5f6' /* pinkish */,
+      }, },
     ],
   };
 
@@ -445,7 +481,8 @@ tp.test('0002-01-start-at-0-deg', (t) => {
         },
         "indexInUserProvidedArray": 0,
         "value": 25,
-        "color": "#37ff00",
+        "faceColor": "#37ff00",
+        "rimColor": "#37ff00",
       },
       {
         "startPointHeads": [
@@ -476,7 +513,8 @@ tp.test('0002-01-start-at-0-deg', (t) => {
         },
         "indexInUserProvidedArray": 1,
         "value": 25,
-        "color": "#0b08f7",
+        "faceColor": "#0b08f7",
+        "rimColor": "#0b08f7",
       },
       {
         "startPointHeads": [
@@ -507,7 +545,8 @@ tp.test('0002-01-start-at-0-deg', (t) => {
         },
         "indexInUserProvidedArray": 2,
         "value": 25,
-        "color": "#ff0000",
+        "faceColor": "#ff0000",
+        "rimColor": "#ff0000",
       },
       {
         "startPointHeads": [
@@ -538,7 +577,8 @@ tp.test('0002-01-start-at-0-deg', (t) => {
         },
         "indexInUserProvidedArray": 3,
         "value": 25,
-        "color": "#f2b5f6",
+        "faceColor": "#f2b5f6",
+        "rimColor": "#f2b5f6",
       },
     ],
     "isPieReversed": false,
@@ -631,9 +671,18 @@ tp.test((t) => {
       rotationAroundCenterZAxisDeg: 0,
     },
     data: [
-      { value: 25, meta: { color: '#ff0000' /* red */, }, },
-      { value: 25, meta: { color: '#37ff00' /* green */, }, },
-      { value: 50, meta: { color: '#f2b5f6' /* pinkish */, }, },
+      { value: 25, meta: {
+        faceColor: '#ff0000' /* red */,
+        rimColor: '#ff0000' /* red */,
+      }, },
+      { value: 25, meta: {
+        faceColor: '#37ff00' /* green */,
+        rimColor: '#37ff00' /* green */,
+      }, },
+      { value: 50, meta: {
+        faceColor: '#f2b5f6' /* pinkish */,
+        rimColor: '#f2b5f6' /* pinkish */,
+      }, },
     ],
   };
 
@@ -669,7 +718,8 @@ tp.test((t) => {
         },
         "indexInUserProvidedArray": 0,
         "value": 25,
-        "color": "#ff0000",
+        "faceColor": "#ff0000",
+        "rimColor": "#ff0000",
       },
       {
         "startPointHeads": [
@@ -700,7 +750,8 @@ tp.test((t) => {
         },
         "indexInUserProvidedArray": 1,
         "value": 25,
-        "color": "#37ff00",
+        "faceColor": "#37ff00",
+        "rimColor": "#37ff00",
       },
       {
         "startPointHeads": [
@@ -731,7 +782,8 @@ tp.test((t) => {
         },
         "indexInUserProvidedArray": 2,
         "value": 50,
-        "color": "#f2b5f6",
+        "faceColor": "#f2b5f6",
+        "rimColor": "#f2b5f6",
       },
     ],
     "isPieReversed": false,
@@ -824,10 +876,22 @@ tp.test((t) => {
       rotationAroundCenterZAxisDeg: 0,
     },
     data: [
-      { value: 25, meta: { color: '#f2b5f6' /* pinkish */, }, },
-      { value: 25, meta: { color: '#00fff5' /* cyan */, }, },
-      { value: 25, meta: { color: '#feed00' /* yellow */, }, },
-      { value: 25, meta: { color: '#ff0010' /* red */, }, },
+      { value: 25, meta: {
+        faceColor: '#f2b5f6' /* pinkish */,
+        rimColor: '#f2b5f6' /* pinkish */,
+      }, },
+      { value: 25, meta: {
+        faceColor: '#00fff5' /* cyan */,
+        rimColor: '#00fff5' /* cyan */,
+      }, },
+      { value: 25, meta: {
+        faceColor: '#feed00' /* yellow */,
+        rimColor: '#feed00' /* yellow */,
+      }, },
+      { value: 25, meta: {
+        faceColor: '#ff0010' /* red */,
+        rimColor: '#ff0010' /* red */,
+      }, },
     ],
   };
 
@@ -863,7 +927,8 @@ tp.test((t) => {
         },
         "indexInUserProvidedArray": 0,
         "value": 25,
-        "color": "#f2b5f6",
+        "faceColor": "#f2b5f6",
+        "rimColor": "#f2b5f6",
       },
       {
         "startPointHeads": [
@@ -894,7 +959,8 @@ tp.test((t) => {
         },
         "indexInUserProvidedArray": 1,
         "value": 25,
-        "color": "#00fff5",
+        "faceColor": "#00fff5",
+        "rimColor": "#00fff5",
       },
       {
         "startPointHeads": [
@@ -925,7 +991,8 @@ tp.test((t) => {
         },
         "indexInUserProvidedArray": 2,
         "value": 25,
-        "color": "#feed00",
+        "faceColor": "#feed00",
+        "rimColor": "#feed00",
       },
       {
         "startPointHeads": [
@@ -956,7 +1023,8 @@ tp.test((t) => {
         },
         "indexInUserProvidedArray": 3,
         "value": 25,
-        "color": "#ff0010",
+        "faceColor": "#ff0010",
+        "rimColor": "#ff0010",
       },
     ],
     "isPieReversed": false,
@@ -1049,8 +1117,14 @@ tp.test((t) => {
       rotationAroundCenterZAxisDeg: 0,
     },
     data: [
-      { value: 25, meta: { color: '#37ff00' /* green */, }, },
-      { value: 50, meta: { color: '#f2b5f6' /* pinkish */, }, },
+      { value: 25, meta: {
+        faceColor: '#37ff00' /* green */,
+        rimColor: '#37ff00' /* green */,
+      }, },
+      { value: 50, meta: {
+        faceColor: '#f2b5f6' /* pinkish */,
+        rimColor: '#f2b5f6' /* pinkish */,
+      }, },
     ],
   };
 
@@ -1086,7 +1160,8 @@ tp.test((t) => {
         },
         "indexInUserProvidedArray": 0,
         "value": 25,
-        "color": "#37ff00",
+        "faceColor": "#37ff00",
+        "rimColor": "#37ff00",
       },
       {
         "startPointHeads": [
@@ -1117,7 +1192,8 @@ tp.test((t) => {
         },
         "indexInUserProvidedArray": 1,
         "value": 50,
-        "color": "#f2b5f6",
+        "faceColor": "#f2b5f6",
+        "rimColor": "#f2b5f6",
       },
     ],
     "isPieReversed": false,
@@ -1210,10 +1286,22 @@ tp.test('0004-left-edge-slice-index-bigger-right-one', (t) => {
       rotationAroundCenterZAxisDeg: 0,
     },
     data: [
-      { value: 25, meta: { color: '#37ff00' /* green */, }, },
-      { value: 25, meta: { color: '#ff0000' /* red */, }, },
-      { value: 25, meta: { color: '#37ff00' /* green */, }, },
-      { value: 50, meta: { color: '#f2b5f6' /* pinkish */, }, },
+      { value: 25, meta: {
+        faceColor: '#37ff00' /* green */,
+        rimColor: '#37ff00' /* green */,
+      }, },
+      { value: 25, meta: {
+        faceColor: '#ff0000' /* red */,
+        rimColor: '#ff0000' /* red */,
+      }, },
+      { value: 25, meta: {
+        faceColor: '#37ff00' /* green */,
+        rimColor: '#37ff00' /* green */,
+      }, },
+      { value: 50, meta: {
+        faceColor: '#f2b5f6' /* pinkish */,
+        rimColor: '#f2b5f6' /* pinkish */,
+      }, },
     ],
   };
 
@@ -1249,7 +1337,8 @@ tp.test('0004-left-edge-slice-index-bigger-right-one', (t) => {
         },
         "indexInUserProvidedArray": 0,
         "value": 25,
-        "color": "#37ff00",
+        "faceColor": "#37ff00",
+        "rimColor": "#37ff00",
       },
       {
         "startPointHeads": [
@@ -1280,7 +1369,8 @@ tp.test('0004-left-edge-slice-index-bigger-right-one', (t) => {
         },
         "indexInUserProvidedArray": 1,
         "value": 25,
-        "color": "#ff0000",
+        "faceColor": "#ff0000",
+        "rimColor": "#ff0000",
       },
       {
         "startPointHeads": [
@@ -1311,7 +1401,8 @@ tp.test('0004-left-edge-slice-index-bigger-right-one', (t) => {
         },
         "indexInUserProvidedArray": 2,
         "value": 25,
-        "color": "#37ff00",
+        "faceColor": "#37ff00",
+        "rimColor": "#37ff00",
       },
       {
         "startPointHeads": [
@@ -1342,7 +1433,8 @@ tp.test('0004-left-edge-slice-index-bigger-right-one', (t) => {
         },
         "indexInUserProvidedArray": 3,
         "value": 50,
-        "color": "#f2b5f6",
+        "faceColor": "#f2b5f6",
+        "rimColor": "#f2b5f6",
       },
     ],
     "isPieReversed": false,
@@ -1435,8 +1527,14 @@ tp.test((t) => {
       rotationAroundCenterZAxisDeg: 0,
     },
     data: [
-      { value: 75, meta: { color: '#37ff00' /* green */, }, },
-      { value: 25, meta: { color: '#fffd00' /* yellow */, }, },
+      { value: 75, meta: {
+        faceColor: '#37ff00' /* green */,
+        rimColor: '#37ff00' /* green */,
+      }, },
+      { value: 25, meta: {
+        faceColor: '#fffd00' /* yellow */,
+        rimColor: '#fffd00' /* yellow */,
+      }, },
     ],
   };
 
@@ -1472,7 +1570,8 @@ tp.test((t) => {
         },
         "indexInUserProvidedArray": 0,
         "value": 75,
-        "color": "#37ff00",
+        "faceColor": "#37ff00",
+        "rimColor": "#37ff00",
       },
       {
         "startPointHeads": [
@@ -1503,7 +1602,8 @@ tp.test((t) => {
         },
         "indexInUserProvidedArray": 1,
         "value": 25,
-        "color": "#fffd00",
+        "faceColor": "#fffd00",
+        "rimColor": "#fffd00",
       },
     ],
     "isPieReversed": false,
@@ -1596,8 +1696,14 @@ tp.test((t) => {
       rotationAroundCenterZAxisDeg: 0,
     },
     data: [
-      { value: 75, meta: { color: '#37ff00' /* green */, }, },
-      { value: 25, meta: { color: '#fffd00' /* yellow */, }, },
+      { value: 75, meta: {
+        faceColor: '#37ff00' /* green */,
+        rimColor: '#37ff00' /* green */,
+      }, },
+      { value: 25, meta: {
+        faceColor: '#fffd00' /* yellow */,
+        rimColor: '#fffd00' /* yellow */,
+      }, },
     ],
   };
 
@@ -1633,7 +1739,8 @@ tp.test((t) => {
         },
         "indexInUserProvidedArray": 0,
         "value": 75,
-        "color": "#37ff00",
+        "faceColor": "#37ff00",
+        "rimColor": "#37ff00",
       },
       {
         "startPointHeads": [
@@ -1664,7 +1771,8 @@ tp.test((t) => {
         },
         "indexInUserProvidedArray": 1,
         "value": 25,
-        "color": "#fffd00",
+        "faceColor": "#fffd00",
+        "rimColor": "#fffd00",
       },
     ],
     "isPieReversed": false,
@@ -1757,9 +1865,18 @@ tp.test('0010-rotation-over-center-x-axis-greater-180-deg', (t) => {
       rotationAroundCenterZAxisDeg: 0,
     },
     data: [
-      { value: 75, meta: { color: '#37ff00' /* green */, }, },
-      { value: 5, meta: { color: '#21f0f5' /* cyan */, }, },
-      { value: 25, meta: { color: '#fffd00' /* yellow */, }, },
+      { value: 75, meta: {
+        faceColor: '#37ff00' /* green */,
+        rimColor: '#37ff00' /* green */,
+      }, },
+      { value: 5, meta: {
+        faceColor: '#21f0f5' /* cyan */,
+        rimColor: '#21f0f5' /* cyan */,
+      }, },
+      { value: 25, meta: {
+        faceColor: '#fffd00' /* yellow */,
+        rimColor: '#fffd00' /* yellow */,
+      }, },
     ],
   };
 
@@ -1795,7 +1912,8 @@ tp.test('0010-rotation-over-center-x-axis-greater-180-deg', (t) => {
         },
         "indexInUserProvidedArray": 2,
         "value": 25,
-        "color": "#fffd00",
+        "faceColor": "#fffd00",
+        "rimColor": "#fffd00",
       },
       {
         "startPointHeads": [
@@ -1826,7 +1944,8 @@ tp.test('0010-rotation-over-center-x-axis-greater-180-deg', (t) => {
         },
         "indexInUserProvidedArray": 1,
         "value": 5,
-        "color": "#21f0f5",
+        "faceColor": "#21f0f5",
+        "rimColor": "#21f0f5",
       },
       {
         "startPointHeads": [
@@ -1857,7 +1976,8 @@ tp.test('0010-rotation-over-center-x-axis-greater-180-deg', (t) => {
         },
         "indexInUserProvidedArray": 0,
         "value": 75,
-        "color": "#37ff00",
+        "faceColor": "#37ff00",
+        "rimColor": "#37ff00",
       },
     ],
     "isPieReversed": true,
@@ -1950,10 +2070,22 @@ tp.test('0011-rotation-100-deg-start-ang-0', (t) => {
       rotationAroundCenterZAxisDeg: 0,
     },
     data: [
-      { value: 25, meta: { color: '#37ff00' /* green */, }, },
-      { value: 25, meta: { color: '#0b08f7' /* blue */, }, },
-      { value: 25, meta: { color: '#ff0000' /* red */, }, },
-      { value: 25, meta: { color: '#f2b5f6' /* pinkish */, }, },
+      { value: 25, meta: {
+        faceColor: '#37ff00' /* green */,
+        rimColor: '#37ff00' /* green */,
+      }, },
+      { value: 25, meta: {
+        faceColor: '#0b08f7' /* blue */,
+        rimColor: '#0b08f7' /* blue */,
+      }, },
+      { value: 25, meta: {
+        faceColor: '#ff0000' /* red */,
+        rimColor: '#ff0000' /* red */,
+      }, },
+      { value: 25, meta: {
+        faceColor: '#f2b5f6' /* pinkish */,
+        rimColor: '#f2b5f6' /* pinkish */,
+      }, },
     ],
   };
 
@@ -1989,7 +2121,8 @@ tp.test('0011-rotation-100-deg-start-ang-0', (t) => {
         },
         "indexInUserProvidedArray": 0,
         "value": 25,
-        "color": "#37ff00",
+        "faceColor": "#37ff00",
+        "rimColor": "#37ff00",
       },
       {
         "startPointHeads": [
@@ -2020,7 +2153,8 @@ tp.test('0011-rotation-100-deg-start-ang-0', (t) => {
         },
         "indexInUserProvidedArray": 1,
         "value": 25,
-        "color": "#0b08f7",
+        "faceColor": "#0b08f7",
+        "rimColor": "#0b08f7",
       },
       {
         "startPointHeads": [
@@ -2051,7 +2185,8 @@ tp.test('0011-rotation-100-deg-start-ang-0', (t) => {
         },
         "indexInUserProvidedArray": 2,
         "value": 25,
-        "color": "#ff0000",
+        "faceColor": "#ff0000",
+        "rimColor": "#ff0000",
       },
       {
         "startPointHeads": [
@@ -2082,7 +2217,8 @@ tp.test('0011-rotation-100-deg-start-ang-0', (t) => {
         },
         "indexInUserProvidedArray": 3,
         "value": 25,
-        "color": "#f2b5f6",
+        "faceColor": "#f2b5f6",
+        "rimColor": "#f2b5f6",
       },
     ],
     "isPieReversed": false,

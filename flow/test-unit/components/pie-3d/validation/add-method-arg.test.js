@@ -18,9 +18,18 @@ tp.test('valid argument case', (t) => {
       rotationAroundCenterZAxisDeg: 45,
     },
     data: [
-      { value: 40, meta: { color: '#ff0000' /* red */, }, },
-      { value: 25, meta: { color: '#37ff00' /* green */, }, },
-      { value: 35, meta: { color: '#000aff' /* blue */, }, },
+      { value: 40, meta: {
+        faceColor: '#ff0000' /* red */,
+        rimColor: '#ff0000' /* red */,
+      }, },
+      { value: 25, meta: {
+        faceColor: '#37ff00' /* green */,
+        rimColor: '#37ff00' /* green */,
+      }, },
+      { value: 35, meta: {
+        faceColor: '#000aff' /* blue */,
+        rimColor: '#000aff' /* blue */,
+      }, },
     ],
   };
   const dict = getDictionary();
@@ -47,9 +56,18 @@ tp.test('extra property present', (t) => {
       rotationAroundCenterZAxisDeg: 45,
     },
     data: [
-      { value: 40, meta: { color: '#ff0000' /* red */, }, },
-      { value: 25, meta: { color: '#37ff00' /* green */, }, },
-      { value: 35, meta: { color: '#000aff' /* blue */, }, },
+      { value: 40, meta: {
+        faceColor: '#ff0000' /* red */,
+        rimColor: '#ff0000' /* red */,
+      }, },
+      { value: 25, meta: {
+        faceColor: '#37ff00' /* green */,
+        rimColor: '#37ff00' /* green */,
+      }, },
+      { value: 35, meta: {
+        faceColor: '#000aff' /* blue */,
+        rimColor: '#000aff' /* blue */,
+      }, },
     ],
   };
   const dict = getDictionary();
@@ -121,9 +139,18 @@ tp.test('options is not object', (t) => {
     zIndex: '1',
     options: true,
     data: [
-      { value: 40, meta: { color: '#ff0000' /* red */, }, },
-      { value: 25, meta: { color: '#37ff00' /* green */, }, },
-      { value: 35, meta: { color: '#000aff' /* blue */, }, },
+      { value: 40, meta: {
+        faceColor: '#ff0000' /* red */,
+        rimColor: '#ff0000' /* red */,
+      }, },
+      { value: 25, meta: {
+        faceColor: '#37ff00' /* green */,
+        rimColor: '#37ff00' /* green */,
+      }, },
+      { value: 35, meta: {
+        faceColor: '#000aff' /* blue */,
+        rimColor: '#000aff' /* blue */,
+      }, },
     ],
   };
   const dict = getDictionary();
@@ -154,9 +181,18 @@ tp.test('extra property', (t) => {
       rotationAroundCenterZAxisDeg: 45,
     },
     data: [
-      { value: 40, meta: { color: '#ff0000' /* red */, }, },
-      { value: 25, meta: { color: '#37ff00' /* green */, }, },
-      { value: 35, meta: { color: '#000aff' /* blue */, }, },
+      { value: 40, meta: {
+        faceColor: '#ff0000' /* red */,
+        rimColor: '#ff0000' /* red */,
+      }, },
+      { value: 25, meta: {
+        faceColor: '#37ff00' /* green */,
+        rimColor: '#37ff00' /* green */,
+      }, },
+      { value: 35, meta: {
+        faceColor: '#000aff' /* blue */,
+        rimColor: '#000aff' /* blue */,
+      }, },
     ],
   };
   const dict = getDictionary();
@@ -186,9 +222,18 @@ tp.test('missing property', (t) => {
       rotationAroundCenterZAxisDeg: 45,
     },
     data: [
-      { value: 40, meta: { color: '#ff0000' /* red */, }, },
-      { value: 25, meta: { color: '#37ff00' /* green */, }, },
-      { value: 35, meta: { color: '#000aff' /* blue */, }, },
+      { value: 40, meta: {
+        faceColor: '#ff0000' /* red */,
+        rimColor: '#ff0000' /* red */,
+      }, },
+      { value: 25, meta: {
+        faceColor: '#37ff00' /* green */,
+        rimColor: '#37ff00' /* green */,
+      }, },
+      { value: 35, meta: {
+        faceColor: '#000aff' /* blue */,
+        rimColor: '#000aff' /* blue */,
+      }, },
     ],
   };
   const dict = getDictionary();
@@ -218,9 +263,18 @@ tp.test('missing properties', (t) => {
       rotationAroundCenterZAxisDeg: 45,
     },
     data: [
-      { value: 40, meta: { color: '#ff0000' /* red */, }, },
-      { value: 25, meta: { color: '#37ff00' /* green */, }, },
-      { value: 35, meta: { color: '#000aff' /* blue */, }, },
+      { value: 40, meta: {
+        faceColor: '#ff0000' /* red */,
+        rimColor: '#ff0000' /* red */,
+      }, },
+      { value: 25, meta: {
+        faceColor: '#37ff00' /* green */,
+        rimColor: '#37ff00' /* green */,
+      }, },
+      { value: 35, meta: {
+        faceColor: '#000aff' /* blue */,
+        rimColor: '#000aff' /* blue */,
+      }, },
     ],
   };
   const dict = getDictionary();
@@ -250,9 +304,18 @@ tp.test('startAtDeg invalid', (t) => {
       rotationAroundCenterZAxisDeg: 45,
     },
     data: [
-      { value: 40, meta: { color: '#ff0000' /* red */, }, },
-      { value: 25, meta: { color: '#37ff00' /* green */, }, },
-      { value: 35, meta: { color: '#000aff' /* blue */, }, },
+      { value: 40, meta: {
+        faceColor: '#ff0000' /* red */,
+        rimColor: '#ff0000' /* red */,
+      }, },
+      { value: 25, meta: {
+        faceColor: '#37ff00' /* green */,
+        rimColor: '#37ff00' /* green */,
+      }, },
+      { value: 35, meta: {
+        faceColor: '#000aff' /* blue */,
+        rimColor: '#000aff' /* blue */,
+      }, },
     ],
   };
   const dict = getDictionary();
@@ -328,11 +391,17 @@ tp.test('data is empty array', (t) => {
 
 tp.test('data array has non index property, allowed, ignored', (t) => {
   const data = [
-    { value: 40, meta: { color: '#ff0000' /* red */, }, },
+    { value: 40, meta: {
+      faceColor: '#ff0000' /* red */,
+      rimColor: '#ff0000' /* red */,
+    }, },
   ];
   //This is needed to check an error case
   //$FlowFixMe[prop-missing]
-  data.fooProp = { value: -1, meta: { color: '#000aff' /* blue */, }, };
+  data.fooProp = { value: -1, meta: {
+    faceColor: '#000aff' /* blue */,
+    rimColor: '#000aff' /* blue */,
+  }, };
   const addMethodArg = {
     type: 'pie-3d',
     zIndex: '1',
@@ -358,9 +427,15 @@ tp.test('data array has non index property, allowed, ignored', (t) => {
 
 tp.test('data array has sparse elements', (t) => {
   const data = [
-    { value: 40, meta: { color: '#ff0000' /* red */, }, },
+    { value: 40, meta: {
+      faceColor: '#ff0000' /* red */,
+      rimColor: '#ff0000' /* red */,
+    }, },
   ];
-  data[4] = { value: 10, meta: { color: '#000aff' /* blue */, }, };
+  data[4] = { value: 10, meta: {
+    faceColor: '#000aff' /* blue */,
+    rimColor: '#000aff' /* blue */,
+  }, };
   const addMethodArg = {
     type: 'pie-3d',
     zIndex: '1',
@@ -402,8 +477,14 @@ tp.test('data array has total value 0', (t) => {
       rotationAroundCenterZAxisDeg: 45,
     },
     data: [
-      { value: 0, meta: { color: '#ff0000' /* red */, }, },
-      { value: 0, meta: { color: '#000aff' /* blue */, }, },
+      { value: 0, meta: {
+        faceColor: '#ff0000' /* red */,
+        rimColor: '#ff0000' /* red */,
+      }, },
+      { value: 0, meta: {
+        faceColor: '#000aff' /* blue */,
+        rimColor: '#000aff' /* blue */,
+      }, },
     ],
   };
   const dict = getDictionary();
@@ -433,9 +514,15 @@ tp.test('data element is not object', (t) => {
       rotationAroundCenterZAxisDeg: 45,
     },
     data: [
-      { value: 40, meta: { color: '#ff0000' /* red */, }, },
+      { value: 40, meta: {
+        faceColor: '#ff0000' /* red */,
+        rimColor: '#ff0000' /* red */,
+      }, },
       true,
-      { value: 35, meta: { color: '#000aff' /* blue */, }, },
+      { value: 35, meta: {
+        faceColor: '#000aff' /* blue */,
+        rimColor: '#000aff' /* blue */,
+      }, },
     ],
   };
   const dict = getDictionary();
@@ -465,8 +552,14 @@ tp.test('prop is missing', (t) => {
       rotationAroundCenterZAxisDeg: 45,
     },
     data: [
-      { value: 40, meta: { color: '#ff0000' /* red */, }, },
-      { /*value: 35,*/ meta: { color: '#000aff' /* blue */, }, },
+      { value: 40, meta: {
+        faceColor: '#ff0000' /* red */,
+        rimColor: '#ff0000' /* red */,
+      }, },
+      { /*value: 35,*/ meta: {
+        faceColor: '#000aff' /* blue */,
+        rimColor: '#000aff' /* blue */,
+      }, },
     ],
   };
   const dict = getDictionary();
@@ -496,7 +589,10 @@ tp.test('prop is not object', (t) => {
       rotationAroundCenterZAxisDeg: 45,
     },
     data: [
-      { value: 40, meta: { color: '#ff0000' /* red */, }, },
+      { value: 40, meta: {
+        faceColor: '#ff0000' /* red */,
+        rimColor: '#ff0000' /* red */,
+      }, },
       { value: 35, meta: true, },
     ],
   };
@@ -527,8 +623,14 @@ tp.test('value is not valid', (t) => {
       rotationAroundCenterZAxisDeg: 45,
     },
     data: [
-      { value: 40, meta: { color: '#ff0000' /* red */, }, },
-      { value: -1, meta: { color: '#000aff' /* blue */, }, },
+      { value: 40, meta: {
+        faceColor: '#ff0000' /* red */,
+        rimColor: '#ff0000' /* red */,
+      }, },
+      { value: -1, meta: {
+        faceColor: '#000aff' /* blue */,
+        rimColor: '#000aff' /* blue */,
+      }, },
     ],
   };
   const dict = getDictionary();
@@ -558,8 +660,14 @@ tp.test('prop is missing on level 1', (t) => {
       rotationAroundCenterZAxisDeg: 45,
     },
     data: [
-      { value: 40, meta: { color: '#ff0000' /* red */, }, },
-      { value: 35, meta: { /*color: '#000aff' * blue ,*/ }, },
+      { value: 40, meta: {
+        faceColor: '#ff0000' /* red */,
+        rimColor: '#ff0000' /* red */,
+      }, },
+      { value: 35, meta: {
+        /*faceColor: '#000aff' /* blue ,*/
+          rimColor: '#000aff' /* blue */,
+      }, },
     ],
   };
   const dict = getDictionary();
@@ -567,7 +675,7 @@ tp.test('prop is missing on level 1', (t) => {
   const expected = [
     'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
     '.add() method argument, component pie-3d -> data -> 1 -> meta:',
-    "  missing properties: color",
+    "  missing properties: faceColor",
   ].join('\n');
 
   const actual = validate(dict, addMethodArg);
@@ -589,15 +697,22 @@ tp.test('prop is invalid on level 1', (t) => {
       rotationAroundCenterZAxisDeg: 45,
     },
     data: [
-      { value: 40, meta: { color: '#FF0000' /* red */, }, },
-      { value: 35, meta: { color: '#000afg' /* invalid */, }, },
+      { value: 40, meta: {
+        faceColor: '#FF0000' /* red */,
+        rimColor: '#FF0000' /* red */,
+      }, },
+      { value: 35, meta: {
+        faceColor: '#000afg' /* invalid */,
+        rimColor: '#000aff' /* blue */,
+      }, },
     ],
   };
   const dict = getDictionary();
 
   const expected = [
     'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
-    '.add() method argument, component pie-3d -> data -> 1 -> meta -> color:',
+    '.add() method argument, component pie-3d -> data -> 1 -> meta -> ' +
+      'faceColor:',
     '  value must be a full (6 char long) hex string, e.g. #ffffff, not #fff',
   ].join('\n');
 

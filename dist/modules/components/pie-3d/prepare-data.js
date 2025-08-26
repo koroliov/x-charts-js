@@ -317,7 +317,8 @@ export function prepareData(arg                        )          {
         },
         indexInUserProvidedArray: ll.i,
         value: d.value,
-        color: d.meta.color,
+        faceColor: d.meta.faceColor,
+        rimColor: d.meta.rimColor,
       };
       prevEndHeads = rv.endPointHeads;
       prevEndTails = rv.endPointTails;
