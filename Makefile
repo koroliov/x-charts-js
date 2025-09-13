@@ -77,7 +77,9 @@ podman-container-bash:
 #npm section
 .PHONY: npm-outdated
 npm-outdated:
-	podman container exec -it $(CONTAINER_NAME) bash -c "npm outdated"
+	podman container exec -it $(CONTAINER_NAME) bash -c \
+	'npm outdated; err_code=$$?; [ $$err_code -eq 1 ] && exit 0 || \
+	exit $$err_code'
 
 .PHONY: npm-install-save-dev-help
 npm-install-save-dev-help:
