@@ -83,7 +83,7 @@ npm-outdated:
 
 .PHONY: npm-install-save-dev-help
 npm-install-save-dev-help:
-	@echo "make npm-install NPM_MOD='nodemon@3.1.10'"
+	@echo "make npm-install-save-dev NPM_MOD='nodemon@3.1.10'"
 
 .PHONY: npm-install-save-dev
 npm-install-save-dev:
