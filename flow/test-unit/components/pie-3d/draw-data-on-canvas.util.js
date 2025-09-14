@@ -78,7 +78,7 @@ export function drawDataOnCanvas(arg: Arg) {
           ${ jsString }
         </script>
         <script src="http://localhost:${ livereloadPort
-          }/livereload.js?snipver=1"></script>
+          }/livereload.js"></script>
       </body>
       </html>
     `;
