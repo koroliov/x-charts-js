@@ -79,11 +79,13 @@ the Podman image tag must be incremented by 1:
 
 **How to install/update node packages?**
 
-- Run the container with an interactive shell or login into a running container
-- Install/update the package
+- Use Makefile targets like (this is needed to update the package.json,
+  package-lock.json files):
+  - npm-install-save-dev
+  - npm-install-save-dev-help
 - Update the image tag number
-- Commit the changes
 - Rebuild the image
+- Git-commit the changes
 
 **How to modify/work with test/server/main.js w/o restarting container?**
 

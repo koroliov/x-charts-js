@@ -1,9 +1,9 @@
 FILE := ''
 PROJECT_NAME := x-charts
-PROJECT_IMAGE_TAG := 27
+PROJECT_IMAGE_TAG := 28
 CONTAINER_NAME := $(PROJECT_NAME)-$(PROJECT_IMAGE_TAG)
-NODE_VERSION_NUM := 24.5.0
-NPM_VERSION_NUM := 11.5.2
+NODE_VERSION_NUM := 24.8.0
+NPM_VERSION_NUM := 11.6.0
 FEDORA_VERSION_NUM := 42
 
 include ./var/Makefile.config
@@ -77,11 +77,13 @@ podman-container-bash:
 #npm section
 .PHONY: npm-outdated
 npm-outdated:
-	podman container exec -it $(CONTAINER_NAME) bash -c "npm outdated"
+	podman container exec -it $(CONTAINER_NAME) bash -c \
+	'npm outdated; err_code=$$?; [ $$err_code -eq 1 ] && exit 0 || \
+	exit $$err_code'
 
 .PHONY: npm-install-save-dev-help
 npm-install-save-dev-help:
-	@echo "make npm-install NPM_MOD='nodemon@3.1.10'"
+	@echo "make npm-install-save-dev NPM_MOD='nodemon@3.1.10'"
 
 .PHONY: npm-install-save-dev
 npm-install-save-dev:
