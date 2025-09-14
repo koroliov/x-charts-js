@@ -6,6 +6,9 @@ NODE_VERSION_NUM := 24.8.0
 NPM_VERSION_NUM := 11.6.0
 FEDORA_VERSION_NUM := 42
 
+SHELL := /bin/bash
+.SHELLFLAGS := -xeuo pipefail -c
+
 include ./var/Makefile.config
 
 .DEFAULT:
@@ -97,6 +100,15 @@ npm-install-save-dev:
 	podman container exec -it $(CONTAINER_NAME) bash -c "npm i --save-dev \
 	$(NPM_MOD) && cp package.json ./var/ && cp package-lock.json ./var/ && \
 	echo 'DON''T FORGET TO REBUILD IMAGE'"
+
+#docusaurus section
+.PHONY: docusaurus-build
+docusaurus-build:
+	podman container exec -w "/home/$(PROJECT_NAME)/docs-src/" \
+	$(CONTAINER_NAME) \
+	bash -c "npm run build && rm -rf ../docs/* ../docs/.[!.]* ../docs/..?* && \
+	cp -r ../docs-tmp/* ../docs/ && \
+	cp -r ../docs-tmp/.[!.]* ../docs/"
 
 #flow section
 .PHONY: flow-build-full
