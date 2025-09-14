@@ -4,7 +4,7 @@ import '/dist/modules/components/legend/main.js';
 
 
 const xChartsConstructorArg = {
-  containerDiv: document.getElementById('x-charts'),
+  containerDiv: document.getElementById('x-charts-js'),
   options: {
     //backgroundColor: '#3300ff' /* blue */,
     backgroundColor: '#ffffff' /* white */,
