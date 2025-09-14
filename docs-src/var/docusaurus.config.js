@@ -88,9 +88,15 @@ const config = {
         //},
         items: [
           {
+            to: 'docs/changelog',
+            activeBasePath: 'docs',
+            label: 'v0.0.0',
+            position: 'left',
+          },
+          {
             type: 'docSidebar',
             sidebarId: 'tutorialSidebar',
-            position: 'left',
+            position: 'right',
             label: 'Tutorial',
           },
           //{to: '/blog', label: 'Blog', position: 'left'},
