@@ -53,11 +53,11 @@ export default class XCharts {
             height: 100%;
             position: relative;
             z-index: 0;
-          " id="x-charts--components-container"></div>
+          " id="x-charts-js--components-container"></div>
         </div>
       `;
       const componentsContainer = that._shadowRoot
-          .getElementById('x-charts--components-container');
+          .getElementById('x-charts-js--components-container');
       if (!(componentsContainer instanceof HTMLDivElement)) {
         throw new Error([
           'ERR_X_CHARTS_INTERNAL:',
