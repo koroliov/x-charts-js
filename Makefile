@@ -1,6 +1,6 @@
 FILE := ''
 PROJECT_NAME := x-charts-js
-PROJECT_IMAGE_TAG := 0
+PROJECT_IMAGE_TAG := 1
 CONTAINER_NAME := $(PROJECT_NAME)-$(PROJECT_IMAGE_TAG)
 NODE_VERSION_NUM := 24.8.0
 NPM_VERSION_NUM := 11.6.0
@@ -39,12 +39,19 @@ podman-container-run-attached podman-container-run-detached:
 	podman container run --rm \
 	--init \
 	--publish $(PORT):443 \
+	--publish $(DOCUSAURUS_PORT):3000 \
 	--publish $(LIVERELOAD_PORT):35729 \
 	--env LIVERELOAD_PORT=$(LIVERELOAD_PORT) \
 	-v $(CURDIR)/var/:/home/$(PROJECT_NAME)/var/ \
 	-v $(CURDIR)/dist/:/home/$(PROJECT_NAME)/dist/ \
 	-v $(CURDIR)/flow/:/home/$(PROJECT_NAME)/flow/ \
 	-v $(CURDIR)/test/:/home/$(PROJECT_NAME)/test/ \
+	-v $(CURDIR)/docs/:/home/$(PROJECT_NAME)/docs/ \
+	-v $(CURDIR)/docs-src/blog/:/home/$(PROJECT_NAME)/docs-src/blog/ \
+	-v $(CURDIR)/docs-src/docs/:/home/$(PROJECT_NAME)/docs-src/docs/ \
+	-v $(CURDIR)/docs-src/src/:/home/$(PROJECT_NAME)/docs-src/src/ \
+	-v $(CURDIR)/docs-src/static/:/home/$(PROJECT_NAME)/docs-src/static/ \
+	-v $(CURDIR)/docs-src/var/:/home/$(PROJECT_NAME)/docs-src/var/ \
 	$(DETACHED_FLAG) --name $(CONTAINER_NAME) \
 	$(PROJECT_NAME):$(PROJECT_IMAGE_TAG)
 	podman container exec -it $(CONTAINER_NAME) bash -c \
