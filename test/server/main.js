@@ -63,7 +63,7 @@ function handleStream(stream, headers) {
       stream.end(`
         document.write([
           '<script src="http://localhost:${ process.env.LIVERELOAD_PORT
-            }/livereload.js?snipver=1"></',
+            }/livereload.js"></',
           'script>',
         ].join(''));
       `);
