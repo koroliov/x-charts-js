@@ -96,6 +96,12 @@ const config = {
             position: 'left',
           },
           {
+            to: 'docs/demos',
+            //activeBasePath: 'docs',
+            label: 'Demos',
+            position: 'right',
+          },
+          {
             type: 'docSidebar',
             sidebarId: 'tutorialSidebar',
             position: 'right',
