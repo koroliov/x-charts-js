@@ -89,7 +89,9 @@ const config = {
         items: [
           {
             to: 'docs/changelog',
-            activeBasePath: 'docs',
+            //to highlight as 'active' in case the currently loaded page matches
+            //the pass
+            //activeBasePath: 'docs',
             label: 'v0.0.0',
             position: 'left',
           },
