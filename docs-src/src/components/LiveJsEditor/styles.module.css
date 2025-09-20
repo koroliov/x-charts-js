@@ -133,8 +133,9 @@
   background: var(--ifm-code-background);
   border: 1px solid var(--ifm-color-emphasis-200);
   border-radius: var(--ifm-global-radius);
-  min-height: 14rem;
+  height: 20rem;
   outline: none;
+  resize: vertical;
 }
 
 /* When hidden attribute is present, don't take space */
