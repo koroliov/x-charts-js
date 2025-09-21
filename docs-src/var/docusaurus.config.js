@@ -77,7 +77,7 @@ const config = {
 
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
-    ({
+    {
       // Replace with your project's social card
       image: 'img/docusaurus-social-card.jpg',
       navbar: {
@@ -95,6 +95,9 @@ const config = {
             label: 'v0.0.0',
             position: 'left',
           },
+          //{
+          //  type: 'docsVersionDropdown',
+          //},
           {
             to: 'docs/demos',
             //activeBasePath: 'docs',
@@ -103,10 +106,16 @@ const config = {
           },
           {
             type: 'docSidebar',
-            sidebarId: 'tutorialSidebar',
+            sidebarId: 'docsSidebar',
             position: 'right',
-            label: 'Tutorial',
+            label: 'Docs',
           },
+          //{
+          //  type: 'docSidebar',
+          //  sidebarId: 'backupRefSidebar',
+          //  position: 'right',
+          //  label: 'BackupRef',
+          //},
           //{to: '/blog', label: 'Blog', position: 'left'},
           {
             href: 'https://github.com/koroliov/x-charts-js',
@@ -130,27 +139,27 @@ const config = {
           //{
           //  title: 'Community',
           //  items: [
-          //    //{
-          //    //  label: 'Stack Overflow',
-          //    //  href: 'https://stackoverflow.com/questions/tagged/docusaurus',
-          //    //},
-          //    //{
-          //    //  label: 'Discord',
-          //    //  href: 'https://discordapp.com/invite/docusaurus',
-          //    //},
-          //    //{
-          //    //  label: 'X',
-          //    //  href: 'https://x.com/docusaurus',
-          //    //},
+          //    {
+          //      label: 'Stack Overflow',
+          //      href: 'https://stackoverflow.com/questions/tagged/docusaurus',
+          //    },
+          //    {
+          //      label: 'Discord',
+          //      href: 'https://discordapp.com/invite/docusaurus',
+          //    },
+          //    {
+          //      label: 'X',
+          //      href: 'https://x.com/docusaurus',
+          //    },
           //  ],
           //},
           //{
           //  title: 'More',
           //  items: [
-          //    //{
-          //    //  label: 'Blog',
-          //    //  to: '/blog',
-          //    //},
+          //    {
+          //      label: 'Blog',
+          //      to: '/blog',
+          //    },
           //    {
           //      label: 'GitHub',
           //      href: 'https://github.com/koroliov/x-charts-js',
@@ -158,13 +167,14 @@ const config = {
           //  ],
           //},
         ],
-        copyright: `Copyright © ${new Date().getFullYear()} koroliov. Built with Docusaurus.`,
+        copyright: `Copyright © ${
+          new Date().getFullYear() } koroliov. Built with Docusaurus.`,
       },
       prism: {
         theme: prismThemes.github,
         darkTheme: prismThemes.dracula,
       },
-    }),
+    },
 };
 
 export default config;

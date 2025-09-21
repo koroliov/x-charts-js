@@ -30,7 +30,15 @@ const sidebars = {
     },
   ],
    */
-  tutorialSidebar: [
+  docsSidebar: [
+    'overview',
+    //{
+    //  type: 'category',
+    //  label: 'Tutorial',
+    //  items: ['tutorial-basics/create-a-document'],
+    //},
+  ],
+  backupRefSidebar: [
     'intro',
     {
       type: 'category',
