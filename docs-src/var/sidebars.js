@@ -37,9 +37,9 @@ const sidebars = {
       items: [
         'overview/introduction',
         'overview/prerequisites',
+        'overview/usage',
         'overview/current-limitations',
         'overview/caveats',
-        'overview/usage',
       ],
     },
     //{

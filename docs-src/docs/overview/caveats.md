@@ -1,6 +1,5 @@
 ---
 sidebar_label: 'Caveats'
-sidebar_position: 4
 ---
 
 # Caveats

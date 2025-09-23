@@ -1,6 +1,5 @@
 ---
 sidebar_label: 'Prerequisites'
-sidebar_position: 2
 ---
 
 # Prerequisites

@@ -1,6 +1,5 @@
 ---
 sidebar_label: 'Current limitations'
-sidebar_position: 3
 ---
 
 # Current Limitations (v0.0.0)
