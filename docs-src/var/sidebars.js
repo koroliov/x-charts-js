@@ -31,7 +31,17 @@ const sidebars = {
   ],
    */
   docsSidebar: [
-    'overview',
+    {
+      type: 'category',
+      label: 'Overview',
+      items: [
+        'overview/introduction',
+        'overview/prerequisites',
+        'overview/current-limitations',
+        'overview/caveats',
+        'overview/usage',
+      ],
+    },
     //{
     //  type: 'category',
     //  label: 'Tutorial',
