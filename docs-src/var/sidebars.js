@@ -47,6 +47,14 @@ const sidebars = {
       label: 'API Reference',
       items: [
         'api-ref/x-charts-js',
+        {
+          type: 'category',
+          label: 'Components',
+          items: [
+            'api-ref/components/legend',
+            'api-ref/components/pie-3d',
+          ],
+        },
       ],
     },
     //{
