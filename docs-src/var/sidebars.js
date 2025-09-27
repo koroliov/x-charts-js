@@ -42,6 +42,13 @@ const sidebars = {
         'overview/caveats',
       ],
     },
+    {
+      type: 'category',
+      label: 'API Reference',
+      items: [
+        'api-ref/x-charts-js',
+      ],
+    },
     //{
     //  type: 'category',
     //  label: 'Tutorial',
