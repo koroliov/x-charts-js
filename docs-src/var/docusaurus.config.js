@@ -153,22 +153,22 @@ const config = {
           //    },
           //  ],
           //},
-          //{
-          //  title: 'More',
-          //  items: [
-          //    {
-          //      label: 'Blog',
-          //      to: '/blog',
-          //    },
-          //    {
-          //      label: 'GitHub',
-          //      href: 'https://github.com/koroliov/x-charts-js',
-          //    },
-          //  ],
-          //},
+          {
+            title: 'Contribute',
+            items: [
+              //{
+              //  label: 'Blog',
+              //  to: '/blog',
+              //},
+              {
+                label: 'GitHub',
+                href: 'https://github.com/koroliov/x-charts-js/tree/main/docs-dev/',
+              },
+            ],
+          },
         ],
         copyright: `Copyright © ${
-          new Date().getFullYear() } koroliov. Built with Docusaurus.`,
+          new Date().getFullYear() } Dmitry Koroliov. Built with Docusaurus.`,
       },
       prism: {
         theme: prismThemes.github,
