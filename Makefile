@@ -85,9 +85,10 @@ podman-container-bash:
 	podman container exec -it $(CONTAINER_NAME) bash
 
 #npm section
-.PHONY: npm-outdated
-npm-outdated:
-	podman container exec -it $(CONTAINER_NAME) bash -c \
+.PHONY: npm-outdated docusaurus-npm-outdated
+docusaurus-npm-outdated: WORKDIR = --workdir /home/$(PROJECT_NAME)/docs-src/
+npm-outdated docusaurus-npm-outdated:
+	podman container exec $(WORKDIR) $(CONTAINER_NAME) bash -c \
 	'npm outdated; err_code=$$?; [ $$err_code -eq 1 ] && exit 0 || \
 	exit $$err_code'
 
@@ -95,9 +96,11 @@ npm-outdated:
 npm-install-save-dev-help:
 	@echo "make npm-install-save-dev NPM_MOD='nodemon@3.1.10'"
 
-.PHONY: npm-install-save-dev
-npm-install-save-dev:
-	podman container exec -it $(CONTAINER_NAME) bash -c "npm i --save-dev \
+.PHONY: npm-install-save-dev docusaurus-npm-install-save-dev
+docusaurus-npm-install-save-dev: WORKDIR = --workdir \
+ /home/$(PROJECT_NAME)/docs-src/
+npm-install-save-dev docusaurus-npm-install-save-dev:
+	podman container exec $(WORKDIR) $(CONTAINER_NAME) bash -c "npm i --save-dev \
 	$(NPM_MOD) && cp package.json ./var/ && cp package-lock.json ./var/ && \
 	echo 'DON''T FORGET TO REBUILD IMAGE'"
 
@@ -109,6 +112,10 @@ docusaurus-build:
 	bash -c "npm run build && rm -rf ../docs/* ../docs/.[!.]* ../docs/..?* && \
 	cp -r ../docs-tmp/* ../docs/ && \
 	cp -r ../docs-tmp/.[!.]* ../docs/"
+
+.PHONY: docusaurus-npm-install-save-dev-help
+docusaurus-npm-install-save-dev-help:
+	@echo "make docusaurus-npm-install-save-dev-help NPM_MOD='nodemon@3.1.10'"
 
 #flow section
 .PHONY: flow-build-full
