@@ -1,0 +1,166 @@
+import LiveJsEditor from '@site/src/components/LiveJsEditor';
+
+# Demos
+
+## Pie 3d chart
+
+<LiveJsEditor
+  headerText="Live code"
+  initialJs="
+//Use real location where you placed the library
+import XChartsJs from '../x-charts-js/main.js';
+import '../x-charts-js/components/pie-3d/main.js';
+import '../x-charts-js/components/legend/main.js';
+
+const data = [
+&nbsp; { label: 'USA', value: 4890,
+&nbsp;   faceColor: '#af9760' /* brown */,
+&nbsp;   rimColor: '#93793d', },
+&nbsp; { label: 'Saudi Arabia', value: 4130,
+&nbsp;   faceColor: '#b7b872' /* golden-brown */,
+&nbsp;   rimColor: '#9fa046', },
+&nbsp; { label: 'Russia', value: 3940,
+&nbsp;   faceColor: '#e4c5c5' /* grey-pinkish */,
+&nbsp;   rimColor: '#c99e9e', },
+&nbsp; { label: 'Canada', value: 1730,
+&nbsp;   faceColor: '#9dd999' /* light-green */,
+&nbsp;   rimColor: '#54a94f', },
+&nbsp; { label: 'Iraq', value: 1510,
+&nbsp;   faceColor: '#b4b605' /* golden */,
+&nbsp;   rimColor: '#929416', },
+&nbsp; { label: 'China', value: 1090,
+&nbsp;   faceColor: '#eef07a' /* yellow */,
+&nbsp;   rimColor: '#b7b93d', },
+&nbsp; { label: 'United Arab Emirates', value: 1070,
+&nbsp;   faceColor: '#b3a4b5' /* violet-grey */,
+&nbsp;   rimColor: '#99759d', },
+];
+
+const xChartsJsConstructorArg = {
+&nbsp; containerDiv: document.getElementById('x-charts-js'),
+&nbsp; options: {
+&nbsp;   backgroundColor: '#ffffff' /* white */,
+&nbsp;   isComponentInspectMode: false,
+&nbsp; },
+};
+
+const pie3dArgument = {
+&nbsp; type: 'pie-3d',
+&nbsp; zIndex: '1',
+&nbsp; options: {
+&nbsp;   thicknessPx: 30,
+&nbsp;   radiusPx: 200,
+&nbsp;   centerXPx: 210,
+&nbsp;   centerYPx: 200,
+&nbsp;   startAtDeg: 0,
+&nbsp;   rotationAroundCenterXAxisDeg: 60,
+&nbsp;   rotationAroundCenterZAxisDeg: 0,
+&nbsp; },
+&nbsp; data: data.map((d) => {
+&nbsp;   return {
+&nbsp;     value: d.value,
+&nbsp;     meta: { faceColor: d.faceColor, rimColor: d.rimColor, },
+&nbsp;   };
+&nbsp; }),
+};
+
+const legendArgument = {
+&nbsp; type: 'legend',
+&nbsp; zIndex: '2',
+&nbsp; htmlFragment: `
+&nbsp;   <style>
+&nbsp;     .root {
+&nbsp;       direction: ltr;
+&nbsp;       background-color: transparent;
+&nbsp;       position: absolute;
+&nbsp;       left: 0;
+&nbsp;       right: 0;
+&nbsp;       top: 0;
+&nbsp;       bottom: 0;
+&nbsp;       text-align: end;
+&nbsp;     }
+&nbsp;     .legend {
+&nbsp;       background-color: white;
+&nbsp;       display: inline-block;
+&nbsp;       text-align: start;
+&nbsp;       width: 150px;
+&nbsp;       border: 1px solid black;
+&nbsp;       padding: 1em 1em 0;
+&nbsp;       overflow: hidden;
+&nbsp;       margin: 1em;
+&nbsp;       font-size: 0.8em;
+&nbsp;       font-family: sans-serif;
+&nbsp;     }
+&nbsp;     .header {
+&nbsp;       font-size: 1.3em;
+&nbsp;       font-weight: bold;
+&nbsp;       margin-bottom: 1em;
+&nbsp;     }
+&nbsp;     .header > span {
+&nbsp;       font-size: 0.8em;
+&nbsp;       font-weight: normal;
+&nbsp;     }
+&nbsp;     .row {
+&nbsp;       line-height: 1.2em;
+&nbsp;       display: block;
+&nbsp;       margin: 0.5em 0;
+&nbsp;     }
+&nbsp;     .marker {
+&nbsp;       content: '';
+&nbsp;       float: inline-start;
+&nbsp;       clear: both;
+&nbsp;       width: 2em;
+&nbsp;       height: 0.8em;
+&nbsp;       margin-inline-end: 1em;
+&nbsp;       margin-top: 0.1em;
+&nbsp;       margin-bottom: 0.3em;
+&nbsp;       border: 1px solid black;
+&nbsp;     }
+&nbsp;   </style>
+&nbsp;   <div class='root'>
+&nbsp;     <div class='legend'>
+&nbsp;       <div class='header'>
+&nbsp;         Oil producers<br>
+&nbsp;         <span>(ml barrels per year)</span>
+&nbsp;       </div>
+&nbsp;       ${
+&nbsp;         data.map((d) => {
+&nbsp;           return `
+&nbsp;             <div class='row'>
+&nbsp;               <div class='marker' style='background-color: ${
+&nbsp;                 d.faceColor }'></div>
+&nbsp;               ${ d.label }, ${ d.value.toLocaleString() }
+&nbsp;             </div>
+&nbsp;           `;
+&nbsp;         }).join('\n')
+&nbsp;       }
+&nbsp;     </div>
+&nbsp;   </div>
+&nbsp; `,
+};
+
+const ins = new XChartsJs(xChartsJsConstructorArg);
+ins.add(pie3dArgument);
+ins.add(legendArgument);
+"
+  initialHtml="
+<style>
+&nbsp; div {
+&nbsp;   margin: 0 auto;
+&nbsp;   border: 1px solid black;
+&nbsp;   background-color: grey;
+&nbsp;   width: 550px;
+&nbsp;   height: 380px;
+&nbsp; }
+</style>
+<div id='x-charts-js'></div>
+"
+  overviewHtml="
+    <ul>
+      <li>Have a div DOM element</li>
+      <li>Import x-charts-js and components.</li>
+      <li>Instantiate an XChartsJs instance.</li>
+      <li>Add components to it with .add() method calls.</li>
+    </ul>
+  "
+/>

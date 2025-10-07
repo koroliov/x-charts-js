@@ -1,0 +1,155 @@
+.container {
+  margin-bottom: var(--ifm-leading);
+  border-radius: var(--ifm-global-radius);
+  box-shadow: var(--ifm-global-shadow-lw);
+  overflow: hidden;
+  background: var(--ifm-background-color);
+}
+
+.header {
+  letter-spacing: 0.08rem;
+  padding: 0.75rem 1rem;
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: var(--ifm-code-font-size);
+  background: var(--ifm-color-emphasis-700);
+  color: var(--ifm-color-content-inverse);
+}
+
+.iframe {
+  height: 25rem;
+  width: 100%;
+  background: #fff;
+  border: 0;
+  display: block;
+}
+
+.resultPre {
+  margin: 0;
+  padding: 0.75rem 1rem;
+  font-family: var(--ifm-font-family-monospace);
+  font-size: var(--ifm-code-font-size);
+  background: var(--ifm-code-background);
+  color: var(--ifm-color-emphasis-900);
+  border-top: 1px solid var(--ifm-color-emphasis-200);
+  border-bottom: 1px solid var(--ifm-color-emphasis-200);
+  /* keeps the area visible even with no output */
+  min-height: 2.25rem;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+/* Tab bar: overview | html | js | [Run] */
+.tabBar {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0 0.5rem;
+  background: var(--ifm-background-surface-color);
+  border-bottom: 1px solid var(--ifm-color-emphasis-200);
+}
+
+.tabButtons {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.tab {
+  appearance: none;
+  background: transparent;
+  border: 0;
+  margin: 0;
+  padding: 0.75rem 0.75rem;
+  color: var(--ifm-font-color-secondary);
+  font: inherit;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  border-top-left-radius: var(--ifm-global-radius);
+  border-top-right-radius: var(--ifm-global-radius);
+}
+
+.tab:hover {
+  color: var(--ifm-font-color-base);
+  background: color-mix(in srgb, var(--ifm-color-primary) 8%, transparent);
+}
+
+.tabActive {
+  color: var(--ifm-color-primary);
+  border-bottom-color: var(--ifm-color-primary);
+  font-weight: 600;
+}
+
+.tabSpacer {
+  flex: 1 1 auto;
+}
+
+/* Primary Run button matching Docusaurus style but custom */
+.runButton {
+  appearance: none;
+  border: 0;
+  border-radius: var(--ifm-button-border-radius);
+  padding: 0.45rem 0.9rem;
+  background: var(--ifm-color-primary);
+  color: var(--ifm-color-content-inverse);
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: var(--ifm-global-shadow-lw);
+  transition: transform 0.05s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.runButton:hover {
+  background: color-mix(in srgb, var(--ifm-color-primary) 90%, black 10%);
+  box-shadow: var(--ifm-global-shadow-md);
+}
+
+.runButton:active {
+  transform: translateY(1px);
+}
+
+/* Panels area below tabs */
+.panelArea {
+  padding: 0.75rem 0.75rem 0.5rem;
+}
+
+/* Overview panel content */
+.overviewPanel {
+  padding: 0.5rem 0.25rem 0.75rem;
+  color: var(--ifm-font-color-secondary);
+  font-size: 0.95rem;
+}
+
+/* Editors */
+.preWrapper {
+  display: block;
+  margin-top: 0.25rem;
+}
+
+.pre {
+  margin: 0;
+  width: 100%;
+  overflow: auto;
+  padding: 0.75rem !important;
+  background: var(--ifm-code-background);
+  border: 1px solid var(--ifm-color-emphasis-200);
+  border-radius: var(--ifm-global-radius);
+  height: 20rem;
+  outline: none;
+  resize: vertical;
+}
+
+/* When hidden attribute is present, don't take space */
+.pre[hidden] {
+  display: none !important;
+}
+
+/* Optional focus ring for accessibility when editing */
+.pre:focus {
+  border-color: var(--ifm-color-primary);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--ifm-color-primary) 25%, transparent);
+}
+
+/* Keep for any future positioning needs */
+.resultContainer {
+  position: relative;
+}

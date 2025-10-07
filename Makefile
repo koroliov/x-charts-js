@@ -1,10 +1,13 @@
 FILE := ''
 PROJECT_NAME := x-charts-js
-PROJECT_IMAGE_TAG := 0
+PROJECT_IMAGE_TAG := 3
 CONTAINER_NAME := $(PROJECT_NAME)-$(PROJECT_IMAGE_TAG)
 NODE_VERSION_NUM := 24.8.0
-NPM_VERSION_NUM := 11.6.0
+NPM_VERSION_NUM := 11.6.1
 FEDORA_VERSION_NUM := 42
+
+SHELL := /bin/bash
+.SHELLFLAGS := -xeuo pipefail -c
 
 include ./var/Makefile.config
 
@@ -39,12 +42,19 @@ podman-container-run-attached podman-container-run-detached:
 	podman container run --rm \
 	--init \
 	--publish $(PORT):443 \
+	--publish $(DOCUSAURUS_PORT):3000 \
 	--publish $(LIVERELOAD_PORT):35729 \
 	--env LIVERELOAD_PORT=$(LIVERELOAD_PORT) \
 	-v $(CURDIR)/var/:/home/$(PROJECT_NAME)/var/ \
 	-v $(CURDIR)/dist/:/home/$(PROJECT_NAME)/dist/ \
 	-v $(CURDIR)/flow/:/home/$(PROJECT_NAME)/flow/ \
 	-v $(CURDIR)/test/:/home/$(PROJECT_NAME)/test/ \
+	-v $(CURDIR)/docs/:/home/$(PROJECT_NAME)/docs/ \
+	-v $(CURDIR)/docs-src/blog/:/home/$(PROJECT_NAME)/docs-src/blog/ \
+	-v $(CURDIR)/docs-src/docs/:/home/$(PROJECT_NAME)/docs-src/docs/ \
+	-v $(CURDIR)/docs-src/src/:/home/$(PROJECT_NAME)/docs-src/src/ \
+	-v $(CURDIR)/docs-src/static/:/home/$(PROJECT_NAME)/docs-src/static/ \
+	-v $(CURDIR)/docs-src/var/:/home/$(PROJECT_NAME)/docs-src/var/ \
 	$(DETACHED_FLAG) --name $(CONTAINER_NAME) \
 	$(PROJECT_NAME):$(PROJECT_IMAGE_TAG)
 	podman container exec -it $(CONTAINER_NAME) bash -c \
@@ -75,9 +85,10 @@ podman-container-bash:
 	podman container exec -it $(CONTAINER_NAME) bash
 
 #npm section
-.PHONY: npm-outdated
-npm-outdated:
-	podman container exec -it $(CONTAINER_NAME) bash -c \
+.PHONY: npm-outdated docusaurus-npm-outdated
+docusaurus-npm-outdated: WORKDIR = --workdir /home/$(PROJECT_NAME)/docs-src/
+npm-outdated docusaurus-npm-outdated:
+	podman container exec $(WORKDIR) $(CONTAINER_NAME) bash -c \
 	'npm outdated; err_code=$$?; [ $$err_code -eq 1 ] && exit 0 || \
 	exit $$err_code'
 
@@ -85,11 +96,26 @@ npm-outdated:
 npm-install-save-dev-help:
 	@echo "make npm-install-save-dev NPM_MOD='nodemon@3.1.10'"
 
-.PHONY: npm-install-save-dev
-npm-install-save-dev:
-	podman container exec -it $(CONTAINER_NAME) bash -c "npm i --save-dev \
+.PHONY: npm-install-save-dev docusaurus-npm-install-save-dev
+docusaurus-npm-install-save-dev: WORKDIR = --workdir \
+ /home/$(PROJECT_NAME)/docs-src/
+npm-install-save-dev docusaurus-npm-install-save-dev:
+	podman container exec $(WORKDIR) $(CONTAINER_NAME) bash -c "npm i --save-dev \
 	$(NPM_MOD) && cp package.json ./var/ && cp package-lock.json ./var/ && \
 	echo 'DON''T FORGET TO REBUILD IMAGE'"
+
+#docusaurus section
+.PHONY: docusaurus-build
+docusaurus-build:
+	podman container exec --workdir "/home/$(PROJECT_NAME)/docs-src/" \
+	$(CONTAINER_NAME) \
+	bash -c "npm run build && rm -rf ../docs/* ../docs/.[!.]* ../docs/..?* && \
+	cp -r ../docs-tmp/* ../docs/ && \
+	cp -r ../docs-tmp/.[!.]* ../docs/"
+
+.PHONY: docusaurus-npm-install-save-dev-help
+docusaurus-npm-install-save-dev-help:
+	@echo "make docusaurus-npm-install-save-dev-help NPM_MOD='nodemon@3.1.10'"
 
 #flow section
 .PHONY: flow-build-full

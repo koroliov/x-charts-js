@@ -22,8 +22,12 @@ ADD https://nodejs.org/dist/v${NODE_VERSION_NUM}/${NODE_TARBALL_NAME} ${NODE_TAR
 RUN tar -xf ${NODE_DIR_NAME}.tar.xz
 RUN rm ${NODE_DIR_NAME}.tar.xz
 
-WORKDIR /home/${PROJECT_NAME}
+WORKDIR /home/${PROJECT_NAME}/docs-src
+COPY ./docs-src/var/package.json .
+COPY ./docs-src/var/package-lock.json .
+RUN npm ci
 
+WORKDIR /home/${PROJECT_NAME}
 COPY ./var/package.json .
 COPY ./var/package-lock.json .
 RUN npm install -g npm@${NPM_VERSION_NUM}
