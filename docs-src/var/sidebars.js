@@ -59,6 +59,7 @@ const sidebars = {
     },
   ],
   sandboxAndRefSidebar: [
+    'sandbox-n-ref/markdown-reference',
     'sandbox-n-ref/intro',
     {
       type: 'category',
