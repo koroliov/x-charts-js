@@ -33,8 +33,8 @@ tp.test('no arguments', (t) => {
   //$FlowFixMe[incompatible-call]
   const dict = getDictionary(ContainerDiv);
   const expected = [
-    'ERR_X_CHARTS_INVALID_CONSTRUCTOR_ARG:',
-    'The new XCharts() constructor expects a single argument',
+    'ERR_XCHARTSJS_INVALID_CONSTRUCTOR_ARG:',
+    'The new XChartsJs() constructor expects a single argument',
   ].join('\n');
 
   const actual = validate(dict, constructorArg);
@@ -57,8 +57,8 @@ tp.test('extra arguments', (t) => {
   //$FlowFixMe[incompatible-call]
   const dict = getDictionary(ContainerDiv);
   const expected = [
-    'ERR_X_CHARTS_INVALID_CONSTRUCTOR_ARG:',
-    'The new XCharts() constructor expects a single argument',
+    'ERR_XCHARTSJS_INVALID_CONSTRUCTOR_ARG:',
+    'The new XChartsJs() constructor expects a single argument',
   ].join('\n');
 
   const actual = validate(dict, constructorArg);
@@ -75,8 +75,8 @@ tp.test('argument is not object', (t) => {
   //$FlowFixMe[incompatible-call]
   const dict = getDictionary(ContainerDiv);
   const expected = [
-    'ERR_X_CHARTS_INVALID_CONSTRUCTOR_ARG:',
-    'Argument to the new XCharts() constructor must be an object',
+    'ERR_XCHARTSJS_INVALID_CONSTRUCTOR_ARG:',
+    'Argument to the new XChartsJs() constructor must be an object',
     'e.g. {  }, Object.create(null)',
   ].join('\n');
 
@@ -100,8 +100,8 @@ tp.test('containerDiv is not valid', (t) => {
   //$FlowFixMe[incompatible-call]
   const dict = getDictionary(ContainerDiv);
   const expected = [
-    'ERR_X_CHARTS_INVALID_CONSTRUCTOR_ARG:',
-    'new XCharts() argument -> containerDiv:',
+    'ERR_XCHARTSJS_INVALID_CONSTRUCTOR_ARG:',
+    'new XChartsJs() argument -> containerDiv:',
     '  value must be an HTMLDivElement',
   ].join('\n');
 
@@ -126,8 +126,8 @@ tp.test('extra argument in options', (t) => {
   //$FlowFixMe[incompatible-call]
   const dict = getDictionary(ContainerDiv);
   const expected = [
-    'ERR_X_CHARTS_INVALID_CONSTRUCTOR_ARG:',
-    'new XCharts() argument -> options:',
+    'ERR_XCHARTSJS_INVALID_CONSTRUCTOR_ARG:',
+    'new XChartsJs() argument -> options:',
     "  unknown property 'foo'",
   ].join('\n');
 
@@ -151,8 +151,8 @@ tp.test('isComponentInspectMode invalid', (t) => {
   //$FlowFixMe[incompatible-call]
   const dict = getDictionary(ContainerDiv);
   const expected = [
-    'ERR_X_CHARTS_INVALID_CONSTRUCTOR_ARG:',
-    'new XCharts() argument -> options -> isComponentInspectMode:',
+    'ERR_XCHARTSJS_INVALID_CONSTRUCTOR_ARG:',
+    'new XChartsJs() argument -> options -> isComponentInspectMode:',
     "  value must be boolean",
   ].join('\n');
 

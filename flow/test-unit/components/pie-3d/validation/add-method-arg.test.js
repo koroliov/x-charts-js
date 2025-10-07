@@ -73,7 +73,7 @@ tp.test('extra property present', (t) => {
   const dict = getDictionary();
 
   const expected = [
-    'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
+    'ERR_XCHARTSJS_INVALID_ADD_METHOD_ARG:',
     '.add() method argument, component pie-3d:',
     "  unknown property 'someUnknownProp'",
   ].join('\n');
@@ -101,7 +101,7 @@ tp.test('missing property', (t) => {
   const dict = getDictionary();
 
   const expected = [
-    'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
+    'ERR_XCHARTSJS_INVALID_ADD_METHOD_ARG:',
     '.add() method argument, component pie-3d:',
     "  missing properties: data",
   ].join('\n');
@@ -121,7 +121,7 @@ tp.test('missing properties', (t) => {
   const dict = getDictionary();
 
   const expected = [
-    'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
+    'ERR_XCHARTSJS_INVALID_ADD_METHOD_ARG:',
     '.add() method argument, component pie-3d:',
     "  missing properties: options, data",
   ].join('\n');
@@ -156,7 +156,7 @@ tp.test('options is not object', (t) => {
   const dict = getDictionary();
 
   const expected = [
-    'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
+    'ERR_XCHARTSJS_INVALID_ADD_METHOD_ARG:',
     '.add() method argument, component pie-3d -> options:',
     '  must be an object',
   ].join('\n');
@@ -198,7 +198,7 @@ tp.test('extra property', (t) => {
   const dict = getDictionary();
 
   const expected = [
-    'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
+    'ERR_XCHARTSJS_INVALID_ADD_METHOD_ARG:',
     '.add() method argument, component pie-3d -> options:',
     "  unknown property 'someUnknownProp'",
   ].join('\n');
@@ -239,7 +239,7 @@ tp.test('missing property', (t) => {
   const dict = getDictionary();
 
   const expected = [
-    'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
+    'ERR_XCHARTSJS_INVALID_ADD_METHOD_ARG:',
     '.add() method argument, component pie-3d -> options:',
     "  missing properties: radiusPx",
   ].join('\n');
@@ -280,7 +280,7 @@ tp.test('missing properties', (t) => {
   const dict = getDictionary();
 
   const expected = [
-    'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
+    'ERR_XCHARTSJS_INVALID_ADD_METHOD_ARG:',
     '.add() method argument, component pie-3d -> options:',
     "  missing properties: radiusPx, startAtDeg",
   ].join('\n');
@@ -321,7 +321,7 @@ tp.test('startAtDeg invalid', (t) => {
   const dict = getDictionary();
 
   const expected = [
-    'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
+    'ERR_XCHARTSJS_INVALID_ADD_METHOD_ARG:',
     '.add() method argument, component pie-3d -> options -> startAtDeg:',
     "  value must be a number in [+0, 360) range",
   ].join('\n');
@@ -351,7 +351,7 @@ tp.test('data is not array', (t) => {
   const dict = getDictionary();
 
   const expected = [
-    'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
+    'ERR_XCHARTSJS_INVALID_ADD_METHOD_ARG:',
     '.add() method argument, component pie-3d -> data:',
     '  must be an non empty array',
   ].join('\n');
@@ -379,7 +379,7 @@ tp.test('data is empty array', (t) => {
   const dict = getDictionary();
 
   const expected = [
-    'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
+    'ERR_XCHARTSJS_INVALID_ADD_METHOD_ARG:',
     '.add() method argument, component pie-3d -> data:',
     '  must be an non empty array',
   ].join('\n');
@@ -453,7 +453,7 @@ tp.test('data array has sparse elements', (t) => {
   const dict = getDictionary();
 
   const expected = [
-    'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
+    'ERR_XCHARTSJS_INVALID_ADD_METHOD_ARG:',
     '.add() method argument, component pie-3d -> data -> 1:',
     '  must be an object',
   ].join('\n');
@@ -490,7 +490,7 @@ tp.test('data array has total value 0', (t) => {
   const dict = getDictionary();
 
   const expected = [
-    'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
+    'ERR_XCHARTSJS_INVALID_ADD_METHOD_ARG:',
     '.add() method argument, component pie-3d -> data:',
     '  total value must be >= 0',
   ].join('\n');
@@ -528,7 +528,7 @@ tp.test('data element is not object', (t) => {
   const dict = getDictionary();
 
   const expected = [
-    'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
+    'ERR_XCHARTSJS_INVALID_ADD_METHOD_ARG:',
     '.add() method argument, component pie-3d -> data -> 1:',
     '  must be an object',
   ].join('\n');
@@ -565,7 +565,7 @@ tp.test('prop is missing', (t) => {
   const dict = getDictionary();
 
   const expected = [
-    'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
+    'ERR_XCHARTSJS_INVALID_ADD_METHOD_ARG:',
     '.add() method argument, component pie-3d -> data -> 1:',
     "  missing properties: value",
   ].join('\n');
@@ -599,7 +599,7 @@ tp.test('prop is not object', (t) => {
   const dict = getDictionary();
 
   const expected = [
-    'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
+    'ERR_XCHARTSJS_INVALID_ADD_METHOD_ARG:',
     '.add() method argument, component pie-3d -> data -> 1 -> meta:',
     "  must be an object",
   ].join('\n');
@@ -636,7 +636,7 @@ tp.test('value is not valid', (t) => {
   const dict = getDictionary();
 
   const expected = [
-    'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
+    'ERR_XCHARTSJS_INVALID_ADD_METHOD_ARG:',
     '.add() method argument, component pie-3d -> data -> 1 -> value:',
     '  value must be a finite number >= 0',
   ].join('\n');
@@ -673,7 +673,7 @@ tp.test('prop is missing on level 1', (t) => {
   const dict = getDictionary();
 
   const expected = [
-    'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
+    'ERR_XCHARTSJS_INVALID_ADD_METHOD_ARG:',
     '.add() method argument, component pie-3d -> data -> 1 -> meta:',
     "  missing properties: faceColor",
   ].join('\n');
@@ -710,7 +710,7 @@ tp.test('prop is invalid on level 1', (t) => {
   const dict = getDictionary();
 
   const expected = [
-    'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
+    'ERR_XCHARTSJS_INVALID_ADD_METHOD_ARG:',
     '.add() method argument, component pie-3d -> data -> 1 -> meta -> ' +
       'faceColor:',
     '  value must be a full (6 char long) hex string, e.g. #ffffff, not #fff',
