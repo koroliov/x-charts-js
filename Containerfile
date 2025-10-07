@@ -14,6 +14,7 @@ ENV PATH=/opt/${NODE_DIR_NAME}/bin:$PATH
 LABEL name=${PROJECT_NAME}-${PROJECT_IMAGE_TAG}
 LABEL maintainer=${PROJECT_NAME}
 
+RUN dnf install -y zip
 RUN dnf install -y ncurses
 
 WORKDIR /opt

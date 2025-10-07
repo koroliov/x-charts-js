@@ -4,3 +4,4 @@ Makefile.current
 test/unit-tmp/
 test/diff/
 test/served-tmp/
+dist/x-charts-js.zip

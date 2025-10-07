@@ -1,6 +1,6 @@
 FILE := ''
 PROJECT_NAME := x-charts-js
-PROJECT_IMAGE_TAG := 3
+PROJECT_IMAGE_TAG := 4
 CONTAINER_NAME := $(PROJECT_NAME)-$(PROJECT_IMAGE_TAG)
 NODE_VERSION_NUM := 24.8.0
 NPM_VERSION_NUM := 11.6.1
@@ -104,7 +104,7 @@ npm-install-save-dev docusaurus-npm-install-save-dev:
 	$(NPM_MOD) && cp package.json ./var/ && cp package-lock.json ./var/ && \
 	echo 'DON''T FORGET TO REBUILD IMAGE'"
 
-#docusaurus section
+#docs section
 .PHONY: docusaurus-build
 docusaurus-build:
 	podman container exec --workdir "/home/$(PROJECT_NAME)/docs-src/" \
@@ -116,6 +116,12 @@ docusaurus-build:
 .PHONY: docusaurus-npm-install-save-dev-help
 docusaurus-npm-install-save-dev-help:
 	@echo "make docusaurus-npm-install-save-dev-help NPM_MOD='nodemon@3.1.10'"
+
+.PHONY: zip-dist-for-release
+zip-dist-for-release:
+	podman container exec $(CONTAINER_NAME) \
+	bash -c "mv dist/modules /tmp/$(PROJECT_NAME) && \
+	zip -9r dist/$(PROJECT_NAME).zip /tmp/$(PROJECT_NAME)"
 
 #flow section
 .PHONY: flow-build-full
