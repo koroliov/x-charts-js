@@ -107,7 +107,7 @@ npm-install-save-dev docusaurus-npm-install-save-dev:
 #docusaurus section
 .PHONY: docusaurus-build
 docusaurus-build:
-	podman container exec -w "/home/$(PROJECT_NAME)/docs-src/" \
+	podman container exec --workdir "/home/$(PROJECT_NAME)/docs-src/" \
 	$(CONTAINER_NAME) \
 	bash -c "npm run build && rm -rf ../docs/* ../docs/.[!.]* ../docs/..?* && \
 	cp -r ../docs-tmp/* ../docs/ && \
