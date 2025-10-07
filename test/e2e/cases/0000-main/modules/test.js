@@ -1,9 +1,9 @@
-import XCharts from '/dist/modules/main.js';
+import XChartsJs from '/dist/modules/main.js';
 import '/dist/modules/components/pie-3d/main.js';
 import '/dist/modules/components/legend/main.js';
 
 
-const xChartsConstructorArg = {
+const xChartsJsConstructorArg = {
   containerDiv: document.getElementById('x-charts-js'),
   options: {
     //backgroundColor: '#3300ff' /* blue */,
@@ -11,7 +11,7 @@ const xChartsConstructorArg = {
     isComponentInspectMode: false,
   },
 };
-const ins = new XCharts(xChartsConstructorArg);
+const ins = new XChartsJs(xChartsJsConstructorArg);
 
 const data = getData();
 const addMethodArgPie3d = getAddMethodArgPie3d(data);
