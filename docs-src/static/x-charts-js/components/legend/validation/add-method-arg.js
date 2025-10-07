@@ -12,7 +12,7 @@ export function validate(
 )         {
   let errMsg = '';
   if (errMsg = validateByDictionary({
-    errorCode: 'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG',
+    errorCode: 'ERR_XCHARTSJS_INVALID_ADD_METHOD_ARG',
     topLevelPropName: '.add() method argument, component legend',
     ignorePropsSet: new Set(Object.keys(getDictionaryCommon())),
     dictionary: dict,

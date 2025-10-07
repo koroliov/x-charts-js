@@ -15,8 +15,8 @@ export function validate(dict                      ,
   //$FlowFixMe[incompatible-type]
   const arg          = allConstructorArgs[0];
   return validateByDictionary({
-    errorCode: 'ERR_X_CHARTS_INVALID_CONSTRUCTOR_ARG',
-    topLevelPropName: 'new XCharts() argument',
+    errorCode: 'ERR_XCHARTSJS_INVALID_CONSTRUCTOR_ARG',
+    topLevelPropName: 'new XChartsJs() argument',
     ignorePropsSet: new Set(),
     dictionary: dict,
     value: arg,
@@ -53,15 +53,15 @@ export function getDictionary(containerClass                       )
 
 function generateWrongNumberOfArgumentsErrorReturnValue() {
   return [
-    'ERR_X_CHARTS_INVALID_CONSTRUCTOR_ARG:',
-    'The new XCharts() constructor expects a single argument',
+    'ERR_XCHARTSJS_INVALID_CONSTRUCTOR_ARG:',
+    'The new XChartsJs() constructor expects a single argument',
   ].join('\n');
 }
 
 function generateNotObjectArgumentErrorReturnValue() {
   return [
-    'ERR_X_CHARTS_INVALID_CONSTRUCTOR_ARG:',
-    'Argument to the new XCharts() constructor must be an object',
+    'ERR_XCHARTSJS_INVALID_CONSTRUCTOR_ARG:',
+    'Argument to the new XChartsJs() constructor must be an object',
     'e.g. {  }, Object.create(null)',
   ].join('\n');
 }

@@ -14,7 +14,7 @@ export function validate(
 )         {
   let errMsg = '';
   if (errMsg = validateByDictionary({
-    errorCode: 'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG',
+    errorCode: 'ERR_XCHARTSJS_INVALID_ADD_METHOD_ARG',
     topLevelPropName: '.add() method argument, component pie-3d',
     ignorePropsSet: new Set(Object.keys(getDictionaryCommon())),
     dictionary: dict,
@@ -33,7 +33,7 @@ export function validate(
       //$FlowFixMe[incompatible-use]
       .reduce((t        , d           ) => t + d.value, 0);
     return total > 0 ? '' : [
-      'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
+      'ERR_XCHARTSJS_INVALID_ADD_METHOD_ARG:',
       '.add() method argument, component pie-3d -> data:',
       '  total value must be >= 0',
     ].join('\n');
