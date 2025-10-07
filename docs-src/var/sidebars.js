@@ -57,18 +57,28 @@ const sidebars = {
         },
       ],
     },
-    //{
-    //  type: 'category',
-    //  label: 'Tutorial',
-    //  items: ['tutorial-basics/create-a-document'],
-    //},
   ],
-  backupRefSidebar: [
-    'intro',
+  sandboxAndRefSidebar: [
+    'sandbox-n-ref/intro',
     {
       type: 'category',
-      label: 'Tutorial',
-      items: ['tutorial-basics/create-a-document'],
+      label: 'Tutorial Basics',
+      items: [
+        'sandbox-n-ref/tutorial-basics/congratulations',
+        'sandbox-n-ref/tutorial-basics/create-a-blog-post',
+        'sandbox-n-ref/tutorial-basics/create-a-document',
+        'sandbox-n-ref/tutorial-basics/create-a-page',
+        'sandbox-n-ref/tutorial-basics/deploy-your-site',
+        'sandbox-n-ref/tutorial-basics/markdown-features',
+      ],
+    },
+    {
+      type: 'category',
+      label: 'Tutorial Extras',
+      items: [
+        'sandbox-n-ref/tutorial-extras/manage-docs-versions',
+        'sandbox-n-ref/tutorial-extras/translate-your-site',
+      ],
     },
   ],
 };

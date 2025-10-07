@@ -111,9 +111,9 @@ const config = {
           },
           //{
           //  type: 'docSidebar',
-          //  sidebarId: 'backupRefSidebar',
+          //  sidebarId: 'sandboxAndRefSidebar',
           //  position: 'right',
-          //  label: 'BackupRef',
+          //  label: 'SandboxAndRef',
           //},
           //{to: '/blog', label: 'Blog', position: 'left'},
           {
