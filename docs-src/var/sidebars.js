@@ -47,6 +47,7 @@ const sidebars = {
       label: 'API Reference',
       items: [
         'api-ref/x-charts-js',
+        'api-ref/version',
         {
           type: 'category',
           label: 'Components',
