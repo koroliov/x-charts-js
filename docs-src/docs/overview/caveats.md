@@ -17,3 +17,7 @@ import { validate, getDictionary, }
 :::warning
 the user must not do it.
 :::
+
+## Unstable API
+
+Breaking changes may be introduced on minor version updates.

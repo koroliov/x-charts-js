@@ -2,7 +2,7 @@
 sidebar_label: 'Current limitations'
 ---
 
-# Current Limitations (v0.0.0)
+# Current Limitations
 
 ## No support for user interactions, animations
 
