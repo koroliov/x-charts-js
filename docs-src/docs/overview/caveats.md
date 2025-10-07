@@ -14,4 +14,6 @@ import { validate, getDictionary, }
   from '/path-to/x-charts-js/validation/constructor-arg.js';
 ```
 
-**the user must not do it**.
+:::warning
+the user must not do it.
+:::

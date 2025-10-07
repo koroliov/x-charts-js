@@ -31,9 +31,11 @@ There is no way to change this order.
 
 ### Unsafely large numeric values
 
+:::warning
 Currently there are no safeguards regarding too large numbers, e.g. those with
 are close to `Number.MAX_VALUE` so that mathematical operations become
 inaccurate.
+:::
 
 E.g. if the data provided contains values large enough that when summed up,
 processed the result will be inaccurate (`Infinity`, `NaN` etc.), then currently

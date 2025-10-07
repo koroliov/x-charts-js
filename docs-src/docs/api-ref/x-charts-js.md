@@ -60,5 +60,7 @@ Adds a component to the chart. E.g. a 'pie-3d', a 'legend'. The user may add
 multiple components of the same type. To add a particular component refer to its
 documentation page.
 
+:::warning
 The return value is not defined, i.e. the user should not rely on it. It can be
 changed in future versions.
+:::

@@ -17,7 +17,7 @@ present as a DOM DocumentFragment, not a &lt;canvas&gt; element.
 If one is using only 1 component (and it's not legend) and the XChartsJs
 constructor has been supplied the `isComponentInspectMode: true,` option
 
-```js
+```js {5}
 const xChartsJsConstructorArg = {
   //...
   options: {
@@ -30,8 +30,11 @@ const xChartsJsConstructorArg = {
 const ins = new XChartsJs(xChartsJsConstructorArg);
 ```
 
-then it will work, but **this is not supported and can be removed in future
-versions**.
+then it will work, but
+
+:::warning
+this is not supported and can be removed in future versions.
+:::
 
 Instead there are plans to draw the legend on the canvas and make the normal
 behavior of the 'Save as' context menu option work.

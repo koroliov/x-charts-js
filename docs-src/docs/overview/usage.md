@@ -19,7 +19,7 @@ unzip x-charts-js-v0.0.0.zip
 - a div element must present and visible
 - a script of type module must be used to draw charts on the page
 
-```html
+```html {9-10}
 <!doctype html>
 <html lang="en">
 <head>
@@ -27,10 +27,10 @@ unzip x-charts-js-v0.0.0.zip
   <title>Some page</title>
 </head>
 <body>
-  ... Some can go content here
+  ... Some content here
   <div id="x-charts-js"></div>
   <script type="module" src="/path-to-module/my-page-charts.js"></script>
-  ... Some can go content here
+  ... Some content here
 </body>
 </html>
 ```

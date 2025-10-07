@@ -18,8 +18,11 @@ downside is that it cannot be easily saved as an image.
 
 In the future this may be changed and the legend will be drawn on a canvas as an
 image, with the canvas API, which may put restrictions on its look. To rephrase:
+
+:::warning
 not every legend which can be generated and added to a chart now, will be
-available in the future.
+possible to render in the future.
+:::
 
 So the user should be aware this.
 
@@ -45,7 +48,8 @@ Similar to the CSS `z-index`. Equals the order of the component in the
 An HTML string, whose rendering by the browser will become the legend presented
 to the user. Example:
 
-```html
+```js
+`
 <style>
   ul {
     list-style: decimal-leading-zero;
@@ -54,4 +58,5 @@ to the user. Example:
 <ul>
   <li>Item One</li>
 </ul>
+`
 ```
