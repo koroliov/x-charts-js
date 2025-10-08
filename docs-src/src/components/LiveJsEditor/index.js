@@ -50,7 +50,8 @@ export default function LiveJsEditor({
 
         function runCode() {
           const codeJs = preRefs.javascript.current.innerText;
-          const iframeWindow = iframeRef.current.contentWindow;
+          const iframe = iframeRef.current;
+          const iframeWindow = iframe.contentWindow;
           outputRef.current.textContent = '';
           iframeWindow.onerror = null;
           iframeWindow.onerror = (message, source, lineno, colno) => {
@@ -59,12 +60,22 @@ export default function LiveJsEditor({
             return true;
           };
           const codeHtml = preRefs.html.current.innerText;
-          const doc = iframeWindow.document;
-          doc.body.innerHTML = codeHtml;
-          const script = doc.createElement('script');
-          script.type = 'module';
-          script.textContent = codeJs;
-          doc.body.appendChild(script);
+          const html = createHtml(codeHtml);
+          iframe.addEventListener('load', onFrameLoad, { once: true, });
+          iframe.srcdoc = html;
+
+          function onFrameLoad() {
+            const doc = iframe.contentDocument;
+            const script = doc.createElement('script');
+            script.type = 'module';
+            script.textContent = codeJs;
+            doc.body.appendChild(script);
+          }
+
+          function createHtml(innerHtml) {
+            return `<!doctype html><html><head><meta charset="utf-8">
+              </head><body>${ innerHtml }</body></html>`;
+          }
         }
 
         const onBlurJs = (e) =>
