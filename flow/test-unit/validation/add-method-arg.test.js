@@ -38,7 +38,7 @@ tp.test('no arguments', (t) => {
   const addMethodArguments: Array<mixed> = [];
   const dict = getDictionary();
   const expected = [
-    'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
+    'ERR_XCHARTSJS_INVALID_ADD_METHOD_ARG:',
     'The .add() method expects a single argument',
   ].join('\n');
 
@@ -70,7 +70,7 @@ tp.test('extra arguments', (t) => {
   ];
   const dict = getDictionary();
   const expected = [
-    'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
+    'ERR_XCHARTSJS_INVALID_ADD_METHOD_ARG:',
     'The .add() method expects a single argument',
   ].join('\n');
 
@@ -83,7 +83,7 @@ tp.test('arg is not object', (t) => {
   const addMethodArguments = ['abc',];
   const dict = getDictionary();
   const expected = [
-    'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
+    'ERR_XCHARTSJS_INVALID_ADD_METHOD_ARG:',
     'Argument to the .add() method must be an object',
     'e.g. {  }, Object.create(null)',
   ].join('\n');
@@ -114,7 +114,7 @@ tp.test('missing property', (t) => {
   ];
   const dict = getDictionary();
   const expected = [
-    'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
+    'ERR_XCHARTSJS_INVALID_ADD_METHOD_ARG:',
     '.add() method argument:',
     '  missing properties: type',
   ].join('\n');
@@ -147,7 +147,7 @@ tp.test('invalid type property, empty string ""', (t) => {
   ];
   const dict = getDictionary();
   const expected = [
-    'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
+    'ERR_XCHARTSJS_INVALID_ADD_METHOD_ARG:',
     '.add() method argument -> type:',
     '  value must be a non-empty string',
   ].join('\n');
@@ -208,7 +208,7 @@ tp.test('invalid zIndex property', (t) => {
   ];
   const dict = getDictionary();
   const expected = [
-    'ERR_X_CHARTS_INVALID_ADD_METHOD_ARG:',
+    'ERR_XCHARTSJS_INVALID_ADD_METHOD_ARG:',
     '.add() method argument -> zIndex:',
     '  value must be a numeric integer string with no white spaces',
   ].join('\n');

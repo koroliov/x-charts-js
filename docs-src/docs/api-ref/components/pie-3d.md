@@ -32,7 +32,7 @@ There is no way to change this order.
 ### Unsafely large numeric values
 
 :::warning
-Currently there are no safeguards regarding too large numbers, e.g. those with
+Currently there are no safeguards regarding too large numbers, e.g. those which
 are close to `Number.MAX_VALUE` so that mathematical operations become
 inaccurate.
 :::

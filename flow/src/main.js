@@ -60,7 +60,7 @@ export default class XCharts {
           .getElementById('x-charts-js--components-container');
       if (!(componentsContainer instanceof HTMLDivElement)) {
         throw new Error([
-          'ERR_X_CHARTS_INTERNAL:',
+          'ERR_XCHARTSJS_INTERNAL:',
           'Internal Flow required XCharts error',
         ].join('\n'));
       }
@@ -122,7 +122,7 @@ export default class XCharts {
 
     function getNoRegisteredComponentErrorMsg() {
       return [
-        'ERR_X_CHARTS_COMPONENT_NOT_REGISTERED:',
+        'ERR_XCHARTSJS_COMPONENT_NOT_REGISTERED:',
         `Component of type '${ argTypeVerified.type
           }' has not been registered,`,
         `registered components are:`,

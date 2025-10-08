@@ -6,12 +6,11 @@ sidebar_label: 'Usage'
 
 For some actual working examples see the [Demos page](/docs/demos)
 
-## Download library, unarchive it and place it on your server
-
-TODO: fix the file name
+## Download [latest released version](https://github.com/koroliov/x-charts-js/releases), unarchive it and place it on your server
 
 ```bash
-unzip x-charts-js-v0.0.0.zip
+#downloaded from https://github.com/koroliov/x-charts-js/releases
+unzip x-charts-js.zip
 ```
 
 ## Have web page
