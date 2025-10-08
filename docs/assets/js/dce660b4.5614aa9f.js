@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkdocs_src=self.webpackChunkdocs_src||[]).push([[6617],{8101:s=>{s.exports=JSON.parse('{"metadata":{"permalink":"/x-charts-js/blog","page":1,"postsPerPage":10,"totalPages":1,"totalCount":4,"blogDescription":"Blog","blogTitle":"Blog"}}')}}]);
