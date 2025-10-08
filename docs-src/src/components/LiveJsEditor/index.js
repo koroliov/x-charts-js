@@ -167,8 +167,14 @@ export default function LiveJsEditor({
           }
 
           function createHtml(innerHtml) {
-            return `<!doctype html><html><head><meta charset="utf-8">
-              </head><body>${ innerHtml }</body></html>`;
+            return `<!doctype html>
+              <html>
+                <head>
+                  <meta charset="utf-8">
+                  <base href="${ location.href }">
+                </head>
+                <body>${ innerHtml }</body>
+              </html>`;
           }
         }
       }}
