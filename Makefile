@@ -86,7 +86,7 @@ podman-container-bash:
 
 #npm section
 .PHONY: npm-outdated docusaurus-npm-outdated
-docusaurus-npm-outdated: WORKDIR = --workdir /home/$(PROJECT_NAME)/docs-src/
+docusaurus-npm-outdated: WORKDIR = --workdir //home/$(PROJECT_NAME)/docs-src/
 npm-outdated docusaurus-npm-outdated:
 	podman container exec $(WORKDIR) $(CONTAINER_NAME) bash -c \
 	'npm outdated; err_code=$$?; [ $$err_code -eq 1 ] && exit 0 || \
@@ -98,7 +98,7 @@ npm-install-save-dev-help:
 
 .PHONY: npm-install-save-dev docusaurus-npm-install-save-dev
 docusaurus-npm-install-save-dev: WORKDIR = --workdir \
- /home/$(PROJECT_NAME)/docs-src/
+ //home/$(PROJECT_NAME)/docs-src/
 npm-install-save-dev docusaurus-npm-install-save-dev:
 	podman container exec $(WORKDIR) $(CONTAINER_NAME) bash -c "npm i --save-dev \
 	$(NPM_MOD) && cp package.json ./var/ && cp package-lock.json ./var/ && \
@@ -107,7 +107,7 @@ npm-install-save-dev docusaurus-npm-install-save-dev:
 #docs section
 .PHONY: docusaurus-build
 docusaurus-build:
-	podman container exec --workdir "/home/$(PROJECT_NAME)/docs-src/" \
+	podman container exec --workdir //home/$(PROJECT_NAME)/docs-src/ \
 	$(CONTAINER_NAME) \
 	bash -c "npm run build && rm -rf ../docs/* ../docs/.[!.]* ../docs/..?* && \
 	cp -r ../docs-tmp/* ../docs/ && \
