@@ -41,43 +41,6 @@ export default function LiveJsEditor({
           }
         }, [activeTab]);
 
-        function applyHighlight(kind, value) {
-          const ref = preRefs[kind];
-          if (!ref?.current) return;
-          ref.current.innerHTML =
-            Prism.highlight(value, Prism.languages[kind], kind);
-        }
-
-        function runCode() {
-          const codeJs = preRefs.javascript.current.innerText;
-          const iframe = iframeRef.current;
-          const iframeWindow = iframe.contentWindow;
-          outputRef.current.textContent = '';
-          iframeWindow.onerror = null;
-          iframeWindow.onerror = (message, source, lineno, colno) => {
-            outputRef.current.textContent = `Error: ${message} at ${
-              lineno}:${colno}`;
-            return true;
-          };
-          const codeHtml = preRefs.html.current.innerText;
-          const html = createHtml(codeHtml);
-          iframe.addEventListener('load', onFrameLoad, { once: true, });
-          iframe.srcdoc = html;
-
-          function onFrameLoad() {
-            const doc = iframe.contentDocument;
-            const script = doc.createElement('script');
-            script.type = 'module';
-            script.textContent = codeJs;
-            doc.body.appendChild(script);
-          }
-
-          function createHtml(innerHtml) {
-            return `<!doctype html><html><head><meta charset="utf-8">
-              </head><body>${ innerHtml }</body></html>`;
-          }
-        }
-
         const onBlurJs = (e) =>
           setCode((prev) => ({ ...prev, javascript: e.target.innerText }));
         const onBlurHtml = (e) =>
@@ -171,6 +134,43 @@ export default function LiveJsEditor({
             </div>
           </div>
         );
+
+        function applyHighlight(kind, value) {
+          const ref = preRefs[kind];
+          if (!ref?.current) return;
+          ref.current.innerHTML =
+            Prism.highlight(value, Prism.languages[kind], kind);
+        }
+
+        function runCode() {
+          const codeJs = preRefs.javascript.current.innerText;
+          const iframe = iframeRef.current;
+          const iframeWindow = iframe.contentWindow;
+          outputRef.current.textContent = '';
+          iframeWindow.onerror = null;
+          iframeWindow.onerror = (message, source, lineno, colno) => {
+            outputRef.current.textContent = `Error: ${message} at ${
+              lineno}:${colno}`;
+            return true;
+          };
+          const codeHtml = preRefs.html.current.innerText;
+          const html = createHtml(codeHtml);
+          iframe.addEventListener('load', onFrameLoad, { once: true, });
+          iframe.srcdoc = html;
+
+          function onFrameLoad() {
+            const doc = iframe.contentDocument;
+            const script = doc.createElement('script');
+            script.type = 'module';
+            script.textContent = codeJs;
+            doc.body.appendChild(script);
+          }
+
+          function createHtml(innerHtml) {
+            return `<!doctype html><html><head><meta charset="utf-8">
+              </head><body>${ innerHtml }</body></html>`;
+          }
+        }
       }}
     </BrowserOnly>
   );
