@@ -120,8 +120,10 @@ docusaurus-npm-install-save-dev-help:
 .PHONY: zip-dist-for-release
 zip-dist-for-release:
 	podman container exec $(CONTAINER_NAME) \
-	bash -c "mv dist/modules /tmp/$(PROJECT_NAME) && \
-	zip -9r dist/$(PROJECT_NAME).zip /tmp/$(PROJECT_NAME)"
+	bash -c "rm -rf /tmp/$(PROJECT_NAME) && \
+	mv dist/modules /tmp/$(PROJECT_NAME) && \
+	cd /tmp/ && \
+	zip -9r /home/$(PROJECT_NAME)/dist/$(PROJECT_NAME).zip $(PROJECT_NAME)"
 
 #flow section
 .PHONY: flow-build-full
