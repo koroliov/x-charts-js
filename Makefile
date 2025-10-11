@@ -118,11 +118,13 @@ docusaurus-npm-install-save-dev-help:
 	@echo "make docusaurus-npm-install-save-dev-help NPM_MOD='nodemon@3.1.10'"
 
 .PHONY: zip-dist-for-release
+zip-dist-for-release: TMPDIR = /tmp/zip-dist-for-release
 zip-dist-for-release:
 	podman container exec $(CONTAINER_NAME) \
-	bash -c "rm -rf /tmp/$(PROJECT_NAME) && \
-	mv dist/modules /tmp/$(PROJECT_NAME) && \
-	cd /tmp/ && \
+	bash -c "rm -rf $(TMPDIR) && \
+	mkdir $(TMPDIR) && \
+	mv ./dist/modules $(TMPDIR)/$(PROJECT_NAME) && \
+	cd $(TMPDIR) && \
 	zip -9r /home/$(PROJECT_NAME)/dist/$(PROJECT_NAME).zip $(PROJECT_NAME)"
 
 #flow section
