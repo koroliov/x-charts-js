@@ -7,7 +7,7 @@ sidebar_label: 'Pie-3d'
 ```js
 import '/path-to/x-charts-js/components/pie-3d/main.js';
 
-XChartsJs.add(addMethodArgument);
+xChartsJs.add(addMethodArgument);
 ```
 
 ## General notes
