@@ -9,6 +9,7 @@ ARG NODE_VERSION_NUM
 ARG NPM_VERSION_NUM
 ARG NODE_DIR_NAME=node-v${NODE_VERSION_NUM}-linux-x64
 ARG NODE_TARBALL_NAME=${NODE_DIR_NAME}.tar.xz
+ARG VAR_DIR_CONTAINED=${VAR_DIR_CONTAINED}
 ENV PATH=/opt/${NODE_DIR_NAME}/bin:$PATH
 
 LABEL name=${PROJECT_NAME}-${PROJECT_IMAGE_TAG}
@@ -29,7 +30,7 @@ COPY ./docs-src/var/package-lock.json .
 RUN npm ci
 
 WORKDIR /home/${PROJECT_NAME}
-RUN mkdir tmp
+RUN mkdir ${VAR_DIR_CONTAINED}
 COPY ./var/package.json .
 COPY ./var/package-lock.json .
 RUN npm install -g npm@${NPM_VERSION_NUM}

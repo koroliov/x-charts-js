@@ -5,6 +5,7 @@ CONTAINER_NAME := $(PROJECT_NAME)-$(PROJECT_IMAGE_TAG)
 NODE_VERSION_NUM := 24.8.0
 NPM_VERSION_NUM := 11.6.1
 FEDORA_VERSION_NUM := 42
+VAR_DIR_CONTAINED := /home/$(PROJECT_NAME)/var-contained
 
 SHELL := /bin/bash
 .SHELLFLAGS := -xeuo pipefail -c
@@ -29,6 +30,7 @@ podman-image-build:
 	--build-arg NPM_VERSION_NUM=$(NPM_VERSION_NUM) \
 	--build-arg PROJECT_NAME=$(PROJECT_NAME) \
 	--build-arg PROJECT_IMAGE_TAG=$(PROJECT_IMAGE_TAG) \
+	--build-arg VAR_DIR_CONTAINED=$(VAR_DIR_CONTAINED) \
 	-t $(PROJECT_NAME):$(PROJECT_IMAGE_TAG)
 
 .PHONY: podman-container-run-interactive
@@ -45,6 +47,7 @@ podman-container-run-attached podman-container-run-detached:
 	--publish $(DOCUSAURUS_PORT):3000 \
 	--publish $(LIVERELOAD_PORT):35729 \
 	--env LIVERELOAD_PORT=$(LIVERELOAD_PORT) \
+	--env VAR_DIR_CONTAINED=$(VAR_DIR_CONTAINED) \
 	-v $(CURDIR)/var/:/home/$(PROJECT_NAME)/var/ \
 	-v $(CURDIR)/dist/:/home/$(PROJECT_NAME)/dist/ \
 	-v $(CURDIR)/flow/:/home/$(PROJECT_NAME)/flow/ \
@@ -106,7 +109,7 @@ npm-install-save-dev docusaurus-npm-install-save-dev:
 
 #docs section
 .PHONY: docusaurus-build
-docusaurus-build: TMPDIR = /home/$(PROJECT_NAME)/tmp/docusaurus-build
+docusaurus-build: TMPDIR = $(VAR_DIR_CONTAINED)/docusaurus-build
 docusaurus-build:
 	podman container exec --workdir //home/$(PROJECT_NAME)/docs-src/ \
 	$(CONTAINER_NAME) \
