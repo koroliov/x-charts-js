@@ -106,13 +106,13 @@ npm-install-save-dev docusaurus-npm-install-save-dev:
 
 #docs section
 .PHONY: docusaurus-build
-docusaurus-build: TMPDIR = /tmp/docusaurus-build
+docusaurus-build: TMPDIR = /home/$(PROJECT_NAME)/tmp/docusaurus-build
 docusaurus-build:
 	podman container exec --workdir //home/$(PROJECT_NAME)/docs-src/ \
 	$(CONTAINER_NAME) \
-	bash -c "npm run build && rm -rf ../docs/* ../docs/.[!.]* ../docs/..?* && \
-	cp -r $(TMPDIR)/* ../docs/ && \
-	cp -r $(TMPDIR)/.[!.]* ../docs/"
+	bash -c 'npm run build && \
+  find ../docs -mindepth 1 -prune -exec rm -rf -- "{}" + && \
+  find $(TMPDIR) -mindepth 1 -prune -exec cp -r -- "{}" ../docs/ \;'
 
 .PHONY: docusaurus-npm-install-save-dev-help
 docusaurus-npm-install-save-dev-help:

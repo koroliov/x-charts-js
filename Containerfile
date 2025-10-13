@@ -29,6 +29,7 @@ COPY ./docs-src/var/package-lock.json .
 RUN npm ci
 
 WORKDIR /home/${PROJECT_NAME}
+RUN mkdir tmp
 COPY ./var/package.json .
 COPY ./var/package-lock.json .
 RUN npm install -g npm@${NPM_VERSION_NUM}
