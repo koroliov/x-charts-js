@@ -147,12 +147,6 @@ export default function LiveJsEditor({
           const iframe = iframeRef.current;
           const iframeWindow = iframe.contentWindow;
           outputRef.current.textContent = '';
-          iframeWindow.onerror = null;
-          iframeWindow.onerror = (message, source, lineno, colno) => {
-            outputRef.current.textContent = `Error: ${message} at ${
-              lineno}:${colno}`;
-            return true;
-          };
           const codeHtml = preRefs.html.current.innerText;
           const html = createHtml(codeHtml);
           iframe.addEventListener('load', onFrameLoad, { once: true, });
@@ -164,6 +158,13 @@ export default function LiveJsEditor({
             script.type = 'module';
             script.textContent = codeJs;
             doc.body.appendChild(script);
+
+            iframeWindow.onerror = null;
+            iframeWindow.onerror = (message, source, lineno, colno) => {
+              outputRef.current.textContent = `Error: ${message} at ${
+                lineno}:${colno}`;
+              return true;
+            };
           }
 
           function createHtml(innerHtml) {

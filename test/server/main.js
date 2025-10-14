@@ -1,9 +1,10 @@
 import http2 from 'node:http2';
 import fs from 'node:fs';
 
+const certsDir = `${ process.env.VAR_DIR_CONTAINED }/certs`;
 const server = http2.createSecureServer({
-  key: fs.readFileSync('./test/server/privkey.pem'),
-  cert: fs.readFileSync('./test/server/cert.pem'),
+  key: fs.readFileSync(`${ certsDir }/privkey.pem`),
+  cert: fs.readFileSync(`${ certsDir }/cert.pem`),
 });
 server.on('error', console.error);
 server.on('stream', handleStream);

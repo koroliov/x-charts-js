@@ -37,7 +37,7 @@ const config = {
   // may want to replace "en" with "zh-Hans".
   i18n: {
     defaultLocale: 'en',
-    locales: ['en'],
+    locales: [ 'en', ],
   },
 
   presets: [
@@ -52,6 +52,7 @@ const config = {
           //editUrl:
           //  'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
         },
+        blog: false,
         //blog: {
         //  showReadingTime: true,
         //  feedOptions: {
@@ -78,7 +79,7 @@ const config = {
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     {
       // Replace with your project's social card
-      image: 'img/docusaurus-social-card.jpg',
+      //image: 'img/x-charts-js-social-card.png',
       navbar: {
         title: 'x-charts-js',
         //logo: {
@@ -169,6 +170,20 @@ const config = {
         copyright: `Copyright © ${
           new Date().getFullYear() } Dmitry Koroliov. Built with Docusaurus.`,
       },
+      metadata: [
+        { name: 'keywords', content: 'javascript, charts, library, pie 3d', },
+        // Open Graph basics
+        { property: 'og:type', content: 'website', },
+        { property: 'og:site_name', content: 'x-charts-js', },
+        { property: 'og:image', content: 'https://koroliov.github.io/x-charts-js/img/x-charts-js-social-card.png', },
+        { property: 'og:image:alt', content: 'x-charts-js demo screenshot', },
+        { name: 'twitter:card', content: 'summary_large_image', },
+        // review these:
+        { name: 'twitter:title', content: 'Demos — x-charts-js' },
+        { name: 'twitter:description', content: 'A fledgling JavaScript charting library', },
+        { name: 'twitter:image', content: 'https://koroliov.github.io/x-charts-js/img/x-charts-js-social-card.png', },
+        { name: 'twitter:image:alt', content: 'x-charts-js demo screenshot', },
+      ],
       prism: {
         theme: prismThemes.github,
         darkTheme: prismThemes.dracula,

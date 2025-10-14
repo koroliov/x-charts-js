@@ -5,7 +5,7 @@
   "scripts": {
     "docusaurus": "docusaurus",
     "start": "docusaurus start",
-    "build": "docusaurus build --out-dir ../docs-tmp/ --config ./var/docusaurus.config.js",
+    "build": "docusaurus build --out-dir ${VAR_DIR_CONTAINED}/docusaurus-build/ --config ./var/docusaurus.config.js",
     "swizzle": "docusaurus swizzle",
     "deploy": "docusaurus deploy",
     "clear": "docusaurus clear",
