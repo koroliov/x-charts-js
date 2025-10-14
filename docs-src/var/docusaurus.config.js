@@ -79,7 +79,7 @@ const config = {
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     {
       // Replace with your project's social card
-      //image: 'img/x-charts-js-social-card.png',
+      //image: 'img/x-charts-js-social-card.jpg',
       navbar: {
         title: 'x-charts-js',
         //logo: {
@@ -175,13 +175,13 @@ const config = {
         // Open Graph basics
         { property: 'og:type', content: 'website', },
         { property: 'og:site_name', content: 'x-charts-js', },
-        { property: 'og:image', content: 'https://koroliov.github.io/x-charts-js/img/x-charts-js-social-card.png', },
+        { property: 'og:image', content: 'https://koroliov.github.io/x-charts-js/img/x-charts-js-social-card.jpg', },
         { property: 'og:image:alt', content: 'x-charts-js demo screenshot', },
         { name: 'twitter:card', content: 'summary_large_image', },
         // review these:
         { name: 'twitter:title', content: 'Demos — x-charts-js' },
         { name: 'twitter:description', content: 'A fledgling JavaScript charting library', },
-        { name: 'twitter:image', content: 'https://koroliov.github.io/x-charts-js/img/x-charts-js-social-card.png', },
+        { name: 'twitter:image', content: 'https://koroliov.github.io/x-charts-js/img/x-charts-js-social-card.jpg', },
         { name: 'twitter:image:alt', content: 'x-charts-js demo screenshot', },
       ],
       prism: {
