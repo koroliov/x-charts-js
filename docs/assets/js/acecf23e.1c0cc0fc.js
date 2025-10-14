@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkdocs_src=self.webpackChunkdocs_src||[]).push([[1903],{1912:s=>{s.exports=JSON.parse('{"blogBasePath":"/x-charts-js/blog","blogTitle":"Blog","authorsListPath":"/x-charts-js/blog/authors"}')}}]);
