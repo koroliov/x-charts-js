@@ -171,6 +171,7 @@ const config = {
           new Date().getFullYear() } Dmitry Koroliov. Built with Docusaurus.`,
       },
       metadata: [
+        { name: 'keywords', content: 'javascript, charts, library, pie 3d', },
         // Open Graph basics
         { property: 'og:type', content: 'website', },
         { property: 'og:site_name', content: 'x-charts-js', },
