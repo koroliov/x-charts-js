@@ -1,6 +1,6 @@
 # README
 
-This is yet another JavaScript charts library.
+This is yet another JavaScript charting library.
 
 For official documentation please refer to [GitHub
 pages](https://koroliov.github.io/x-charts-js/).
