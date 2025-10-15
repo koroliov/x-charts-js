@@ -172,13 +172,14 @@ const config = {
       },
       metadata: [
         { name: 'keywords', content: 'javascript, charts, library, pie 3d', },
-        // Open Graph basics
+
         { property: 'og:type', content: 'website', },
         { property: 'og:site_name', content: 'x-charts-js', },
+        { property: 'og:description', content: 'A fledgling JavaScript charting library', },
         { property: 'og:image', content: 'https://koroliov.github.io/x-charts-js/img/x-charts-js-social-card.jpg', },
         { property: 'og:image:alt', content: 'x-charts-js demo screenshot', },
+
         { name: 'twitter:card', content: 'summary_large_image', },
-        // review these:
         { name: 'twitter:title', content: 'Demos — x-charts-js' },
         { name: 'twitter:description', content: 'A fledgling JavaScript charting library', },
         { name: 'twitter:image', content: 'https://koroliov.github.io/x-charts-js/img/x-charts-js-social-card.jpg', },
