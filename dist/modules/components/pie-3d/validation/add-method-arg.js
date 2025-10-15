@@ -44,10 +44,16 @@ export function getDictionary()                       {
   return {
     options: {
       thicknessPx(val) {
-        return Number.isFinite(val) ? '' : 'value must be a number';
+        //The .isFinite() call is supposed to guarantee that it's a number
+        //$FlowFixMe[invalid-compare]
+        return Number.isFinite(val) && val >= 0 ?
+          '' : 'value must be a finite number >= 0';
       },
       radiusPx(val) {
-        return Number.isFinite(val) ? '' : 'value must be a number';
+        //The .isFinite() call is supposed to guarantee that it's a number
+        //$FlowFixMe[invalid-compare]
+        return Number.isFinite(val) && val > 0 ?
+          '' : 'value must be a finite number > 0';
       },
       centerXPx(val) {
         return Number.isFinite(val) ? '' : 'value must be a number';

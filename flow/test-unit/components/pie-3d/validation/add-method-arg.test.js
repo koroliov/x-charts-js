@@ -331,6 +331,72 @@ tp.test('startAtDeg invalid', (t) => {
   t.end();
 });
 
+tp.test('thicknessPx invalid', (t) => {
+  const addMethodArg = {
+    type: 'pie-3d',
+    zIndex: '1',
+    options: {
+      thicknessPx: -1,
+      radiusPx: 150,
+      centerXPx: 300,
+      centerYPx: 250,
+      startAtDeg: 0,
+      rotationAroundCenterXAxisDeg: 60,
+      rotationAroundCenterZAxisDeg: 45,
+    },
+    data: [
+      { value: 40, meta: {
+        faceColor: '#ff0000' /* red */,
+        rimColor: '#ff0000' /* red */,
+      }, },
+    ],
+  };
+  const dict = getDictionary();
+
+  const expected = [
+    'ERR_XCHARTSJS_INVALID_ADD_METHOD_ARG:',
+    '.add() method argument, component pie-3d -> options -> thicknessPx:',
+    '  value must be a finite number >= 0',
+  ].join('\n');
+
+  const actual = validate(dict, addMethodArg);
+  t.equal(actual, expected);
+  t.end();
+});
+
+tp.test('radiusPx invalid', (t) => {
+  const addMethodArg = {
+    type: 'pie-3d',
+    zIndex: '1',
+    options: {
+      thicknessPx: 50,
+      radiusPx: 0,
+      centerXPx: 300,
+      centerYPx: 250,
+      startAtDeg: 0,
+      rotationAroundCenterXAxisDeg: 60,
+      rotationAroundCenterZAxisDeg: 45,
+    },
+    data: [
+      { value: 40, meta: {
+        faceColor: '#ff0000' /* red */,
+        rimColor: '#ff0000' /* red */,
+      }, },
+    ],
+  };
+  const dict = getDictionary();
+
+  const expected = [
+    'ERR_XCHARTSJS_INVALID_ADD_METHOD_ARG:',
+    '.add() method argument, component pie-3d -> options -> radiusPx:',
+    '  value must be a finite number > 0',
+  ].join('\n');
+
+  const actual = validate(dict, addMethodArg);
+  t.equal(actual, expected);
+  t.end();
+});
+
 //============ data values ========================
 
 tp.test('data is not array', (t) => {
