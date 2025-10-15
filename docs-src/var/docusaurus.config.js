@@ -92,7 +92,7 @@ const config = {
             //to highlight as 'active' in case the currently loaded page matches
             //the pass
             //activeBasePath: 'docs',
-            label: 'v0.0.0',
+            label: 'v0.0.1',
             position: 'left',
           },
           //{
