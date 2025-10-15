@@ -69,11 +69,11 @@ An object.
 
 ### addMethodArgument.options.thicknessPx
 
-A number of pixels for the pie's height/thickness.
+A number of pixels for the pie's height/thickness. Must be >= 0.
 
 ### addMethodArgument.options.radiusPx
 
-A number of pixels for the pie's radius
+A number of pixels for the pie's radius. Must be > 0.
 
 ### addMethodArgument.options.centerXPx
 
@@ -88,17 +88,20 @@ corner, which is the standard for the HTML 5 Canvas).
 ### addMethodArgument.options.startAtDeg
 
 A number, the angle in degrees from which the first slice will be drawn
-counterclockwise.
+counterclockwise. Must be >= 0 and < 360.
 
 ### addMethodArgument.options.rotationAroundCenterXAxisDeg
 
 A number, the angle in degrees by which the standard 2d pie will be rotated
-around the axis passing thru its center and parallel to the originX axis.
+around the axis passing thru its center and parallel to the originX axis. Must
+be >= 0 and < 360.
 
 ### addMethodArgument.options.rotationAroundCenterZAxisDeg
 
 A number, the angle in degrees by which the standard 2d pie will be rotated
-around the axis passing thru its center and parallel to the originZ axis.
+around the axis passing thru its center and parallel to the originZ axis. Must
+be >= 0 and < 360.
+
 
 ### addMethodArgument.data
 
@@ -110,7 +113,8 @@ An object.
 
 ### addMethodArgument.data[N].value
 
-A number >= 0. The actual numeric value to be represented by the chart.
+A number. The actual numeric value to be represented by the chart. Must
+be >= 0.
 
 ### addMethodArgument.data[N].meta
 
