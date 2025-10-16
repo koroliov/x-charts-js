@@ -111,6 +111,9 @@ npm-install-save-dev docusaurus-npm-install-save-dev:
 .PHONY: docusaurus-build
 docusaurus-build: TMPDIR = $(VAR_DIR_CONTAINED)/docusaurus-build
 docusaurus-build:
+	podman container exec --workdir //home/$(PROJECT_NAME)/ \
+	$(CONTAINER_NAME) \
+	bash -c 'node ./docs-src/var/enforce-version-number.js'
 	podman container exec --workdir //home/$(PROJECT_NAME)/docs-src/ \
 	$(CONTAINER_NAME) \
 	bash -c 'npm run build && \
