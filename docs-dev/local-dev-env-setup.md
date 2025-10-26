@@ -18,6 +18,7 @@ If someone provides a solution for such a potential problem, I'd appreciate it.
 One will need 3 tools in order to run the dev environment:
 
 - Git
+- Git LFS
 - GNU Make
 - Podman
 
@@ -31,10 +32,21 @@ One will need 3 tools in order to run the dev environment:
   `make podman-image-build`
 - Run the container:
   `make podman-container-run-detached`
+  (at this stage one may have issues with SELinux if he's on Linux, see below)
 - Open the https://localhost:8080/
   You should see a web page with a list of links which you can follow.
 - Run the tests:
   `make test-unit-full`
+
+### SELinux issues
+
+If the developer uses a Linux system with SELinux and enforced, he will have to
+relabel the cloned directory to allow the files to be used inside the container.
+
+```bash
+sudo semanage fcontext -a -t container_file_t '[PATH_TO_CLONED_REPO]/x-charts-js(/.*)?'
+sudo restorecon -Rv '[PATH_TO_CLONED_REPO]/x-charts-js'
+```
 
 ### Editor and LSP setup
 
