@@ -60,11 +60,11 @@ podman-container-run-attached podman-container-run-detached:
 	-v $(CURDIR)/docs-src/var/:/home/$(PROJECT_NAME)/docs-src/var/ \
 	$(DETACHED_FLAG) --name $(CONTAINER_NAME) \
 	$(PROJECT_NAME):$(PROJECT_IMAGE_TAG)
-	podman container exec -it $(CONTAINER_NAME) bash -c \
+	podman container exec $(CONTAINER_NAME) bash -c \
 	"[[ -d './test/served-tmp/' ]] || mkdir './test/served-tmp/'"
-	podman container exec -it $(CONTAINER_NAME) bash -c \
+	podman container exec $(CONTAINER_NAME) bash -c \
 	"[[ -d './test/diff/' ]] || mkdir './test/diff/'"
-	podman container exec -it $(CONTAINER_NAME) bash -c \
+	podman container exec $(CONTAINER_NAME) bash -c \
 	"[[ -d './test/unit-tmp/' ]] || mkdir './test/unit-tmp/'"
 
 .PHONY: podman-container-attach
@@ -137,13 +137,13 @@ zip-dist-for-release:
 #flow section
 .PHONY: flow-build-full
 flow-build-full:
-	podman container exec -it $(CONTAINER_NAME) bash -c "npm run flow-build-full"
+	podman container exec $(CONTAINER_NAME) bash -c "npm run flow-build-full"
 
 #test section
 .PHONY: test-unit
 test-unit: TEST_FILES_RUN = $(subst ./flow/,./test/unit-tmp/flow/,$(TEST_FILES))
 test-unit:
-	podman container exec -it $(CONTAINER_NAME) bash -c "rm -rf \
+	podman container exec $(CONTAINER_NAME) bash -c "rm -rf \
 	./test/unit-tmp/* && npm run flow && npm run flow-build-test $(BUILD_FILES) \
 	$(TEST_FILES) && npm run tape $(TEST_FILES_RUN)"
 
@@ -155,7 +155,7 @@ test-unit-help:
 
 .PHONY: test-unit-full
 test-unit-full:
-	podman container exec -it $(CONTAINER_NAME) bash -c "rm -rf \
+	podman container exec $(CONTAINER_NAME) bash -c "rm -rf \
 	./test/unit-tmp/* && npm run flow && npm run flow-build-test \
 	./flow/ && npm run tape ./test/unit-tmp/\{**/,\}*.test.js"
 
