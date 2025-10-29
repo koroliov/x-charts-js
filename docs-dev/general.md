@@ -63,7 +63,23 @@ the Podman image tag must be incremented by 1:
 - hex colors (and other colors, but currently only hex colors are supposed to
   be allowed) must always have their human name right next to them, e.g.:
 ```
-{ value: 50, meta: { color: '#f2b5f6' /* pinkish */, }, },
+{
+  value: 50,
+  options: {
+    color: '#f2b5f6' /* pinkish */,
+  },
+},
+```
+
+  unless those colors are 'closely related' in their tint, e.g. darker, lighter.
+```
+{
+  value: 50,
+  options: {
+    color: '#f2b5f6' /* pinkish */,
+    color: '#c187c5',
+  },
+},
 ```
 
 ============================= **Various how-tos** ==============================
