@@ -16,6 +16,8 @@ tp.test('valid argument case', (t) => {
       startAtDeg: 20,
       rotationAroundCenterXAxisDeg: 60,
       rotationAroundCenterZAxisDeg: 45,
+      strokeColor: '#000000',
+      strokeWidth: 0.5,
     },
     data: [
       { value: 40, options: {
@@ -54,6 +56,8 @@ tp.test('extra property present', (t) => {
       startAtDeg: 20,
       rotationAroundCenterXAxisDeg: 60,
       rotationAroundCenterZAxisDeg: 45,
+      strokeColor: '#000000',
+      strokeWidth: 0.5,
     },
     data: [
       { value: 40, options: {
@@ -95,6 +99,8 @@ tp.test('missing property', (t) => {
       startAtDeg: 20,
       rotationAroundCenterXAxisDeg: 60,
       rotationAroundCenterZAxisDeg: 45,
+      strokeColor: '#000000',
+      strokeWidth: 0.5,
     },
     //data: [],
   };
@@ -179,6 +185,8 @@ tp.test('extra property', (t) => {
       startAtDeg: 20,
       rotationAroundCenterXAxisDeg: 60,
       rotationAroundCenterZAxisDeg: 45,
+      strokeColor: '#000000',
+      strokeWidth: 0.5,
     },
     data: [
       { value: 40, options: {
@@ -220,6 +228,8 @@ tp.test('missing property', (t) => {
       startAtDeg: 20,
       rotationAroundCenterXAxisDeg: 60,
       rotationAroundCenterZAxisDeg: 45,
+      strokeColor: '#000000',
+      strokeWidth: 0.5,
     },
     data: [
       { value: 40, options: {
@@ -261,6 +271,8 @@ tp.test('missing properties', (t) => {
       //startAtDeg: 20,
       rotationAroundCenterXAxisDeg: 60,
       rotationAroundCenterZAxisDeg: 45,
+      strokeColor: '#000000',
+      strokeWidth: 0.5,
     },
     data: [
       { value: 40, options: {
@@ -302,6 +314,8 @@ tp.test('startAtDeg invalid', (t) => {
       startAtDeg: -1,
       rotationAroundCenterXAxisDeg: 60,
       rotationAroundCenterZAxisDeg: 45,
+      strokeColor: '#000000',
+      strokeWidth: 0.5,
     },
     data: [
       { value: 40, options: {
@@ -343,6 +357,8 @@ tp.test('thicknessPx invalid', (t) => {
       startAtDeg: 0,
       rotationAroundCenterXAxisDeg: 60,
       rotationAroundCenterZAxisDeg: 45,
+      strokeColor: '#000000',
+      strokeWidth: 0.5,
     },
     data: [
       { value: 40, options: {
@@ -376,6 +392,8 @@ tp.test('radiusPx invalid', (t) => {
       startAtDeg: 0,
       rotationAroundCenterXAxisDeg: 60,
       rotationAroundCenterZAxisDeg: 45,
+      strokeColor: '#000000',
+      strokeWidth: 0.5,
     },
     data: [
       { value: 40, options: {
@@ -397,6 +415,41 @@ tp.test('radiusPx invalid', (t) => {
   t.end();
 });
 
+tp.test('strokeColor invalid', (t) => {
+  const addMethodArg = {
+    type: 'pie-3d',
+    zIndex: '1',
+    options: {
+      thicknessPx: 50,
+      radiusPx: 150,
+      centerXPx: 300,
+      centerYPx: 250,
+      startAtDeg: 0,
+      rotationAroundCenterXAxisDeg: 60,
+      rotationAroundCenterZAxisDeg: 45,
+      strokeColor: '000000',
+      strokeWidth: 0.5,
+    },
+    data: [
+      { value: 40, options: {
+        faceColor: '#ff0000' /* red */,
+        rimColor: '#ff0000' /* red */,
+      }, },
+    ],
+  };
+  const dict = getDictionary();
+
+  const expected = [
+    'ERR_XCHARTSJS_INVALID_ADD_METHOD_ARG:',
+    '.add() method argument, component pie-3d -> options -> strokeColor:',
+    '  value must be a full (6 char long) hex string, e.g. #ffffff, not #fff',
+  ].join('\n');
+
+  const actual = validate(dict, addMethodArg);
+  t.equal(actual, expected);
+  t.end();
+});
+
 //============ data values ========================
 
 tp.test('data is not array', (t) => {
@@ -411,6 +464,8 @@ tp.test('data is not array', (t) => {
       startAtDeg: 20,
       rotationAroundCenterXAxisDeg: 60,
       rotationAroundCenterZAxisDeg: 45,
+      strokeColor: '#000000',
+      strokeWidth: 0.5,
     },
     data: true,
   };
@@ -439,6 +494,8 @@ tp.test('data is empty array', (t) => {
       startAtDeg: 20,
       rotationAroundCenterXAxisDeg: 60,
       rotationAroundCenterZAxisDeg: 45,
+      strokeColor: '#000000',
+      strokeWidth: 0.5,
     },
     data: [],
   };
@@ -479,6 +536,8 @@ tp.test('data array has non index property, allowed, ignored', (t) => {
       startAtDeg: 20,
       rotationAroundCenterXAxisDeg: 60,
       rotationAroundCenterZAxisDeg: 45,
+      strokeColor: '#000000',
+      strokeWidth: 0.5,
     },
     data,
   };
@@ -513,6 +572,8 @@ tp.test('data array has sparse elements', (t) => {
       startAtDeg: 20,
       rotationAroundCenterXAxisDeg: 60,
       rotationAroundCenterZAxisDeg: 45,
+      strokeColor: '#000000',
+      strokeWidth: 0.5,
     },
     data,
   };
@@ -541,6 +602,8 @@ tp.test('data array has total value 0', (t) => {
       startAtDeg: 20,
       rotationAroundCenterXAxisDeg: 60,
       rotationAroundCenterZAxisDeg: 45,
+      strokeColor: '#000000',
+      strokeWidth: 0.5,
     },
     data: [
       { value: 0, options: {
@@ -578,6 +641,8 @@ tp.test('data element is not object', (t) => {
       startAtDeg: 20,
       rotationAroundCenterXAxisDeg: 60,
       rotationAroundCenterZAxisDeg: 45,
+      strokeColor: '#000000',
+      strokeWidth: 0.5,
     },
     data: [
       { value: 40, options: {
@@ -616,6 +681,8 @@ tp.test('prop is missing', (t) => {
       startAtDeg: 20,
       rotationAroundCenterXAxisDeg: 60,
       rotationAroundCenterZAxisDeg: 45,
+      strokeColor: '#000000',
+      strokeWidth: 0.5,
     },
     data: [
       { value: 40, options: {
@@ -653,6 +720,8 @@ tp.test('prop is not object', (t) => {
       startAtDeg: 20,
       rotationAroundCenterXAxisDeg: 60,
       rotationAroundCenterZAxisDeg: 45,
+      strokeColor: '#000000',
+      strokeWidth: 0.5,
     },
     data: [
       { value: 40, options: {
@@ -687,6 +756,8 @@ tp.test('value is not valid', (t) => {
       startAtDeg: 20,
       rotationAroundCenterXAxisDeg: 60,
       rotationAroundCenterZAxisDeg: 45,
+      strokeColor: '#000000',
+      strokeWidth: 0.5,
     },
     data: [
       { value: 40, options: {
@@ -724,6 +795,8 @@ tp.test('prop is missing on level 1', (t) => {
       startAtDeg: 20,
       rotationAroundCenterXAxisDeg: 60,
       rotationAroundCenterZAxisDeg: 45,
+      strokeColor: '#000000',
+      strokeWidth: 0.5,
     },
     data: [
       { value: 40, options: {
@@ -761,6 +834,8 @@ tp.test('prop is invalid on level 1', (t) => {
       startAtDeg: 20,
       rotationAroundCenterXAxisDeg: 60,
       rotationAroundCenterZAxisDeg: 45,
+      strokeColor: '#000000',
+      strokeWidth: 0.5,
     },
     data: [
       { value: 40, options: {

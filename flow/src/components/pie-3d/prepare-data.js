@@ -265,6 +265,8 @@ export function prepareData(arg: AddMethodArgumentPie3d): PieData {
       totalValue,
       slices,
       isPieReversed,
+      strokeWidth: arg.options.strokeWidth,
+      strokeColor: arg.options.strokeColor,
       pointTopHeads: [0, 0, 0,],
       edgeLeft: {
         pointHeads: [0, 0, 0,],

@@ -133,6 +133,8 @@ function getAddMethodArgPie3d(data) {
       startAtDeg: 0,
       rotationAroundCenterXAxisDeg: 50,
       rotationAroundCenterZAxisDeg: 0,
+      strokeColor: '#000000',
+      strokeWidth: 0,
     },
     data: data.map((d) => {
       return {

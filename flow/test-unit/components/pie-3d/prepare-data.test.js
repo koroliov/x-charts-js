@@ -18,6 +18,8 @@ tp.test((t) => {
       startAtDeg: 20,
       rotationAroundCenterXAxisDeg: 60,
       rotationAroundCenterZAxisDeg: 45,
+      strokeColor: '#000000',
+      strokeWidth: 0.5,
     },
     data: [
       { value: 40, options: {
@@ -136,6 +138,8 @@ tp.test((t) => {
       },
     ],
     "isPieReversed": false,
+    "strokeColor": "#000000",
+    "strokeWidth": 0.5,
     "pointTopHeads": [
       231.6576805186141,
       181.65768051861406,
@@ -223,6 +227,8 @@ tp.test('0001-most-common-case', (t) => {
       startAtDeg: 130,
       rotationAroundCenterXAxisDeg: 70,
       rotationAroundCenterZAxisDeg: 0,
+      strokeColor: '#000000',
+      strokeWidth: 0.5,
     },
     data: [
       { value: 25, options: {
@@ -341,6 +347,8 @@ tp.test('0001-most-common-case', (t) => {
       },
     ],
     "isPieReversed": false,
+    "strokeColor": "#000000",
+    "strokeWidth": 0.5,
     "pointTopHeads": [
       235,
       18.10365581521853,
@@ -428,6 +436,8 @@ tp.test('0002-01-start-at-0-deg', (t) => {
       startAtDeg: 0,
       rotationAroundCenterXAxisDeg: 70,
       rotationAroundCenterZAxisDeg: 0,
+      strokeColor: '#000000',
+      strokeWidth: 0.5,
     },
     data: [
       { value: 25, options: {
@@ -582,6 +592,8 @@ tp.test('0002-01-start-at-0-deg', (t) => {
       },
     ],
     "isPieReversed": false,
+    "strokeColor": "#000000",
+    "strokeWidth": 0.5,
     "pointTopHeads": [
       235,
       18.10365581521853,
@@ -669,6 +681,8 @@ tp.test((t) => {
       startAtDeg: 135,
       rotationAroundCenterXAxisDeg: 120,
       rotationAroundCenterZAxisDeg: 0,
+      strokeColor: '#000000',
+      strokeWidth: 0.5,
     },
     data: [
       { value: 25, options: {
@@ -787,6 +801,8 @@ tp.test((t) => {
       },
     ],
     "isPieReversed": false,
+    "strokeColor": "#000000",
+    "strokeWidth": 0.5,
     "pointTopHeads": [
       400,
       328.349364905389,
@@ -874,6 +890,8 @@ tp.test((t) => {
       startAtDeg: 90,
       rotationAroundCenterXAxisDeg: 70,
       rotationAroundCenterZAxisDeg: 0,
+      strokeColor: '#000000',
+      strokeWidth: 0.5,
     },
     data: [
       { value: 25, options: {
@@ -1028,6 +1046,8 @@ tp.test((t) => {
       },
     ],
     "isPieReversed": false,
+    "strokeColor": "#000000",
+    "strokeWidth": 0.5,
     "pointTopHeads": [
       235,
       18.10365581521853,
@@ -1115,6 +1135,8 @@ tp.test((t) => {
       startAtDeg: 40,
       rotationAroundCenterXAxisDeg: 70,
       rotationAroundCenterZAxisDeg: 0,
+      strokeColor: '#000000',
+      strokeWidth: 0.5,
     },
     data: [
       { value: 25, options: {
@@ -1197,6 +1219,8 @@ tp.test((t) => {
       },
     ],
     "isPieReversed": false,
+    "strokeColor": "#000000",
+    "strokeWidth": 0.5,
     "pointTopHeads": [
       235,
       18.10365581521853,
@@ -1284,6 +1308,8 @@ tp.test('0004-left-edge-slice-index-bigger-right-one', (t) => {
       startAtDeg: 230,
       rotationAroundCenterXAxisDeg: 70,
       rotationAroundCenterZAxisDeg: 0,
+      strokeColor: '#000000',
+      strokeWidth: 0.5,
     },
     data: [
       { value: 25, options: {
@@ -1438,6 +1464,8 @@ tp.test('0004-left-edge-slice-index-bigger-right-one', (t) => {
       },
     ],
     "isPieReversed": false,
+    "strokeColor": "#000000",
+    "strokeWidth": 0.5,
     "pointTopHeads": [
       235,
       18.10365581521853,
@@ -1525,6 +1553,8 @@ tp.test((t) => {
       startAtDeg: 90.00001,
       rotationAroundCenterXAxisDeg: 70,
       rotationAroundCenterZAxisDeg: 0,
+      strokeColor: '#000000',
+      strokeWidth: 0.5,
     },
     data: [
       { value: 75, options: {
@@ -1607,6 +1637,8 @@ tp.test((t) => {
       },
     ],
     "isPieReversed": false,
+    "strokeColor": "#000000",
+    "strokeWidth": 0.5,
     "pointTopHeads": [
       235,
       18.10365581521853,
@@ -1694,6 +1726,8 @@ tp.test((t) => {
       startAtDeg: 315,
       rotationAroundCenterXAxisDeg: 70,
       rotationAroundCenterZAxisDeg: 0,
+      strokeColor: '#000000',
+      strokeWidth: 0.5,
     },
     data: [
       { value: 75, options: {
@@ -1776,6 +1810,8 @@ tp.test((t) => {
       },
     ],
     "isPieReversed": false,
+    "strokeColor": "#000000",
+    "strokeWidth": 0.5,
     "pointTopHeads": [
       235,
       18.10365581521853,
@@ -1863,6 +1899,8 @@ tp.test('0010-rotation-over-center-x-axis-greater-180-deg', (t) => {
       startAtDeg: 0,
       rotationAroundCenterXAxisDeg: 220,
       rotationAroundCenterZAxisDeg: 0,
+      strokeColor: '#000000',
+      strokeWidth: 0.5,
     },
     data: [
       { value: 75, options: {
@@ -1981,6 +2019,8 @@ tp.test('0010-rotation-over-center-x-axis-greater-180-deg', (t) => {
       },
     ],
     "isPieReversed": true,
+    "strokeColor": "#000000",
+    "strokeWidth": 0.5,
     "pointTopHeads": [
       235,
       30.721421134040895,
@@ -2068,6 +2108,8 @@ tp.test('0011-rotation-100-deg-start-ang-0', (t) => {
       startAtDeg: 0,
       rotationAroundCenterXAxisDeg: 100,
       rotationAroundCenterZAxisDeg: 0,
+      strokeColor: '#000000',
+      strokeWidth: 0.5,
     },
     data: [
       { value: 25, options: {
@@ -2222,6 +2264,8 @@ tp.test('0011-rotation-100-deg-start-ang-0', (t) => {
       },
     ],
     "isPieReversed": false,
+    "strokeColor": "#000000",
+    "strokeWidth": 0.5,
     "pointTopHeads": [
       235,
       120.10944170808085,

@@ -17,6 +17,8 @@ tp.test('valid argument case', (t) => {
         startAtDeg: 20,
         rotationAroundCenterXAxisDeg: 60,
         rotationAroundCenterZAxisDeg: 45,
+        strokeColor: '#000000',
+        strokeWidth: 0.5,
       },
       data: [
         { value: 40, options: { color: '#ff0000' /* red */, }, },
@@ -60,6 +62,8 @@ tp.test('extra arguments', (t) => {
         startAtDeg: 20,
         rotationAroundCenterXAxisDeg: 60,
         rotationAroundCenterZAxisDeg: 45,
+        strokeColor: '#000000',
+        strokeWidth: 0.5,
       },
       data: [
         { value: 40, options: { color: '#ff0000' /* red */, }, },
@@ -105,6 +109,8 @@ tp.test('missing property', (t) => {
         startAtDeg: 20,
         rotationAroundCenterXAxisDeg: 60,
         rotationAroundCenterZAxisDeg: 45,
+        strokeColor: '#000000',
+        strokeWidth: 0.5,
       },
       data: [
         { value: 40, options: { color: '#ff0000' /* red */, }, },
@@ -138,6 +144,8 @@ tp.test('invalid type property, empty string ""', (t) => {
         startAtDeg: 20,
         rotationAroundCenterXAxisDeg: 60,
         rotationAroundCenterZAxisDeg: 45,
+        strokeColor: '#000000',
+        strokeWidth: 0.5,
       },
       data: [
         { value: 40, options: { color: '#ff0000' /* red */, }, },
@@ -171,6 +179,8 @@ tp.test('zIndex property negative integers allowed', (t) => {
         startAtDeg: 20,
         rotationAroundCenterXAxisDeg: 60,
         rotationAroundCenterZAxisDeg: 45,
+        strokeColor: '#000000',
+        strokeWidth: 0.5,
       },
       data: [
         { value: 40, options: { color: '#ff0000' /* red */, }, },
@@ -199,6 +209,8 @@ tp.test('invalid zIndex property', (t) => {
         startAtDeg: 20,
         rotationAroundCenterXAxisDeg: 60,
         rotationAroundCenterZAxisDeg: 45,
+        strokeColor: '#000000',
+        strokeWidth: 0.5,
       },
       data: [
         { value: 40, options: { color: '#ff0000' /* red */, }, },

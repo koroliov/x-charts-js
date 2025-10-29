@@ -9,19 +9,29 @@ export function draw(arg: {
 }) {
   const { addMethodArg, ctx, } = arg;
   const pieData = prepareData(addMethodArg);
-  ctx.lineWidth = 0.5;
   const rimSlicesData = prepareRimSlicesData(pieData);
+  const processActions = handleAndGetProcessActions();
   if (!pieData.isHeadsVisibleToUser && !pieData.isTailsVisibleToUser) {
-    processRimBar({ action: 'fill', });
-    processRimBar({ action: 'stroke', });
+    processActions.forEach((a) => a ? processRimBar({ action: a, }) : 0);
   } else {
     const isHeads = pieData.isHeadsVisibleToUser;
-    processFace({ isHeads, action: 'fill', });
-    processRimElliptic({ isHeadsVisible: isHeads, rimSlicesData,
-      action: 'fill', });
-    processFace({ isHeads, action: 'stroke', });
-    processRimElliptic({ isHeadsVisible: isHeads, rimSlicesData,
-      action: 'stroke', });
+    processActions.forEach((a) => {
+      if (!a) {
+        return;
+      }
+      processFace({ isHeads, action: a, });
+      processRimElliptic({ isHeadsVisible: isHeads, rimSlicesData,
+        action: a, });
+    });
+  }
+
+  function handleAndGetProcessActions(): [ 'fill', 'stroke' | '', ] {
+    if (pieData.strokeWidth) {
+      ctx.lineWidth = pieData.strokeWidth;
+      ctx.strokeStyle = pieData.strokeColor;
+      return [ 'fill', 'stroke', ];
+    }
+    return [ 'fill', '', ];
   }
 
   function processRimBar(arg: { action: 'stroke' | 'fill', }) {

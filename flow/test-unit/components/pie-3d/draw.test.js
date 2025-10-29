@@ -22,6 +22,8 @@ tp.test((t) => {
       startAtDeg: 130,
       rotationAroundCenterXAxisDeg: 70,
       rotationAroundCenterZAxisDeg: 0,
+      strokeColor: '#000000',
+      strokeWidth: 0.5,
     },
     data: [
       { value: 25, options: {
@@ -73,6 +75,8 @@ tp.test((t) => {
       startAtDeg: 90,
       rotationAroundCenterXAxisDeg: 70,
       rotationAroundCenterZAxisDeg: 0,
+      strokeColor: '#000000',
+      strokeWidth: 0.5,
     },
     data: [
       { value: 25, options: {
@@ -128,6 +132,8 @@ tp.test((t) => {
       startAtDeg: 0,
       rotationAroundCenterXAxisDeg: 70,
       rotationAroundCenterZAxisDeg: 0,
+      strokeColor: '#000000',
+      strokeWidth: 0.5,
     },
     data: [
       { value: 25, options: {
@@ -183,6 +189,8 @@ tp.test((t) => {
       startAtDeg: 40,
       rotationAroundCenterXAxisDeg: 70,
       rotationAroundCenterZAxisDeg: 0,
+      strokeColor: '#000000',
+      strokeWidth: 0.5,
     },
     data: [
       { value: 25, options: {
@@ -230,6 +238,8 @@ tp.test((t) => {
       startAtDeg: 230,
       rotationAroundCenterXAxisDeg: 70,
       rotationAroundCenterZAxisDeg: 0,
+      strokeColor: '#000000',
+      strokeWidth: 0.5,
     },
     data: [
       { value: 25, options: {
@@ -285,6 +295,8 @@ tp.test((t) => {
       startAtDeg: 0,
       rotationAroundCenterXAxisDeg: 110,
       rotationAroundCenterZAxisDeg: 0,
+      strokeColor: '#000000',
+      strokeWidth: 0.5,
     },
     data: [
       { value: 45, options: {
@@ -332,6 +344,8 @@ tp.test((t) => {
       startAtDeg: 90,
       rotationAroundCenterXAxisDeg: 70,
       rotationAroundCenterZAxisDeg: 0,
+      strokeColor: '#000000',
+      strokeWidth: 0.5,
     },
     data: [
       { value: 75, options: {
@@ -379,6 +393,8 @@ tp.test((t) => {
       startAtDeg: 90.00001,
       rotationAroundCenterXAxisDeg: 70,
       rotationAroundCenterZAxisDeg: 0,
+      strokeColor: '#000000',
+      strokeWidth: 0.5,
     },
     data: [
       { value: 75, options: {
@@ -426,6 +442,8 @@ tp.test((t) => {
       startAtDeg: 90,
       rotationAroundCenterXAxisDeg: 90,
       rotationAroundCenterZAxisDeg: 0,
+      strokeColor: '#000000',
+      strokeWidth: 0.5,
     },
     data: [
       { value: 75, options: {
@@ -473,6 +491,8 @@ tp.test((t) => {
       startAtDeg: 315,
       rotationAroundCenterXAxisDeg: 70,
       rotationAroundCenterZAxisDeg: 0,
+      strokeColor: '#000000',
+      strokeWidth: 0.5,
     },
     data: [
       { value: 75, options: {
@@ -520,6 +540,8 @@ tp.test((t) => {
       startAtDeg: 0,
       rotationAroundCenterXAxisDeg: 220,
       rotationAroundCenterZAxisDeg: 0,
+      strokeColor: '#000000',
+      strokeWidth: 0.5,
     },
     data: [
       { value: 75, options: {
@@ -571,6 +593,8 @@ tp.test((t) => {
       startAtDeg: 0,
       rotationAroundCenterXAxisDeg: 100,
       rotationAroundCenterZAxisDeg: 0,
+      strokeColor: '#000000',
+      strokeWidth: 0.5,
     },
     data: [
       { value: 25, options: {
@@ -626,6 +650,8 @@ tp.test((t) => {
       startAtDeg: 247,
       rotationAroundCenterXAxisDeg: 113,
       rotationAroundCenterZAxisDeg: 0,
+      strokeColor: '#000000',
+      strokeWidth: 0.5,
     },
     data: [
       { value: 225, options: {
@@ -686,6 +712,8 @@ tp.test((t) => {
       startAtDeg: 247,
       rotationAroundCenterXAxisDeg: 110,
       rotationAroundCenterZAxisDeg: 0,
+      strokeColor: '#000000',
+      strokeWidth: 0.5,
     },
     data: [
       { value: 225, options: {

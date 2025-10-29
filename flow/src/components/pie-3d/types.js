@@ -21,6 +21,8 @@ export type AddMethodArgumentPie3d = {
     +startAtDeg: number,
     +rotationAroundCenterXAxisDeg: number,
     +rotationAroundCenterZAxisDeg: number,
+    +strokeColor: string,
+    +strokeWidth: number,
   },
 }
 
@@ -75,6 +77,8 @@ export type PieData = {
   +totalValue: number,
   +slices: SliceData[],
   +isPieReversed: boolean,
+  +strokeColor: string,
+  +strokeWidth: number,
   +pointTopHeads: Point,
   +edgeLeft: EdgeData,
   +edgeRight: EdgeData,
