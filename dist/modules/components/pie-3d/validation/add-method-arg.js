@@ -88,7 +88,7 @@ export function getDictionary()                       {
           return Number.isFinite(val) && val >= 0 ?
             '' : 'value must be a finite number >= 0';
         },
-        meta: {
+        options: {
           faceColor: validateHexColor,
           rimColor: validateHexColor,
         },

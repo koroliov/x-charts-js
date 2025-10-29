@@ -137,7 +137,7 @@ function getAddMethodArgPie3d(data) {
     data: data.map((d) => {
       return {
         value: d.value,
-        meta: { faceColor: d.faceColor, rimColor: d.rimColor, },
+        options: { faceColor: d.faceColor, rimColor: d.rimColor, },
       };
     }),
   };

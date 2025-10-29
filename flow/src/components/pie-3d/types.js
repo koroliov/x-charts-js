@@ -3,7 +3,7 @@ import type { XChartsAddMethodArgument, Point, } from '../../types.js';
 
 export type DataEntry = {
   +value: number,
-  +meta: {
+  +options: {
     +faceColor: string,
     +rimColor: string,
   },

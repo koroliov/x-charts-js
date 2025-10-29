@@ -19,8 +19,8 @@ tp.test('valid argument case', (t) => {
         rotationAroundCenterZAxisDeg: 45,
       },
       data: [
-        { value: 40, meta: { color: '#ff0000' /* red */, }, },
-        { value: 25, meta: { color: '#37ff00' /* green */, }, },
+        { value: 40, options: { color: '#ff0000' /* red */, }, },
+        { value: 25, options: { color: '#37ff00' /* green */, }, },
       ],
     },
   ];
@@ -62,8 +62,8 @@ tp.test('extra arguments', (t) => {
         rotationAroundCenterZAxisDeg: 45,
       },
       data: [
-        { value: 40, meta: { color: '#ff0000' /* red */, }, },
-        { value: 25, meta: { color: '#37ff00' /* green */, }, },
+        { value: 40, options: { color: '#ff0000' /* red */, }, },
+        { value: 25, options: { color: '#37ff00' /* green */, }, },
       ],
     },
     'foo',
@@ -107,8 +107,8 @@ tp.test('missing property', (t) => {
         rotationAroundCenterZAxisDeg: 45,
       },
       data: [
-        { value: 40, meta: { color: '#ff0000' /* red */, }, },
-        { value: 25, meta: { color: '#37ff00' /* green */, }, },
+        { value: 40, options: { color: '#ff0000' /* red */, }, },
+        { value: 25, options: { color: '#37ff00' /* green */, }, },
       ],
     },
   ];
@@ -140,8 +140,8 @@ tp.test('invalid type property, empty string ""', (t) => {
         rotationAroundCenterZAxisDeg: 45,
       },
       data: [
-        { value: 40, meta: { color: '#ff0000' /* red */, }, },
-        { value: 25, meta: { color: '#37ff00' /* green */, }, },
+        { value: 40, options: { color: '#ff0000' /* red */, }, },
+        { value: 25, options: { color: '#37ff00' /* green */, }, },
       ],
     },
   ];
@@ -173,8 +173,8 @@ tp.test('zIndex property negative integers allowed', (t) => {
         rotationAroundCenterZAxisDeg: 45,
       },
       data: [
-        { value: 40, meta: { color: '#ff0000' /* red */, }, },
-        { value: 25, meta: { color: '#37ff00' /* green */, }, },
+        { value: 40, options: { color: '#ff0000' /* red */, }, },
+        { value: 25, options: { color: '#37ff00' /* green */, }, },
       ],
     },
   ];
@@ -201,8 +201,8 @@ tp.test('invalid zIndex property', (t) => {
         rotationAroundCenterZAxisDeg: 45,
       },
       data: [
-        { value: 40, meta: { color: '#ff0000' /* red */, }, },
-        { value: 25, meta: { color: '#37ff00' /* green */, }, },
+        { value: 40, options: { color: '#ff0000' /* red */, }, },
+        { value: 25, options: { color: '#37ff00' /* green */, }, },
       ],
     },
   ];

@@ -18,15 +18,15 @@ tp.test('valid argument case', (t) => {
       rotationAroundCenterZAxisDeg: 45,
     },
     data: [
-      { value: 40, meta: {
+      { value: 40, options: {
         faceColor: '#ff0000' /* red */,
         rimColor: '#ff0000' /* red */,
       }, },
-      { value: 25, meta: {
+      { value: 25, options: {
         faceColor: '#37ff00' /* green */,
         rimColor: '#37ff00' /* green */,
       }, },
-      { value: 35, meta: {
+      { value: 35, options: {
         faceColor: '#000aff' /* blue */,
         rimColor: '#000aff' /* blue */,
       }, },
@@ -56,15 +56,15 @@ tp.test('extra property present', (t) => {
       rotationAroundCenterZAxisDeg: 45,
     },
     data: [
-      { value: 40, meta: {
+      { value: 40, options: {
         faceColor: '#ff0000' /* red */,
         rimColor: '#ff0000' /* red */,
       }, },
-      { value: 25, meta: {
+      { value: 25, options: {
         faceColor: '#37ff00' /* green */,
         rimColor: '#37ff00' /* green */,
       }, },
-      { value: 35, meta: {
+      { value: 35, options: {
         faceColor: '#000aff' /* blue */,
         rimColor: '#000aff' /* blue */,
       }, },
@@ -139,15 +139,15 @@ tp.test('options is not object', (t) => {
     zIndex: '1',
     options: true,
     data: [
-      { value: 40, meta: {
+      { value: 40, options: {
         faceColor: '#ff0000' /* red */,
         rimColor: '#ff0000' /* red */,
       }, },
-      { value: 25, meta: {
+      { value: 25, options: {
         faceColor: '#37ff00' /* green */,
         rimColor: '#37ff00' /* green */,
       }, },
-      { value: 35, meta: {
+      { value: 35, options: {
         faceColor: '#000aff' /* blue */,
         rimColor: '#000aff' /* blue */,
       }, },
@@ -181,15 +181,15 @@ tp.test('extra property', (t) => {
       rotationAroundCenterZAxisDeg: 45,
     },
     data: [
-      { value: 40, meta: {
+      { value: 40, options: {
         faceColor: '#ff0000' /* red */,
         rimColor: '#ff0000' /* red */,
       }, },
-      { value: 25, meta: {
+      { value: 25, options: {
         faceColor: '#37ff00' /* green */,
         rimColor: '#37ff00' /* green */,
       }, },
-      { value: 35, meta: {
+      { value: 35, options: {
         faceColor: '#000aff' /* blue */,
         rimColor: '#000aff' /* blue */,
       }, },
@@ -222,15 +222,15 @@ tp.test('missing property', (t) => {
       rotationAroundCenterZAxisDeg: 45,
     },
     data: [
-      { value: 40, meta: {
+      { value: 40, options: {
         faceColor: '#ff0000' /* red */,
         rimColor: '#ff0000' /* red */,
       }, },
-      { value: 25, meta: {
+      { value: 25, options: {
         faceColor: '#37ff00' /* green */,
         rimColor: '#37ff00' /* green */,
       }, },
-      { value: 35, meta: {
+      { value: 35, options: {
         faceColor: '#000aff' /* blue */,
         rimColor: '#000aff' /* blue */,
       }, },
@@ -263,15 +263,15 @@ tp.test('missing properties', (t) => {
       rotationAroundCenterZAxisDeg: 45,
     },
     data: [
-      { value: 40, meta: {
+      { value: 40, options: {
         faceColor: '#ff0000' /* red */,
         rimColor: '#ff0000' /* red */,
       }, },
-      { value: 25, meta: {
+      { value: 25, options: {
         faceColor: '#37ff00' /* green */,
         rimColor: '#37ff00' /* green */,
       }, },
-      { value: 35, meta: {
+      { value: 35, options: {
         faceColor: '#000aff' /* blue */,
         rimColor: '#000aff' /* blue */,
       }, },
@@ -304,15 +304,15 @@ tp.test('startAtDeg invalid', (t) => {
       rotationAroundCenterZAxisDeg: 45,
     },
     data: [
-      { value: 40, meta: {
+      { value: 40, options: {
         faceColor: '#ff0000' /* red */,
         rimColor: '#ff0000' /* red */,
       }, },
-      { value: 25, meta: {
+      { value: 25, options: {
         faceColor: '#37ff00' /* green */,
         rimColor: '#37ff00' /* green */,
       }, },
-      { value: 35, meta: {
+      { value: 35, options: {
         faceColor: '#000aff' /* blue */,
         rimColor: '#000aff' /* blue */,
       }, },
@@ -345,7 +345,7 @@ tp.test('thicknessPx invalid', (t) => {
       rotationAroundCenterZAxisDeg: 45,
     },
     data: [
-      { value: 40, meta: {
+      { value: 40, options: {
         faceColor: '#ff0000' /* red */,
         rimColor: '#ff0000' /* red */,
       }, },
@@ -378,7 +378,7 @@ tp.test('radiusPx invalid', (t) => {
       rotationAroundCenterZAxisDeg: 45,
     },
     data: [
-      { value: 40, meta: {
+      { value: 40, options: {
         faceColor: '#ff0000' /* red */,
         rimColor: '#ff0000' /* red */,
       }, },
@@ -457,14 +457,14 @@ tp.test('data is empty array', (t) => {
 
 tp.test('data array has non index property, allowed, ignored', (t) => {
   const data = [
-    { value: 40, meta: {
+    { value: 40, options: {
       faceColor: '#ff0000' /* red */,
       rimColor: '#ff0000' /* red */,
     }, },
   ];
   //This is needed to check an error case
   //$FlowFixMe[prop-missing]
-  data.fooProp = { value: -1, meta: {
+  data.fooProp = { value: -1, options: {
     faceColor: '#000aff' /* blue */,
     rimColor: '#000aff' /* blue */,
   }, };
@@ -493,12 +493,12 @@ tp.test('data array has non index property, allowed, ignored', (t) => {
 
 tp.test('data array has sparse elements', (t) => {
   const data = [
-    { value: 40, meta: {
+    { value: 40, options: {
       faceColor: '#ff0000' /* red */,
       rimColor: '#ff0000' /* red */,
     }, },
   ];
-  data[4] = { value: 10, meta: {
+  data[4] = { value: 10, options: {
     faceColor: '#000aff' /* blue */,
     rimColor: '#000aff' /* blue */,
   }, };
@@ -543,11 +543,11 @@ tp.test('data array has total value 0', (t) => {
       rotationAroundCenterZAxisDeg: 45,
     },
     data: [
-      { value: 0, meta: {
+      { value: 0, options: {
         faceColor: '#ff0000' /* red */,
         rimColor: '#ff0000' /* red */,
       }, },
-      { value: 0, meta: {
+      { value: 0, options: {
         faceColor: '#000aff' /* blue */,
         rimColor: '#000aff' /* blue */,
       }, },
@@ -580,12 +580,12 @@ tp.test('data element is not object', (t) => {
       rotationAroundCenterZAxisDeg: 45,
     },
     data: [
-      { value: 40, meta: {
+      { value: 40, options: {
         faceColor: '#ff0000' /* red */,
         rimColor: '#ff0000' /* red */,
       }, },
       true,
-      { value: 35, meta: {
+      { value: 35, options: {
         faceColor: '#000aff' /* blue */,
         rimColor: '#000aff' /* blue */,
       }, },
@@ -618,11 +618,11 @@ tp.test('prop is missing', (t) => {
       rotationAroundCenterZAxisDeg: 45,
     },
     data: [
-      { value: 40, meta: {
+      { value: 40, options: {
         faceColor: '#ff0000' /* red */,
         rimColor: '#ff0000' /* red */,
       }, },
-      { /*value: 35,*/ meta: {
+      { /*value: 35,*/ options: {
         faceColor: '#000aff' /* blue */,
         rimColor: '#000aff' /* blue */,
       }, },
@@ -655,18 +655,18 @@ tp.test('prop is not object', (t) => {
       rotationAroundCenterZAxisDeg: 45,
     },
     data: [
-      { value: 40, meta: {
+      { value: 40, options: {
         faceColor: '#ff0000' /* red */,
         rimColor: '#ff0000' /* red */,
       }, },
-      { value: 35, meta: true, },
+      { value: 35, options: true, },
     ],
   };
   const dict = getDictionary();
 
   const expected = [
     'ERR_XCHARTSJS_INVALID_ADD_METHOD_ARG:',
-    '.add() method argument, component pie-3d -> data -> 1 -> meta:',
+    '.add() method argument, component pie-3d -> data -> 1 -> options:',
     "  must be an object",
   ].join('\n');
 
@@ -689,11 +689,11 @@ tp.test('value is not valid', (t) => {
       rotationAroundCenterZAxisDeg: 45,
     },
     data: [
-      { value: 40, meta: {
+      { value: 40, options: {
         faceColor: '#ff0000' /* red */,
         rimColor: '#ff0000' /* red */,
       }, },
-      { value: -1, meta: {
+      { value: -1, options: {
         faceColor: '#000aff' /* blue */,
         rimColor: '#000aff' /* blue */,
       }, },
@@ -726,11 +726,11 @@ tp.test('prop is missing on level 1', (t) => {
       rotationAroundCenterZAxisDeg: 45,
     },
     data: [
-      { value: 40, meta: {
+      { value: 40, options: {
         faceColor: '#ff0000' /* red */,
         rimColor: '#ff0000' /* red */,
       }, },
-      { value: 35, meta: {
+      { value: 35, options: {
         /*faceColor: '#000aff' /* blue ,*/
           rimColor: '#000aff' /* blue */,
       }, },
@@ -740,7 +740,7 @@ tp.test('prop is missing on level 1', (t) => {
 
   const expected = [
     'ERR_XCHARTSJS_INVALID_ADD_METHOD_ARG:',
-    '.add() method argument, component pie-3d -> data -> 1 -> meta:',
+    '.add() method argument, component pie-3d -> data -> 1 -> options:',
     "  missing properties: faceColor",
   ].join('\n');
 
@@ -763,11 +763,11 @@ tp.test('prop is invalid on level 1', (t) => {
       rotationAroundCenterZAxisDeg: 45,
     },
     data: [
-      { value: 40, meta: {
+      { value: 40, options: {
         faceColor: '#FF0000' /* red */,
         rimColor: '#FF0000' /* red */,
       }, },
-      { value: 35, meta: {
+      { value: 35, options: {
         faceColor: '#000afg' /* invalid */,
         rimColor: '#000aff' /* blue */,
       }, },
@@ -777,7 +777,7 @@ tp.test('prop is invalid on level 1', (t) => {
 
   const expected = [
     'ERR_XCHARTSJS_INVALID_ADD_METHOD_ARG:',
-    '.add() method argument, component pie-3d -> data -> 1 -> meta -> ' +
+    '.add() method argument, component pie-3d -> data -> 1 -> options -> ' +
       'faceColor:',
     '  value must be a full (6 char long) hex string, e.g. #ffffff, not #fff',
   ].join('\n');

@@ -24,15 +24,15 @@ tp.test((t) => {
       rotationAroundCenterZAxisDeg: 0,
     },
     data: [
-      { value: 25, meta: {
+      { value: 25, options: {
         faceColor: '#37ff00' /* green */,
         rimColor: '#37ff00' /* green */,
       }, },
-      { value: 25, meta: {
+      { value: 25, options: {
         faceColor: '#ff0000' /* red */,
         rimColor: '#ff0000' /* red */,
       }, },
-      { value: 50, meta: {
+      { value: 50, options: {
         faceColor: '#f2b5f6' /* pinkish */,
         rimColor: '#f2b5f6' /* pinkish */,
       }, },
@@ -75,19 +75,19 @@ tp.test((t) => {
       rotationAroundCenterZAxisDeg: 0,
     },
     data: [
-      { value: 25, meta: {
+      { value: 25, options: {
         faceColor: '#f2b5f6' /* pinkish */,
         rimColor: '#f2b5f6' /* pinkish */,
       }, },
-      { value: 25, meta: {
+      { value: 25, options: {
         faceColor: '#00fff5' /* cyan */,
         rimColor: '#00fff5' /* cyan */,
       }, },
-      { value: 25, meta: {
+      { value: 25, options: {
         faceColor: '#feed00' /* yellow */,
         rimColor: '#feed00' /* yellow */,
       }, },
-      { value: 25, meta: {
+      { value: 25, options: {
         faceColor: '#ff0010' /* red */,
         rimColor: '#ff0010' /* red */,
       }, },
@@ -130,19 +130,19 @@ tp.test((t) => {
       rotationAroundCenterZAxisDeg: 0,
     },
     data: [
-      { value: 25, meta: {
+      { value: 25, options: {
         faceColor: '#37ff00' /* green */,
         rimColor: '#37ff00' /* green */,
       }, },
-      { value: 25, meta: {
+      { value: 25, options: {
         faceColor: '#0b08f7' /* blue */,
         rimColor: '#0b08f7' /* blue */,
       }, },
-      { value: 25, meta: {
+      { value: 25, options: {
         faceColor: '#ff0000' /* red */,
         rimColor: '#ff0000' /* red */,
       }, },
-      { value: 25, meta: {
+      { value: 25, options: {
         faceColor: '#f2b5f6' /* pinkish */,
         rimColor: '#f2b5f6' /* pinkish */,
       }, },
@@ -185,11 +185,11 @@ tp.test((t) => {
       rotationAroundCenterZAxisDeg: 0,
     },
     data: [
-      { value: 25, meta: {
+      { value: 25, options: {
         faceColor: '#37ff00' /* green */,
         rimColor: '#37ff00' /* green */,
       }, },
-      { value: 50, meta: {
+      { value: 50, options: {
         faceColor: '#f2b5f6' /* pinkish */,
         rimColor: '#f2b5f6' /* pinkish */,
       }, },
@@ -232,19 +232,19 @@ tp.test((t) => {
       rotationAroundCenterZAxisDeg: 0,
     },
     data: [
-      { value: 25, meta: {
+      { value: 25, options: {
         faceColor: '#37ff00' /* green */,
         rimColor: '#37ff00' /* green */,
       }, },
-      { value: 25, meta: {
+      { value: 25, options: {
         faceColor: '#ff0000' /* red */,
         rimColor: '#ff0000' /* red */,
       }, },
-      { value: 25, meta: {
+      { value: 25, options: {
         faceColor: '#37ff00' /* green */,
         rimColor: '#37ff00' /* green */,
       }, },
-      { value: 50, meta: {
+      { value: 50, options: {
         faceColor: '#f2b5f6' /* pinkish */,
         rimColor: '#f2b5f6' /* pinkish */,
       }, },
@@ -287,11 +287,11 @@ tp.test((t) => {
       rotationAroundCenterZAxisDeg: 0,
     },
     data: [
-      { value: 45, meta: {
+      { value: 45, options: {
         faceColor: '#37ff00' /* green */,
         rimColor: '#37ff00' /* green */,
       }, },
-      { value: 25, meta: {
+      { value: 25, options: {
         faceColor: '#fffd00' /* yellow */,
         rimColor: '#fffd00' /* yellow */,
       }, },
@@ -334,11 +334,11 @@ tp.test((t) => {
       rotationAroundCenterZAxisDeg: 0,
     },
     data: [
-      { value: 75, meta: {
+      { value: 75, options: {
         faceColor: '#37ff00' /* green */,
         rimColor: '#37ff00' /* green */,
       }, },
-      { value: 25, meta: {
+      { value: 25, options: {
         faceColor: '#fffd00' /* yellow */,
         rimColor: '#fffd00' /* yellow */,
       }, },
@@ -381,11 +381,11 @@ tp.test((t) => {
       rotationAroundCenterZAxisDeg: 0,
     },
     data: [
-      { value: 75, meta: {
+      { value: 75, options: {
         faceColor: '#37ff00' /* green */,
         rimColor: '#37ff00' /* green */,
       }, },
-      { value: 25, meta: {
+      { value: 25, options: {
         faceColor: '#fffd00' /* yellow */,
         rimColor: '#fffd00' /* yellow */,
       }, },
@@ -428,11 +428,11 @@ tp.test((t) => {
       rotationAroundCenterZAxisDeg: 0,
     },
     data: [
-      { value: 75, meta: {
+      { value: 75, options: {
         faceColor: '#37ff00' /* green */,
         rimColor: '#37ff00' /* green */,
       }, },
-      { value: 25, meta: {
+      { value: 25, options: {
         faceColor: '#fffd00' /* yellow */,
         rimColor: '#fffd00' /* yellow */,
       }, },
@@ -475,11 +475,11 @@ tp.test((t) => {
       rotationAroundCenterZAxisDeg: 0,
     },
     data: [
-      { value: 75, meta: {
+      { value: 75, options: {
         faceColor: '#37ff00' /* green */,
         rimColor: '#37ff00' /* green */,
       }, },
-      { value: 25, meta: {
+      { value: 25, options: {
         faceColor: '#fffd00' /* yellow */,
         rimColor: '#fffd00' /* yellow */,
       }, },
@@ -522,15 +522,15 @@ tp.test((t) => {
       rotationAroundCenterZAxisDeg: 0,
     },
     data: [
-      { value: 75, meta: {
+      { value: 75, options: {
         faceColor: '#37ff00' /* green */,
         rimColor: '#37ff00' /* green */,
       }, },
-      { value: 5, meta: {
+      { value: 5, options: {
         faceColor: '#21f0f5' /* cyan */,
         rimColor: '#21f0f5' /* cyan */,
       }, },
-      { value: 25, meta: {
+      { value: 25, options: {
         faceColor: '#fffd00' /* yellow */,
         rimColor: '#fffd00' /* yellow */,
       }, },
@@ -573,19 +573,19 @@ tp.test((t) => {
       rotationAroundCenterZAxisDeg: 0,
     },
     data: [
-      { value: 25, meta: {
+      { value: 25, options: {
         faceColor: '#37ff00' /* green */,
         rimColor: '#37ff00' /* green */,
       }, },
-      { value: 25, meta: {
+      { value: 25, options: {
         faceColor: '#0b08f7' /* blue */,
         rimColor: '#0b08f7' /* blue */,
       }, },
-      { value: 25, meta: {
+      { value: 25, options: {
         faceColor: '#ff0000' /* red */,
         rimColor: '#ff0000' /* red */,
       }, },
-      { value: 25, meta: {
+      { value: 25, options: {
         faceColor: '#f2b5f6' /* pinkish */,
         rimColor: '#f2b5f6' /* pinkish */,
       }, },
@@ -628,23 +628,23 @@ tp.test((t) => {
       rotationAroundCenterZAxisDeg: 0,
     },
     data: [
-      { value: 225, meta: {
+      { value: 225, options: {
         faceColor: '#37ff00' /* green */,
         rimColor: '#37ff00' /* green */,
       }, },
-      { value: 5, meta: {
+      { value: 5, options: {
         faceColor: '#03fff0' /* cayan */,
         rimColor: '#03fff0' /* cayan */,
       }, },
-      { value: 8, meta: {
+      { value: 8, options: {
         faceColor: '#ffc04b' /* orange */,
         rimColor: '#ffc04b' /* orange */,
       }, },
-      { value: 25, meta: {
+      { value: 25, options: {
         faceColor: '#ff0000' /* red */,
         rimColor: '#ff0000' /* red */,
       }, },
-      { value: 50, meta: {
+      { value: 50, options: {
         faceColor: '#f2b5f6' /* pinkish */,
         rimColor: '#f2b5f6' /* pinkish */,
       }, },
@@ -688,11 +688,11 @@ tp.test((t) => {
       rotationAroundCenterZAxisDeg: 0,
     },
     data: [
-      { value: 225, meta: {
+      { value: 225, options: {
         faceColor: '#37ff00' /* green */,
         rimColor: '#37ff00' /* green */,
       }, },
-      { value: 50, meta: {
+      { value: 50, options: {
         faceColor: '#f2b5f6' /* pinkish */,
         rimColor: '#f2b5f6' /* pinkish */,
       }, },
