@@ -63,6 +63,59 @@ tp.test((t) => {
 });
 
 tp.test((t) => {
+  const testName = '0001-01-no-stroke';
+  const arg = {
+    type: 'pie-3d',
+    zIndex: '1',
+    options: {
+      thicknessPx: 50,
+      radiusPx: 200,
+      centerXPx: 235,
+      centerYPx: 110,
+      startAtDeg: 130,
+      rotationAroundCenterXAxisDeg: 70,
+      rotationAroundCenterZAxisDeg: 0,
+      strokeColor: '#000000',
+      strokeWidth: 0,
+    },
+    data: [
+      { value: 25, options: {
+        faceColor: '#37ff00' /* green */,
+        rimColor: '#42b621',
+      }, },
+      { value: 25, options: {
+        faceColor: '#ff0000' /* red */,
+        rimColor: '#d20808',
+      }, },
+      { value: 50, options: {
+        faceColor: '#f2b5f6' /* pinkish */,
+        rimColor: '#be56c4',
+      }, },
+    ],
+  };
+  const { ctx, canvas, } =
+    createCanvasContext2d({ w: 470, h: 220, fillStyle: 'white', });
+  draw({ ctx, addMethodArg: arg, });
+
+  canvas.toBuffer(async (err: null | Error, buff: Buffer) => {
+    await writeCanvasToTestDiffDir({
+      canvas: ctx.canvas,
+      fileNameRelative: './test/diff/current.png',
+    });
+    const equal = await compareWithLooksSame({
+      buffer: buff,
+      expectedFileNameRelative:
+        `./test/unit-permanent/components/pie-3d/draw/${ testName }.png`,
+      highlightColor: '#0300ff',
+      //diffFileNameRelativeOnError: `./test/diff/diff-${ testName }.png`,
+      diffFileNameRelativeOnError: '',
+    });
+    t.ok(equal);
+    t.end();
+  });
+});
+
+tp.test((t) => {
   const testName = '0002-left-edge-on-slices-boundary';
   const arg = {
     type: 'pie-3d',
