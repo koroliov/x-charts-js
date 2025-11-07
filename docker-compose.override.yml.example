@@ -1,0 +1,12 @@
+#only values mentioned here are supposed to be overriden
+#and only host values, e.g. in the 8080:443 the 8080 may be changed, but not
+#443
+services:
+  main:
+    ports:
+      - "8080:443"
+      - "35729:35729"
+
+  docs:
+    ports:
+      - "8081:3000"

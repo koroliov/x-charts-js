@@ -6,3 +6,4 @@ test/diff/
 test/served-tmp/
 dist/x-charts-js.zip
 *.pem
+docker-compose.override.yml

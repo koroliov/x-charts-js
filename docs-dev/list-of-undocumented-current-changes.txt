@@ -1,2 +1,3 @@
 - in pie-3d's addMethodArgument.data[N].meta has been changed to options
 - added 2 options for pie-3d: strokeColor, strokeWidth
+- local dev setup with `podman compose` etc.

@@ -1,0 +1,46 @@
+services:
+  preliminary-actions:
+    image: fedora:${FEDORA_VERSION_NUM}
+    command: >
+      bash -c "
+        [[ -d './test/served-tmp/' ]] || mkdir '/test/served-tmp/' && \
+        [[ -d './test/diff/' ]] || mkdir '/test/diff/' && \
+        [[ -d './test/unit-tmp/' ]] || mkdir '/test/unit-tmp/'"
+    volumes:
+      - ./test:/test
+    restart: "no"
+
+  main:
+    depends_on:
+      preliminary-actions:
+        condition: service_completed_successfully
+        restart: false
+    image: ${PROJECT_NAME}-main:${MAIN_IMAGE_TAG}
+    pull_policy: never
+    environment:
+      LIVERELOAD_PORT: 35729
+      VAR_DIR_CONTAINED: ${VAR_DIR_CONTAINED}
+    ports:
+      - "8080:443"
+      - "35729:35729"
+    volumes:
+      - ./var:/home/${PROJECT_NAME}/var
+      - ./dist:/home/${PROJECT_NAME}/dist
+      - ./flow:/home/${PROJECT_NAME}/flow
+      - ./test:/home/${PROJECT_NAME}/test
+
+  docs:
+    image: ${PROJECT_NAME}-docs:${DOCS_IMAGE_TAG}
+    pull_policy: never
+    ports:
+      - "8081:3000"
+    environment:
+      VAR_DIR_CONTAINED: ${VAR_DIR_CONTAINED}
+    volumes:
+      - ./dist:/home/${PROJECT_NAME}/dist
+      - ./docs:/home/${PROJECT_NAME}/docs
+      - ./docs-src/blog:/home/${PROJECT_NAME}/docs-src/blog
+      - ./docs-src/docs:/home/${PROJECT_NAME}/docs-src/docs
+      - ./docs-src/src:/home/${PROJECT_NAME}/docs-src/src
+      - ./docs-src/static:/home/${PROJECT_NAME}/docs-src/static
+      - ./docs-src/var:/home/${PROJECT_NAME}/docs-src/var
