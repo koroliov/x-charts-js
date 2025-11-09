@@ -8,7 +8,7 @@ const server = http2.createSecureServer({
 });
 server.on('error', console.error);
 server.on('stream', handleStream);
-server.listen(443);
+server.listen(443, '0.0.0.0');
 
 function handleStream(stream, headers) {
   const requestedPath = headers[':path'].split('?')[0];

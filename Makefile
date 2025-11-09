@@ -29,6 +29,15 @@ podman-image-build-main podman-image-build-docs:
 	--build-arg PROJECT_NAME=$(PROJECT_NAME) \
 	$(EXTRA_ARGS) -t $(PROJECT_NAME)-$(TARGET):$(TAG)
 
+.PHONY: podman-image-build-playwright
+podman-image-build-playwright: TARGET = playwright
+podman-image-build-playwright: TAG = $(PLAYWRIGHT_IMAGE_TAG)
+podman-image-build-playwright:
+	podman build . --target $(TARGET) \
+	--build-arg PLAYWRIGHT_BASE_IMAGE=$(PLAYWRIGHT_BASE_IMAGE) \
+	--build-arg NPM_VERSION_NUM=$(NPM_VERSION_NUM) \
+	-t $(PROJECT_NAME)-$(TARGET):$(TAG)
+
 #npm section
 .PHONY: npm-outdated-main npm-outdated-docs
 npm-outdated-docs: WORKDIR = --workdir //home/$(PROJECT_NAME)/docs-src/
@@ -97,6 +106,10 @@ test-unit-full:
 	podman compose exec main bash -c "rm -rf \
 	./test/unit-tmp/* && npm run flow && npm run flow-build-test \
 	./flow/ && npm run tape ./test/unit-tmp/\{**/,\}*.test.js"
+
+.PHONY: test-e2e-full
+test-e2e-full:
+	podman compose exec playwright bash -c "npm run test"
 
 ifneq ($(wildcard ./Makefile.current), '')
   include ./var/Makefile.current

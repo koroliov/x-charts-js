@@ -5,7 +5,13 @@ services:
       bash -c "
         [[ -d './test/served-tmp/' ]] || mkdir '/test/served-tmp/' && \
         [[ -d './test/diff/' ]] || mkdir '/test/diff/' && \
-        [[ -d './test/unit-tmp/' ]] || mkdir '/test/unit-tmp/'"
+        [[ -d './test/unit-tmp/' ]] || mkdir '/test/unit-tmp/' && \
+        [[ -d './test/e2e/playwright/test-results/' ]] || \
+          mkdir './test/e2e/playwright/test-results/' && \
+        [[ -d './test/e2e/playwright/playwright-report/' ]] || \
+          mkdir './test/e2e/playwright/playwright-report/' && \
+        chmod 777 './test/e2e/playwright/test-results/' && \
+        chmod 777 './test/e2e/playwright/playwright-report/'"
     volumes:
       - ./test:/test
     restart: "no"
@@ -32,6 +38,7 @@ services:
   docs:
     image: ${PROJECT_NAME}-docs:${DOCS_IMAGE_TAG}
     pull_policy: never
+    user: "1001"
     ports:
       - "8081:3000"
     environment:
@@ -44,3 +51,20 @@ services:
       - ./docs-src/src:/home/${PROJECT_NAME}/docs-src/src
       - ./docs-src/static:/home/${PROJECT_NAME}/docs-src/static
       - ./docs-src/var:/home/${PROJECT_NAME}/docs-src/var
+
+  playwright:
+    image: ${PROJECT_NAME}-playwright:${PLAYWRIGHT_IMAGE_TAG}
+    pull_policy: never
+    user: "1001"
+    #to serve the report via a server if there is a need if one cannnot open
+    #the index.html file via the file:// schema
+    #ports:
+    #  - "8082:9323"
+    volumes:
+      - ./test/e2e/playwright/var:/home/pwuser/var
+      - ./test/e2e/playwright/specs:/home/pwuser/specs
+      - ./test/e2e/playwright/playwright-report:/home/pwuser/playwright-report:U
+      - ./test/e2e/playwright/test-results:/home/pwuser/test-results:U
+    command: bash
+    tty: true
+    stdin_open: true

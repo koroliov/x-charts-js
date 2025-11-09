@@ -1,5 +1,6 @@
 #This is not a typo, 00 is needed
 ARG FEDORA_VERSION_NUM=00
+ARG PLAYWRIGHT_BASE_IMAGE=${PLAYWRIGHT_BASE_IMAGE}
 
 FROM fedora:${FEDORA_VERSION_NUM} as base
 
@@ -9,6 +10,7 @@ ARG NPM_VERSION_NUM
 ARG NODE_DIR_NAME=node-v${NODE_VERSION_NUM}-linux-x64
 ARG NODE_TARBALL_NAME=${NODE_DIR_NAME}.tar.xz
 ARG VAR_DIR_CONTAINED=${VAR_DIR_CONTAINED}
+
 ENV PATH=/opt/${NODE_DIR_NAME}/bin:$PATH
 
 WORKDIR /opt
@@ -48,3 +50,19 @@ COPY ./docs-src/var/package-lock.json .
 RUN npm ci
 
 CMD ["npm", "run", "serve"]
+
+#playwright image
+FROM ${PLAYWRIGHT_BASE_IMAGE} as playwright
+ARG NPM_VERSION_NUM
+
+USER root
+RUN apt-get update && apt-get install -y --no-install-recommends \
+  vim-tiny ca-certificates
+RUN npm install -g npm@${NPM_VERSION_NUM}
+
+USER 1001
+WORKDIR /home/pwuser
+
+COPY ./test/e2e/playwright/var/package.json .
+COPY ./test/e2e/playwright/var/package-lock.json .
+RUN npm ci

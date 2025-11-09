@@ -1,0 +1,10 @@
+{
+  "scripts": {
+    "test": "playwright test -c ./var/playwright.config.js",
+    "show-report": "playwright show-report --host 0.0.0.0 --port 9323"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.56.1",
+    "playwright": "^1.56.1"
+  }
+}

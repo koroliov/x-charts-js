@@ -1,6 +1,9 @@
 !.editorconfig
 Makefile.config
 Makefile.current
+/package.json
+/package-lock.json
+/node_modules
 test/unit-tmp/
 test/diff/
 test/served-tmp/
