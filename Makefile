@@ -1,7 +1,8 @@
 include ./.env
 
 SHELL := /bin/bash
-.SHELLFLAGS := -xeuo pipefail -c
+#.SHELLFLAGS := -xeuo pipefail -c
+.SHELLFLAGS := -euo pipefail -c
 
 include ./var/Makefile.config
 
