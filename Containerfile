@@ -14,6 +14,7 @@ ARG VAR_DIR_CONTAINED=${VAR_DIR_CONTAINED}
 ENV PATH=/opt/${NODE_DIR_NAME}/bin:$PATH
 
 WORKDIR /opt
+RUN microdnf install -y libatomic
 ADD https://nodejs.org/dist/v${NODE_VERSION_NUM}/${NODE_TARBALL_NAME} ${NODE_TARBALL_NAME}
 RUN tar -xf ${NODE_DIR_NAME}.tar.xz
 RUN rm ${NODE_DIR_NAME}.tar.xz

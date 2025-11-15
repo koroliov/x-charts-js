@@ -42,6 +42,8 @@ services:
       - "8081:3000"
     environment:
       VAR_DIR_CONTAINED: ${VAR_DIR_CONTAINED}
+      #this should be removed once https://github.com/nodejs/node/issues/60704 is fixed
+      NODE_OPTIONS: "--no-experimental-webstorage"
     volumes:
       - ./dist:/home/${PROJECT_NAME}/dist
       - ./docs:/home/${PROJECT_NAME}/docs
