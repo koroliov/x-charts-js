@@ -38,7 +38,6 @@ services:
   docs:
     image: ${PROJECT_NAME}-docs:${DOCS_IMAGE_TAG}
     pull_policy: never
-    user: "1001"
     ports:
       - "8081:3000"
     environment:
