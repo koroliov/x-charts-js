@@ -88,6 +88,13 @@ zip-dist-for-release:
 flow-build-full:
 	podman compose exec main bash -c "npm run flow-build-full"
 
+.PHONY: flow-typed-update
+flow-typed-update:
+	rm -rf ./flow/flow-typed/*
+	podman compose exec main bash -c "npm exec -c 'flow-typed update-cache'" && \
+	podman compose exec main bash -c \
+	"npm exec -c 'flow-typed install -i=dev -r=./flow'"
+
 #test section
 .PHONY: test-unit
 test-unit: TEST_FILES_RUN = $(subst ./flow/,./test/unit-tmp/flow/,$(TEST_FILES))

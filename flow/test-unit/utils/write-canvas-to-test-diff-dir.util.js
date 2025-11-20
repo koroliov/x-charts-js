@@ -3,7 +3,7 @@ import fs from 'fs';
 
 type Arg = {
   fileNameRelative: StringSuffix<'.png'> & StringPrefix<'./test/diff/'>,
-  //$FlowIgnore[unclear-type]
+  //$FlowFixMe[unclear-type]
   canvas: any,
 }
 

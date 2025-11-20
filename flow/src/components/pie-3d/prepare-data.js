@@ -142,7 +142,9 @@ export function prepareData(arg: AddMethodArgumentPie3d): PieData {
       }
 
       function handleLastSliceTakesAllVisibleRimCase() {
-        ['edgeLeft', 'edgeRight',].forEach((edge) => {
+        type A = [ 'edgeLeft', 'edgeRight', ];
+        const a: A = [ 'edgeLeft', 'edgeRight', ];
+        a.forEach((edge) => {
           if (pieData[edge].sliceIndex === -1) {
             pieData[edge].sliceIndex = pieData.slices.length - 1;
           }
@@ -298,8 +300,8 @@ export function prepareData(arg: AddMethodArgumentPie3d): PieData {
     const isPieReversed =
       ops.rotationAroundCenterXAxisDeg >= 180 ? true : false;
     let totalValue = 0;
-    let prevEndHeads = [0, 0, 0,];
-    let prevEndTails = [0, 0, 0,];
+    let prevEndHeads: Point = [0, 0, 0,];
+    let prevEndTails: Point = [0, 0, 0,];
     const slices: PieData['slices'] = [];
 
     const ll = getLoopLogic(isPieReversed, arg.data.length);

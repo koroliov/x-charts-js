@@ -19,15 +19,16 @@ ADD https://nodejs.org/dist/v${NODE_VERSION_NUM}/${NODE_TARBALL_NAME} ${NODE_TAR
 RUN tar -xf ${NODE_DIR_NAME}.tar.xz
 RUN rm ${NODE_DIR_NAME}.tar.xz
 RUN npm install -g npm@${NPM_VERSION_NUM}
+RUN mv /usr/bin/dmesg /usr/bin/dmesg.real && \
+  printf '#!/bin/sh\necho "dmesg disabled in this container"\nexit 0\n' > /usr/bin/dmesg && \
+  chmod 755 /usr/bin/dmesg
 
 #main image
 FROM base as main
 ARG PROJECT_NAME
 ARG VAR_DIR_CONTAINED
 
-RUN microdnf install -y zip
-RUN microdnf install -y ncurses
-RUN microdnf install -y openssl
+RUN microdnf install -y zip ncurses openssl git
 
 WORKDIR ${VAR_DIR_CONTAINED}/certs
 RUN openssl req -new -newkey rsa:4096 -days 365 -nodes -x509 \

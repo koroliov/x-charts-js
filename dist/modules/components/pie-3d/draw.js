@@ -99,7 +99,16 @@ export function draw(arg
         ctx.fill();
       }
 
-      function getPropNames() {
+      function getPropNames()   
+                                                                           
+                                                                             
+                                                                     
+                                                                       
+                                                                    
+                                    
+                                                                  
+                                    
+        {
         if (isHeadsVisible) {
           return {
             pointStartOnVisibleFace: 'pointStartOnHeads',
