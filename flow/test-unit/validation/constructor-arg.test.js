@@ -6,7 +6,7 @@ import { validate, getDictionary, } from
 
 tp.test('valid argument case', (t) => {
   const ContainerDiv = class ContainerDiv {  };
-  const constructorArg = [
+  const constructorArg: Parameters<typeof validate>[1] = [
     {
       containerDiv: new ContainerDiv(),
       options: {
@@ -16,7 +16,7 @@ tp.test('valid argument case', (t) => {
     },
   ];
   //In tests it's acceptable
-  //$FlowFixMe[incompatible-call]
+  //$FlowFixMe[incompatible-type]
   const dict = getDictionary(ContainerDiv);
   const expected = '';
 
@@ -27,10 +27,10 @@ tp.test('valid argument case', (t) => {
 
 tp.test('no arguments', (t) => {
   const ContainerDiv = class ContainerDiv {  };
-  const constructorArg: Array<mixed> = [
+  const constructorArg: Parameters<typeof validate>[1] = [
   ];
   //In tests it's acceptable
-  //$FlowFixMe[incompatible-call]
+  //$FlowFixMe[incompatible-type]
   const dict = getDictionary(ContainerDiv);
   const expected = [
     'ERR_XCHARTSJS_INVALID_CONSTRUCTOR_ARG:',
@@ -44,7 +44,7 @@ tp.test('no arguments', (t) => {
 
 tp.test('extra arguments', (t) => {
   const ContainerDiv = class ContainerDiv {  };
-  const constructorArg = [
+  const constructorArg: Parameters<typeof validate>[1] = [
     {
       containerDiv: new ContainerDiv(),
       options: {
@@ -54,7 +54,7 @@ tp.test('extra arguments', (t) => {
     'foo',
   ];
   //In tests it's acceptable
-  //$FlowFixMe[incompatible-call]
+  //$FlowFixMe[incompatible-type]
   const dict = getDictionary(ContainerDiv);
   const expected = [
     'ERR_XCHARTSJS_INVALID_CONSTRUCTOR_ARG:',
@@ -68,11 +68,11 @@ tp.test('extra arguments', (t) => {
 
 tp.test('argument is not object', (t) => {
   const ContainerDiv = class ContainerDiv {  };
-  const constructorArg = [
+  const constructorArg: Parameters<typeof validate>[1] = [
     'foo',
   ];
   //In tests it's acceptable
-  //$FlowFixMe[incompatible-call]
+  //$FlowFixMe[incompatible-type]
   const dict = getDictionary(ContainerDiv);
   const expected = [
     'ERR_XCHARTSJS_INVALID_CONSTRUCTOR_ARG:',
@@ -88,7 +88,7 @@ tp.test('argument is not object', (t) => {
 tp.test('containerDiv is not valid', (t) => {
   const ContainerDiv = class ContainerDiv {  };
   const ContainerSpan = class ContainerSpan {  };
-  const constructorArg = [
+  const constructorArg: Parameters<typeof validate>[1] = [
     {
       containerDiv: new ContainerSpan(),
       options: {
@@ -97,7 +97,7 @@ tp.test('containerDiv is not valid', (t) => {
     },
   ];
   //In tests it's acceptable
-  //$FlowFixMe[incompatible-call]
+  //$FlowFixMe[incompatible-type]
   const dict = getDictionary(ContainerDiv);
   const expected = [
     'ERR_XCHARTSJS_INVALID_CONSTRUCTOR_ARG:',
@@ -113,7 +113,7 @@ tp.test('containerDiv is not valid', (t) => {
 //options validation
 tp.test('extra argument in options', (t) => {
   const ContainerDiv = class ContainerDiv {  };
-  const constructorArg = [
+  const constructorArg: Parameters<typeof validate>[1] = [
     {
       containerDiv: new ContainerDiv(),
       options: {
@@ -123,7 +123,7 @@ tp.test('extra argument in options', (t) => {
     },
   ];
   //In tests it's acceptable
-  //$FlowFixMe[incompatible-call]
+  //$FlowFixMe[incompatible-type]
   const dict = getDictionary(ContainerDiv);
   const expected = [
     'ERR_XCHARTSJS_INVALID_CONSTRUCTOR_ARG:',
@@ -138,7 +138,7 @@ tp.test('extra argument in options', (t) => {
 
 tp.test('isComponentInspectMode invalid', (t) => {
   const ContainerDiv = class ContainerDiv {  };
-  const constructorArg = [
+  const constructorArg: Parameters<typeof validate>[1] = [
     {
       containerDiv: new ContainerDiv(),
       options: {
@@ -148,7 +148,7 @@ tp.test('isComponentInspectMode invalid', (t) => {
     },
   ];
   //In tests it's acceptable
-  //$FlowFixMe[incompatible-call]
+  //$FlowFixMe[incompatible-type]
   const dict = getDictionary(ContainerDiv);
   const expected = [
     'ERR_XCHARTSJS_INVALID_CONSTRUCTOR_ARG:',

@@ -5,7 +5,7 @@ import { validate, getDictionary, }
   from '../../../../src/components/pie-3d/validation/add-method-arg.js';
 
 tp.test('valid argument case', (t) => {
-  const addMethodArg = {
+  const addMethodArg: Parameters<typeof validate>[1] = {
     type: 'pie-3d',
     zIndex: '1',
     options: {
@@ -44,7 +44,7 @@ tp.test('valid argument case', (t) => {
 
 //============ top level props ========================
 tp.test('extra property present', (t) => {
-  const addMethodArg = {
+  const addMethodArg: Parameters<typeof validate>[1] = {
     type: 'pie-3d',
     zIndex: '1',
     someUnknownProp: 'foo',
@@ -88,7 +88,7 @@ tp.test('extra property present', (t) => {
 });
 
 tp.test('missing property', (t) => {
-  const addMethodArg = {
+  const addMethodArg: Parameters<typeof validate>[1] = {
     type: 'pie-3d',
     zIndex: '1',
     options: {
@@ -118,7 +118,7 @@ tp.test('missing property', (t) => {
 });
 
 tp.test('missing properties', (t) => {
-  const addMethodArg = {
+  const addMethodArg: Parameters<typeof validate>[1] = {
     type: 'pie-3d',
     zIndex: '1',
     //options: { },
@@ -140,7 +140,7 @@ tp.test('missing properties', (t) => {
 //============ options ========================
 
 tp.test('options is not object', (t) => {
-  const addMethodArg = {
+  const addMethodArg: Parameters<typeof validate>[1] = {
     type: 'pie-3d',
     zIndex: '1',
     options: true,
@@ -173,7 +173,7 @@ tp.test('options is not object', (t) => {
 });
 
 tp.test('extra property', (t) => {
-  const addMethodArg = {
+  const addMethodArg: Parameters<typeof validate>[1] = {
     type: 'pie-3d',
     zIndex: '1',
     options: {
@@ -217,7 +217,7 @@ tp.test('extra property', (t) => {
 });
 
 tp.test('missing property', (t) => {
-  const addMethodArg = {
+  const addMethodArg: Parameters<typeof validate>[1] = {
     type: 'pie-3d',
     zIndex: '1',
     options: {
@@ -260,7 +260,7 @@ tp.test('missing property', (t) => {
 });
 
 tp.test('missing properties', (t) => {
-  const addMethodArg = {
+  const addMethodArg: Parameters<typeof validate>[1] = {
     type: 'pie-3d',
     zIndex: '1',
     options: {
@@ -303,7 +303,7 @@ tp.test('missing properties', (t) => {
 });
 
 tp.test('startAtDeg invalid', (t) => {
-  const addMethodArg = {
+  const addMethodArg: Parameters<typeof validate>[1] = {
     type: 'pie-3d',
     zIndex: '1',
     options: {
@@ -346,7 +346,7 @@ tp.test('startAtDeg invalid', (t) => {
 });
 
 tp.test('thicknessPx invalid', (t) => {
-  const addMethodArg = {
+  const addMethodArg: Parameters<typeof validate>[1] = {
     type: 'pie-3d',
     zIndex: '1',
     options: {
@@ -381,7 +381,7 @@ tp.test('thicknessPx invalid', (t) => {
 });
 
 tp.test('radiusPx invalid', (t) => {
-  const addMethodArg = {
+  const addMethodArg: Parameters<typeof validate>[1] = {
     type: 'pie-3d',
     zIndex: '1',
     options: {
@@ -416,7 +416,7 @@ tp.test('radiusPx invalid', (t) => {
 });
 
 tp.test('strokeColor invalid', (t) => {
-  const addMethodArg = {
+  const addMethodArg: Parameters<typeof validate>[1] = {
     type: 'pie-3d',
     zIndex: '1',
     options: {
@@ -453,7 +453,7 @@ tp.test('strokeColor invalid', (t) => {
 //============ data values ========================
 
 tp.test('data is not array', (t) => {
-  const addMethodArg = {
+  const addMethodArg: Parameters<typeof validate>[1] = {
     type: 'pie-3d',
     zIndex: '1',
     options: {
@@ -483,7 +483,7 @@ tp.test('data is not array', (t) => {
 });
 
 tp.test('data is empty array', (t) => {
-  const addMethodArg = {
+  const addMethodArg: Parameters<typeof validate>[1] = {
     type: 'pie-3d',
     zIndex: '1',
     options: {
@@ -525,7 +525,7 @@ tp.test('data array has non index property, allowed, ignored', (t) => {
     faceColor: '#000aff' /* blue */,
     rimColor: '#000aff' /* blue */,
   }, };
-  const addMethodArg = {
+  const addMethodArg: Parameters<typeof validate>[1] = {
     type: 'pie-3d',
     zIndex: '1',
     options: {
@@ -561,7 +561,7 @@ tp.test('data array has sparse elements', (t) => {
     faceColor: '#000aff' /* blue */,
     rimColor: '#000aff' /* blue */,
   }, };
-  const addMethodArg = {
+  const addMethodArg: Parameters<typeof validate>[1] = {
     type: 'pie-3d',
     zIndex: '1',
     options: {
@@ -591,7 +591,7 @@ tp.test('data array has sparse elements', (t) => {
 });
 
 tp.test('data array has total value 0', (t) => {
-  const addMethodArg = {
+  const addMethodArg: Parameters<typeof validate>[1] = {
     type: 'pie-3d',
     zIndex: '1',
     options: {
@@ -630,7 +630,7 @@ tp.test('data array has total value 0', (t) => {
 });
 
 tp.test('data element is not object', (t) => {
-  const addMethodArg = {
+  const addMethodArg: Parameters<typeof validate>[1] = {
     type: 'pie-3d',
     zIndex: '1',
     options: {
@@ -670,7 +670,7 @@ tp.test('data element is not object', (t) => {
 });
 
 tp.test('prop is missing', (t) => {
-  const addMethodArg = {
+  const addMethodArg: Parameters<typeof validate>[1] = {
     type: 'pie-3d',
     zIndex: '1',
     options: {
@@ -709,7 +709,7 @@ tp.test('prop is missing', (t) => {
 });
 
 tp.test('prop is not object', (t) => {
-  const addMethodArg = {
+  const addMethodArg: Parameters<typeof validate>[1] = {
     type: 'pie-3d',
     zIndex: '1',
     options: {
@@ -745,7 +745,7 @@ tp.test('prop is not object', (t) => {
 });
 
 tp.test('value is not valid', (t) => {
-  const addMethodArg = {
+  const addMethodArg: Parameters<typeof validate>[1] = {
     type: 'pie-3d',
     zIndex: '1',
     options: {
@@ -784,7 +784,7 @@ tp.test('value is not valid', (t) => {
 });
 
 tp.test('prop is missing on level 1', (t) => {
-  const addMethodArg = {
+  const addMethodArg: Parameters<typeof validate>[1] = {
     type: 'pie-3d',
     zIndex: '1',
     options: {
@@ -823,7 +823,7 @@ tp.test('prop is missing on level 1', (t) => {
 });
 
 tp.test('prop is invalid on level 1', (t) => {
-  const addMethodArg = {
+  const addMethodArg: Parameters<typeof validate>[1] = {
     type: 'pie-3d',
     zIndex: '1',
     options: {

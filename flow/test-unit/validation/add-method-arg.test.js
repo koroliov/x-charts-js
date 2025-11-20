@@ -5,7 +5,7 @@ import { validate, getDictionary, } from
   '../../src/validation/add-method-arg.js';
 
 tp.test('valid argument case', (t) => {
-  const addMethodArguments = [
+  const addMethodArguments: Array<mixed> = [
     {
       type: 'pie-3d',
       zIndex: '1',
@@ -50,7 +50,7 @@ tp.test('no arguments', (t) => {
 });
 
 tp.test('extra arguments', (t) => {
-  const addMethodArguments = [
+  const addMethodArguments: Array<mixed> = [
     {
       type: 'pie-3d',
       zIndex: '1',
@@ -84,7 +84,7 @@ tp.test('extra arguments', (t) => {
 });
 
 tp.test('arg is not object', (t) => {
-  const addMethodArguments = ['abc',];
+  const addMethodArguments: Array<mixed> = ['abc',];
   const dict = getDictionary();
   const expected = [
     'ERR_XCHARTSJS_INVALID_ADD_METHOD_ARG:',
@@ -98,7 +98,7 @@ tp.test('arg is not object', (t) => {
 });
 
 tp.test('missing property', (t) => {
-  const addMethodArguments = [
+  const addMethodArguments: Array<mixed> = [
     {
       zIndex: '1',
       options: {
@@ -132,7 +132,7 @@ tp.test('missing property', (t) => {
 
 //================ type property checks ===============
 tp.test('invalid type property, empty string ""', (t) => {
-  const addMethodArguments = [
+  const addMethodArguments: Array<mixed> = [
     {
       type: '',
       zIndex: '1',
@@ -167,7 +167,7 @@ tp.test('invalid type property, empty string ""', (t) => {
 
 //================ zIndex property checks ===============
 tp.test('zIndex property negative integers allowed', (t) => {
-  const addMethodArguments = [
+  const addMethodArguments: Array<mixed> = [
     {
       type: 'pie-3d',
       zIndex: '-1',
@@ -197,7 +197,7 @@ tp.test('zIndex property negative integers allowed', (t) => {
 });
 
 tp.test('invalid zIndex property', (t) => {
-  const addMethodArguments = [
+  const addMethodArguments: Array<mixed> = [
     {
       type: 'pie-3d',
       zIndex: '1 ',

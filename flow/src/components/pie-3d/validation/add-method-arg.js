@@ -44,14 +44,10 @@ export function getDictionary(): ValidationDictionary {
   return {
     options: {
       thicknessPx(val) {
-        //The .isFinite() call is supposed to guarantee that it's a number
-        //$FlowFixMe[invalid-compare]
         return Number.isFinite(val) && val >= 0 ?
           '' : 'value must be a finite number >= 0';
       },
       radiusPx(val) {
-        //The .isFinite() call is supposed to guarantee that it's a number
-        //$FlowFixMe[invalid-compare]
         return Number.isFinite(val) && val > 0 ?
           '' : 'value must be a finite number > 0';
       },
@@ -62,27 +58,19 @@ export function getDictionary(): ValidationDictionary {
         return Number.isFinite(val) ? '' : 'value must be a number';
       },
       startAtDeg(val) {
-        //The .isFinite() call is supposed to guarantee that it's a number
-        //$FlowFixMe[invalid-compare]
         return Number.isFinite(val) && val >= 0 && val < 360 ?
           '' : 'value must be a number in [+0, 360) range';
       },
       rotationAroundCenterXAxisDeg(val) {
-        //The .isFinite() call is supposed to guarantee that it's a number
-        //$FlowFixMe[invalid-compare]
         return Number.isFinite(val) && val >= 0 && val < 360 ?
           '' : 'value must be a number in [+0, 360) range';
       },
       rotationAroundCenterZAxisDeg(val) {
-        //The .isFinite() call is supposed to guarantee that it's a number
-        //$FlowFixMe[invalid-compare]
         return Number.isFinite(val) && val >= 0 && val < 360 ?
           '' : 'value must be a number in [+0, 360) range';
       },
       strokeColor: validateHexColor,
       strokeWidth(val) {
-        //The .isFinite() call is supposed to guarantee that it's a number
-        //$FlowFixMe[invalid-compare]
         return Number.isFinite(val) && val >= 0 ?
           '' : 'value must be a finite number >= 0';
       },
@@ -90,8 +78,6 @@ export function getDictionary(): ValidationDictionary {
     data: [
       {
         value(val) {
-          //The .isFinite() call is supposed to guarantee that it's a number
-          //$FlowFixMe[invalid-compare]
           return Number.isFinite(val) && val >= 0 ?
             '' : 'value must be a finite number >= 0';
         },

@@ -5,7 +5,7 @@ import { validate, getDictionary, }
   from '../../../../src/components/legend/validation/add-method-arg.js';
 
 tp.test('valid argument case', (t) => {
-  const addMethodArg = {
+  const addMethodArg: Parameters<typeof validate>[1] = {
     type: 'legend',
     zIndex: '1',
     htmlFragment: '<style>div { color: red; }</style><div></div>',
@@ -20,7 +20,7 @@ tp.test('valid argument case', (t) => {
 
 //============ top level props ========================
 tp.test('extra property present', (t) => {
-  const addMethodArg = {
+  const addMethodArg: Parameters<typeof validate>[1] = {
     type: 'legend',
     zIndex: '1',
     someUnknownProp: 1,
@@ -40,7 +40,7 @@ tp.test('extra property present', (t) => {
 });
 
 tp.test('htmlFragment is not string', (t) => {
-  const addMethodArg = {
+  const addMethodArg: Parameters<typeof validate>[1] = {
     type: 'legend',
     zIndex: '1',
     htmlFragment: 0,

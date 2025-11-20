@@ -99,7 +99,16 @@ export function draw(arg: {
         ctx.fill();
       }
 
-      function getPropNames() {
+      function getPropNames(): {
+        pointStartOnVisibleFace: 'pointStartOnHeads' | 'pointStartOnTails',
+        pointStartOnInvisibleFace: 'pointStartOnTails' | 'pointStartOnHeads',
+        pointEndOnVisibleFace: 'pointEndOnHeads' | 'pointEndOnTails',
+        pointEndOnInvisibleFace: 'pointEndOnTails' | 'pointEndOnHeads',
+        ellipseArgumentsOnInvisibleFace: 'ellipseArgumentsOnTails' |
+          'ellipseArgumentsOnHeads',
+        ellipseArgumentsOnVisibleFace: 'ellipseArgumentsOnHeads' |
+          'ellipseArgumentsOnTails',
+      } {
         if (isHeadsVisible) {
           return {
             pointStartOnVisibleFace: 'pointStartOnHeads',

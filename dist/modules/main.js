@@ -91,8 +91,8 @@ export default class XCharts {
       }
       //After the validation we should be sure it's guaranteed to be
       //XChartsConstructorArgument
-      //$FlowFixMe[incompatible-cast]
-      return arg                              ;
+      //$FlowFixMe[incompatible-type]
+      return arg;
     }
   }
 
@@ -147,7 +147,7 @@ export default class XCharts {
           //Despite the argTypeVerified is guaranteed at that point to have
           //props like: type, zIndex, I WANT to ignore them and treat the value
           //as the cast to value.
-          //$FlowFixMe[incompatible-cast]
+          //$FlowFixMe[incompatible-type]
           argTypeVerified                        );
       if (invalidArgumentErrorMsg) {
         that._attemptToShowError(invalidArgumentErrorMsg);
