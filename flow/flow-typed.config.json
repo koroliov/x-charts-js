@@ -1,0 +1,17 @@
+{
+  "env": [
+    "bom",
+    "cssom",
+    "dom",
+    "geometry",
+    "html",
+    "indexeddb",
+    "intl",
+    "json-api",
+    "jsx",
+    "node",
+    "serviceworkers",
+    "streams",
+    "web-animations"
+  ]
+}

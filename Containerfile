@@ -28,9 +28,7 @@ FROM base as main
 ARG PROJECT_NAME
 ARG VAR_DIR_CONTAINED
 
-RUN microdnf install -y zip
-RUN microdnf install -y ncurses
-RUN microdnf install -y openssl
+RUN microdnf install -y zip ncurses openssl git
 
 WORKDIR ${VAR_DIR_CONTAINED}/certs
 RUN openssl req -new -newkey rsa:4096 -days 365 -nodes -x509 \
