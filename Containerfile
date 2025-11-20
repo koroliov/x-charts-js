@@ -19,6 +19,9 @@ ADD https://nodejs.org/dist/v${NODE_VERSION_NUM}/${NODE_TARBALL_NAME} ${NODE_TAR
 RUN tar -xf ${NODE_DIR_NAME}.tar.xz
 RUN rm ${NODE_DIR_NAME}.tar.xz
 RUN npm install -g npm@${NPM_VERSION_NUM}
+RUN mv /usr/bin/dmesg /usr/bin/dmesg.real && \
+  printf '#!/bin/sh\necho "dmesg disabled in this container"\nexit 0\n' > /usr/bin/dmesg && \
+  chmod 755 /usr/bin/dmesg
 
 #main image
 FROM base as main
