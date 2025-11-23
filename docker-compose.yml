@@ -30,10 +30,12 @@ services:
       - "8080:443"
       - "35729:35729"
     volumes:
-      - ./var:/home/${PROJECT_NAME}/var:z
-      - ./dist:/home/${PROJECT_NAME}/dist:z
-      - ./flow:/home/${PROJECT_NAME}/flow:z
-      - ./test:/home/${PROJECT_NAME}/test:z
+      - ./var:/home/${PROJECT_NAME}/var
+      - ./dist:/home/${PROJECT_NAME}/dist
+      - ./flow:/home/${PROJECT_NAME}/flow
+      - ./test:/home/${PROJECT_NAME}/test
+    security_opt:
+      - label=disable
 
   docs:
     image: ${PROJECT_NAME}-docs:${DOCS_IMAGE_TAG}
@@ -43,13 +45,15 @@ services:
     environment:
       VAR_DIR_CONTAINED: ${VAR_DIR_CONTAINED}
     volumes:
-      - ./dist:/home/${PROJECT_NAME}/dist:z
-      - ./docs:/home/${PROJECT_NAME}/docs:z
-      - ./docs-src/blog:/home/${PROJECT_NAME}/docs-src/blog:z
-      - ./docs-src/docs:/home/${PROJECT_NAME}/docs-src/docs:z
-      - ./docs-src/src:/home/${PROJECT_NAME}/docs-src/src:z
-      - ./docs-src/static:/home/${PROJECT_NAME}/docs-src/static:z
-      - ./docs-src/var:/home/${PROJECT_NAME}/docs-src/var:z
+      - ./dist:/home/${PROJECT_NAME}/dist
+      - ./docs:/home/${PROJECT_NAME}/docs
+      - ./docs-src/blog:/home/${PROJECT_NAME}/docs-src/blog
+      - ./docs-src/docs:/home/${PROJECT_NAME}/docs-src/docs
+      - ./docs-src/src:/home/${PROJECT_NAME}/docs-src/src
+      - ./docs-src/static:/home/${PROJECT_NAME}/docs-src/static
+      - ./docs-src/var:/home/${PROJECT_NAME}/docs-src/var
+    security_opt:
+      - label=disable
 
   playwright:
     image: ${PROJECT_NAME}-playwright:${PLAYWRIGHT_IMAGE_TAG}
@@ -60,10 +64,12 @@ services:
     #ports:
     #  - "8082:9323"
     volumes:
-      - ./test/e2e/playwright/var:/home/pwuser/var:z
-      - ./test/e2e/playwright/specs:/home/pwuser/specs:z
-      - ./test/e2e/playwright/playwright-report:/home/pwuser/playwright-report:U,z
-      - ./test/e2e/playwright/test-results:/home/pwuser/test-results:U,z
+      - ./test/e2e/playwright/var:/home/pwuser/var
+      - ./test/e2e/playwright/specs:/home/pwuser/specs
+      - ./test/e2e/playwright/playwright-report:/home/pwuser/playwright-report:U
+      - ./test/e2e/playwright/test-results:/home/pwuser/test-results:U
     command: bash
     tty: true
     stdin_open: true
+    security_opt:
+      - label=disable
