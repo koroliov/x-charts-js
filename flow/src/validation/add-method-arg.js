@@ -15,7 +15,7 @@ export function validate(dict: ValidationDictionary,
   //$FlowFixMe[incompatible-type]
   const arg: { ... } = allAddMethodArgs[0];
   return validateByDictionary({
-    errorCode: 'ERR_XCHARTSJS_INVALID_ADD_METHOD_ARG',
+    errorCode: 'ERR_X_CHARTS_JS_INVALID_ADD_METHOD_ARG',
     topLevelPropName: '.add() method argument',
     ignorePropsSet: getIgnorePropsSet(),
     dictionary: dict,
@@ -32,14 +32,14 @@ export function validate(dict: ValidationDictionary,
 
 function generateWrongNumberOfArgumentsErrorReturnValue() {
   return [
-    'ERR_XCHARTSJS_INVALID_ADD_METHOD_ARG:',
+    'ERR_X_CHARTS_JS_INVALID_ADD_METHOD_ARG:',
     'The .add() method expects a single argument',
   ].join('\n');
 }
 
 function generateNotObjectArgumentErrorReturnValue() {
   return [
-    'ERR_XCHARTSJS_INVALID_ADD_METHOD_ARG:',
+    'ERR_X_CHARTS_JS_INVALID_ADD_METHOD_ARG:',
     'Argument to the .add() method must be an object',
     'e.g. {  }, Object.create(null)',
   ].join('\n');

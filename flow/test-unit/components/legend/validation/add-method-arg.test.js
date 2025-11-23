@@ -29,7 +29,7 @@ tp.test('extra property present', (t) => {
   const dict = getDictionary();
 
   const expected = [
-    'ERR_XCHARTSJS_INVALID_ADD_METHOD_ARG:',
+    'ERR_X_CHARTS_JS_INVALID_ADD_METHOD_ARG:',
     '.add() method argument, component legend:',
     "  unknown property 'someUnknownProp'",
   ].join('\n');
@@ -48,7 +48,7 @@ tp.test('htmlFragment is not string', (t) => {
   const dict = getDictionary();
 
   const expected = [
-    'ERR_XCHARTSJS_INVALID_ADD_METHOD_ARG:',
+    'ERR_X_CHARTS_JS_INVALID_ADD_METHOD_ARG:',
     '.add() method argument, component legend -> htmlFragment:',
     '  value must be a non-empty valid HTML string',
   ].join('\n');

@@ -33,7 +33,7 @@ tp.test('no arguments', (t) => {
   //$FlowFixMe[incompatible-type]
   const dict = getDictionary(ContainerDiv);
   const expected = [
-    'ERR_XCHARTSJS_INVALID_CONSTRUCTOR_ARG:',
+    'ERR_X_CHARTS_JS_INVALID_CONSTRUCTOR_ARG:',
     'The new XChartsJs() constructor expects a single argument',
   ].join('\n');
 
@@ -57,7 +57,7 @@ tp.test('extra arguments', (t) => {
   //$FlowFixMe[incompatible-type]
   const dict = getDictionary(ContainerDiv);
   const expected = [
-    'ERR_XCHARTSJS_INVALID_CONSTRUCTOR_ARG:',
+    'ERR_X_CHARTS_JS_INVALID_CONSTRUCTOR_ARG:',
     'The new XChartsJs() constructor expects a single argument',
   ].join('\n');
 
@@ -75,7 +75,7 @@ tp.test('argument is not object', (t) => {
   //$FlowFixMe[incompatible-type]
   const dict = getDictionary(ContainerDiv);
   const expected = [
-    'ERR_XCHARTSJS_INVALID_CONSTRUCTOR_ARG:',
+    'ERR_X_CHARTS_JS_INVALID_CONSTRUCTOR_ARG:',
     'Argument to the new XChartsJs() constructor must be an object',
     'e.g. {  }, Object.create(null)',
   ].join('\n');
@@ -100,7 +100,7 @@ tp.test('containerDiv is not valid', (t) => {
   //$FlowFixMe[incompatible-type]
   const dict = getDictionary(ContainerDiv);
   const expected = [
-    'ERR_XCHARTSJS_INVALID_CONSTRUCTOR_ARG:',
+    'ERR_X_CHARTS_JS_INVALID_CONSTRUCTOR_ARG:',
     'new XChartsJs() argument -> containerDiv:',
     '  value must be an HTMLDivElement',
   ].join('\n');
@@ -126,7 +126,7 @@ tp.test('extra argument in options', (t) => {
   //$FlowFixMe[incompatible-type]
   const dict = getDictionary(ContainerDiv);
   const expected = [
-    'ERR_XCHARTSJS_INVALID_CONSTRUCTOR_ARG:',
+    'ERR_X_CHARTS_JS_INVALID_CONSTRUCTOR_ARG:',
     'new XChartsJs() argument -> options:',
     "  unknown property 'foo'",
   ].join('\n');
@@ -151,7 +151,7 @@ tp.test('isComponentInspectMode invalid', (t) => {
   //$FlowFixMe[incompatible-type]
   const dict = getDictionary(ContainerDiv);
   const expected = [
-    'ERR_XCHARTSJS_INVALID_CONSTRUCTOR_ARG:',
+    'ERR_X_CHARTS_JS_INVALID_CONSTRUCTOR_ARG:',
     'new XChartsJs() argument -> options -> isComponentInspectMode:',
     "  value must be boolean",
   ].join('\n');
