@@ -1,7 +1,5 @@
 //@flow strict
-import type {
-  ComponentInstance,
-} from '../../types.js';
+import type { ComponentInstance, } from '../../types.js';
 import XCharts, { registerComponent, } from '../../main.js';
 import type { AddMethodArgumentPie3d, } from './types.js';
 import { draw, } from './draw.js';

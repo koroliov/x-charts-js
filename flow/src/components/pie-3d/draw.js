@@ -12,7 +12,7 @@ export function draw(arg: {
   const rimSlicesData = prepareRimSlicesData(pieData);
   const processActions = handleAndGetProcessActions();
   if (!pieData.isHeadsVisibleToUser && !pieData.isTailsVisibleToUser) {
-    processActions.forEach((a) => a ? processRimBar({ action: a, }) : 0);
+    processActions.forEach((a) => a && processRimBar({ action: a, }));
   } else {
     const isHeads = pieData.isHeadsVisibleToUser;
     processActions.forEach((a) => {
