@@ -1,4 +1,4 @@
-import XChartsJs from '/dist/modules/main.js';
+import XChartsJs from '/dist/modules/main/main.js';
 import '/dist/modules/components/pie-3d/main.js';
 import '/dist/modules/components/legend/main.js';
 

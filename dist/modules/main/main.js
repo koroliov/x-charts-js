@@ -3,15 +3,15 @@
                              
                  
                     
-                    
+                     
 import {
   validate as validateXChartsAddMethodArgumentOnXChartsLevel,
   getDictionary as getValidationDictionaryOnXChartsLevel,
-} from './validation/add-method-arg.js';
+} from '../validation/add-method-arg.js';
 import {
   validate as validateConstructorArgument,
   getDictionary as getValidationDictionaryForContructorArgument,
-} from './validation/constructor-arg.js';
+} from '../validation/constructor-arg.js';
 
 const componentsRegistry                              = new Map();
 
@@ -60,7 +60,7 @@ export default class XCharts {
           .getElementById('x-charts-js--components-container');
       if (!(componentsContainer instanceof HTMLDivElement)) {
         throw new Error([
-          'ERR_XCHARTSJS_INTERNAL:',
+          'ERR_X_CHARTS_JS_INTERNAL:',
           'Internal Flow required XCharts error',
         ].join('\n'));
       }
@@ -122,7 +122,7 @@ export default class XCharts {
 
     function getNoRegisteredComponentErrorMsg() {
       return [
-        'ERR_XCHARTSJS_COMPONENT_NOT_REGISTERED:',
+        'ERR_X_CHARTS_JS_COMPONENT_NOT_REGISTERED:',
         `Component of type '${ argTypeVerified.type
           }' has not been registered,`,
         `registered components are:`,

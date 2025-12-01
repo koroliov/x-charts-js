@@ -1,8 +1,6 @@
 //      strict
-             
-                    
-                        
-import XCharts, { registerComponent, } from '../../main.js';
+                                                         
+import XCharts, { registerComponent, } from '../../main/main.js';
                                                           
 import { draw, } from './draw.js';
 import * as AddMethodArgumentValidator from './validation/add-method-arg.js';
