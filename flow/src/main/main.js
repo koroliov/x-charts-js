@@ -3,15 +3,15 @@ import type {
   XChartsConstructorArgument,
   ComponentClass,
   ComponentInstance,
-} from './types.js';
+} from '../types.js';
 import {
   validate as validateXChartsAddMethodArgumentOnXChartsLevel,
   getDictionary as getValidationDictionaryOnXChartsLevel,
-} from './validation/add-method-arg.js';
+} from '../validation/add-method-arg.js';
 import {
   validate as validateConstructorArgument,
   getDictionary as getValidationDictionaryForContructorArgument,
-} from './validation/constructor-arg.js';
+} from '../validation/constructor-arg.js';
 
 const componentsRegistry: Map<string, ComponentClass> = new Map();
 
