@@ -98,7 +98,7 @@ export default class XCharts {
 
   add(argProvided: mixed): ComponentInstance {
     const that = this;
-    doXChartsLevelArgumentValidation([...arguments]);
+    doMainLevelArgumentValidation([...arguments]);
     const argTypeVerified: { type: string, zIndex: string, [string]: mixed, } =
       //At this point the type and zIndex properties are supposed to be valid
       //$FlowFixMe[incompatible-type]
@@ -155,7 +155,7 @@ export default class XCharts {
       }
     }
 
-    function doXChartsLevelArgumentValidation(addMethodArgs: Array<mixed>) {
+    function doMainLevelArgumentValidation(addMethodArgs: Array<mixed>) {
       const dict = getValidationDictionaryOnXChartsLevel();
       const errorMsg =
         validateAddMethodArgumentOnXChartsLevel(dict, addMethodArgs);
