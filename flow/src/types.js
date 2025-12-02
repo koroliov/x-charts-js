@@ -1,5 +1,5 @@
 //@flow strict
-export type XChartsConstructorArgument = {
+export type XChartsJsConstructorArgument = {
   +containerDiv: HTMLDivElement,
   +options: {
     +backgroundColor: string,
@@ -12,7 +12,7 @@ export interface ComponentInstance {
 
 export type ComponentClass = {
   +_type: string,
-  validateXChartsAddMethodArgument(
+  validateAddMethodArgument(
     arg: {
       [string]: mixed,
     },
@@ -20,7 +20,7 @@ export type ComponentClass = {
   ...
 }
 
-export type XChartsAddMethodArgument = {
+export type AddMethodArgument = {
   +type: string,
   +zIndex: string,
   [string]: mixed,

@@ -1,11 +1,11 @@
 //@flow strict
 import type {
-  XChartsConstructorArgument,
+  XChartsJsConstructorArgument,
   ComponentClass,
   ComponentInstance,
 } from '../types.js';
 import {
-  validate as validateXChartsAddMethodArgumentOnXChartsLevel,
+  validate as validateAddMethodArgumentOnXChartsLevel,
   getDictionary as getValidationDictionaryOnXChartsLevel,
 } from '../validation/add-method-arg.js';
 import {
@@ -82,7 +82,7 @@ export default class XCharts {
     }
 
     function doValidation(constructorArguments: Array<mixed>):
-      XChartsConstructorArgument {
+      XChartsJsConstructorArgument {
       const dict = getValidationDictionaryForContructorArgument(HTMLDivElement);
       const errorMsg = validateConstructorArgument(dict, constructorArguments);
       if (errorMsg) {
@@ -90,7 +90,7 @@ export default class XCharts {
         throw new Error(errorMsg);
       }
       //After the validation we should be sure it's guaranteed to be
-      //XChartsConstructorArgument
+      //XChartsJsConstructorArgument
       //$FlowFixMe[incompatible-type]
       return arg;
     }
@@ -143,7 +143,7 @@ export default class XCharts {
 
     function doComponentLevelArgumentValidation() {
       const invalidArgumentErrorMsg = componentClass
-        .validateXChartsAddMethodArgument(
+        .validateAddMethodArgument(
           //Despite the argTypeVerified is guaranteed at that point to have
           //props like: type, zIndex, I WANT to ignore them and treat the value
           //as the cast to value.
@@ -158,7 +158,7 @@ export default class XCharts {
     function doXChartsLevelArgumentValidation(addMethodArgs: Array<mixed>) {
       const dict = getValidationDictionaryOnXChartsLevel();
       const errorMsg =
-        validateXChartsAddMethodArgumentOnXChartsLevel(dict, addMethodArgs);
+        validateAddMethodArgumentOnXChartsLevel(dict, addMethodArgs);
       if (errorMsg) {
         that._attemptToShowError(errorMsg);
         throw new Error(errorMsg);

@@ -23,7 +23,7 @@ class Legend implements ComponentInstance {
     }
   }
 
-  static validateXChartsAddMethodArgument(
+  static validateAddMethodArgument(
     arg: { [string]: mixed, }
   ): string {
     const dict = AddMethodArgumentValidator.getDictionary();
@@ -31,10 +31,10 @@ class Legend implements ComponentInstance {
   }
 }
 
-//This error is due to some 'unbindig' of the static
-//validateXChartsAddMethodArgument() method. The method is placed correctly (I
-//don't want to declare it outside of the class declaration) and it's used
-//correctly: RefToLegendClass.validateXChartsAddMethodArgument() So the logical
-//decision was just to suppress here.
+//This error is due to some 'unbindig' of the static validateAddMethodArgument()
+//method. The method is placed correctly (I don't want to declare it outside of
+//the class declaration) and it's used correctly:
+//RefToLegendClass.validateAddMethodArgument() So the logical decision was just
+//to suppress here.
 //$FlowFixMe[method-unbinding]
 registerComponent(Legend);

@@ -1,5 +1,5 @@
 //@flow strict
-import type { XChartsAddMethodArgument, Point, } from '../../types.js';
+import type { AddMethodArgument, Point, } from '../../types.js';
 
 export type DataEntry = {
   +value: number,
@@ -10,8 +10,8 @@ export type DataEntry = {
 }
 
 export type AddMethodArgumentPie3d = {
-  +type: XChartsAddMethodArgument['type'],
-  +zIndex: XChartsAddMethodArgument['zIndex'],
+  +type: AddMethodArgument['type'],
+  +zIndex: AddMethodArgument['zIndex'],
   +data: $ReadOnlyArray<DataEntry>,
   +options: {
     +thicknessPx: number,

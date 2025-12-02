@@ -1,8 +1,8 @@
 //@flow strict
-import type { XChartsAddMethodArgument, } from '../../types.js';
+import type { AddMethodArgument, } from '../../types.js';
 
 export type AddMethodArgumentLegend = {
-  +type: XChartsAddMethodArgument['type'],
-  +zIndex: XChartsAddMethodArgument['zIndex'],
+  +type: AddMethodArgument['type'],
+  +zIndex: AddMethodArgument['zIndex'],
   +htmlFragment: string,
 }
