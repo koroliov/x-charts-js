@@ -29,7 +29,7 @@ class Pie3d                              {
     }
   }
 
-  static validateXChartsAddMethodArgument(
+  static validateAddMethodArgument(
     arg                      
   )         {
     const dict = AddMethodArgumentValidator.getDictionary();
@@ -37,10 +37,10 @@ class Pie3d                              {
   }
 }
 
-//This error is due to some 'unbindig' of the static
-//validateXChartsAddMethodArgument() method. The method is placed correctly (I
-//don't want to declare it outside of the class declaration) and it's used
-//correctly: RefToPie3dClass.validateXChartsAddMethodArgument() So the logical
-//decision was just to suppress here.
+//This error is due to some 'unbindig' of the static validateAddMethodArgument()
+//method. The method is placed correctly (I don't want to declare it outside of
+//the class declaration) and it's used correctly:
+//RefToPie3dClass.validateAddMethodArgument() So the logical decision was just
+//to suppress here.
 //$FlowFixMe[method-unbinding]
 registerComponent(Pie3d);

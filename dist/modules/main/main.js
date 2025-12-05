@@ -1,11 +1,11 @@
 //      strict
              
-                             
+                               
                  
                     
                      
 import {
-  validate as validateXChartsAddMethodArgumentOnXChartsLevel,
+  validate as validateAddMethodArgumentOnXChartsLevel,
   getDictionary as getValidationDictionaryOnXChartsLevel,
 } from '../validation/add-method-arg.js';
 import {
@@ -82,7 +82,7 @@ export default class XCharts {
     }
 
     function doValidation(constructorArguments              ) 
-                                 {
+                                   {
       const dict = getValidationDictionaryForContructorArgument(HTMLDivElement);
       const errorMsg = validateConstructorArgument(dict, constructorArguments);
       if (errorMsg) {
@@ -90,7 +90,7 @@ export default class XCharts {
         throw new Error(errorMsg);
       }
       //After the validation we should be sure it's guaranteed to be
-      //XChartsConstructorArgument
+      //XChartsJsConstructorArgument
       //$FlowFixMe[incompatible-type]
       return arg;
     }
@@ -98,7 +98,7 @@ export default class XCharts {
 
   add(argProvided       )                    {
     const that = this;
-    doXChartsLevelArgumentValidation([...arguments]);
+    doMainLevelArgumentValidation([...arguments]);
     const argTypeVerified                                                     =
       //At this point the type and zIndex properties are supposed to be valid
       //$FlowFixMe[incompatible-type]
@@ -143,7 +143,7 @@ export default class XCharts {
 
     function doComponentLevelArgumentValidation() {
       const invalidArgumentErrorMsg = componentClass
-        .validateXChartsAddMethodArgument(
+        .validateAddMethodArgument(
           //Despite the argTypeVerified is guaranteed at that point to have
           //props like: type, zIndex, I WANT to ignore them and treat the value
           //as the cast to value.
@@ -155,10 +155,10 @@ export default class XCharts {
       }
     }
 
-    function doXChartsLevelArgumentValidation(addMethodArgs              ) {
+    function doMainLevelArgumentValidation(addMethodArgs              ) {
       const dict = getValidationDictionaryOnXChartsLevel();
       const errorMsg =
-        validateXChartsAddMethodArgumentOnXChartsLevel(dict, addMethodArgs);
+        validateAddMethodArgumentOnXChartsLevel(dict, addMethodArgs);
       if (errorMsg) {
         that._attemptToShowError(errorMsg);
         throw new Error(errorMsg);
