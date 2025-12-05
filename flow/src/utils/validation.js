@@ -1,12 +1,20 @@
 //@flow strict
 export function isObject(val: mixed): boolean {
-  if (val === undefined || val === null) {
+  if (val === null || Array.isArray(val) || typeof val !== 'object') {
     return false;
   }
-  if (Array.isArray(val)) {
-    return false;
+  const proto = Object.getPrototypeOf(val);
+  //In this case we explicitly want to check if it's null, which is a normal
+  //practice of object instantiation Object.create(null);
+  //$FlowFixMe[invalid-compare]
+  if (proto === null) {
+    return true;
   }
-  return typeof val === 'object';
+  const objProto = Object.prototype;
+  if (proto === objProto) {
+    return true;
+  }
+  return false;
 }
 
 export function validateHexColor(val: mixed): string {
