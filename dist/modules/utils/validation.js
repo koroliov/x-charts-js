@@ -1,5 +1,6 @@
 //      strict
-export function isObject(val       )          {
+export function isObject(val       )                
+                                                               {
   if (val === null || Array.isArray(val) || typeof val !== 'object') {
     return false;
   }
@@ -8,10 +9,18 @@ export function isObject(val       )          {
   //practice of object instantiation Object.create(null);
   //$FlowFixMe[invalid-compare]
   if (proto === null) {
+    //The error message was incomprehensible, about the 'object [1]', probably
+    //the argument val having RO key/value signature, but the TypeGuard's
+    //is clause having the RW signature
+    //$FlowFixMe[incompatible-type-guard]
     return true;
   }
   const objProto = Object.prototype;
   if (proto === objProto) {
+    //The error message was incomprehensible, about the 'object [1]', probably
+    //the argument val having RO key/value signature, but the TypeGuard's
+    //is clause having the RW signature
+    //$FlowFixMe[incompatible-type-guard]
     return true;
   }
   return false;

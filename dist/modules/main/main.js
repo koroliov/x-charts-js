@@ -9,6 +9,9 @@ import {
   getDictionary as getValidationDictionaryOnXChartsLevel,
 } from '../validation/add-method-arg.js';
 import {
+  process as processAddMethodArg,
+} from './process-external-values/add-method-arg.js';
+import {
   validate as validateConstructorArgument,
   getDictionary as getValidationDictionaryForContructorArgument,
 } from '../validation/constructor-arg.js';
@@ -99,11 +102,13 @@ export default class XCharts {
   add(argProvided       )                    {
     const that = this;
     doMainLevelArgumentValidation([...arguments]);
+    const valueToUseOnMainLevel =
+      doMainLevelArgumentProcessing(Array.from(arguments));
+    const componentClass = getComponentClass();
     const argTypeVerified                                                     =
       //At this point the type and zIndex properties are supposed to be valid
       //$FlowFixMe[incompatible-type]
       argProvided;
-    const componentClass = getComponentClass();
     doComponentLevelArgumentValidation();
     const container = createContainer();
     //At this point is should be of type expected by the component's class
@@ -111,7 +116,7 @@ export default class XCharts {
     return new componentClass(argTypeVerified, container);
 
     function getComponentClass()                 {
-      const componentClass = componentsRegistry.get(argTypeVerified.type);
+      const componentClass = componentsRegistry.get(valueToUseOnMainLevel.type);
       if (!componentClass) {
         const msg = getNoRegisteredComponentErrorMsg();
         that._attemptToShowError(msg);
@@ -123,7 +128,7 @@ export default class XCharts {
     function getNoRegisteredComponentErrorMsg() {
       return [
         'ERR_X_CHARTS_JS_COMPONENT_NOT_REGISTERED:',
-        `Component of type '${ argTypeVerified.type
+        `Component of type '${ valueToUseOnMainLevel.type
           }' has not been registered,`,
         `registered components are:`,
         Array.from(componentsRegistry.keys()).join(),
@@ -132,8 +137,9 @@ export default class XCharts {
 
     function createContainer() {
       const container = document.createElement('div');
-      container.setAttribute('class', `${ argTypeVerified.type }--container`);
-      container.style.zIndex = argTypeVerified.zIndex;
+      container.setAttribute('class', `${ valueToUseOnMainLevel.type
+        }--container`);
+      container.style.zIndex = valueToUseOnMainLevel.zIndex;
       container.style.position = 'absolute';
       container.style.width = '100%';
       container.style.height = '100%';
@@ -163,6 +169,16 @@ export default class XCharts {
         that._attemptToShowError(errorMsg);
         throw new Error(errorMsg);
       }
+    }
+
+    function doMainLevelArgumentProcessing(addMethodArgs              ) {
+      const { validationErrorMessage: e, valueToUse, } =
+        processAddMethodArg(addMethodArgs);
+      if (e) {
+        that._attemptToShowError(e);
+        throw new Error(e);
+      }
+      return valueToUse;
     }
   }
 
