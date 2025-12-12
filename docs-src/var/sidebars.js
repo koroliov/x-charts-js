@@ -31,17 +31,7 @@ const sidebars = {
   ],
    */
   docsSidebar: [
-    {
-      type: 'category',
-      label: 'Overview',
-      items: [
-        'overview/introduction',
-        'overview/prerequisites',
-        'overview/usage',
-        'overview/current-limitations',
-        'overview/caveats',
-      ],
-    },
+    'overview',
     {
       type: 'category',
       label: 'API Reference',
