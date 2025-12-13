@@ -1,6 +1,6 @@
 //@flow strict
-export function isObject(val: mixed): implies val is
-  { [string]: mixed, } | { [string]: mixed, __proto__: null, } {
+import type { PureObject, } from '../types.js';
+export function isPureObject(val: mixed): implies val is PureObject {
   if (val === null || Array.isArray(val) || typeof val !== 'object') {
     return false;
   }

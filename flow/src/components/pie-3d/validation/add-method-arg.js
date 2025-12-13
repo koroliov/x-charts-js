@@ -1,7 +1,7 @@
 //@flow strict
 import type { ValidationDictionary, } from '../../../types.js';
 import type { DataEntry, } from '../types.js';
-import { isObject, validateHexColor, } from '../../../utils/validation.js';
+import { validateHexColor, } from '../../../utils/validation.js';
 import { validate as validateByDictionary, } from
   '../../../validation/by-dictionary.js';
 import { getDictionary as getDictionaryCommon, }

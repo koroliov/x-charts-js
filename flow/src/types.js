@@ -38,3 +38,6 @@ export type ValidationDictionary = {
     ValidationDictionaryPure |
     [ ValidationDictionary, ],
 }
+
+export type PureObject = { [string]: mixed, } |
+  { [string]: mixed, __proto__: null, }
