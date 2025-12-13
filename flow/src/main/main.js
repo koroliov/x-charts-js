@@ -111,7 +111,7 @@ export default class XCharts {
       argProvided;
     doComponentLevelArgumentValidation();
     const container = createContainer();
-    //At this point is should be of type expected by the component's class
+    //At this point it should be a component class
     //$FlowFixMe[invalid-constructor]
     return new componentClass(argTypeVerified, container);
 
