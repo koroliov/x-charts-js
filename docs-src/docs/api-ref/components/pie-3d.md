@@ -1,8 +1,15 @@
 ---
+description: "JavaScript canvas pie 3d chart. No WebGL is required. Works in any
+modern web browser."
 sidebar_label: 'Pie-3d'
 ---
 
 # Pie-3d
+
+:::tip
+**There is the live working <a class="button button--primary button--sm"
+href="/x-charts-js/docs/demos/#pie-3d-chart">demo page</a> example.**
+:::
 
 ```js
 import '/path-to/x-charts-js/components/pie-3d/main.js';
@@ -41,7 +48,7 @@ E.g. if the data provided contains values large enough that when summed up,
 processed the result will be inaccurate (`Infinity`, `NaN` etc.), then currently
 the user is supposed to take care of this.
 
-normalize data to something reasonable/safe. E.g divide each item by
+Normalize data to something reasonable/safe, e.g. divide each item by
 1,000,000,000,000 etc., exclude/combine too small values etc.
 
 Currently this was deemed to be an overkill to implement.
