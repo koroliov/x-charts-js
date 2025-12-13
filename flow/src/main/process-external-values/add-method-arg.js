@@ -1,9 +1,6 @@
 //@flow strict
-import type {
-  Schema,
-  SchemaArray,
-  CarryObj,
-} from '../../external-values-processor/types.js';
+import type { SchemaArray, CarryObj, }
+  from '../../external-values-processor/types.js';
 import { process as processMain, }
   from '../../external-values-processor/main.js';
 
