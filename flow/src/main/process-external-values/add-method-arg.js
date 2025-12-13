@@ -40,6 +40,20 @@ export function process(userProvidedArguments: Array<mixed>, registeredTypes:
         type: {
           type: 'final',
           process(valueProvided: mixed, carryObj: CarryObj) {
+            const valueProvidedStr = String(valueProvided);
+            if (!registeredTypes.has(valueProvidedStr)) {
+              return {
+                validationErrorMessage: [
+                  'ERR_X_CHARTS_JS_INVALID_ADD_METHOD_ARG:',
+                  `Component of type '${ valueProvidedStr
+                    }' has not been registered,`,
+                  `registered components are: ${
+                    Array.from(registeredTypes).join(', ') }`,
+                ].join('\n'),
+                carryObj,
+                valueToUse: null,
+              };
+            }
             return {
               validationErrorMessage: '',
               carryObj,

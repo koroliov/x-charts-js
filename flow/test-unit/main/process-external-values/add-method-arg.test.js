@@ -46,3 +46,27 @@ tp.test('zIndex default value', (t) => {
   t.deepEqual(actual, expected);
   t.end();
 });
+
+//Invalid cases, type
+tp.test('unregistered type', (t) => {
+  const addMethodArguments: Array<mixed> = [
+    {
+      type: 'unknownType',
+      zIndex: '2',
+      anyOtherProp: 'any',
+    },
+  ];
+  const registeredTypes = new Set([ 'foo', 'bar', ]);
+  const expected = {
+    validationErrorMessage: [
+      'ERR_X_CHARTS_JS_INVALID_ADD_METHOD_ARG:',
+      `Component of type 'unknownType' has not been registered,`,
+      `registered components are: foo, bar`,
+    ].join('\n'),
+    valueToUse: null,
+  };
+
+  const actual = process(addMethodArguments, registeredTypes);
+  t.deepEqual(actual, expected);
+  t.end();
+});

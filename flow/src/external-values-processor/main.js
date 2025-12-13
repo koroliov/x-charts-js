@@ -38,34 +38,41 @@ export function process(externalValue: mixed, schema: Schema): {
   let i = -1;
   let externalValueCurrent = externalValue;
 
-  while (true) {
-    const lastStackEntry = stack.at(-1);
-    if (!lastStackEntry) {
-      if (schemaCurrent.type === 'array') {
-        handleTopLevelExternalValueArray(schemaCurrent);
-        continue;
-      }
-    } else {
-      i = ++lastStackEntry.i;
-      if (lastStackEntry.type === 'array') {
-        if (handleDeepLevelExternalValueArray(lastStackEntry)) {
+  try {
+    while (true) {
+      const lastStackEntry = stack.at(-1);
+      if (!lastStackEntry) {
+        if (schemaCurrent.type === 'array') {
+          handleTopLevelExternalValueArray(schemaCurrent);
           continue;
         }
-      } else if (lastStackEntry.type === 'object') {
-        if (handleDeepLevelExternalValueObject(lastStackEntry)) {
-          continue;
-        }
-        schemaCurrent =
-          lastStackEntry.schema.properties[lastStackEntry.propsSchema[i]];
-        if (schemaCurrent.type === 'final') {
-          if (handleDeepLevelExternalValueFinalInObject(lastStackEntry,
-              schemaCurrent)) {
+      } else {
+        i = ++lastStackEntry.i;
+        if (lastStackEntry.type === 'array') {
+          if (handleDeepLevelExternalValueArray(lastStackEntry)) {
             continue;
+          }
+        } else if (lastStackEntry.type === 'object') {
+          if (handleDeepLevelExternalValueObject(lastStackEntry)) {
+            continue;
+          }
+          schemaCurrent =
+            lastStackEntry.schema.properties[lastStackEntry.propsSchema[i]];
+          if (schemaCurrent.type === 'final') {
+            if (handleDeepLevelExternalValueFinalInObject(lastStackEntry,
+                schemaCurrent)) {
+              continue;
+            }
           }
         }
       }
+      break;
     }
-    break;
+  } catch(e) {
+    return {
+      validationErrorMessage: e.message,
+      valueToUse: null,
+    };
   }
   return {
     validationErrorMessage: '',
@@ -176,7 +183,7 @@ export function process(externalValue: mixed, schema: Schema): {
     }
     const procValue = schemaCasted.process(extObj[prop], carry);
     if (procValue.validationErrorMessage) {
-      throw new Error('validation error');
+      throw new Error(procValue.validationErrorMessage);
     }
     lastStackEntry.valueToUse[prop] = procValue.valueToUse;
     return true;

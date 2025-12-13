@@ -8,9 +8,8 @@ import {
   validate as validateAddMethodArgumentOnXChartsLevel,
   getDictionary as getValidationDictionaryOnXChartsLevel,
 } from '../validation/add-method-arg.js';
-import {
-  process as processAddMethodArg,
-} from './process-external-values/add-method-arg.js';
+import { process as processAddMethodArg, }
+  from './process-external-values/add-method-arg.js';
 import {
   validate as validateConstructorArgument,
   getDictionary as getValidationDictionaryForContructorArgument,
