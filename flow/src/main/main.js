@@ -104,7 +104,11 @@ export default class XCharts {
     doMainLevelArgumentValidation([...arguments]);
     const valueToUseOnMainLevel =
       doMainLevelArgumentProcessing(Array.from(arguments));
-    const componentClass = getComponentClass();
+    const componentClass: ComponentClass =
+      //Here it's validated and we are sure that the component has been
+      //registered
+      //$FlowFixMe[incompatible-type]
+      componentsRegistry.get(valueToUseOnMainLevel.type);
     const argTypeVerified: { type: string, zIndex: string, [string]: mixed, } =
       //At this point the type and zIndex properties are supposed to be valid
       //$FlowFixMe[incompatible-type]
@@ -114,26 +118,6 @@ export default class XCharts {
     //At this point it should be a component class
     //$FlowFixMe[invalid-constructor]
     return new componentClass(argTypeVerified, container);
-
-    function getComponentClass(): ComponentClass {
-      const componentClass = componentsRegistry.get(valueToUseOnMainLevel.type);
-      if (!componentClass) {
-        const msg = getNoRegisteredComponentErrorMsg();
-        that._attemptToShowError(msg);
-        throw new Error(msg);
-      }
-      return componentClass;
-    }
-
-    function getNoRegisteredComponentErrorMsg() {
-      return [
-        'ERR_X_CHARTS_JS_COMPONENT_NOT_REGISTERED:',
-        `Component of type '${ valueToUseOnMainLevel.type
-          }' has not been registered,`,
-        `registered components are:`,
-        Array.from(componentsRegistry.keys()).join(),
-      ].join('\n');
-    }
 
     function createContainer() {
       const container = document.createElement('div');
@@ -172,8 +156,9 @@ export default class XCharts {
     }
 
     function doMainLevelArgumentProcessing(addMethodArgs: Array<mixed>) {
+      const registeredTypes = new Set(componentsRegistry.keys());
       const { validationErrorMessage: e, valueToUse, } =
-        processAddMethodArg(addMethodArgs);
+        processAddMethodArg(addMethodArgs, registeredTypes);
       if (e) {
         that._attemptToShowError(e);
         throw new Error(e);

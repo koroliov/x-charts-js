@@ -7,20 +7,21 @@ import { process, } from
 tp.test('valid argument case', (t) => {
   const addMethodArguments: Array<mixed> = [
     {
-      type: 'any',
+      type: 'foo',
       zIndex: '2',
       anyOtherProp: 'any',
     },
   ];
+  const registeredTypes = new Set([ 'foo', 'bar', ]);
   const expected = {
     validationErrorMessage: '',
     valueToUse: {
-      type: 'any',
+      type: 'foo',
       zIndex: '2',
     },
   };
 
-  const actual = process(addMethodArguments);
+  const actual = process(addMethodArguments, registeredTypes);
   t.deepEqual(actual, expected);
   t.end();
 });
@@ -28,19 +29,20 @@ tp.test('valid argument case', (t) => {
 tp.test('zIndex default value', (t) => {
   const addMethodArguments: Array<mixed> = [
     {
-      type: 'any',
+      type: 'foo',
       anyOtherProp: 'any',
     },
   ];
+  const registeredTypes = new Set([ 'foo', 'bar', ]);
   const expected = {
     validationErrorMessage: '',
     valueToUse: {
-      type: 'any',
+      type: 'foo',
       zIndex: '1',
     },
   };
 
-  const actual = process(addMethodArguments);
+  const actual = process(addMethodArguments, registeredTypes);
   t.deepEqual(actual, expected);
   t.end();
 });

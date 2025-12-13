@@ -9,7 +9,8 @@ type AddMethodArgumentMainLevel = {
   +zIndex: string,
 }
 
-export function process(userProvidedArguments: Array<mixed>): {
+export function process(userProvidedArguments: Array<mixed>, registeredTypes:
+    Set<string>): {
   validationErrorMessage: string,
   valueToUse: AddMethodArgumentMainLevel,
 } {
