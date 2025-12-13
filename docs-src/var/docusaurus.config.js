@@ -24,6 +24,7 @@ const config = {
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
   baseUrl: '/x-charts-js/',
+  trailingSlash: true,
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
@@ -172,6 +173,7 @@ const config = {
       },
       metadata: [
         { name: 'keywords', content: 'javascript, charts, library, pie 3d', },
+        { name: 'google-site-verification', content: 'GMz31BOMbWMxWvSU-VthMB_J3R13R6lGkFTJiB0PIIs', },
 
         { property: 'og:type', content: 'website', },
         { property: 'og:site_name', content: 'x-charts-js', },
