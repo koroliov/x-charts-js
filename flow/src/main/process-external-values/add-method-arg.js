@@ -3,6 +3,7 @@ import type { SchemaArray, CarryObj, }
   from '../../external-values-processor/types.js';
 import { process as processMain, }
   from '../../external-values-processor/main.js';
+import { isPureObject, } from '../../utils/validation.js';
 
 type AddMethodArgumentMainLevel = {
   +type: string,
@@ -17,6 +18,17 @@ export function process(userProvidedArguments: Array<mixed>, registeredTypes:
   const schema: SchemaArray = {
     type: 'array',
     processPre(valueProvided, carryObj, valueToUse) {
+      if (Array.isArray(valueProvided)) {
+        if (valueProvided.length !== 1) {
+          return {
+            carryObj,
+            valueToUse,
+            validationErrorMessage:
+                `The .add() method expects a single argument, received ${
+                    valueProvided.length }`,
+          };
+        }
+      }
       return {
         carryObj,
         valueToUse,
@@ -32,6 +44,21 @@ export function process(userProvidedArguments: Array<mixed>, registeredTypes:
     },
     elements: {
       type: 'object',
+      processPre(valueProvided, carryObj, valueToUse) {
+        if (!isPureObject(valueProvided)) {
+          return {
+            carryObj,
+            valueToUse,
+            validationErrorMessage:
+              'Must be an object, e.g. {  }, Object.create(null)',
+          };
+        }
+        return {
+          carryObj,
+          valueToUse,
+          validationErrorMessage: '',
+        };
+      },
       getStub() {
         return { type: '', zIndex: '', };
       },
@@ -44,7 +71,6 @@ export function process(userProvidedArguments: Array<mixed>, registeredTypes:
             if (!registeredTypes.has(valueProvidedStr)) {
               return {
                 validationErrorMessage: [
-                  'ERR_X_CHARTS_JS_INVALID_ADD_METHOD_ARG:',
                   `Component of type '${ valueProvidedStr
                     }' has not been registered,`,
                   `registered components are: ${
@@ -64,11 +90,22 @@ export function process(userProvidedArguments: Array<mixed>, registeredTypes:
         zIndex: {
           type: 'final',
           process(valueProvided: mixed, carryObj: CarryObj) {
-            return {
+            const retVal = {
               validationErrorMessage: '',
               carryObj,
               valueToUse: valueProvided,
             };
+            if (isInvalid()) {
+              retVal.valueToUse = null;
+              retVal.validationErrorMessage =
+                'Value must be a numeric integer string with no white spaces';
+            }
+            return retVal;
+
+            function isInvalid() {
+              return typeof valueProvided !== 'string' ||
+                !/^-*\d+$/.test(valueProvided);
+            }
           },
           getDefault() {
             return '1';
@@ -79,8 +116,32 @@ export function process(userProvidedArguments: Array<mixed>, registeredTypes:
   };
 
   const processed = processMain(userProvidedArguments, schema);
+  const retVal = {
+    validationErrorMessage: prepareFinalErrorMessage(),
+    valueToUse: processed.valueToUse,
+  };
   //At this stage the processed.valueToUse should be guaranteed to be of type
   //AddMethodArgumentMainLevel
   //$FlowFixMe[incompatible-type]
-  return processed;
+  return retVal;
+
+  function prepareFinalErrorMessage() {
+    if (!processed.validationError) {
+      return '';
+    }
+    const errorMessageArray: Array<string> = [
+      'ERR_X_CHARTS_JS_INVALID_ADD_METHOD_ARG:',
+    ];
+    if (processed.validationError.path.length) {
+      processed.validationError.path[0] = 'argument 0';
+      errorMessageArray.push(`  ${
+          //.path is definitely not null here
+          //$FlowFixMe[incompatible-use]
+          processed.validationError.path.join(' -> ') }:`);
+    }
+    //if validationError is not null, then .message is string
+    //$FlowFixMe[incompatible-use]
+    errorMessageArray.push(`  ${ processed.validationError.message }`);
+    return errorMessageArray.join('\n');
+  }
 }

@@ -28,7 +28,10 @@ type StackEntryObject = {
 }
 
 export function process(externalValue: mixed, schema: Schema): {
-  validationErrorMessage: string,
+  validationError: null | {
+    path: Array<string>,
+    message: string,
+  },
   valueToUse: mixed,
 } {
   const carry = Object.create(null);
@@ -70,14 +73,28 @@ export function process(externalValue: mixed, schema: Schema): {
     }
   } catch(e) {
     return {
-      validationErrorMessage: e.message,
+      validationError: {
+        path: generateErrorValuePath(),
+        message: e.message,
+      },
       valueToUse: null,
     };
   }
   return {
-    validationErrorMessage: '',
+    validationError: null,
     valueToUse,
   };
+
+  function generateErrorValuePath() {
+    return stack.reduce((a: Array<string>, el) => {
+      if (el.type === 'array') {
+        return a.push(String(el.i)), a;
+      } else if (el.type === 'object') {
+        return a.push(el.propsSchema[el.i]), a;
+      }
+      return a;
+    }, []);
+  }
 
   function isArray(param: mixed): param is Array<mixed> {
     //Seems to be a Flow bug
@@ -94,7 +111,7 @@ export function process(externalValue: mixed, schema: Schema): {
       const rv = schemaCurrentPassed
         .processPre(externalValueCurrent, carry, valueToUseArray);
       if (rv.validationErrorMessage) {
-        throw new Error('aaa');
+        throw new Error(rv.validationErrorMessage);
       }
     }
     stack.push({
@@ -105,15 +122,21 @@ export function process(externalValue: mixed, schema: Schema): {
       i: -1,
     });
     schemaCurrent = schemaCurrentPassed.elements;
-    if (0 === externalValueCurrent.length) {
-      throw new Error('aaa');
-    }
   }
 
   function handleDeepLevelExternalValueArray(lastStackEntry: StackEntryArray) {
     const extArray: Array<mixed> = lastStackEntry.externalValueCurrent;
-    schemaCurrent = lastStackEntry.schema.elements;
+    const schemaOfArrayElement = lastStackEntry.schema.elements;
     if (i >= extArray.length) {
+      return handleAllElementsProcessedInProvidedArray();
+    }
+    const extValueEl = extArray[i];
+    if (schemaOfArrayElement.type === 'object') {
+      return handleArrayEntryIsObject();
+    }
+    return false;
+
+    function handleAllElementsProcessedInProvidedArray() {
       lastStackEntry.valueToUse.push(valueToUse);
       valueToUse = lastStackEntry.valueToUse;
       if (lastStackEntry.schema.processPost) {
@@ -123,14 +146,26 @@ export function process(externalValue: mixed, schema: Schema): {
       stack.pop();
       return true;
     }
-    const extValueEl = extArray[i];
-    if (schemaCurrent.type === 'object') {
-      const schemaCasted: SchemaObject = schemaCurrent;
+
+    function handleArrayEntryIsObject() {
+      //This function is supposed to be called only if schemaOfArrayElement is
+      //SchemaObject
+      //$FlowFixMe[incompatible-type]
+      const schemaCasted: SchemaObject = schemaOfArrayElement;
+      const valueToUse = schemaCasted.getStub();
+      if (Object.hasOwn(schemaCasted, 'processPre')) {
+        //If it's a SchemaObject and it has own property processPre, then it
+        //must be a function, don't want to use the typeof operator
+        //$FlowFixMe[not-a-function]
+        const rv = schemaCasted.processPre(extValueEl, carry, valueToUse);
+        if (rv.validationErrorMessage) {
+          throw new Error(rv.validationErrorMessage);
+        }
+      }
       if (!isPureObject(extValueEl)) {
         throw new Error('must be an object');
       }
       const propsPresent = Object.keys(extValueEl);
-      const valueToUse = schemaCasted.getStub();
       stack.push({
         type: 'object',
         schema: schemaCasted,
@@ -142,7 +177,6 @@ export function process(externalValue: mixed, schema: Schema): {
       });
       return true;
     }
-    return false;
   }
 
   function handleDeepLevelExternalValueObject(
@@ -166,8 +200,8 @@ export function process(externalValue: mixed, schema: Schema): {
     const prop = lastStackEntry.propsSchema[i];
     const extObj = lastStackEntry.externalValueCurrent;
     const schemaCasted: SchemaFinal = schemaCurrent;
-    //If it's a StackEntryObject then it must be a PureObject and should
-    //be allowed here
+    //If it's a StackEntryObject then it must be a PureObject and should be
+    //allowed here
     //$FlowFixMe[incompatible-type]
     if (!Object.hasOwn(extObj, prop)) {
       if (Object.hasOwn(schemaCasted, 'getDefault')) {
@@ -178,7 +212,7 @@ export function process(externalValue: mixed, schema: Schema): {
         valueToUse[prop] = m;
         return true;
       } else {
-        throw new Error('no value');
+        throw new Error('Property is missing');
       }
     }
     const procValue = schemaCasted.process(extObj[prop], carry);
