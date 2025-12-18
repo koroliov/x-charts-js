@@ -4,10 +4,6 @@ import type {
   ComponentClass,
   ComponentInstance,
 } from '../types.js';
-import {
-  validate as validateAddMethodArgumentOnXChartsLevel,
-  getDictionary as getValidationDictionaryOnXChartsLevel,
-} from '../validation/add-method-arg.js';
 import { process as processAddMethodArg, }
   from './process-external-values/add-method-arg.js';
 import {
@@ -100,7 +96,6 @@ export default class XCharts {
 
   add(argProvided: mixed): ComponentInstance {
     const that = this;
-    doMainLevelArgumentValidation([...arguments]);
     const valueToUseOnMainLevel =
       doMainLevelArgumentProcessing(Array.from(arguments));
     const componentClass: ComponentClass =
@@ -141,16 +136,6 @@ export default class XCharts {
       if (invalidArgumentErrorMsg) {
         that._attemptToShowError(invalidArgumentErrorMsg);
         throw new Error(invalidArgumentErrorMsg);
-      }
-    }
-
-    function doMainLevelArgumentValidation(addMethodArgs: Array<mixed>) {
-      const dict = getValidationDictionaryOnXChartsLevel();
-      const errorMsg =
-        validateAddMethodArgumentOnXChartsLevel(dict, addMethodArgs);
-      if (errorMsg) {
-        that._attemptToShowError(errorMsg);
-        throw new Error(errorMsg);
       }
     }
 
