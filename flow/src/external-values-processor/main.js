@@ -160,12 +160,16 @@ export function process(externalValue: mixed, schema: Schema): {
             throw new Error('must be an object');
           }
           const propsPresent = Object.keys(extValueEl);
+          const propsSchema = Object.keys(schemaCasted.properties);
+          if (!schemaCasted.ignoreExtraPropertiesAll) {
+            checkProps(propsSchema, propsPresent);
+          }
           stack.push({
             type: 'object',
             schema: schemaCasted,
             valueToUse,
             propsPresent,
-            propsSchema: Object.keys(schemaCasted.properties),
+            propsSchema,
             externalValueCurrent: extValueEl,
             noValueProvided: false,
             i: -1,
@@ -176,13 +180,13 @@ export function process(externalValue: mixed, schema: Schema): {
 
       function handleDeepLevelExternalValueObject(
           lastStackEntry: StackEntryObject) {
-        const prop = lastStackEntry.propsSchema[i]
         if (i >= lastStackEntry.propsSchema.length) {
           const prop = lastStackEntry.propsSchema[lastStackEntry.i - 1];
           valueToUse = lastStackEntry.valueToUse;
           stack.pop();
           return true;
         }
+        const prop = lastStackEntry.propsSchema[i];
         if (!Object.hasOwn(lastStackEntry.schema.properties, prop)) {
           if (lastStackEntry.schema.ignoreExtraPropertiesAll) {
             return true;
@@ -195,8 +199,12 @@ export function process(externalValue: mixed, schema: Schema): {
           const valueToUseInner = schemaCasted.getStub();
           valueToUse = valueToUseInner;
           lastStackEntry.valueToUse[prop] = valueToUseInner;
+          const propsSchema = Object.keys(schemaCasted.properties);
           if (!isPureObject(lastStackEntry.externalValueCurrent[prop])) {
             const propsPresent = Object.keys(valueToUseInner);
+            if (!lastStackEntry.schema.ignoreExtraPropertiesAll) {
+              checkProps(propsSchema, propsPresent);
+            }
             //the first argument is an object, and even if it wasn't the
             //hasOwn() method accepts any value
             //$FlowFixMe[incompatible-type]
@@ -207,18 +215,22 @@ export function process(externalValue: mixed, schema: Schema): {
                 schema: schemaCasted,
                 valueToUse: valueToUseInner,
                 propsPresent,
-                propsSchema: Object.keys(schemaCasted.properties),
+                propsSchema,
                 externalValueCurrent: valueToUseInner,
                 noValueProvided,
                 i: -1,
               });
               return true;
             }
-            throw new Error('foo');
+            throw new Error(
+                'Must be an object, e.g. {  }, Object.create(null)');
           }
           const extValueEl: PureObject =
             lastStackEntry.externalValueCurrent[prop];
           const propsPresent = Object.keys(extValueEl);
+          if (!lastStackEntry.schema.ignoreExtraPropertiesAll) {
+            checkProps(propsSchema, propsPresent);
+          }
           stack.push({
             type: 'object',
             schema: schemaCasted,
@@ -232,6 +244,17 @@ export function process(externalValue: mixed, schema: Schema): {
           return true;
         }
         return false;
+      }
+
+      function checkProps(propsSchema: Array<string>,
+          propsPresent: Array<string>) {
+        const setSchema = new Set(propsSchema);
+        const setPresent = new Set(propsPresent);
+        setPresent.forEach(p => {
+          if (!setSchema.has(p)) {
+            throw new Error(`Unknown property '${ p }'`);
+          }
+        });
       }
     }
 

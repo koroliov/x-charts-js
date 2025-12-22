@@ -3,7 +3,7 @@ import type { SchemaArray, CarryObj, }
   from '../../external-values-processor/types.js';
 import { process as processMain, }
   from '../../external-values-processor/main.js';
-import { isPureObject, } from '../../utils/validation.js';
+import { isPureObject, validateHexColor, } from '../../utils/validation.js';
 
 type ConstructorArgument = {
   +containerDiv: HTMLDivElement,
@@ -20,24 +20,25 @@ export function process(userProvidedArguments: Array<mixed>, containerClass:
 } {
   const schema: SchemaArray = {
     type: 'array',
-    //processPre(valueProvided, carryObj, valueToUse) {
-    //  if (Array.isArray(valueProvided)) {
-    //    if (valueProvided.length !== 1) {
-    //      return {
-    //        carryObj,
-    //        valueToUse,
-    //        validationErrorMessage:
-    //            `The .() method expects a single argument, received ${
-    //                valueProvided.length }`,
-    //      };
-    //    }
-    //  }
-    //  return {
-    //    carryObj,
-    //    valueToUse,
-    //    validationErrorMessage: '',
-    //  };
-    //},
+    processPre(valueProvided, carryObj, valueToUse) {
+      if (Array.isArray(valueProvided)) {
+        if (valueProvided.length !== 1) {
+          return {
+            carryObj,
+            valueToUse,
+            validationErrorMessage: [
+              'The new XChartsJs() constructor expects a single',
+              `argument, received ${ valueProvided.length }`,
+            ].join(' '),
+          };
+        }
+      }
+      return {
+        carryObj,
+        valueToUse,
+        validationErrorMessage: '',
+      };
+    },
     processPost(valueProvided, carryObj, valueToUse: Array<mixed>) {
       return {
         carryObj,
@@ -47,21 +48,21 @@ export function process(userProvidedArguments: Array<mixed>, containerClass:
     },
     elements: {
       type: 'object',
-      //processPre(valueProvided, carryObj, valueToUse) {
-      //  if (!isPureObject(valueProvided)) {
-      //    return {
-      //      carryObj,
-      //      valueToUse,
-      //      validationErrorMessage:
-      //        'Must be an object, e.g. {  }, Object.create(null)',
-      //    };
-      //  }
-      //  return {
-      //    carryObj,
-      //    valueToUse,
-      //    validationErrorMessage: '',
-      //  };
-      //},
+      processPre(valueProvided, carryObj, valueToUse) {
+        if (!isPureObject(valueProvided)) {
+          return {
+            carryObj,
+            valueToUse,
+            validationErrorMessage:
+              'Must be an object, e.g. {  }, Object.create(null)',
+          };
+        }
+        return {
+          carryObj,
+          valueToUse,
+          validationErrorMessage: '',
+        };
+      },
       getStub() {
         return { containerDiv: null, options: null, };
       },
@@ -70,19 +71,14 @@ export function process(userProvidedArguments: Array<mixed>, containerClass:
         containerDiv: {
           type: 'final',
           process(valueProvided: mixed, carryObj: CarryObj) {
-            //const valueProvidedStr = String(valueProvided);
-            //if (!registeredTypes.has(valueProvidedStr)) {
-            //  return {
-            //    validationErrorMessage: [
-            //      `Component of type '${ valueProvidedStr
-            //        }' has not been registered,`,
-            //      `registered components are: ${
-            //        Array.from(registeredTypes).join(', ') }`,
-            //    ].join('\n'),
-            //    carryObj,
-            //    valueToUse: null,
-            //  };
-            //}
+            const valueProvidedStr = String(valueProvided);
+            if (!(valueProvided instanceof containerClass)) {
+              return {
+                validationErrorMessage: 'Must be an HTMLDivElement',
+                carryObj,
+                valueToUse: null,
+              };
+            }
             return {
               validationErrorMessage: '',
               carryObj,
@@ -101,19 +97,19 @@ export function process(userProvidedArguments: Array<mixed>, containerClass:
             backgroundColor: {
               type: 'final',
               process(valueProvided: mixed, carryObj: CarryObj) {
-                //const valueProvidedStr = String(valueProvided);
-                //if (!registeredTypes.has(valueProvidedStr)) {
-                //  return {
-                //    validationErrorMessage: [
-                //      `Component of type '${ valueProvidedStr
-                //        }' has not been registered,`,
-                //      `registered components are: ${
-                //        Array.from(registeredTypes).join(', ') }`,
-                //    ].join('\n'),
-                //    carryObj,
-                //    valueToUse: null,
-                //  };
-                //}
+                const valueProvidedStr = String(valueProvided);
+                //TODO: use error message from the validateHexColor()
+                const isInvalid = validateHexColor(valueProvidedStr);
+                if (isInvalid) {
+                  return {
+                    validationErrorMessage: [
+                      'Value must be a full (6 char long) hex string,',
+                      'e.g. #ffffff, not #fff',
+                    ].join('\n'),
+                    carryObj,
+                    valueToUse: null,
+                  };
+                }
                 return {
                   validationErrorMessage: '',
                   carryObj,
@@ -127,19 +123,13 @@ export function process(userProvidedArguments: Array<mixed>, containerClass:
             isComponentInspectMode: {
               type: 'final',
               process(valueProvided: mixed, carryObj: CarryObj) {
-                //const valueProvidedStr = String(valueProvided);
-                //if (!registeredTypes.has(valueProvidedStr)) {
-                //  return {
-                //    validationErrorMessage: [
-                //      `Component of type '${ valueProvidedStr
-                //        }' has not been registered,`,
-                //      `registered components are: ${
-                //        Array.from(registeredTypes).join(', ') }`,
-                //    ].join('\n'),
-                //    carryObj,
-                //    valueToUse: null,
-                //  };
-                //}
+                if (typeof valueProvided !== 'boolean') {
+                  return {
+                    validationErrorMessage: 'Value must be a boolean',
+                    carryObj,
+                    valueToUse: null,
+                  };
+                }
                 return {
                   validationErrorMessage: '',
                   carryObj,
@@ -152,54 +142,6 @@ export function process(userProvidedArguments: Array<mixed>, containerClass:
             },
           },
         },
-        //},
-        //type: {
-        //  type: 'final',
-        //  process(valueProvided: mixed, carryObj: CarryObj) {
-        //    const valueProvidedStr = String(valueProvided);
-        //    if (!registeredTypes.has(valueProvidedStr)) {
-        //      return {
-        //        validationErrorMessage: [
-        //          `Component of type '${ valueProvidedStr
-        //            }' has not been registered,`,
-        //          `registered components are: ${
-        //            Array.from(registeredTypes).join(', ') }`,
-        //        ].join('\n'),
-        //        carryObj,
-        //        valueToUse: null,
-        //      };
-        //    }
-        //    return {
-        //      validationErrorMessage: '',
-        //      carryObj,
-        //      valueToUse: valueProvided,
-        //    };
-        //  },
-        //},
-        //zIndex: {
-        //  type: 'final',
-        //  process(valueProvided: mixed, carryObj: CarryObj) {
-        //    const retVal = {
-        //      validationErrorMessage: '',
-        //      carryObj,
-        //      valueToUse: valueProvided,
-        //    };
-        //    if (isInvalid()) {
-        //      retVal.valueToUse = null;
-        //      retVal.validationErrorMessage =
-        //        'Value must be a numeric integer string with no white spaces';
-        //    }
-        //    return retVal;
-
-        //    function isInvalid() {
-        //      return typeof valueProvided !== 'string' ||
-        //        !/^-*\d+$/.test(valueProvided);
-        //    }
-        //  },
-        //  getDefault() {
-        //    return '1';
-        //  },
-        //},
       },
       ignoreExtraPropertiesAll: false,
       ignoreExtraPropertiesSet: new Set(),
@@ -221,14 +163,14 @@ export function process(userProvidedArguments: Array<mixed>, containerClass:
       return '';
     }
     const errorMessageArray: Array<string> = [
-      'ERR_X_CHARTS_JS_INVALID_ADD_METHOD_ARG:',
+      'ERR_X_CHARTS_JS_INVALID_CONSTRUCTOR_ARG:',
     ];
     if (processed.validationError.path.length) {
       processed.validationError.path[0] = 'argument 0';
-      //errorMessageArray.push(`  ${
-      //    //.path is definitely not null here
-      //    //$FlowFixMe[incompatible-use]
-      //    processed.validationError.path.join(' -> ') }:`);
+      errorMessageArray.push(`  ${
+          //.path is definitely not null here
+          //$FlowFixMe[incompatible-use]
+          processed.validationError.path.join(' -> ') }:`);
     }
     //if validationError is not null, then .message is string
     //$FlowFixMe[incompatible-use]

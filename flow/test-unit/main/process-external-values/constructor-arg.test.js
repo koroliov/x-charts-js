@@ -120,3 +120,237 @@ tp.test('valid argument case, default isComponentInspectMode', (t) => {
   t.deepEqual(actual, expected);
   t.end();
 });
+
+//Invalid cases, arguments
+tp.test('no arguments', (t) => {
+  //For testing purposes
+  //$FlowFixMe[incompatible-type]
+  const ContainerDiv: Class<HTMLDivElement> = class ContainerDiv {  };
+  const constructorArguments: Array<mixed> = [];
+  const expected = {
+    validationErrorMessage: [
+      'ERR_X_CHARTS_JS_INVALID_CONSTRUCTOR_ARG:',
+      '  The new XChartsJs() constructor expects a single argument, received 0',
+    ].join('\n'),
+    valueToUse: null,
+  };
+
+  const actual = process(constructorArguments, ContainerDiv);
+  t.deepEqual(actual, expected);
+  t.end();
+});
+
+tp.test('extra arguments', (t) => {
+  //For testing purposes
+  //$FlowFixMe[incompatible-type]
+  const ContainerDiv: Class<HTMLDivElement> = class ContainerDiv {  };
+  const constructorArguments: Array<mixed> = [
+    {
+      containerDiv: new ContainerDiv(),
+      options: {
+        backgroundColor: '#ffffff' /* white */,
+        isComponentInspectMode: false,
+      },
+    },
+    null,
+  ];
+  const expected = {
+    validationErrorMessage: [
+      'ERR_X_CHARTS_JS_INVALID_CONSTRUCTOR_ARG:',
+      '  The new XChartsJs() constructor expects a single argument, received 2',
+    ].join('\n'),
+    valueToUse: null,
+  };
+
+  const actual = process(constructorArguments, ContainerDiv);
+  t.deepEqual(actual, expected);
+  t.end();
+});
+
+//Invalid cases, argument
+tp.test('argument is not object', (t) => {
+  //For testing purposes
+  //$FlowFixMe[incompatible-type]
+  const ContainerDiv: Class<HTMLDivElement> = class ContainerDiv {  };
+  const constructorArguments: Array<mixed> = [
+    'foo',
+  ];
+  const expected = {
+    validationErrorMessage: [
+      'ERR_X_CHARTS_JS_INVALID_CONSTRUCTOR_ARG:',
+      '  argument 0:',
+      '  Must be an object, e.g. {  }, Object.create(null)',
+    ].join('\n'),
+    valueToUse: null,
+  };
+
+  const actual = process(constructorArguments, ContainerDiv);
+  t.deepEqual(actual, expected);
+  t.end();
+});
+
+tp.test('extra property in argument', (t) => {
+  //For testing purposes
+  //$FlowFixMe[incompatible-type]
+  const ContainerDiv: Class<HTMLDivElement> = class ContainerDiv {  };
+  const constructorArguments: Array<mixed> = [
+    {
+      containerDiv: new ContainerDiv(),
+      foo: 'foo',
+      options: {
+        backgroundColor: '#ffffff' /* white */,
+        isComponentInspectMode: false,
+      },
+    },
+  ];
+  const expected = {
+    validationErrorMessage: [
+      'ERR_X_CHARTS_JS_INVALID_CONSTRUCTOR_ARG:',
+      '  argument 0:',
+      "  Unknown property 'foo'",
+    ].join('\n'),
+    valueToUse: null,
+  };
+
+  const actual = process(constructorArguments, ContainerDiv);
+  t.deepEqual(actual, expected);
+  t.end();
+});
+
+tp.test('containerDiv is not valid', (t) => {
+  //For testing purposes
+  //$FlowFixMe[incompatible-type]
+  const ContainerDiv: Class<HTMLDivElement> = class ContainerDiv {  };
+  //For testing purposes
+  //$FlowFixMe[incompatible-type]
+  const ContainerSpan: Class<HTMLSpanElement> = class ContainerSpan {  };
+  const constructorArguments: Array<mixed> = [
+    {
+      containerDiv: new ContainerSpan(),
+      options: {
+        backgroundColor: '#ffffff' /* white */,
+        isComponentInspectMode: false,
+      },
+    },
+  ];
+  const expected = {
+    validationErrorMessage: [
+      'ERR_X_CHARTS_JS_INVALID_CONSTRUCTOR_ARG:',
+      '  argument 0 -> containerDiv:',
+      '  Must be an HTMLDivElement',
+    ].join('\n'),
+    valueToUse: null,
+  };
+
+  const actual = process(constructorArguments, ContainerDiv);
+  t.deepEqual(actual, expected);
+  t.end();
+});
+
+//Invalid cases, options
+tp.test('options is not valid', (t) => {
+  //For testing purposes
+  //$FlowFixMe[incompatible-type]
+  const ContainerDiv: Class<HTMLDivElement> = class ContainerDiv {  };
+  const constructorArguments: Array<mixed> = [
+    {
+      containerDiv: new ContainerDiv(),
+      options: 'foo',
+    },
+  ];
+  const expected = {
+    validationErrorMessage: [
+      'ERR_X_CHARTS_JS_INVALID_CONSTRUCTOR_ARG:',
+      '  argument 0 -> options:',
+      '  Must be an object, e.g. {  }, Object.create(null)',
+    ].join('\n'),
+    valueToUse: null,
+  };
+
+  const actual = process(constructorArguments, ContainerDiv);
+  t.deepEqual(actual, expected);
+  t.end();
+});
+
+tp.test('extra property in options', (t) => {
+  //For testing purposes
+  //$FlowFixMe[incompatible-type]
+  const ContainerDiv: Class<HTMLDivElement> = class ContainerDiv {  };
+  const constructorArguments: Array<mixed> = [
+    {
+      containerDiv: new ContainerDiv(),
+      options: {
+        backgroundColor: '#ffffff' /* white */,
+        foo: 'foo',
+        isComponentInspectMode: false,
+      },
+    },
+  ];
+  const expected = {
+    validationErrorMessage: [
+      'ERR_X_CHARTS_JS_INVALID_CONSTRUCTOR_ARG:',
+      '  argument 0 -> options:',
+      "  Unknown property 'foo'",
+    ].join('\n'),
+    valueToUse: null,
+  };
+
+  const actual = process(constructorArguments, ContainerDiv);
+  t.deepEqual(actual, expected);
+  t.end();
+});
+
+tp.test('backgroundColor is not valid', (t) => {
+  //For testing purposes
+  //$FlowFixMe[incompatible-type]
+  const ContainerDiv: Class<HTMLDivElement> = class ContainerDiv {  };
+  const constructorArguments: Array<mixed> = [
+    {
+      containerDiv: new ContainerDiv(),
+      options: {
+        backgroundColor: '#fffff' /* Invalid */,
+        isComponentInspectMode: false,
+      },
+    },
+  ];
+  const expected = {
+    validationErrorMessage: [
+      'ERR_X_CHARTS_JS_INVALID_CONSTRUCTOR_ARG:',
+      '  argument 0 -> options -> backgroundColor:',
+      '  Value must be a full (6 char long) hex string,',
+      'e.g. #ffffff, not #fff',
+    ].join('\n'),
+    valueToUse: null,
+  };
+
+  const actual = process(constructorArguments, ContainerDiv);
+  t.deepEqual(actual, expected);
+  t.end();
+});
+
+tp.test('isComponentInspectMode is not valid', (t) => {
+  //For testing purposes
+  //$FlowFixMe[incompatible-type]
+  const ContainerDiv: Class<HTMLDivElement> = class ContainerDiv {  };
+  const constructorArguments: Array<mixed> = [
+    {
+      containerDiv: new ContainerDiv(),
+      options: {
+        backgroundColor: '#ffffff' /* white */,
+        isComponentInspectMode: 0,
+      },
+    },
+  ];
+  const expected = {
+    validationErrorMessage: [
+      'ERR_X_CHARTS_JS_INVALID_CONSTRUCTOR_ARG:',
+      '  argument 0 -> options -> isComponentInspectMode:',
+      '  Value must be a boolean',
+    ].join('\n'),
+    valueToUse: null,
+  };
+
+  const actual = process(constructorArguments, ContainerDiv);
+  t.deepEqual(actual, expected);
+  t.end();
+});
