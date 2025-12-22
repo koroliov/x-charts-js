@@ -79,6 +79,7 @@ export default class XCharts {
       const { validationErrorMessage: e, valueToUse, } =
         processConstructorArg(constructorArguments, HTMLDivElement);
       if (e) {
+        that._attemptToShowError(e);
         throw new Error(e);
       }
       return valueToUse;
