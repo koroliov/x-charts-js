@@ -1,5 +1,5 @@
 //@flow strict
-import type { SchemaArray, CarryObj, }
+import type { SchemaArray, SchemaObject, SchemaFinal, CarryObj, }
   from '../../external-values-processor/types.js';
 import { process as processMain, }
   from '../../external-values-processor/main.js';
@@ -18,35 +18,118 @@ export function process(userProvidedArguments: Array<mixed>, containerClass:
   validationErrorMessage: string,
   valueToUse: ConstructorArgument,
 } {
-  const schema: SchemaArray = {
-    type: 'array',
-    processPre(valueProvided, carryObj, valueToUse) {
-      if (Array.isArray(valueProvided)) {
-        if (valueProvided.length !== 1) {
+  const argumentsSchema = getArgumentsSchema();
+  const processed = processMain(userProvidedArguments, argumentsSchema);
+  const retVal = {
+    validationErrorMessage: prepareFinalErrorMessage(),
+    valueToUse: processed.valueToUse,
+  };
+  //At this stage the processed.valueToUse should be guaranteed to be of type
+  //AddMethodArgumentMainLevel
+  //$FlowFixMe[incompatible-type]
+  return retVal;
+
+  function getArgumentsSchema(): SchemaArray {
+    return {
+      type: 'array',
+      processPre(valueProvided, carryObj, valueToUse) {
+        if (Array.isArray(valueProvided) && valueProvided.length !== 1) {
           return {
             carryObj,
-            valueToUse,
+            valueToUse: null,
             validationErrorMessage: [
               'The new XChartsJs() constructor expects a single',
               `argument, received ${ valueProvided.length }`,
             ].join(' '),
           };
         }
-      }
-      return {
-        carryObj,
-        valueToUse,
-        validationErrorMessage: '',
-      };
-    },
-    processPost(valueProvided, carryObj, valueToUse: Array<mixed>) {
-      return {
-        carryObj,
-        valueToUse: valueToUse[0],
-        validationErrorMessage: '',
-      };
-    },
-    elements: {
+        return { carryObj, valueToUse, validationErrorMessage: '', };
+      },
+      processPost(valueProvided, carryObj, valueToUse: Array<mixed>) {
+        return { carryObj, valueToUse: valueToUse[0],
+          validationErrorMessage: '', };
+      },
+      elements: getArgumentSchema(),
+    };
+  }
+
+  function getBgColorSchema(): SchemaFinal {
+    return {
+      type: 'final',
+      process(valueProvided: mixed, carryObj: CarryObj) {
+        const valueProvidedStr = String(valueProvided);
+        //TODO: use error message from the validateHexColor()
+        const isInvalid = validateHexColor(valueProvidedStr);
+        if (isInvalid) {
+          return {
+            validationErrorMessage: [
+              'Value must be a full (6 char long) hex string,',
+              'e.g. #ffffff, not #fff',
+            ].join('\n'),
+            carryObj,
+            valueToUse: null,
+          };
+        }
+        return { validationErrorMessage: '', carryObj,
+            valueToUse: valueProvided, };
+      },
+      getDefault() { return '#ffffff'; },
+    };
+  }
+
+  function getIsComponentInspectModeSchema(): SchemaFinal {
+    return {
+      type: 'final',
+      process(valueProvided: mixed, carryObj: CarryObj) {
+        if (typeof valueProvided !== 'boolean') {
+          return {
+            validationErrorMessage: 'Value must be a boolean',
+            carryObj,
+            valueToUse: null,
+          };
+        }
+        return { validationErrorMessage: '', carryObj,
+            valueToUse: valueProvided, };
+      },
+      getDefault() { return false; },
+    };
+  }
+
+  function getContainerDivSchema(): SchemaFinal {
+    return {
+      type: 'final',
+      process(valueProvided: mixed, carryObj: CarryObj) {
+        const valueProvidedStr = String(valueProvided);
+        if (!(valueProvided instanceof containerClass)) {
+          return {
+            carryObj,
+            valueToUse: null,
+            validationErrorMessage: 'Must be an HTMLDivElement',
+          };
+        }
+        return { carryObj, valueToUse: valueProvided,
+            validationErrorMessage: '', };
+      },
+    };
+  }
+
+  function getOptionsSchema(): SchemaObject {
+    return {
+      type: 'object',
+      getStub() {
+        return { backgroundColor: '', isComponentInspectMode: false, };
+      },
+      properties: {
+        backgroundColor: getBgColorSchema(),
+        isComponentInspectMode: getIsComponentInspectModeSchema(),
+      },
+      ignoreExtraPropertiesAll: false,
+      ignoreExtraPropertiesSet: new Set(),
+    };
+  }
+
+  function getArgumentSchema(): SchemaObject {
+    return {
       type: 'object',
       processPre(valueProvided, carryObj, valueToUse) {
         if (!isPureObject(valueProvided)) {
@@ -57,106 +140,20 @@ export function process(userProvidedArguments: Array<mixed>, containerClass:
               'Must be an object, e.g. {  }, Object.create(null)',
           };
         }
-        return {
-          carryObj,
-          valueToUse,
-          validationErrorMessage: '',
-        };
+        return { carryObj, valueToUse, validationErrorMessage: '', };
       },
       getStub() {
         return { containerDiv: null, options: null, };
       },
       ignoreExtraPropertiesAll: true,
       properties: {
-        containerDiv: {
-          type: 'final',
-          process(valueProvided: mixed, carryObj: CarryObj) {
-            const valueProvidedStr = String(valueProvided);
-            if (!(valueProvided instanceof containerClass)) {
-              return {
-                validationErrorMessage: 'Must be an HTMLDivElement',
-                carryObj,
-                valueToUse: null,
-              };
-            }
-            return {
-              validationErrorMessage: '',
-              carryObj,
-              valueToUse: valueProvided,
-            };
-          },
-        },
-        options: {
-          type: 'object',
-          getStub() {
-            return { backgroundColor: '', isComponentInspectMode: false, };
-          },
-          ignoreExtraPropertiesAll: false,
-          ignoreExtraPropertiesSet: new Set(),
-          properties: {
-            backgroundColor: {
-              type: 'final',
-              process(valueProvided: mixed, carryObj: CarryObj) {
-                const valueProvidedStr = String(valueProvided);
-                //TODO: use error message from the validateHexColor()
-                const isInvalid = validateHexColor(valueProvidedStr);
-                if (isInvalid) {
-                  return {
-                    validationErrorMessage: [
-                      'Value must be a full (6 char long) hex string,',
-                      'e.g. #ffffff, not #fff',
-                    ].join('\n'),
-                    carryObj,
-                    valueToUse: null,
-                  };
-                }
-                return {
-                  validationErrorMessage: '',
-                  carryObj,
-                  valueToUse: valueProvided,
-                };
-              },
-              getDefault() {
-                return '#ffffff';
-              },
-            },
-            isComponentInspectMode: {
-              type: 'final',
-              process(valueProvided: mixed, carryObj: CarryObj) {
-                if (typeof valueProvided !== 'boolean') {
-                  return {
-                    validationErrorMessage: 'Value must be a boolean',
-                    carryObj,
-                    valueToUse: null,
-                  };
-                }
-                return {
-                  validationErrorMessage: '',
-                  carryObj,
-                  valueToUse: valueProvided,
-                };
-              },
-              getDefault() {
-                return false;
-              },
-            },
-          },
-        },
+        containerDiv: getContainerDivSchema(),
+        options: getOptionsSchema(),
       },
       ignoreExtraPropertiesAll: false,
       ignoreExtraPropertiesSet: new Set(),
-    },
-  };
-
-  const processed = processMain(userProvidedArguments, schema);
-  const retVal = {
-    validationErrorMessage: prepareFinalErrorMessage(),
-    valueToUse: processed.valueToUse,
-  };
-  //At this stage the processed.valueToUse should be guaranteed to be of type
-  //AddMethodArgumentMainLevel
-  //$FlowFixMe[incompatible-type]
-  return retVal;
+    };
+  }
 
   function prepareFinalErrorMessage() {
     if (!processed.validationError) {
