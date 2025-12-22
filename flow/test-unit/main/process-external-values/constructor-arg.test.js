@@ -217,6 +217,32 @@ tp.test('extra property in argument', (t) => {
   t.end();
 });
 
+tp.test('containerDiv is missing', (t) => {
+  //For testing purposes
+  //$FlowFixMe[incompatible-type]
+  const ContainerDiv: Class<HTMLDivElement> = class ContainerDiv {  };
+  const constructorArguments: Array<mixed> = [
+    {
+      options: {
+        backgroundColor: '#ffffff' /* white */,
+        isComponentInspectMode: false,
+      },
+    },
+  ];
+  const expected = {
+    validationErrorMessage: [
+      'ERR_X_CHARTS_JS_INVALID_CONSTRUCTOR_ARG:',
+      '  argument 0 -> containerDiv:',
+      '  Property is missing',
+    ].join('\n'),
+    valueToUse: null,
+  };
+
+  const actual = process(constructorArguments, ContainerDiv);
+  t.deepEqual(actual, expected);
+  t.end();
+});
+
 tp.test('containerDiv is not valid', (t) => {
   //For testing purposes
   //$FlowFixMe[incompatible-type]
