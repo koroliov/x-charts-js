@@ -19,6 +19,7 @@ type StackEntryObject = {
   propsPresent: Array<string>,
   propsSchema: Array<string>,
   externalValueCurrent: PureObject,
+  noValueProvided: boolean,
   i: number,
 }
 
@@ -96,7 +97,7 @@ export function process(externalValue: mixed, schema: Schema): {
         //If it's a StackEntryObject then it must be a PureObject and should be
         //allowed here
         //$FlowFixMe[incompatible-type]
-        if (!Object.hasOwn(extObj, prop)) {
+        if (!Object.hasOwn(extObj, prop) || lastStackEntry.noValueProvided) {
           if (Object.hasOwn(schemaCasted, 'getDefault')) {
             //if it exists, then it's a function
             //$FlowFixMe[not-a-function]
@@ -166,6 +167,7 @@ export function process(externalValue: mixed, schema: Schema): {
             propsPresent,
             propsSchema: Object.keys(schemaCasted.properties),
             externalValueCurrent: extValueEl,
+            noValueProvided: false,
             i: -1,
           });
           return true;
@@ -187,29 +189,47 @@ export function process(externalValue: mixed, schema: Schema): {
           }
         }
         if (lastStackEntry.schema.properties[prop].type === 'object') {
+          let noValueProvided = false;
+          const schemaCasted: SchemaObject =
+            lastStackEntry.schema.properties[prop];
+          const valueToUseInner = schemaCasted.getStub();
+          valueToUse = valueToUseInner;
+          lastStackEntry.valueToUse[prop] = valueToUseInner;
           if (!isPureObject(lastStackEntry.externalValueCurrent[prop])) {
+            const propsPresent = Object.keys(valueToUseInner);
+            //the first argument is an object, and even if it wasn't the
+            //hasOwn() method accepts any value
+            //$FlowFixMe[incompatible-type]
+            if (!Object.hasOwn(lastStackEntry.externalValueCurrent, prop)) {
+              noValueProvided = true;
+              stack.push({
+                type: 'object',
+                schema: schemaCasted,
+                valueToUse: valueToUseInner,
+                propsPresent,
+                propsSchema: Object.keys(schemaCasted.properties),
+                externalValueCurrent: valueToUseInner,
+                noValueProvided,
+                i: -1,
+              });
+              return true;
+            }
             throw new Error('foo');
           }
           const extValueEl: PureObject =
             lastStackEntry.externalValueCurrent[prop];
-          if (lastStackEntry.schema.properties[prop].type === 'object') {
-            const schemaCasted: SchemaObject =
-              lastStackEntry.schema.properties[prop];
-            const valueToUseInner = schemaCasted.getStub();
-            valueToUse = valueToUseInner;
-            const propsPresent = Object.keys(extValueEl);
-            lastStackEntry.valueToUse[prop] = valueToUseInner;
-            stack.push({
-              type: 'object',
-              schema: schemaCasted,
-              valueToUse: valueToUseInner,
-              propsPresent,
-              propsSchema: Object.keys(schemaCasted.properties),
-              externalValueCurrent: extValueEl,
-              i: -1,
-            });
-            return true;
-          }
+          const propsPresent = Object.keys(extValueEl);
+          stack.push({
+            type: 'object',
+            schema: schemaCasted,
+            valueToUse: valueToUseInner,
+            propsPresent,
+            propsSchema: Object.keys(schemaCasted.properties),
+            externalValueCurrent: extValueEl,
+            noValueProvided,
+            i: -1,
+          });
+          return true;
         }
         return false;
       }

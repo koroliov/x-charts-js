@@ -120,6 +120,9 @@ export function process(userProvidedArguments: Array<mixed>, containerClass:
                   valueToUse: valueProvided,
                 };
               },
+              getDefault() {
+                return '#ffffff';
+              },
             },
             isComponentInspectMode: {
               type: 'final',
@@ -142,6 +145,9 @@ export function process(userProvidedArguments: Array<mixed>, containerClass:
                   carryObj,
                   valueToUse: valueProvided,
                 };
+              },
+              getDefault() {
+                return false;
               },
             },
           },
