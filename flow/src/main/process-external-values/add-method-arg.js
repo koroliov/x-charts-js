@@ -1,5 +1,5 @@
 //@flow strict
-import type { SchemaArray, CarryObj, }
+import type { SchemaArray, SchemaObject, SchemaFinal, CarryObj, }
   from '../../external-values-processor/types.js';
 import { process as processMain, }
   from '../../external-values-processor/main.js';
@@ -15,107 +15,9 @@ export function process(userProvidedArguments: Array<mixed>, registeredTypes:
   validationErrorMessage: string,
   valueToUse: AddMethodArgumentMainLevel,
 } {
-  const schema: SchemaArray = {
-    type: 'array',
-    processPre(valueProvided, carryObj, valueToUse) {
-      if (Array.isArray(valueProvided)) {
-        if (valueProvided.length !== 1) {
-          return {
-            carryObj,
-            valueToUse,
-            validationErrorMessage:
-                `The .add() method expects a single argument, received ${
-                    valueProvided.length }`,
-          };
-        }
-      }
-      return {
-        carryObj,
-        valueToUse,
-        validationErrorMessage: '',
-      };
-    },
-    processPost(valueProvided, carryObj, valueToUse: Array<mixed>) {
-      return {
-        carryObj,
-        valueToUse: valueToUse[0],
-        validationErrorMessage: '',
-      };
-    },
-    elements: {
-      type: 'object',
-      processPre(valueProvided, carryObj, valueToUse) {
-        if (!isPureObject(valueProvided)) {
-          return {
-            carryObj,
-            valueToUse,
-            validationErrorMessage:
-              'Must be an object, e.g. {  }, Object.create(null)',
-          };
-        }
-        return {
-          carryObj,
-          valueToUse,
-          validationErrorMessage: '',
-        };
-      },
-      getStub() {
-        return { type: '', zIndex: '', };
-      },
-      ignoreExtraPropertiesAll: true,
-      properties: {
-        type: {
-          type: 'final',
-          process(valueProvided: mixed, carryObj: CarryObj) {
-            const valueProvidedStr = String(valueProvided);
-            if (!registeredTypes.has(valueProvidedStr)) {
-              return {
-                validationErrorMessage: [
-                  `Component of type '${ valueProvidedStr
-                    }' has not been registered,`,
-                  `registered components are: ${
-                    Array.from(registeredTypes).join(', ') }`,
-                ].join('\n'),
-                carryObj,
-                valueToUse: null,
-              };
-            }
-            return {
-              validationErrorMessage: '',
-              carryObj,
-              valueToUse: valueProvided,
-            };
-          },
-        },
-        zIndex: {
-          type: 'final',
-          process(valueProvided: mixed, carryObj: CarryObj) {
-            const retVal = {
-              validationErrorMessage: '',
-              carryObj,
-              valueToUse: valueProvided,
-            };
-            if (isInvalid()) {
-              retVal.valueToUse = null;
-              retVal.validationErrorMessage =
-                'Value must be a numeric integer string with no white spaces';
-            }
-            return retVal;
+  const argumentsSchema = getArgumentsSchema();
 
-            function isInvalid() {
-              return typeof valueProvided !== 'string' ||
-                !/^-*\d+$/.test(valueProvided);
-            }
-          },
-          getDefault() {
-            return '1';
-          },
-        },
-      },
-    },
-  };
-
-  const processed = processMain(userProvidedArguments, schema);
+  const processed = processMain(userProvidedArguments, argumentsSchema);
   const retVal = {
     validationErrorMessage: prepareFinalErrorMessage(),
     valueToUse: processed.valueToUse,
@@ -124,6 +26,102 @@ export function process(userProvidedArguments: Array<mixed>, registeredTypes:
   //AddMethodArgumentMainLevel
   //$FlowFixMe[incompatible-type]
   return retVal;
+
+  function getTypeSchema(): SchemaFinal {
+    return {
+      type: 'final',
+      process(valueProvided: mixed, carryObj: CarryObj) {
+        const valueProvidedStr = String(valueProvided);
+        if (!registeredTypes.has(valueProvidedStr)) {
+          return {
+            validationErrorMessage: [
+              `Component of type '${ valueProvidedStr
+                }' has not been registered,`,
+              `registered components are: ${
+                Array.from(registeredTypes).join(', ') }`,
+            ].join('\n'),
+            carryObj,
+            valueToUse: null,
+          };
+        }
+        return { validationErrorMessage: '', carryObj,
+            valueToUse: valueProvided, };
+      },
+    };
+  }
+
+  function getZIndexSchema(): SchemaFinal {
+    return {
+      type: 'final',
+      process(valueProvided: mixed, carryObj: CarryObj) {
+        const retVal = {
+          validationErrorMessage: '',
+          carryObj,
+          valueToUse: valueProvided,
+        };
+        if (isInvalid()) {
+          retVal.valueToUse = null;
+          retVal.validationErrorMessage =
+            'Value must be a numeric integer string with no white spaces';
+        }
+        return retVal;
+
+        function isInvalid() {
+          return typeof valueProvided !== 'string' ||
+            !/^-*\d+$/.test(valueProvided);
+        }
+      },
+      getDefault() { return '1'; },
+    };
+  }
+
+  function getArgumentSchema(): SchemaObject {
+    return {
+      type: 'object',
+      processPre(valueProvided, carryObj, valueToUse) {
+        if (!isPureObject(valueProvided)) {
+          return {
+            carryObj,
+            valueToUse,
+            validationErrorMessage:
+                'Must be an object, e.g. {  }, Object.create(null)',
+          };
+        }
+        return { carryObj, valueToUse, validationErrorMessage: '', };
+      },
+      getStub() {
+        return { type: '', zIndex: '', };
+      },
+      ignoreExtraPropertiesAll: true,
+      properties: {
+        type: getTypeSchema(),
+        zIndex: getZIndexSchema(),
+      },
+    };
+  }
+
+  function getArgumentsSchema(): SchemaArray {
+    return {
+      type: 'array',
+      processPre(valueProvided, carryObj, valueToUse) {
+        if (Array.isArray(valueProvided) && valueProvided.length !== 1) {
+          return {
+            carryObj,
+            valueToUse,
+            validationErrorMessage:
+                `The .add() method expects a single argument, received ${
+                    valueProvided.length }`,
+          };
+        }
+        return { carryObj, valueToUse, validationErrorMessage: '', };
+      },
+      processPost(valueProvided, carryObj, valueToUse: Array<mixed>) {
+        return { carryObj, valueToUse: valueToUse[0],
+          validationErrorMessage: '', };
+      },
+      elements: getArgumentSchema(),
+    };
+  }
 
   function prepareFinalErrorMessage() {
     if (!processed.validationError) {
