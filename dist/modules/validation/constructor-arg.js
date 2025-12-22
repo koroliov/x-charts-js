@@ -1,6 +1,6 @@
 //      strict
                                                          
-import { isObject, } from '../utils/validation.js';
+import { isPureObject, } from '../utils/validation.js';
 import { validate as validateByDictionary, } from './by-dictionary.js';
 
 export function validate(dict                      ,
@@ -8,10 +8,11 @@ export function validate(dict                      ,
   if (allConstructorArgs.length !== 1) {
     return generateWrongNumberOfArgumentsErrorReturnValue();
   }
-  if (!isObject(allConstructorArgs[0])) {
+  if (!isPureObject(allConstructorArgs[0])) {
     return generateNotObjectArgumentErrorReturnValue();
   }
-  //the above call of isObject() is supposed to guarantee, that it's an object.
+  //the above call of isPureObject() is supposed to guarantee, that it's an
+  //object.
   //$FlowFixMe[incompatible-type]
   const arg          = allConstructorArgs[0];
   return validateByDictionary({

@@ -1,20 +1,10 @@
 //      strict
-             
-                               
-                 
-                    
+                                                                                
                      
-import {
-  validate as validateAddMethodArgumentOnXChartsLevel,
-  getDictionary as getValidationDictionaryOnXChartsLevel,
-} from '../validation/add-method-arg.js';
-import {
-  process as processAddMethodArg,
-} from './process-external-values/add-method-arg.js';
-import {
-  validate as validateConstructorArgument,
-  getDictionary as getValidationDictionaryForContructorArgument,
-} from '../validation/constructor-arg.js';
+import { process as processAddMethodArg, }
+  from './process-external-values/add-method-arg.js';
+import { process as processConstructorArg, }
+  from './process-external-values/constructor-arg.js';
 
 const componentsRegistry                              = new Map();
 
@@ -35,7 +25,7 @@ export default class XCharts {
     //check if it's a div or not. Looks acceptable.
     //$FlowFixMe[incompatible-use]
     this._containerDiv = arg.containerDiv;
-    const constructorArgValidated = doValidation([...arguments]);
+    const constructorArgValidated = doArgumentProcessing([...arguments]);
     initDom();
 
     function initDom()       {
@@ -84,56 +74,35 @@ export default class XCharts {
       }
     }
 
-    function doValidation(constructorArguments              ) 
-                                   {
-      const dict = getValidationDictionaryForContructorArgument(HTMLDivElement);
-      const errorMsg = validateConstructorArgument(dict, constructorArguments);
-      if (errorMsg) {
-        that._attemptToShowError(errorMsg);
-        throw new Error(errorMsg);
+    function doArgumentProcessing(constructorArguments              ) 
+                                     {
+      const { validationErrorMessage: e, valueToUse, } =
+        processConstructorArg(constructorArguments, HTMLDivElement);
+      if (e) {
+        throw new Error(e);
       }
-      //After the validation we should be sure it's guaranteed to be
-      //XChartsJsConstructorArgument
-      //$FlowFixMe[incompatible-type]
-      return arg;
+      return valueToUse;
     }
   }
 
   add(argProvided       )                    {
     const that = this;
-    doMainLevelArgumentValidation([...arguments]);
     const valueToUseOnMainLevel =
       doMainLevelArgumentProcessing(Array.from(arguments));
-    const componentClass = getComponentClass();
+    const componentClass                 =
+      //Here it's validated and we are sure that the component has been
+      //registered
+      //$FlowFixMe[incompatible-type]
+      componentsRegistry.get(valueToUseOnMainLevel.type);
     const argTypeVerified                                                     =
       //At this point the type and zIndex properties are supposed to be valid
       //$FlowFixMe[incompatible-type]
       argProvided;
     doComponentLevelArgumentValidation();
     const container = createContainer();
-    //At this point is should be of type expected by the component's class
+    //At this point it should be a component class
     //$FlowFixMe[invalid-constructor]
     return new componentClass(argTypeVerified, container);
-
-    function getComponentClass()                 {
-      const componentClass = componentsRegistry.get(valueToUseOnMainLevel.type);
-      if (!componentClass) {
-        const msg = getNoRegisteredComponentErrorMsg();
-        that._attemptToShowError(msg);
-        throw new Error(msg);
-      }
-      return componentClass;
-    }
-
-    function getNoRegisteredComponentErrorMsg() {
-      return [
-        'ERR_X_CHARTS_JS_COMPONENT_NOT_REGISTERED:',
-        `Component of type '${ valueToUseOnMainLevel.type
-          }' has not been registered,`,
-        `registered components are:`,
-        Array.from(componentsRegistry.keys()).join(),
-      ].join('\n');
-    }
 
     function createContainer() {
       const container = document.createElement('div');
@@ -161,19 +130,10 @@ export default class XCharts {
       }
     }
 
-    function doMainLevelArgumentValidation(addMethodArgs              ) {
-      const dict = getValidationDictionaryOnXChartsLevel();
-      const errorMsg =
-        validateAddMethodArgumentOnXChartsLevel(dict, addMethodArgs);
-      if (errorMsg) {
-        that._attemptToShowError(errorMsg);
-        throw new Error(errorMsg);
-      }
-    }
-
     function doMainLevelArgumentProcessing(addMethodArgs              ) {
+      const registeredTypes = new Set(componentsRegistry.keys());
       const { validationErrorMessage: e, valueToUse, } =
-        processAddMethodArg(addMethodArgs);
+        processAddMethodArg(addMethodArgs, registeredTypes);
       if (e) {
         that._attemptToShowError(e);
         throw new Error(e);

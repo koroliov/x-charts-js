@@ -1,6 +1,6 @@
 //      strict
-export function isObject(val       )                
-                                                               {
+                                               
+export function isPureObject(val       )                            {
   if (val === null || Array.isArray(val) || typeof val !== 'object') {
     return false;
   }

@@ -1,7 +1,7 @@
 //      strict
                                                                
                                               
-import { isObject, validateHexColor, } from '../../../utils/validation.js';
+import { validateHexColor, } from '../../../utils/validation.js';
 import { validate as validateByDictionary, } from
   '../../../validation/by-dictionary.js';
 import { getDictionary as getDictionaryCommon, }

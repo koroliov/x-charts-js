@@ -1,6 +1,6 @@
 //      strict
                                                          
-import { isObject, } from '../utils/validation.js';
+import { isPureObject, } from '../utils/validation.js';
 
 export function validate(arg   
                     
@@ -71,7 +71,7 @@ export function validate(arg
 
   function handleExpectedProperty(propOnMapper        , propOnArg        ) {
     let msg = '';
-    if (isObject(mapper[propOnMapper])) {
+    if (isPureObject(mapper[propOnMapper])) {
       msg = enterObjectInMapper();
     } else if (Array.isArray(mapper[propOnMapper])) {
       msg = enterArrayInMapper();
@@ -91,11 +91,11 @@ export function validate(arg
         isArrayInProcess,
       });
       propNameForErrMsg = propOnArg;
-      if (!isObject(userProvidedDataToCheck[propOnMapper])) {
+      if (!isPureObject(userProvidedDataToCheck[propOnMapper])) {
         return getNonObjectErrorMsg();
       }
       isArrayInProcess = false;
-      //After the above isObject() call it is guaranteed to be an object
+      //After the above isPureObject() call it is guaranteed to be an object
       //$FlowFixMe[incompatible-type]
       userProvidedDataToCheck = userProvidedDataToCheck[propOnArg];
       //It's okay to treat ValidationDictionaryPure as ValidationDictionary
@@ -105,7 +105,7 @@ export function validate(arg
       //$FlowFixMe[incompatible-type]
       //$FlowFixMe[incompatible-function-indexer]
       mapper = mapper[propOnMapper];
-      //After the above isObject() call it is guaranteed to be an object
+      //After the above isPureObject() call it is guaranteed to be an object
       //$FlowFixMe[not-an-object]
       //$FlowFixMe[incompatible-type]
       propsToCheckArray = Object.keys(userProvidedDataToCheck);
@@ -235,8 +235,8 @@ export function validate(arg
   }
 
   function isNonObjectInArrayError(propOnMapper        , propOnArg        ) {
-    return isObject(mapper[propOnMapper]) &&
-      !isObject(userProvidedDataToCheck[propOnArg]);
+    return isPureObject(mapper[propOnMapper]) &&
+      !isPureObject(userProvidedDataToCheck[propOnArg]);
   }
 
   function getNonObjectErrorMsg(propOnArg         ) {

@@ -1,152 +1,292 @@
 //      strict
-             
-         
-               
-              
-              
-           
+                                                                         
                     
-import { isObject, } from '../utils/validation.js';
+                                               
+import { isPureObject, } from '../utils/validation.js';
 
-export function process(extValue       , schema        )   
-                                 
+                        
+                
+                      
+                           
+                                     
+            
+ 
+
+                         
+                 
+                       
+                                   
+                              
+                             
+                                   
+                           
+            
+ 
+
+export function process(externalValue       , schema        )   
+                                                                    
                     
   {
-  const carry = Object.create(null);
-  const stack         
-                  
-                        
-                             
-                                  
-              
-       
-                   
-                         
-                                     
-                                
-                               
-                                           
-                                            
-              
-     = [];
-  let doLoop = true;
-  let schemaCurrent         = schema;
   let valueToUse        = null;
-  let i = -1;
-  let extValueCurrent = extValue;
+  const stack                                            = [];
 
-  while (doLoop) {
-    const lastStackEntry = stack.at(-1);
-    if (!lastStackEntry) {
-      if (schemaCurrent.type === 'array') {
-        const valueToUseArray               = [];
-        if (!isArray(extValueCurrent)) {
-          throw new Error('must be an array');
-        }
-        if (schemaCurrent.processPre) {
-          const rv = schemaCurrent
-            .processPre(extValueCurrent, carry, valueToUseArray);
-          if (rv.validationErrorMessage) {
-            throw new Error('aaa');
-          }
-        }
-        stack.push({
-          type: 'array',
-          schema: schemaCurrent,
-          valueToUse: valueToUseArray,
-          extValueCurrent,
-          i: -1,
-        });
-        schemaCurrent = schemaCurrent.elements;
-        if (0 === extValueCurrent.length) {
-          throw new Error('aaa');
-        }
-        continue;
-      }
-    } else {
-      i = ++lastStackEntry.i;
-      if (lastStackEntry.type === 'array') {
-        const extArray               = lastStackEntry.extValueCurrent;
-        schemaCurrent = lastStackEntry.schema.elements;
-        if (i >= extArray.length) {
-          lastStackEntry.valueToUse.push(valueToUse);
-          valueToUse = lastStackEntry.valueToUse;
-          if (lastStackEntry.schema.processPost) {
-            valueToUse = lastStackEntry.schema
-              .processPost(extValueCurrent, carry, valueToUse).valueToUse;
-          }
-          stack.pop();
+  try {
+    iterateInWhile();
+  } catch(e) {
+    return {
+      validationError: { path: generateErrorValuePath(), message: e.message, },
+      valueToUse: null,
+    };
+  }
+  return { validationError: null, valueToUse, };
+
+  function iterateInWhile() {
+    const carry = Object.create(null);
+    let schemaCurrent         = schema;
+    let i = -1;
+    let externalValueCurrent = externalValue;
+
+    while (true) {
+      const lastStackEntry = stack.at(-1);
+      if (!lastStackEntry) {
+        if (schemaCurrent.type === 'array') {
+          handleTopLevelExternalValueArray(schemaCurrent);
           continue;
         }
+      } else if (handleDeepLevelValue(lastStackEntry)) {
+        continue;
+      }
+      break;
+    }
+
+    function handleDeepLevelValue(lastStackEntry                 ) {
+      i = ++lastStackEntry.i;
+      if (lastStackEntry.type === 'array') {
+        if (handleDeepLevelExternalValueArray(lastStackEntry)) {
+          return true;
+        }
+      } else if (lastStackEntry.type === 'object') {
+        if (handleDeepLevelExternalValueObject(lastStackEntry)) {
+          return true;
+        }
+        schemaCurrent =
+          lastStackEntry.schema.properties[lastStackEntry.propsSchema[i]];
+        if (schemaCurrent.type === 'final') {
+          if (handleDeepLevelExternalValueFinalInObject(lastStackEntry,
+              schemaCurrent)) {
+            return true;
+          }
+        }
+      }
+      return false;
+
+      function handleDeepLevelExternalValueFinalInObject(lastStackEntry 
+                          , schemaCurrent             ) {
+        const prop = lastStackEntry.propsSchema[i];
+        const extObj = lastStackEntry.externalValueCurrent;
+        //If it's a StackEntryObject then it must be a PureObject and should be
+        //allowed here
+        //$FlowFixMe[incompatible-type]
+        if (!Object.hasOwn(extObj, prop) || lastStackEntry.noValueProvided) {
+          if (Object.hasOwn(schemaCurrent, 'getDefault')) {
+            const valueToUse = lastStackEntry.valueToUse;
+            //if it exists, then it's a function
+            //$FlowFixMe[not-a-function]
+            valueToUse[prop] = schemaCurrent.getDefault();
+            return true;
+          } else {
+            throw new Error('Property is missing');
+          }
+        }
+        const procValue = schemaCurrent.process(extObj[prop], carry);
+        if (procValue.validationErrorMessage) {
+          throw new Error(procValue.validationErrorMessage);
+        }
+        lastStackEntry.valueToUse[prop] = procValue.valueToUse;
+        return true;
+      }
+
+      function handleDeepLevelExternalValueArray(lastStackEntry 
+                         ) {
+        const extArray = lastStackEntry.externalValueCurrent;
+        if (i >= extArray.length) {
+          return handleAllElementsProcessedInProvidedArray();
+        }
         const extValueEl = extArray[i];
-        if (schemaCurrent.type === 'object') {
-          if (!isObject(extValueEl)) {
+        const schemaOfArrayElement = lastStackEntry.schema.elements;
+        if (schemaOfArrayElement.type === 'object') {
+          return handleArrayEntryIsObject();
+        }
+        return false;
+
+        function handleAllElementsProcessedInProvidedArray() {
+          lastStackEntry.valueToUse.push(valueToUse);
+          valueToUse = lastStackEntry.valueToUse;
+          if (Object.hasOwn(lastStackEntry.schema, 'processPost')) {
+            valueToUse = lastStackEntry.schema
+              //This must be a function b/c of the .hasOwn() check
+              //$FlowFixMe[incompatible-type]
+              //$FlowFixMe[not-a-function]
+              .processPost(externalValueCurrent, carry, valueToUse).valueToUse;
+          }
+          stack.pop();
+          return true;
+        }
+
+        function handleArrayEntryIsObject() {
+          //This function is supposed to be called only if schemaOfArrayElement
+          //is SchemaObject
+          //$FlowFixMe[incompatible-type]
+          const schemaCasted               = schemaOfArrayElement;
+          const valueToUse = schemaCasted.getStub();
+          if (Object.hasOwn(schemaCasted, 'processPre')) {
+            //If it's a SchemaObject and it has own property processPre, then it
+            //must be a function, don't want to use the typeof operator
+            //$FlowFixMe[not-a-function]
+            const rv = schemaCasted.processPre(extValueEl, carry, valueToUse);
+            if (rv.validationErrorMessage) {
+              throw new Error(rv.validationErrorMessage);
+            }
+          }
+          if (!isPureObject(extValueEl)) {
             throw new Error('must be an object');
           }
           const propsPresent = Object.keys(extValueEl);
-          const valueToUse                       = schemaCurrent.getStub();
+          const propsSchema = Object.keys(schemaCasted.properties);
+          if (!schemaCasted.ignoreExtraPropertiesAll) {
+            checkProps(propsSchema, propsPresent);
+          }
           stack.push({
             type: 'object',
-            schema: schemaCurrent,
+            schema: schemaCasted,
             valueToUse,
             propsPresent,
-            propsSchema: Object.keys(schemaCurrent.properties),
-            extValueCurrent: extValueEl,
+            propsSchema,
+            externalValueCurrent: extValueEl,
+            noValueProvided: false,
             i: -1,
           });
-          continue;
+          return true;
         }
       }
-      if (lastStackEntry.type === 'object') {
-        const extObj = lastStackEntry.extValueCurrent;
+
+      function handleDeepLevelExternalValueObject(
+          lastStackEntry                  ) {
         if (i >= lastStackEntry.propsSchema.length) {
-          valueToUse = lastStackEntry.valueToUse;
-          stack.pop();
-          continue;
+          return moveLevelUp();
         }
         const prop = lastStackEntry.propsSchema[i];
-        if (!Object.hasOwn(lastStackEntry.schema.properties, prop)) {
-          if (lastStackEntry.schema.ignoreExtraPropertiesAll) {
-            continue;
+        if (lastStackEntry.schema.properties[prop].type === 'object') {
+          return moveLevelDownToProcessObject(
+              lastStackEntry.schema.properties[prop]);
+        }
+        return false;
+
+        function moveLevelDownToProcessObject(schema              ) {
+          const valueToUseInner = schema.getStub();
+          valueToUse = valueToUseInner;
+          lastStackEntry.valueToUse[prop] = valueToUseInner;
+          const propsSchema = Object.keys(schema.properties);
+          if (!isPureObject(lastStackEntry.externalValueCurrent[prop])) {
+            return handleNotAnObjectProvidedCase();
+          }
+          return handleObjectProvidedCase(
+              lastStackEntry.externalValueCurrent[prop]);
+
+          function handleObjectProvidedCase(extValueEl            ) {
+            const propsPresent = Object.keys(extValueEl);
+            if (!lastStackEntry.schema.ignoreExtraPropertiesAll) {
+              checkProps(propsSchema, propsPresent);
+            }
+            return pushStack(extValueEl, false);
+          }
+
+          function handleNotAnObjectProvidedCase() {
+            //the first argument is an object, and even if it wasn't the
+            //hasOwn() method accepts any value
+            //$FlowFixMe[incompatible-type]
+            if (!Object.hasOwn(lastStackEntry.externalValueCurrent, prop)) {
+              return pushStack(valueToUseInner, true);
+            }
+            throw new Error(
+                'Must be an object, e.g. {  }, Object.create(null)');
+          }
+
+          function pushStack(externalValueCurrent            ,
+              noValueProvided         ) {
+            const propsPresent = Object.keys(externalValueCurrent);
+            stack.push({
+              type: 'object',
+              schema,
+              valueToUse: valueToUseInner,
+              propsPresent,
+              propsSchema,
+              externalValueCurrent,
+              noValueProvided,
+              i: -1,
+            });
+            return true;
           }
         }
-        schemaCurrent = lastStackEntry.schema.properties[prop];
-        if (schemaCurrent.type === 'final') {
-          //.hasOwn() should accept an object with null proto, this looks like a
-          //bug in Flow
-          //$FlowFixMe[incompatible-type]
-          if (!Object.hasOwn(extObj, prop)) {
-            if (Object.hasOwn(schemaCurrent, 'getDefault')) {
-              //The hasOwn check should guarantee the prop is present, and it's
-              //a function, since it's specified in the type
-              //$FlowFixMe[not-a-function]
-              const m = schemaCurrent.getDefault();
-              const valueToUse = lastStackEntry.valueToUse;
-              valueToUse[prop] = m;
-              continue;
-            } else {
-              throw new Error('no value');
-            }
-          }
-          const procValue = schemaCurrent.process(extObj[prop], carry);
-          if (procValue.validationErrorMessage) {
-            throw new Error('validation error');
-          }
-          lastStackEntry.valueToUse[prop] = procValue.valueToUse;
-          continue;
+
+        function moveLevelUp() {
+          const prop = lastStackEntry.propsSchema[lastStackEntry.i - 1];
+          valueToUse = lastStackEntry.valueToUse;
+          stack.pop();
+          return true;
         }
       }
-    }
-    break;
-  }
-  return {
-    validationErrorMessage: '',
-    valueToUse,
-  };
 
-  function isArray(param       )                        {
-    //Seems to be a Flow bug
-    //$FlowFixMe[incompatible-type-guard]
-    return Array.isArray(param);
+      function checkProps(propsSchema               ,
+          propsPresent               ) {
+        const setSchema = new Set(propsSchema);
+        const setPresent = new Set(propsPresent);
+        setPresent.forEach(p => {
+          if (!setSchema.has(p)) {
+            throw new Error(`Unknown property '${ p }'`);
+          }
+        });
+      }
+    }
+
+    function isArray(param       )                        {
+      //Seems to be a Flow bug
+      //$FlowFixMe[incompatible-type-guard]
+      return Array.isArray(param);
+    }
+
+    function handleTopLevelExternalValueArray(schemaCurrentPassed 
+                   ) {
+      const valueToUseArray               = [];
+      if (!isArray(externalValueCurrent)) {
+        throw new Error('must be an array');
+      }
+      if (schemaCurrentPassed.processPre) {
+        const rv = schemaCurrentPassed
+          .processPre(externalValueCurrent, carry, valueToUseArray);
+        if (rv.validationErrorMessage) {
+          throw new Error(rv.validationErrorMessage);
+        }
+      }
+      stack.push({
+        type: 'array',
+        schema: schemaCurrentPassed,
+        valueToUse: valueToUseArray,
+        externalValueCurrent,
+        i: -1,
+      });
+      schemaCurrent = schemaCurrentPassed.elements;
+    }
+  }
+
+  function generateErrorValuePath() {
+    return stack.reduce((a               , el) => {
+      if (el.type === 'array') {
+        return a.push(String(el.i)), a;
+      } else if (el.type === 'object') {
+        return a.push(el.propsSchema[el.i]), a;
+      }
+      return a;
+    }, []);
   }
 }
