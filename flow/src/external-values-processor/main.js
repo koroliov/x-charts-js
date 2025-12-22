@@ -86,6 +86,7 @@ export function process(externalValue: mixed, schema: Schema): {
           }
         }
       }
+      return false;
 
       function handleDeepLevelExternalValueFinalInObject(lastStackEntry:
           StackEntryObject, schemaCurrent: SchemaFinal) {
@@ -175,12 +176,38 @@ export function process(externalValue: mixed, schema: Schema): {
           lastStackEntry: StackEntryObject) {
         const prop = lastStackEntry.propsSchema[i]
         if (i >= lastStackEntry.propsSchema.length) {
+          const prop = lastStackEntry.propsSchema[lastStackEntry.i - 1];
           valueToUse = lastStackEntry.valueToUse;
           stack.pop();
           return true;
         }
         if (!Object.hasOwn(lastStackEntry.schema.properties, prop)) {
           if (lastStackEntry.schema.ignoreExtraPropertiesAll) {
+            return true;
+          }
+        }
+        if (lastStackEntry.schema.properties[prop].type === 'object') {
+          if (!isPureObject(lastStackEntry.externalValueCurrent[prop])) {
+            throw new Error('foo');
+          }
+          const extValueEl: PureObject =
+            lastStackEntry.externalValueCurrent[prop];
+          if (lastStackEntry.schema.properties[prop].type === 'object') {
+            const schemaCasted: SchemaObject =
+              lastStackEntry.schema.properties[prop];
+            const valueToUseInner = schemaCasted.getStub();
+            valueToUse = valueToUseInner;
+            const propsPresent = Object.keys(extValueEl);
+            lastStackEntry.valueToUse[prop] = valueToUseInner;
+            stack.push({
+              type: 'object',
+              schema: schemaCasted,
+              valueToUse: valueToUseInner,
+              propsPresent,
+              propsSchema: Object.keys(schemaCasted.properties),
+              externalValueCurrent: extValueEl,
+              i: -1,
+            });
             return true;
           }
         }
