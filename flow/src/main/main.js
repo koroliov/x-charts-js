@@ -1,15 +1,10 @@
 //@flow strict
-import type {
-  XChartsJsConstructorArgument,
-  ComponentClass,
-  ComponentInstance,
-} from '../types.js';
+import type { XChartsJsConstructorArgument, ComponentClass, ComponentInstance, }
+  from '../types.js';
 import { process as processAddMethodArg, }
   from './process-external-values/add-method-arg.js';
-import {
-  validate as validateConstructorArgument,
-  getDictionary as getValidationDictionaryForContructorArgument,
-} from '../validation/constructor-arg.js';
+import { process as processConstructorArg, }
+  from './process-external-values/constructor-arg.js';
 
 const componentsRegistry: Map<string, ComponentClass> = new Map();
 
@@ -30,7 +25,7 @@ export default class XCharts {
     //check if it's a div or not. Looks acceptable.
     //$FlowFixMe[incompatible-use]
     this._containerDiv = arg.containerDiv;
-    const constructorArgValidated = doValidation([...arguments]);
+    const constructorArgValidated = doArgumentProcessing([...arguments]);
     initDom();
 
     function initDom(): void {
@@ -79,18 +74,14 @@ export default class XCharts {
       }
     }
 
-    function doValidation(constructorArguments: Array<mixed>):
-      XChartsJsConstructorArgument {
-      const dict = getValidationDictionaryForContructorArgument(HTMLDivElement);
-      const errorMsg = validateConstructorArgument(dict, constructorArguments);
-      if (errorMsg) {
-        that._attemptToShowError(errorMsg);
-        throw new Error(errorMsg);
+    function doArgumentProcessing(constructorArguments: Array<mixed>):
+        XChartsJsConstructorArgument {
+      const { validationErrorMessage: e, valueToUse, } =
+        processConstructorArg(constructorArguments, HTMLDivElement);
+      if (e) {
+        throw new Error(e);
       }
-      //After the validation we should be sure it's guaranteed to be
-      //XChartsJsConstructorArgument
-      //$FlowFixMe[incompatible-type]
-      return arg;
+      return valueToUse;
     }
   }
 
