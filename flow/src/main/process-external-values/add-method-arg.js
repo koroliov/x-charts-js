@@ -27,79 +27,6 @@ export function process(userProvidedArguments: Array<mixed>, registeredTypes:
   //$FlowFixMe[incompatible-type]
   return retVal;
 
-  function getTypeSchema(): SchemaFinal {
-    return {
-      type: 'final',
-      process(valueProvided: mixed, carryObj: CarryObj) {
-        const valueProvidedStr = String(valueProvided);
-        if (!registeredTypes.has(valueProvidedStr)) {
-          return {
-            validationErrorMessage: [
-              `Component of type '${ valueProvidedStr
-                }' has not been registered,`,
-              `registered components are: ${
-                Array.from(registeredTypes).join(', ') }`,
-            ].join('\n'),
-            carryObj,
-            valueToUse: null,
-          };
-        }
-        return { validationErrorMessage: '', carryObj,
-            valueToUse: valueProvided, };
-      },
-    };
-  }
-
-  function getZIndexSchema(): SchemaFinal {
-    return {
-      type: 'final',
-      process(valueProvided: mixed, carryObj: CarryObj) {
-        const retVal = {
-          validationErrorMessage: '',
-          carryObj,
-          valueToUse: valueProvided,
-        };
-        if (isInvalid()) {
-          retVal.valueToUse = null;
-          retVal.validationErrorMessage =
-            'Value must be a numeric integer string with no white spaces';
-        }
-        return retVal;
-
-        function isInvalid() {
-          return typeof valueProvided !== 'string' ||
-            !/^-*\d+$/.test(valueProvided);
-        }
-      },
-      getDefault() { return '1'; },
-    };
-  }
-
-  function getArgumentSchema(): SchemaObject {
-    return {
-      type: 'object',
-      processPre(valueProvided, carryObj, valueToUse) {
-        if (!isPureObject(valueProvided)) {
-          return {
-            carryObj,
-            valueToUse,
-            validationErrorMessage:
-                'Must be an object, e.g. {  }, Object.create(null)',
-          };
-        }
-        return { carryObj, valueToUse, validationErrorMessage: '', };
-      },
-      getStub() {
-        return { type: '', zIndex: '', };
-      },
-      ignoreExtraPropertiesAll: true,
-      properties: {
-        type: getTypeSchema(),
-        zIndex: getZIndexSchema(),
-      },
-    };
-  }
-
   function getArgumentsSchema(): SchemaArray {
     return {
       type: 'array',
@@ -119,7 +46,7 @@ export function process(userProvidedArguments: Array<mixed>, registeredTypes:
         return { carryObj, valueToUse: valueToUse[0],
           validationErrorMessage: '', };
       },
-      elements: getArgumentSchema(),
+      elements: getArgumentSchema(registeredTypes),
     };
   }
 
@@ -142,4 +69,77 @@ export function process(userProvidedArguments: Array<mixed>, registeredTypes:
     errorMessageArray.push(`  ${ processed.validationError.message }`);
     return errorMessageArray.join('\n');
   }
+}
+
+export function getArgumentSchema(registeredTypes: Set<string>): SchemaObject {
+  return {
+    type: 'object',
+    processPre(valueProvided, carryObj, valueToUse) {
+      if (!isPureObject(valueProvided)) {
+        return {
+          carryObj,
+          valueToUse,
+          validationErrorMessage:
+              'Must be an object, e.g. {  }, Object.create(null)',
+        };
+      }
+      return { carryObj, valueToUse, validationErrorMessage: '', };
+    },
+    getStub() {
+      return { type: '', zIndex: '', };
+    },
+    ignoreExtraPropertiesAll: true,
+    properties: {
+      type: getTypeSchema(registeredTypes),
+      zIndex: getZIndexSchema(),
+    },
+  };
+}
+
+function getTypeSchema(registeredTypes: Set<string>): SchemaFinal {
+  return {
+    type: 'final',
+    process(valueProvided: mixed, carryObj: CarryObj) {
+      const valueProvidedStr = String(valueProvided);
+      if (!registeredTypes.has(valueProvidedStr)) {
+        return {
+          validationErrorMessage: [
+            `Component of type '${ valueProvidedStr
+              }' has not been registered,`,
+            `registered components are: ${
+              Array.from(registeredTypes).join(', ') }`,
+          ].join('\n'),
+          carryObj,
+          valueToUse: null,
+        };
+      }
+      return { validationErrorMessage: '', carryObj,
+          valueToUse: valueProvided, };
+    },
+  };
+}
+
+function getZIndexSchema(): SchemaFinal {
+  return {
+    type: 'final',
+    process(valueProvided: mixed, carryObj: CarryObj) {
+      const retVal = {
+        validationErrorMessage: '',
+        carryObj,
+        valueToUse: valueProvided,
+      };
+      if (isInvalid()) {
+        retVal.valueToUse = null;
+        retVal.validationErrorMessage =
+          'Value must be a numeric integer string with no white spaces';
+      }
+      return retVal;
+
+      function isInvalid() {
+        return typeof valueProvided !== 'string' ||
+          !/^-*\d+$/.test(valueProvided);
+      }
+    },
+    getDefault() { return '1'; },
+  };
 }

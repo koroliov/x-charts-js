@@ -7,6 +7,8 @@ import { isPureObject, } from '../../../utils/validation.js';
 import type { PureObject, } from '../../../../src/types.js';
 import type { AddMethodArgumentLegend2, }
   from '../../../../src/components/legend/types.js';
+import { getArgumentSchema as getArgumentSchemaMain, } from
+  '../../../../src/main/process-external-values/add-method-arg.js';
 
 type AddMethodArgumentComponentLevel = {
   htmlFragment: string,
@@ -48,6 +50,9 @@ export function process(userProvidedArgument: PureObject): {
   }
 
   function getArgumentSchema(): SchemaObject {
+    const addMethodArgSchemaMain = getArgumentSchemaMain(new Set());
+    const propsHandledOnMainLevel =
+      new Set(Object.keys(addMethodArgSchemaMain.properties));
     return {
       type: 'object',
       processPre(valueProvided, carryObj, valueToUse) {
@@ -65,7 +70,7 @@ export function process(userProvidedArgument: PureObject): {
         return { htmlFragment: '', };
       },
       ignoreExtraPropertiesAll: false,
-      ignoreExtraPropertiesSet: new Set([ 'zIndex', 'type', ]),
+      ignoreExtraPropertiesSet: propsHandledOnMainLevel,
       properties: {
         htmlFragment: getHtmlFragmentSchema(),
       },
