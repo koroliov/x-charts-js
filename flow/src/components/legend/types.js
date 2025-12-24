@@ -6,3 +6,7 @@ export type AddMethodArgumentLegend = {
   +zIndex: AddMethodArgument['zIndex'],
   +htmlFragment: string,
 }
+
+export type AddMethodArgumentLegend2 = {
+  +htmlFragment: string,
+}

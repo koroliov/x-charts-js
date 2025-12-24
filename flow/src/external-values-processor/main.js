@@ -53,10 +53,37 @@ export function process(externalValue: mixed, schema: Schema): {
           handleTopLevelExternalValueArray(schemaCurrent);
           continue;
         }
+        if (schemaCurrent.type === 'object') {
+          handleTopLevelExternalValueObject(schemaCurrent);
+          continue;
+        }
       } else if (handleDeepLevelValue(lastStackEntry)) {
         continue;
       }
       break;
+    }
+
+    function handleTopLevelExternalValueObject(schemaCurrentPassed:
+        SchemaObject) {
+      if (!isPureObject(externalValueCurrent)) {
+        throw new Error('foo');
+      }
+      const propsSchema = Object.keys(schemaCurrentPassed.properties);
+      const propsPresent = Object.keys(externalValueCurrent);
+      if (!schemaCurrentPassed.ignoreExtraPropertiesAll) {
+        checkProps(propsSchema, propsPresent,
+            schemaCurrentPassed.ignoreExtraPropertiesSet);
+      }
+      stack.push({
+        type: 'object',
+        schema: schemaCurrentPassed,
+        valueToUse: schemaCurrentPassed.getStub(),
+        propsPresent,
+        propsSchema,
+        externalValueCurrent,
+        noValueProvided: false,
+        i: -1,
+      });
     }
 
     function handleDeepLevelValue(lastStackEntry: typeof stack[0]) {
@@ -154,7 +181,8 @@ export function process(externalValue: mixed, schema: Schema): {
           const propsPresent = Object.keys(extValueEl);
           const propsSchema = Object.keys(schemaCasted.properties);
           if (!schemaCasted.ignoreExtraPropertiesAll) {
-            checkProps(propsSchema, propsPresent);
+            checkProps(propsSchema, propsPresent,
+                schemaCasted.ignoreExtraPropertiesSet);
           }
           stack.push({
             type: 'object',
@@ -180,6 +208,14 @@ export function process(externalValue: mixed, schema: Schema): {
           return moveLevelDownToProcessObject(
               lastStackEntry.schema.properties[prop]);
         }
+        if (lastStackEntry.schema.properties[prop].type === 'final') {
+          schemaCurrent =
+            lastStackEntry.schema.properties[prop];
+          if (handleDeepLevelExternalValueFinalInObject(lastStackEntry,
+              schemaCurrent)) {
+            return true;
+          }
+        }
         return false;
 
         function moveLevelDownToProcessObject(schema: SchemaObject) {
@@ -196,7 +232,8 @@ export function process(externalValue: mixed, schema: Schema): {
           function handleObjectProvidedCase(extValueEl: PureObject) {
             const propsPresent = Object.keys(extValueEl);
             if (!lastStackEntry.schema.ignoreExtraPropertiesAll) {
-              checkProps(propsSchema, propsPresent);
+              checkProps(propsSchema, propsPresent,
+                  lastStackEntry.schema.ignoreExtraPropertiesSet);
             }
             return pushStack(extValueEl, false);
           }
@@ -236,17 +273,17 @@ export function process(externalValue: mixed, schema: Schema): {
           return true;
         }
       }
+    }
 
-      function checkProps(propsSchema: Array<string>,
-          propsPresent: Array<string>) {
-        const setSchema = new Set(propsSchema);
-        const setPresent = new Set(propsPresent);
-        setPresent.forEach(p => {
-          if (!setSchema.has(p)) {
-            throw new Error(`Unknown property '${ p }'`);
-          }
-        });
-      }
+    function checkProps(propsSchema: Array<string>,
+        propsPresent: Array<string>, propsToIgnore: Set<string>) {
+      const setSchema = new Set(propsSchema);
+      const setPresent = new Set(propsPresent);
+      setPresent.forEach(p => {
+        if (!setSchema.has(p) && !propsToIgnore.has(p)) {
+          throw new Error(`Unknown property '${ p }'`);
+        }
+      });
     }
 
     function isArray(param: mixed): param is Array<mixed> {
