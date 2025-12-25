@@ -12,8 +12,8 @@ tp.test('valid argument case, check references not copied', (t) => {
     {
       containerDiv: new ContainerDiv(),
       options: {
-        backgroundColor: '#ffffff' /* white */,
-        isComponentInspectMode: false,
+        backgroundColor: '#000000' /* black */,
+        isComponentInspectMode: true,
       },
     },
   ];
@@ -22,8 +22,8 @@ tp.test('valid argument case, check references not copied', (t) => {
     valueToUse: {
       containerDiv: new ContainerDiv(),
       options: {
-        backgroundColor: '#ffffff' /* white */,
-        isComponentInspectMode: false,
+        backgroundColor: '#000000' /* black */,
+        isComponentInspectMode: true,
       },
     },
   };
