@@ -49,13 +49,13 @@ export function process(externalValue: mixed, schema: Schema): {
     while (true) {
       const lastStackEntry = stack.at(-1);
       if (!lastStackEntry) {
-        if (schemaCurrent.type === 'array') {
-          handleTopLevelExternalValueArray(schemaCurrent);
-          continue;
-        }
-        if (schemaCurrent.type === 'object') {
-          handleTopLevelExternalValueObject(schemaCurrent);
-          continue;
+        switch (schemaCurrent.type) {
+          case 'array':
+            handleTopLevelExternalValueArray(schemaCurrent);
+            continue;
+          case 'object':
+            handleExpectedObjectCase(schemaCurrent, externalValue);
+            continue;
         }
       } else if (handleDeepLevelValue(lastStackEntry)) {
         continue;
@@ -63,27 +63,38 @@ export function process(externalValue: mixed, schema: Schema): {
       break;
     }
 
-    function handleTopLevelExternalValueObject(schemaCurrentPassed:
-        SchemaObject) {
-      if (!isPureObject(externalValueCurrent)) {
-        throw new Error('foo');
+    function handleExpectedObjectCase(schemaObj: SchemaObject,
+        extValueEl: mixed) {
+      const valueToUse = schemaObj.getStub();
+      if (Object.hasOwn(schemaObj, 'processPre')) {
+        //If it's a SchemaObject and it has own property processPre, then it
+        //must be a function, don't want to use the typeof operator
+        //$FlowFixMe[not-a-function]
+        const rv = schemaObj.processPre(extValueEl, carry, valueToUse);
+        if (rv.validationErrorMessage) {
+          throw new Error(rv.validationErrorMessage);
+        }
       }
-      const propsSchema = Object.keys(schemaCurrentPassed.properties);
-      const propsPresent = Object.keys(externalValueCurrent);
-      if (!schemaCurrentPassed.ignoreExtraPropertiesAll) {
-        checkProps(propsSchema, propsPresent,
-            schemaCurrentPassed.ignoreExtraPropertiesSet);
+      if (!isPureObject(extValueEl)) {
+        throw new Error('must be an object');
+      }
+      const propsPresent = Object.keys(extValueEl);
+      const propsSchema = Object.keys(schemaObj.properties);
+      if (!schemaObj.ignoreExtraPropertiesAll) {
+        const extraPropsToIgnore = schemaObj.ignoreExtraPropertiesSet;
+        checkExtraProps(propsSchema, propsPresent, extraPropsToIgnore);
       }
       stack.push({
         type: 'object',
-        schema: schemaCurrentPassed,
-        valueToUse: schemaCurrentPassed.getStub(),
+        schema: schemaObj,
+        valueToUse,
         propsPresent,
         propsSchema,
-        externalValueCurrent,
+        externalValueCurrent: extValueEl,
         noValueProvided: false,
         i: -1,
       });
+      return true;
     }
 
     function handleDeepLevelValue(lastStackEntry: typeof stack[0]) {
@@ -142,7 +153,7 @@ export function process(externalValue: mixed, schema: Schema): {
         const extValueEl = extArray[i];
         const schemaOfArrayElement = lastStackEntry.schema.elements;
         if (schemaOfArrayElement.type === 'object') {
-          return handleArrayEntryIsObject();
+          return handleExpectedObjectCase(schemaOfArrayElement, extValueEl);
         }
         return false;
 
@@ -157,43 +168,6 @@ export function process(externalValue: mixed, schema: Schema): {
               .processPost(externalValueCurrent, carry, valueToUse).valueToUse;
           }
           stack.pop();
-          return true;
-        }
-
-        function handleArrayEntryIsObject() {
-          //This function is supposed to be called only if schemaOfArrayElement
-          //is SchemaObject
-          //$FlowFixMe[incompatible-type]
-          const schemaCasted: SchemaObject = schemaOfArrayElement;
-          const valueToUse = schemaCasted.getStub();
-          if (Object.hasOwn(schemaCasted, 'processPre')) {
-            //If it's a SchemaObject and it has own property processPre, then it
-            //must be a function, don't want to use the typeof operator
-            //$FlowFixMe[not-a-function]
-            const rv = schemaCasted.processPre(extValueEl, carry, valueToUse);
-            if (rv.validationErrorMessage) {
-              throw new Error(rv.validationErrorMessage);
-            }
-          }
-          if (!isPureObject(extValueEl)) {
-            throw new Error('must be an object');
-          }
-          const propsPresent = Object.keys(extValueEl);
-          const propsSchema = Object.keys(schemaCasted.properties);
-          if (!schemaCasted.ignoreExtraPropertiesAll) {
-            checkProps(propsSchema, propsPresent,
-                schemaCasted.ignoreExtraPropertiesSet);
-          }
-          stack.push({
-            type: 'object',
-            schema: schemaCasted,
-            valueToUse,
-            propsPresent,
-            propsSchema,
-            externalValueCurrent: extValueEl,
-            noValueProvided: false,
-            i: -1,
-          });
           return true;
         }
       }
@@ -229,15 +203,6 @@ export function process(externalValue: mixed, schema: Schema): {
           return handleObjectProvidedCase(
               lastStackEntry.externalValueCurrent[prop]);
 
-          function handleObjectProvidedCase(extValueEl: PureObject) {
-            const propsPresent = Object.keys(extValueEl);
-            if (!lastStackEntry.schema.ignoreExtraPropertiesAll) {
-              checkProps(propsSchema, propsPresent,
-                  lastStackEntry.schema.ignoreExtraPropertiesSet);
-            }
-            return pushStack(extValueEl, false);
-          }
-
           function handleNotAnObjectProvidedCase() {
             //the first argument is an object, and even if it wasn't the
             //hasOwn() method accepts any value
@@ -247,6 +212,16 @@ export function process(externalValue: mixed, schema: Schema): {
             }
             throw new Error(
                 'Must be an object, e.g. {  }, Object.create(null)');
+          }
+
+          function handleObjectProvidedCase(extValueEl: PureObject) {
+            const propsPresent = Object.keys(extValueEl);
+            if (!lastStackEntry.schema.ignoreExtraPropertiesAll) {
+              const extraPropsToIgnore =
+                  lastStackEntry.schema.ignoreExtraPropertiesSet;
+              checkExtraProps(propsSchema, propsPresent, extraPropsToIgnore);
+            }
+            return pushStack(extValueEl, false);
           }
 
           function pushStack(externalValueCurrent: PureObject,
@@ -275,7 +250,7 @@ export function process(externalValue: mixed, schema: Schema): {
       }
     }
 
-    function checkProps(propsSchema: Array<string>,
+    function checkExtraProps(propsSchema: Array<string>,
         propsPresent: Array<string>, propsToIgnore: Set<string>) {
       const setSchema = new Set(propsSchema);
       const setPresent = new Set(propsPresent);

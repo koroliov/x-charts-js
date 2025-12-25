@@ -1,5 +1,5 @@
 //@flow strict
-import type { SchemaArray, SchemaObject, SchemaFinal, CarryObj, }
+import type { SchemaObject, SchemaFinal, CarryObj, }
   from '../../../external-values-processor/types.js';
 import { process as processMain, }
   from '../../../external-values-processor/main.js';
@@ -9,10 +9,6 @@ import type { AddMethodArgumentLegend2, }
   from '../../../../src/components/legend/types.js';
 import { getArgumentSchema as getArgumentSchemaMain, } from
   '../../../../src/main/process-external-values/add-method-arg.js';
-
-type AddMethodArgumentComponentLevel = {
-  htmlFragment: string,
-}
 
 export function process(userProvidedArgument: PureObject): {
   validationErrorMessage: string,
