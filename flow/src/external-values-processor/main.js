@@ -16,7 +16,6 @@ type StackEntryObject = {
   type: 'object',
   schema: SchemaObject,
   valueToUse: { [string]: mixed, },
-  propsPresent: Array<string>,
   propsSchema: Array<string>,
   externalValueCurrent: PureObject,
   noValueProvided: boolean,
@@ -74,17 +73,16 @@ export function process(externalValue: mixed, schema: Schema): {
       if (!isPureObject(extValueEl)) {
         throw new Error('must be an object');
       }
-      const propsPresent = Object.keys(extValueEl);
       const propsSchema = Object.keys(schemaObj.properties);
       if (!schemaObj.ignoreExtraPropertiesAll) {
         const extraPropsToIgnore = schemaObj.ignoreExtraPropertiesSet;
+        const propsPresent = Object.keys(extValueEl);
         checkExtraProps(propsSchema, propsPresent, extraPropsToIgnore);
       }
       stack.push({
         type: 'object',
         schema: schemaObj,
         valueToUse,
-        propsPresent,
         propsSchema,
         externalValueCurrent: extValueEl,
         noValueProvided: false,
@@ -217,12 +215,10 @@ export function process(externalValue: mixed, schema: Schema): {
 
           function pushStack(externalValueCurrent: PureObject,
               noValueProvided: boolean) {
-            const propsPresent = Object.keys(externalValueCurrent);
             stack.push({
               type: 'object',
               schema,
               valueToUse: valueToUseInner,
-              propsPresent,
               propsSchema,
               externalValueCurrent,
               noValueProvided,
