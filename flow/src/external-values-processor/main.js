@@ -66,10 +66,8 @@ export function process(externalValue: mixed, schema: Schema): {
     function handleExpectedObjectCase(schemaObj: SchemaObject,
         extValueEl: mixed) {
       const valueToUse = schemaObj.getStub();
-      if (Object.hasOwn(schemaObj, 'processPre')) {
-        //If it's a SchemaObject and it has own property processPre, then it
-        //must be a function, don't want to use the typeof operator
-        //$FlowFixMe[not-a-function]
+      if (Object.hasOwn(schemaObj, 'processPre') &&
+          typeof schemaObj.processPre === 'function') {
         const rv = schemaObj.processPre(extValueEl, carry, valueToUse);
         if (rv.validationErrorMessage) {
           throw new Error(rv.validationErrorMessage);
@@ -122,14 +120,13 @@ export function process(externalValue: mixed, schema: Schema): {
           StackEntryObject, schemaCurrent: SchemaFinal) {
         const prop = lastStackEntry.propsSchema[i];
         const extObj = lastStackEntry.externalValueCurrent;
-        //If it's a StackEntryObject then it must be a PureObject and should be
-        //allowed here
+        //extObj is guaranteed to be a PureObject by StackEntryObject.
         //$FlowFixMe[incompatible-type]
-        if (!Object.hasOwn(extObj, prop) || lastStackEntry.noValueProvided) {
-          if (Object.hasOwn(schemaCurrent, 'getDefault')) {
+        if (!Object.hasOwn(extObj, prop) ||
+            lastStackEntry.noValueProvided) {
+          if (Object.hasOwn(schemaCurrent, 'getDefault') &&
+              typeof schemaCurrent.getDefault === 'function') {
             const valueToUse = lastStackEntry.valueToUse;
-            //if it exists, then it's a function
-            //$FlowFixMe[not-a-function]
             valueToUse[prop] = schemaCurrent.getDefault();
             return true;
           } else {
@@ -160,12 +157,10 @@ export function process(externalValue: mixed, schema: Schema): {
         function handleAllElementsProcessedInProvidedArray() {
           lastStackEntry.valueToUse.push(valueToUse);
           valueToUse = lastStackEntry.valueToUse;
-          if (Object.hasOwn(lastStackEntry.schema, 'processPost')) {
-            valueToUse = lastStackEntry.schema
-              //This must be a function b/c of the .hasOwn() check
-              //$FlowFixMe[incompatible-type]
-              //$FlowFixMe[not-a-function]
-              .processPost(externalValueCurrent, carry, valueToUse).valueToUse;
+          if (Object.hasOwn(lastStackEntry.schema, 'processPost') &&
+              typeof lastStackEntry.schema.processPost === 'function') {
+            valueToUse = lastStackEntry.schema.processPost(externalValueCurrent,
+                carry, lastStackEntry.valueToUse).valueToUse;
           }
           stack.pop();
           return true;
@@ -204,8 +199,8 @@ export function process(externalValue: mixed, schema: Schema): {
               lastStackEntry.externalValueCurrent[prop]);
 
           function handleNotAnObjectProvidedCase() {
-            //the first argument is an object, and even if it wasn't the
-            //hasOwn() method accepts any value
+            //lastStackEntry.externalValueCurrent is an PureObject, b/c
+            //lastStackEntry is StackEntryObject
             //$FlowFixMe[incompatible-type]
             if (!Object.hasOwn(lastStackEntry.externalValueCurrent, prop)) {
               return pushStack(valueToUseInner, true);
