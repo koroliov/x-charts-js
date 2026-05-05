@@ -69,9 +69,7 @@ export function process(externalValue: mixed, schema: Schema): {
       if (Object.hasOwn(schemaObj, 'processPre') &&
           typeof schemaObj.processPre === 'function') {
         const rv = schemaObj.processPre(extValueEl, carry, valueToUse);
-        if (rv.validationErrorMessage) {
-          throw new Error(rv.validationErrorMessage);
-        }
+        throwIfValidationError(rv);
       }
       if (!isPureObject(extValueEl)) {
         throw new Error('must be an object');
@@ -134,9 +132,7 @@ export function process(externalValue: mixed, schema: Schema): {
           }
         }
         const procValue = schemaCurrent.process(extObj[prop], carry);
-        if (procValue.validationErrorMessage) {
-          throw new Error(procValue.validationErrorMessage);
-        }
+        throwIfValidationError(procValue);
         lastStackEntry.valueToUse[prop] = procValue.valueToUse;
         return true;
       }
@@ -265,9 +261,7 @@ export function process(externalValue: mixed, schema: Schema): {
       if (schemaCurrentPassed.processPre) {
         const rv = schemaCurrentPassed
           .processPre(externalValueCurrent, carry, valueToUseArray);
-        if (rv.validationErrorMessage) {
-          throw new Error(rv.validationErrorMessage);
-        }
+        throwIfValidationError(rv);
       }
       stack.push({
         type: 'array',
@@ -289,5 +283,14 @@ export function process(externalValue: mixed, schema: Schema): {
       }
       return a;
     }, []);
+  }
+
+  function throwIfValidationError(processed: {
+    +validationErrorMessage: string,
+    ...
+  }) {
+    if (processed.validationErrorMessage) {
+      throw new Error(processed.validationErrorMessage);
+    }
   }
 }
