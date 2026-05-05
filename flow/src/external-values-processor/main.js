@@ -229,7 +229,6 @@ export function process(externalValue: mixed, schema: Schema): {
         }
 
         function moveLevelUp() {
-          const prop = lastStackEntry.propsSchema[lastStackEntry.i - 1];
           valueToUse = lastStackEntry.valueToUse;
           stack.pop();
           return true;
@@ -240,8 +239,7 @@ export function process(externalValue: mixed, schema: Schema): {
     function checkExtraProps(propsSchema: Array<string>,
         propsPresent: Array<string>, propsToIgnore: Set<string>) {
       const setSchema = new Set(propsSchema);
-      const setPresent = new Set(propsPresent);
-      setPresent.forEach(p => {
+      propsPresent.forEach(p => {
         if (!setSchema.has(p) && !propsToIgnore.has(p)) {
           throw new Error(`Unknown property '${ p }'`);
         }
