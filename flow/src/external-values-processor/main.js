@@ -2,13 +2,13 @@
 import type { Schema, SchemaObject, SchemaArray, SchemaFinal, CarryObj, }
   from './types.js';
 import type { PureObject, } from '../types.js';
-import { isPureObject, } from '../utils/validation.js';
+import { isPureObject, isReadOnlyArray, } from '../utils/validation.js';
 
 type StackEntryArray = {
   type: 'array',
   schema: SchemaArray,
   valueToUse: Array<mixed>,
-  externalValueCurrent: Array<mixed>,
+  externalValueCurrent: $ReadOnlyArray<mixed>,
   i: number,
 }
 
@@ -261,16 +261,10 @@ export function process(externalValue: mixed, schema: Schema): {
       });
     }
 
-    function isArray(param: mixed): param is Array<mixed> {
-      //Seems to be a Flow bug
-      //$FlowFixMe[incompatible-type-guard]
-      return Array.isArray(param);
-    }
-
     function handleTopLevelExternalValueArray(schemaCurrentPassed:
         SchemaArray) {
       const valueToUseArray: Array<mixed> = [];
-      if (!isArray(externalValueCurrent)) {
+      if (!isReadOnlyArray(externalValueCurrent)) {
         throw new Error('must be an array');
       }
       if (schemaCurrentPassed.processPre) {

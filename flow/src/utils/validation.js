@@ -36,3 +36,7 @@ export function validateHexColor(val: mixed): string {
   }
   return /^#[0-9A-F]{6}$/i.test(val) ? '' : msg;
 }
+
+export function isReadOnlyArray(param: mixed): param is $ReadOnlyArray<mixed> {
+  return Array.isArray(param);
+}
