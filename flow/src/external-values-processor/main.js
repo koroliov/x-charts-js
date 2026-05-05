@@ -205,9 +205,8 @@ export function process(externalValue: mixed, schema: Schema): {
 
           function handleObjectProvidedCase(extValueEl: PureObject) {
             const propsPresent = Object.keys(extValueEl);
-            if (!lastStackEntry.schema.ignoreExtraPropertiesAll) {
-              const extraPropsToIgnore =
-                  lastStackEntry.schema.ignoreExtraPropertiesSet;
+            if (!schema.ignoreExtraPropertiesAll) {
+              const extraPropsToIgnore = schema.ignoreExtraPropertiesSet;
               checkExtraProps(propsSchema, propsPresent, extraPropsToIgnore);
             }
             return pushStack(extValueEl, false);
