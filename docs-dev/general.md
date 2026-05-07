@@ -8,6 +8,22 @@
   done in a dedicated branch and merged with --no-ff. The purpose of this is
   that it should be more convenient to view history.
 
+- no specific restrictions on where (from which commit) to create a branch.
+  Whatever is convenient, e.g. will produce as little conflicts as possible, or
+  will provide some benefit by implementing something and merging somewhere as
+  soon as possible.
+
+  For example: if there is a branch implement-external-values-processor and one
+  needs a change to the local podman compose envirionment, then the dedicated
+  branch, (e.g. fix-local-dev-env-issue-with-node-modules-dir-in-mounted-paths)
+  should be created from the tip of the implement-external-values-processor
+  branch and merged only to it.
+
+  If there is a need to do some SEO task for the documentation, which must be
+  available ASAP on the public docs page, then it makes sense to do create a
+  do-seo-task branch from the tip of the main branch and merge it to main and to
+  some other current branch, to avoid later conflicts on its own merge to main.
+
 - Theoretically there may be problems with the container versions etc. E.g. the
   developer worked on a feature in a branch, updated the container etc. Then
   switched to another branch and forgot to rebuild the image. This can lead to
