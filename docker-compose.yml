@@ -1,17 +1,20 @@
 services:
   preliminary-actions:
     image: fedora:${FEDORA_VERSION_NUM}
-    command: >
+    command: |
       bash -c "
-        [[ -d './test/served-tmp/' ]] || mkdir '/test/served-tmp/' && \
-        [[ -d './test/diff/' ]] || mkdir '/test/diff/' && \
-        [[ -d './test/unit-tmp/' ]] || mkdir '/test/unit-tmp/' && \
-        [[ -d './test/e2e/playwright/test-results/' ]] || \
-          mkdir './test/e2e/playwright/test-results/' && \
-        [[ -d './test/e2e/playwright/playwright-report/' ]] || \
-          mkdir './test/e2e/playwright/playwright-report/' && \
-        chmod 777 './test/e2e/playwright/test-results/' && \
-        chmod 777 './test/e2e/playwright/playwright-report/'"
+        set -e
+
+        mkdir -p \
+          '/test/served-tmp/' \
+          '/test/diff/' \
+          '/test/unit-tmp/' \
+          '/test/e2e/playwright/test-results/' \
+          '/test/e2e/playwright/playwright-report/'
+
+        chmod 777 \
+          '/test/e2e/playwright/test-results/' \
+          '/test/e2e/playwright/playwright-report/'"
     volumes:
       - ./test:/test
     restart: "no"
