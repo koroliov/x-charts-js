@@ -1,9 +1,22 @@
 services:
   preliminary-actions:
     image: fedora:${FEDORA_VERSION_NUM}
-    command: |
-      bash -c "
+    command:
+      - bash
+      - -c
+      - |
         set -e
+
+        for node_modules_dir in \
+          '/workspace/var/node_modules' \
+          '/workspace/docs-src/var/node_modules' \
+          '/workspace/test/e2e/playwright/var/node_modules'
+        do
+          if [[ -d "$${node_modules_dir}" ]]; then
+            echo "Refusing to continue because .$${node_modules_dir#/workspace} exists." >&2
+            exit 1
+          fi
+        done
 
         mkdir -p \
           '/test/served-tmp/' \
@@ -14,8 +27,9 @@ services:
 
         chmod 777 \
           '/test/e2e/playwright/test-results/' \
-          '/test/e2e/playwright/playwright-report/'"
+          '/test/e2e/playwright/playwright-report/'
     volumes:
+      - .:/workspace:ro
       - ./test:/test
     restart: "no"
 
@@ -41,6 +55,10 @@ services:
       - label=disable
 
   docs:
+    depends_on:
+      preliminary-actions:
+        condition: service_completed_successfully
+        restart: false
     image: ${PROJECT_NAME}-docs:${DOCS_IMAGE_TAG}
     pull_policy: never
     ports:
@@ -59,6 +77,10 @@ services:
       - label=disable
 
   playwright:
+    depends_on:
+      preliminary-actions:
+        condition: service_completed_successfully
+        restart: false
     image: ${PROJECT_NAME}-playwright:${PLAYWRIGHT_IMAGE_TAG}
     pull_policy: never
     user: "1001"
