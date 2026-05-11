@@ -7,6 +7,6 @@ export type AddMethodArgumentLegend = {
   +htmlFragment: string,
 }
 
-export type AddMethodArgumentLegend2 = {
+export type AddMethodArgumentLegendNormalized = {
   +htmlFragment: string,
 }

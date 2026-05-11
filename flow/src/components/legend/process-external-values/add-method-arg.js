@@ -5,13 +5,13 @@ import { process as processMain, }
   from '../../../external-values-processor/main.js';
 import { isPureObject, } from '../../../utils/validation.js';
 import type { PureObject, } from '../../../types.js';
-import type { AddMethodArgumentLegend2, } from '../types.js';
+import type { AddMethodArgumentLegendNormalized, } from '../types.js';
 import { getArgumentSchema as getArgumentSchemaMain, } from
   '../../../main/process-external-values/add-method-arg.js';
 
 export function process(userProvidedArgument: PureObject): {
   validationErrorMessage: string,
-  valueToUse: AddMethodArgumentLegend2,
+  valueToUse: AddMethodArgumentLegendNormalized,
 } {
   const argumentSchema = getArgumentSchema();
 
@@ -21,7 +21,7 @@ export function process(userProvidedArgument: PureObject): {
     valueToUse: processed.valueToUse,
   };
   //At this stage the processed.valueToUse should be guaranteed to be of type
-  //AddMethodArgumentLegend2
+  //AddMethodArgumentLegendNormalized
   //$FlowFixMe[incompatible-type]
   return retVal;
 
