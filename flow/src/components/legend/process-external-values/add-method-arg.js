@@ -4,11 +4,10 @@ import type { SchemaObject, SchemaFinal, CarryObj, }
 import { process as processMain, }
   from '../../../external-values-processor/main.js';
 import { isPureObject, } from '../../../utils/validation.js';
-import type { PureObject, } from '../../../../src/types.js';
-import type { AddMethodArgumentLegend2, }
-  from '../../../../src/components/legend/types.js';
+import type { PureObject, } from '../../../types.js';
+import type { AddMethodArgumentLegend2, } from '../types.js';
 import { getArgumentSchema as getArgumentSchemaMain, } from
-  '../../../../src/main/process-external-values/add-method-arg.js';
+  '../../../main/process-external-values/add-method-arg.js';
 
 export function process(userProvidedArgument: PureObject): {
   validationErrorMessage: string,
