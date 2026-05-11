@@ -35,7 +35,7 @@ export function process(userProvidedArgument: PureObject): {
           carryObj,
           valueToUse: valueProvided,
         };
-        if (typeof valueProvided !== 'string') {
+        if (valueProvided === '' || typeof valueProvided !== 'string') {
           retVal.valueToUse = null;
           retVal.validationErrorMessage =
             'Value must be a non-empty valid HTML string';

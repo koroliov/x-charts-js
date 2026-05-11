@@ -65,6 +65,26 @@ tp.test('htmlFragment is not string', (t) => {
   t.end();
 });
 
+tp.test('htmlFragment is empty string', (t) => {
+  const addMethodArg: PureObject = {
+    type: 'legend',
+    zIndex: '1',
+    htmlFragment: '',
+  };
+  const expected = {
+    validationErrorMessage: [
+      'ERR_X_CHARTS_JS_INVALID_ADD_METHOD_ARG:',
+      '  argument 0 -> htmlFragment:',
+      '  Value must be a non-empty valid HTML string',
+    ].join('\n'),
+    valueToUse: null,
+  };
+
+  const actual = process(addMethodArg);
+  t.deepEqual(actual, expected);
+  t.end();
+});
+
 tp.test('htmlFragment is missing', (t) => {
   const addMethodArg: PureObject = {
     type: 'legend',
