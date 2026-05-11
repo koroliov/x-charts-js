@@ -126,6 +126,25 @@ tp.test('argument is not object', (t) => {
   t.end();
 });
 
+tp.test('argument is not a pure object', (t) => {
+  //For testing purposes
+  //$FlowFixMe[invalid-constructor]
+  const addMethodArguments: Array<mixed> = [ new function() {}, ];
+  const registeredTypes = new Set([ 'foo', 'bar', ]);
+  const expected = {
+    validationErrorMessage: [
+      'ERR_X_CHARTS_JS_INVALID_ADD_METHOD_ARG:',
+      '  argument 0:',
+      '  Must be an object, e.g. {  }, Object.create(null)',
+    ].join('\n'),
+    valueToUse: null,
+  };
+
+  const actual = process(addMethodArguments, registeredTypes);
+  t.deepEqual(actual, expected);
+  t.end();
+});
+
 //Invalid cases, type
 tp.test('missed property type', (t) => {
   const addMethodArguments: Array<mixed> = [

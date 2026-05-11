@@ -50,17 +50,6 @@ export function process(userProvidedArgument: PureObject): {
       new Set(Object.keys(addMethodArgSchemaMain.properties));
     return {
       type: 'object',
-      processPre(valueProvided, carryObj, valueToUse) {
-        if (!isPureObject(valueProvided)) {
-          return {
-            carryObj,
-            valueToUse,
-            validationErrorMessage:
-                'Must be an object, e.g. {  }, Object.create(null)',
-          };
-        }
-        return { carryObj, valueToUse, validationErrorMessage: '', };
-      },
       getStub() {
         return { htmlFragment: '', };
       },
