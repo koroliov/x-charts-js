@@ -1,4 +1,5 @@
 //@flow strict
+import type { PureObject, } from '../types.js';
 
 export type CarryObj = { +[string]: mixed, __proto__: null, }
 
@@ -52,3 +53,21 @@ export type SchemaArray = {
 }
 
 export type Schema = SchemaFinal | SchemaArray | SchemaObject
+
+export type StackEntryArray = {
+  type: 'array',
+  schema: SchemaArray,
+  valueToUse: Array<mixed>,
+  externalValueCurrent: $ReadOnlyArray<mixed>,
+  i: number,
+}
+
+export type StackEntryObject = {
+  type: 'object',
+  schema: SchemaObject,
+  valueToUse: { [string]: mixed, },
+  propsSchema: Array<string>,
+  externalValueCurrent: PureObject,
+  noValueProvided: boolean,
+  i: number,
+}

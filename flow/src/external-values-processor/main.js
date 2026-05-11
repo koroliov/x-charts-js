@@ -1,26 +1,8 @@
 //@flow strict
-import type { Schema, SchemaObject, SchemaArray, SchemaFinal, CarryObj, }
-  from './types.js';
+import type { Schema, SchemaObject, SchemaArray, SchemaFinal, CarryObj,
+  StackEntryArray, StackEntryObject, } from './types.js';
 import type { PureObject, } from '../types.js';
 import { isPureObject, isReadOnlyArray, } from '../utils/validation.js';
-
-type StackEntryArray = {
-  type: 'array',
-  schema: SchemaArray,
-  valueToUse: Array<mixed>,
-  externalValueCurrent: $ReadOnlyArray<mixed>,
-  i: number,
-}
-
-type StackEntryObject = {
-  type: 'object',
-  schema: SchemaObject,
-  valueToUse: { [string]: mixed, },
-  propsSchema: Array<string>,
-  externalValueCurrent: PureObject,
-  noValueProvided: boolean,
-  i: number,
-}
 
 export function process(externalValue: mixed, schema: Schema): {
   validationError: null | { path: Array<string>, message: string, },
