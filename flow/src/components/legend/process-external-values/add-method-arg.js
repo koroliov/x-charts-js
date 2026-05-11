@@ -14,9 +14,9 @@ export function process(userProvidedArgument: PureObject): {
   validationErrorMessage: string,
   valueToUse: AddMethodArgumentLegend2,
 } {
-  const argumentsSchema = getArgumentSchema();
+  const argumentSchema = getArgumentSchema();
 
-  const processed = processMain(userProvidedArgument, argumentsSchema);
+  const processed = processMain(userProvidedArgument, argumentSchema);
   const retVal = {
     validationErrorMessage: prepareFinalErrorMessage(),
     valueToUse: processed.valueToUse,

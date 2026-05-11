@@ -1,7 +1,5 @@
 //@flow strict
-import type {
-  ComponentInstance,
-} from '../../types.js';
+import type { ComponentInstance, } from '../../types.js';
 import XCharts, { registerComponent, } from '../../main/main.js';
 import type { AddMethodArgumentLegend, } from './types.js';
 import * as AddMethodArgumentValidator from './validation/add-method-arg.js';
