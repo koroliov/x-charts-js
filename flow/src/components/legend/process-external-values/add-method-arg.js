@@ -25,25 +25,6 @@ export function process(userProvidedArgument: PureObject): {
   //$FlowFixMe[incompatible-type]
   return retVal;
 
-  function getHtmlFragmentSchema(): SchemaFinal {
-    return {
-      type: 'final',
-      process(valueProvided: mixed, carryObj: CarryObj) {
-        const retVal = {
-          validationErrorMessage: '',
-          carryObj,
-          valueToUse: valueProvided,
-        };
-        if (valueProvided === '' || typeof valueProvided !== 'string') {
-          retVal.valueToUse = null;
-          retVal.validationErrorMessage =
-            'Value must be a non-empty valid HTML string';
-        }
-        return retVal;
-      },
-    };
-  }
-
   function getArgumentSchema(): SchemaObject {
     const addMethodArgSchemaMain = getArgumentSchemaMain(new Set());
     const propsHandledOnMainLevel =
@@ -59,6 +40,25 @@ export function process(userProvidedArgument: PureObject): {
         htmlFragment: getHtmlFragmentSchema(),
       },
     };
+
+    function getHtmlFragmentSchema(): SchemaFinal {
+      return {
+        type: 'final',
+        process(valueProvided: mixed, carryObj: CarryObj) {
+          const retVal = {
+            validationErrorMessage: '',
+            carryObj,
+            valueToUse: valueProvided,
+          };
+          if (valueProvided === '' || typeof valueProvided !== 'string') {
+            retVal.valueToUse = null;
+            retVal.validationErrorMessage =
+              'Value must be a non-empty valid HTML string';
+          }
+          return retVal;
+        },
+      };
+    }
   }
 
   function prepareFinalErrorMessage() {

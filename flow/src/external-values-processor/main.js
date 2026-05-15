@@ -247,6 +247,15 @@ export function process(externalValue: mixed, schema: Schema): {
       });
       schemaCurrent = schemaCurrentPassed.elements;
     }
+
+    function throwIfValidationError(processed: {
+      +validationErrorMessage: string,
+      ...
+    }) {
+      if (processed.validationErrorMessage) {
+        throw new Error(processed.validationErrorMessage);
+      }
+    }
   }
 
   function generateErrorValuePath() {
@@ -258,14 +267,5 @@ export function process(externalValue: mixed, schema: Schema): {
       }
       return a;
     }, []);
-  }
-
-  function throwIfValidationError(processed: {
-    +validationErrorMessage: string,
-    ...
-  }) {
-    if (processed.validationErrorMessage) {
-      throw new Error(processed.validationErrorMessage);
-    }
   }
 }
