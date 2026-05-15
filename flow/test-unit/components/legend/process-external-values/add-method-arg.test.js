@@ -35,7 +35,7 @@ tp.test('extra property present', (t) => {
     validationErrorMessage: [
       'ERR_X_CHARTS_JS_INVALID_ADD_METHOD_ARG:',
       '  argument 0:',
-      "  Unknown property 'foo'",
+      "  unknown property 'foo'",
     ].join('\n'),
     valueToUse: null,
   };
@@ -55,7 +55,7 @@ tp.test('htmlFragment is not string', (t) => {
     validationErrorMessage: [
       'ERR_X_CHARTS_JS_INVALID_ADD_METHOD_ARG:',
       '  argument 0 -> htmlFragment:',
-      '  Value must be a non-empty valid HTML string',
+      '  value must be a non-empty valid HTML string',
     ].join('\n'),
     valueToUse: null,
   };
@@ -75,7 +75,7 @@ tp.test('htmlFragment is empty string', (t) => {
     validationErrorMessage: [
       'ERR_X_CHARTS_JS_INVALID_ADD_METHOD_ARG:',
       '  argument 0 -> htmlFragment:',
-      '  Value must be a non-empty valid HTML string',
+      '  value must be a non-empty valid HTML string',
     ].join('\n'),
     valueToUse: null,
   };
@@ -94,7 +94,7 @@ tp.test('htmlFragment is missing', (t) => {
     validationErrorMessage: [
       'ERR_X_CHARTS_JS_INVALID_ADD_METHOD_ARG:',
       '  argument 0 -> htmlFragment:',
-      '  Property is missing',
+      '  property is missing',
     ].join('\n'),
     valueToUse: null,
   };

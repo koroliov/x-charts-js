@@ -130,7 +130,8 @@ tp.test('no arguments', (t) => {
   const expected = {
     validationErrorMessage: [
       'ERR_X_CHARTS_JS_INVALID_CONSTRUCTOR_ARG:',
-      '  The new XChartsJs() constructor expects a single argument, received 0',
+      '  new XChartsJs() constructor call expects a single argument,' +
+        ' received 0',
     ].join('\n'),
     valueToUse: null,
   };
@@ -157,7 +158,8 @@ tp.test('extra arguments', (t) => {
   const expected = {
     validationErrorMessage: [
       'ERR_X_CHARTS_JS_INVALID_CONSTRUCTOR_ARG:',
-      '  The new XChartsJs() constructor expects a single argument, received 2',
+      '  new XChartsJs() constructor call expects a single argument,' +
+        ' received 2',
     ].join('\n'),
     valueToUse: null,
   };
@@ -179,7 +181,7 @@ tp.test('argument is not object', (t) => {
     validationErrorMessage: [
       'ERR_X_CHARTS_JS_INVALID_CONSTRUCTOR_ARG:',
       '  argument 0:',
-      '  Must be an object, e.g. {  }, Object.create(null)',
+      '  value must be an object, e.g. {  }, Object.create(null)',
     ].join('\n'),
     valueToUse: null,
   };
@@ -207,7 +209,7 @@ tp.test('extra property in argument', (t) => {
     validationErrorMessage: [
       'ERR_X_CHARTS_JS_INVALID_CONSTRUCTOR_ARG:',
       '  argument 0:',
-      "  Unknown property 'foo'",
+      "  unknown property 'foo'",
     ].join('\n'),
     valueToUse: null,
   };
@@ -233,7 +235,7 @@ tp.test('containerDiv is missing', (t) => {
     validationErrorMessage: [
       'ERR_X_CHARTS_JS_INVALID_CONSTRUCTOR_ARG:',
       '  argument 0 -> containerDiv:',
-      '  Property is missing',
+      '  property is missing',
     ].join('\n'),
     valueToUse: null,
   };
@@ -316,7 +318,7 @@ tp.test('extra property in options', (t) => {
     validationErrorMessage: [
       'ERR_X_CHARTS_JS_INVALID_CONSTRUCTOR_ARG:',
       '  argument 0 -> options:',
-      "  Unknown property 'foo'",
+      "  unknown property 'foo'",
     ].join('\n'),
     valueToUse: null,
   };
@@ -343,7 +345,7 @@ tp.test('backgroundColor is not valid', (t) => {
     validationErrorMessage: [
       'ERR_X_CHARTS_JS_INVALID_CONSTRUCTOR_ARG:',
       '  argument 0 -> options -> backgroundColor:',
-      '  Value must be a full (6 char long) hex string,',
+      '  value must be a full (6 char long) hex string,',
       'e.g. #ffffff, not #fff',
     ].join('\n'),
     valueToUse: null,
@@ -371,7 +373,7 @@ tp.test('isComponentInspectMode is not valid', (t) => {
     validationErrorMessage: [
       'ERR_X_CHARTS_JS_INVALID_CONSTRUCTOR_ARG:',
       '  argument 0 -> options -> isComponentInspectMode:',
-      '  Value must be a boolean',
+      '  value must be a boolean',
     ].join('\n'),
     valueToUse: null,
   };

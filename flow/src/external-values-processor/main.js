@@ -108,7 +108,7 @@ export function process(externalValue: mixed, schema: Schema): {
             valueToUse[prop] = schemaCurrent.getDefault();
             return true;
           } else {
-            throw new Error('Property is missing');
+            throw new Error('property is missing');
           }
         }
         const procValue = schemaCurrent.process(extObj[prop], carry);
@@ -222,7 +222,7 @@ export function process(externalValue: mixed, schema: Schema): {
       const setSchema = new Set(propsSchema);
       propsPresent.forEach(p => {
         if (!setSchema.has(p) && !propsToIgnore.has(p)) {
-          throw new Error(`Unknown property '${ p }'`);
+          throw new Error(`unknown property '${ p }'`);
         }
       });
     }

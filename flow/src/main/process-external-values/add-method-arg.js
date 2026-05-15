@@ -80,7 +80,7 @@ export function getArgumentSchema(registeredTypes: Set<string>): SchemaObject {
           carryObj,
           valueToUse,
           validationErrorMessage:
-              'Must be an object, e.g. {  }, Object.create(null)',
+              'value must be an object, e.g. {  }, Object.create(null)',
         };
       }
       return { carryObj, valueToUse, validationErrorMessage: '', };
@@ -104,7 +104,7 @@ function getTypeSchema(registeredTypes: Set<string>): SchemaFinal {
       if (!registeredTypes.has(valueProvidedStr)) {
         return {
           validationErrorMessage: [
-            `Component of type '${ valueProvidedStr
+            `component of type '${ valueProvidedStr
               }' has not been registered,`,
             `registered components are: ${
               Array.from(registeredTypes).join(', ') }`,
@@ -131,7 +131,7 @@ function getZIndexSchema(): SchemaFinal {
       if (isInvalid()) {
         retVal.valueToUse = null;
         retVal.validationErrorMessage =
-          'Value must be a numeric integer string with no white spaces';
+          'value must be a numeric integer string with no white spaces';
       }
       return retVal;
 

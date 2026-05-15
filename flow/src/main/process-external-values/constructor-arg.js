@@ -38,7 +38,7 @@ export function process(userProvidedArguments: Array<mixed>, containerClass:
             carryObj,
             valueToUse: null,
             validationErrorMessage: [
-              'The new XChartsJs() constructor expects a single',
+              'new XChartsJs() constructor call expects a single',
               `argument, received ${ valueProvided.length }`,
             ].join(' '),
           };
@@ -63,7 +63,7 @@ export function process(userProvidedArguments: Array<mixed>, containerClass:
         if (isInvalid) {
           return {
             validationErrorMessage: [
-              'Value must be a full (6 char long) hex string,',
+              'value must be a full (6 char long) hex string,',
               'e.g. #ffffff, not #fff',
             ].join('\n'),
             carryObj,
@@ -83,7 +83,7 @@ export function process(userProvidedArguments: Array<mixed>, containerClass:
       process(valueProvided: mixed, carryObj: CarryObj) {
         if (typeof valueProvided !== 'boolean') {
           return {
-            validationErrorMessage: 'Value must be a boolean',
+            validationErrorMessage: 'value must be a boolean',
             carryObj,
             valueToUse: null,
           };
@@ -137,7 +137,7 @@ export function process(userProvidedArguments: Array<mixed>, containerClass:
             carryObj,
             valueToUse,
             validationErrorMessage:
-              'Must be an object, e.g. {  }, Object.create(null)',
+              'value must be an object, e.g. {  }, Object.create(null)',
           };
         }
         return { carryObj, valueToUse, validationErrorMessage: '', };

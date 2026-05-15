@@ -116,7 +116,7 @@ tp.test('argument is not object', (t) => {
     validationErrorMessage: [
       'ERR_X_CHARTS_JS_INVALID_ADD_METHOD_ARG:',
       '  argument 0:',
-      '  Must be an object, e.g. {  }, Object.create(null)',
+      '  value must be an object, e.g. {  }, Object.create(null)',
     ].join('\n'),
     valueToUse: null,
   };
@@ -135,7 +135,7 @@ tp.test('argument is not a pure object', (t) => {
     validationErrorMessage: [
       'ERR_X_CHARTS_JS_INVALID_ADD_METHOD_ARG:',
       '  argument 0:',
-      '  Must be an object, e.g. {  }, Object.create(null)',
+      '  value must be an object, e.g. {  }, Object.create(null)',
     ].join('\n'),
     valueToUse: null,
   };
@@ -158,7 +158,7 @@ tp.test('missed property type', (t) => {
     validationErrorMessage: [
       'ERR_X_CHARTS_JS_INVALID_ADD_METHOD_ARG:',
       '  argument 0 -> type:',
-      '  Property is missing',
+      '  property is missing',
     ].join('\n'),
     valueToUse: null,
   };
@@ -181,7 +181,7 @@ tp.test('unregistered type', (t) => {
     validationErrorMessage: [
       'ERR_X_CHARTS_JS_INVALID_ADD_METHOD_ARG:',
       '  argument 0 -> type:',
-      `  Component of type 'unknownType' has not been registered,`,
+      `  component of type 'unknownType' has not been registered,`,
       'registered components are: foo, bar',
     ].join('\n'),
     valueToUse: null,
@@ -206,7 +206,7 @@ tp.test('unregistered type', (t) => {
     validationErrorMessage: [
       'ERR_X_CHARTS_JS_INVALID_ADD_METHOD_ARG:',
       '  argument 0 -> zIndex:',
-      '  Value must be a numeric integer string with no white spaces',
+      '  value must be a numeric integer string with no white spaces',
     ].join('\n'),
     valueToUse: null,
   };

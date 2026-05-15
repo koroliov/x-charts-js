@@ -53,7 +53,7 @@ export function process(userProvidedArgument: PureObject): {
           if (valueProvided === '' || typeof valueProvided !== 'string') {
             retVal.valueToUse = null;
             retVal.validationErrorMessage =
-              'Value must be a non-empty valid HTML string';
+              'value must be a non-empty valid HTML string';
           }
           return retVal;
         },
